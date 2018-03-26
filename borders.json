@@ -153,7 +153,7 @@
 			"Yemen": ["Oman", "Saudi Arabia"],
 			"Zambia": ["Angola", "Botswana", "Democratic Republic of the Congo", "Malawi", "Mozambique", "Namibia", "Tanzania", "Zimbabwe"],
 			"Zimbabwe": ["Botswana", "Mozambique", "South Africa", "Zambia"]
-		},
+		}
 	},
 
 	"islands": {
