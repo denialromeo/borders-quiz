@@ -1,6 +1,3 @@
-// American/British territories (e.g. Puerto Rico, Anguilla) are not counted as part of the mainland. French ones (e.g. Martinique), however, are.
-// I use Timor-Leste instead of East Timor (https://blogs.crikey.com.au/fullysic/2013/12/06/whats-in-a-name-for-the-timorese-quite-a-lot/)
-
 {
 	"land": {
 		"Afghanistan": ["China", "Iran", "Pakistan", "Tajikistan", "Turkmenistan", "Uzbekistan"],
