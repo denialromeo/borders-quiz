@@ -105,7 +105,7 @@
 		"Netherlands (Sint Maarten)": ["France (Saint Martin)"],
 		"Nicaragua": ["Costa Rica", "Honduras"],
 		"Niger": ["Algeria", "Benin", "Burkina Faso", "Chad", "Mali", "Nigeria"],
-		"Nigeria": ["Benin", "Cameroon" "Chad", "Niger"],
+		"Nigeria": ["Benin", "Cameroon", "Chad", "Niger"],
 		"Norway": ["Finland", "Russia", "Sweden"],
 		"Oman": ["Saudi Arabia", "United Arab Emirates", "Yemen"],
 		"Pakistan": ["Afghanistan", "China", "India", "Iran"],
@@ -157,7 +157,7 @@
 		"Vietnam": ["Cambodia", "China", "Laos"],
 		"Yemen": ["Oman", "Saudi Arabia"],
 		"Zambia": ["Angola", "Botswana", "Democratic Republic of the Congo", "Malawi", "Mozambique", "Namibia", "Tanzania", "Zimbabwe"],
-		"Zimbabwe": ["Botswana", "Mozambique", "South Africa", "Zambia"],
+		"Zimbabwe": ["Botswana", "Mozambique", "South Africa", "Zambia"]
 	},
 
 	"maritime-islands": {
@@ -208,6 +208,6 @@
 		"Trinidad and Tobago": ["Grenada", "Venezuela"],
 		"Tuvalu": ["France (Wallis and Futuna)", "Fiji", "Kiribati"],
 		"United Kingdom": ["Belgium", "Denmark", "France", "Germany", "Ireland", "Netherlands", "Norway"],
-		"Vanuatu": ["France (New Caledonia)", "Fiji", "Solomon Islands"],
+		"Vanuatu": ["France (New Caledonia)", "Fiji", "Solomon Islands"]
 	}
 }
