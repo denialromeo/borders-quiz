@@ -39,7 +39,7 @@ Some notes on the data in [borders.json](/borders.json) -
 
 * Countries taken from [U.S. Dept. of State](https://www.state.gov/misc/list/index.htm). Omitted Hong Kong and Macau, Timor-Leste used as name for East Timor.
 * Borders transcribed from [Wikipedia](https://en.wikipedia.org/wiki/List_of_countries_and_territories_by_land_and_maritime_borders).
-* Island countries' maritime borders are stored separately from non-island country data. However, where an island has a land border with another country (e.g. the UK and Ireland), it's stored with the regular data.
+* "continental" means "non-island". "new-world" refers to the Americas. "old-world" refers to Africa, Europe, and Asia.
 
 Funny dev realizations -
 
