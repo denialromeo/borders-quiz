@@ -42,6 +42,6 @@ Some notes on the data in [borders.json](/borders.json) -
 
 Funny dev realizations -
 
-* I thought I was so slick when I separated countries into islands and non-islands, with the idea that every non-island in either the old or new world was in a connected graph.
+* I thought I was so slick when I separated countries into islands and non-islands, with the idea that every non-island in either the old or new world was in a connected, complete graph.
 
     Turns out Malaysia breaks this rule. Malaysia isn't an island, but also has overseas territory on the island of Borneo! So to make this work, I've had to have two definitions for Malaysia. One where it only borders Thailand, and another where it borders Indonesia and Brunei.
