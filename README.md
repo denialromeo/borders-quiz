@@ -26,7 +26,7 @@ Personally, I always get flustered when I think about the world's countries (Eas
 
 This will first take shape as a simple command-line interface, but will hopefully end up a web application (maybe using Google Maps in some fun way).
 
-To get up and going with the project at the current state -
+To get up and going with the project in its current state -
 
 ```
 git clone https://github.com/danielm00re/world-borders-quiz.git
