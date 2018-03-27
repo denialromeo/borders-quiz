@@ -30,6 +30,7 @@ To get up and going with the project in its current state -
 
 ```
 git clone https://github.com/danielm00re/world-borders-quiz.git
+cd world-borders-quiz
 python -i main.py
 data['continental']['old-world']['India']
 ```
