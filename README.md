@@ -44,10 +44,10 @@ Some notes on the data in [borders.json](/borders.json) -
 
 Funny dev realizations -
 
-* I thought I was so slick when I separated countries into islands and non-islands, with the idea that every non-island in either the old or new world was in a connected, complete graph.
+* I separated countries into islands and non-islands under the assumption that every non-island in either the old or new world was in a connected, complete graph.
 
-    Turns out Malaysia breaks this rule. Malaysia isn't an island, but also has overseas territory on the island of Borneo! So to make this work, I've had to have two definitions for Malaysia. One where it only borders Thailand, and another where it also borders Indonesia and Brunei.
+    Turns out Malaysia breaks this rule. Malaysia isn't an island, but half of it's overseas on the island of Borneo! So to make this work, I've had to have two definitions for Malaysia. One as a continental country where it only borders Thailand, and another as an island where it also borders Indonesia and Brunei.
 
-* China and Russia connect Europe and Asia too well, making the "graph distance" difficulty mechanic a bit pointless. If India and North Korea are just two countries away, having a "Hard" question asking if the two border each other is a bit too easy.
+* China and Russia make the "graph distance" difficulty mechanic a little pointless. If India and North Korea are just two countries apart, having a "Hard" question asking if they border each other is a bit too easy.
 
     So I've removed China and Russia from graph distance calculations except the Koreas, Mongolia, and Scandinavia.

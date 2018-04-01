@@ -1,16 +1,20 @@
 import json, random
 
-def neighbors(country):
-	if country in data['continental']['new-world']:
-		return data['continental']['new-world'][country]
-	else:
-		return data['continental']['old-world'][country]
-
 def grab_marbles_from_bag(bag, num_marbles):
 	for i in range(num_marbles):
 		r = random.randint(i, len(bag) - 1)
 		bag[i], bag[r] = bag[r], bag[i]
 	return bag[0:num_marbles]
+
+def random_country():
+	countries = list(data['continental']['old-world']) + list(data['continental']['new-world'])
+	return grab_marbles_from_bag(countries, 1)[0]
+
+def neighbors(country):
+	if country in data['continental']['new-world']:
+		return data['continental']['new-world'][country]
+	else:
+		return data['continental']['old-world'][country]
 
 # bfs stands for "breadth-first search". Google this if unfamiliar.
 def bfs(country):
@@ -64,10 +68,6 @@ def question(country, difficulty):
 		s += "\t{0}. {1}\n".format(letter, choice)
 		letter = chr(ord(letter) + 1)
 	print(s)
-
-def random_country():
-	countries = list(data['continental']['old-world']) + list(data['continental']['new-world'])
-	return grab_marbles_from_bag(countries, 1)[0]
 
 if __name__ == '__main__':
 	with open('borders.json') as data_file:
