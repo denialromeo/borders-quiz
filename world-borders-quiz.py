@@ -16,19 +16,16 @@ def neighbors(country):
 	else:
 		return data['continental']['old-world'][country]
 
-# bfs stands for "breadth-first search". Google this if unfamiliar.
 def bfs(country):
 	bfs_queue = [country]
-	# { country_name: (distance_from_start, path_predecessor) }
-	visited = {country: (0,'')} 
+	visited = {country: (0,'')}
 	while bfs_queue != []:
 		v = bfs_queue.pop(0)
 		for neighbor in neighbors(v):
 			if neighbor not in visited:
 				visited[neighbor] = (visited[v][0] + 1, v)
 				# Everything borders China and Russia, skewing quiz difficulty.
-				keep_china_russia = ['Finland', 'Sweden', 'Norway', \
-									 'Mongolia', 'North Korea', 'South Korea']
+				keep_china_russia = ['Finland', 'Sweden', 'Norway', 'Mongolia', 'North Korea', 'South Korea']
 				if neighbor in ['China', 'Russia'] and country not in keep_china_russia:
 					pass
 				else:
@@ -54,19 +51,22 @@ def countries_x_or_more_countries_away(start_country, x):
 
 def question(country, difficulty):
 	s = "\nWhich of these countries does not border {0}?\n\n".format(country)
+
 	possible_wrong_answers = neighbors(country)
+	if (len(possible_wrong_answers) > 3):
+		possible_wrong_answers = grab_marbles_from_bag(possible_wrong_answers, 3)
+
 	if difficulty == 'easy':
 		answer = grab_marbles_from_bag(countries_x_or_more_countries_away(country, 4), 1)
 	if difficulty == 'hard':
 		answer = grab_marbles_from_bag(countries_x_countries_away(country, 2), 1)
-	if (len(possible_wrong_answers) > 3):
-		possible_wrong_answers = grab_marbles_from_bag(possible_wrong_answers, 3)
+
 	choices = possible_wrong_answers + answer
 	choices = grab_marbles_from_bag(choices, len(choices))
-	letter = 'A'
-	for choice in choices:
-		s += "\t{0}. {1}\n".format(letter, choice)
-		letter = chr(ord(letter) + 1)
+
+	for idx, choice in enumerate(choices):
+		s += '\t{0}. {1}\n'.format(chr(idx + 65), choice)
+
 	print(s)
 
 if __name__ == '__main__':
