@@ -48,6 +48,6 @@ Funny dev realizations -
 
     Turns out Malaysia breaks this rule. Malaysia isn't an island, but also has overseas territory on the island of Borneo! So to make this work, I've had to have two definitions for Malaysia. One where it only borders Thailand, and another where it also borders Indonesia and Brunei.
 
-* China and Russia connect Europe and Asia too well, making the "graph distance" difficulty mechanic a bit pointless. If India and North Korea are just two countries away, having a "Medium" question asking if the two border each other is a bit too easy.
+* China and Russia connect Europe and Asia too well, making the "graph distance" difficulty mechanic a bit pointless. If India and North Korea are just two countries away, having a "Hard" question asking if the two border each other is a bit too easy.
 
     So I've removed China and Russia from graph distance calculations except the Koreas, Mongolia, and Scandinavia.
