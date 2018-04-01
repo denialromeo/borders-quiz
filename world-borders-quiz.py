@@ -50,14 +50,15 @@ def countries_x_or_more_countries_away(start_country, x):
 
 def question(country, difficulty):
 	s = "\nWhich of these countries does not border {0}?\n\n".format(country)
-	neighboring = neighbors(country)
+	possible_wrong_answers = neighbors(country)
 	if difficulty == 'easy':
-		not_neighbor = grab_marbles_from_bag(countries_x_or_more_countries_away(country, 4), 1)
+		answer = grab_marbles_from_bag(countries_x_or_more_countries_away(country, 4), 1)
 	if difficulty == 'hard':
-		not_neighbor = grab_marbles_from_bag(countries_x_countries_away(country, 2), 1)
-	if (len(neighboring) > 3):
-		neighboring = grab_marbles_from_bag(neighboring, 3)
-	choices = neighboring + not_neighbor
+		answer = grab_marbles_from_bag(countries_x_countries_away(country, 2), 1)
+	if (len(possible_wrong_answers) > 3):
+		possible_wrong_answers = grab_marbles_from_bag(possible_wrong_answers, 3)
+	choices = possible_wrong_answers + answer
+	choices = grab_marbles_from_bag(choices, len(choices))
 	letter = 'A'
 	for choice in choices:
 		s += "\t{0}. {1}\n".format(letter, choice)
