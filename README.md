@@ -26,13 +26,14 @@ Personally, I always get flustered when I think about the world's countries (Eas
 
 This will first take shape as a simple command-line interface, but will hopefully end up a web application (maybe using Google Maps in some fun way).
 
-To get up and going with the project in its current state -
+To get up and going with the project in its current state, open your command prompt and run -
 
 ```
 git clone https://github.com/danielm00re/world-borders-quiz.git
 cd world-borders-quiz
-python -i main.py
-data['continental']['old-world']['India']
+python -i world-borders-quiz.py
+question(random_country(), "easy")
+question(random_country(), "hard")
 ```
 
 Some notes on the data in [borders.json](/borders.json) -
@@ -46,3 +47,7 @@ Funny dev realizations -
 * I thought I was so slick when I separated countries into islands and non-islands, with the idea that every non-island in either the old or new world was in a connected, complete graph.
 
     Turns out Malaysia breaks this rule. Malaysia isn't an island, but also has overseas territory on the island of Borneo! So to make this work, I've had to have two definitions for Malaysia. One where it only borders Thailand, and another where it also borders Indonesia and Brunei.
+
+* China and Russia connect Europe and Asia too well, making the "graph distance" difficulty mechanic a bit pointless. If India and North Korea are just two countries away, having a "Medium" question asking if the two border each other is a bit too easy.
+
+    So I've removed China and Russia from graph distance calculations except the Koreas, Mongolia, and Scandinavia.
