@@ -1,11 +1,11 @@
 import json, random
 
 # Randomly pick and return a given number of items from a list.
-def random_sampling(bag, num_marbles):
-	for i in range(num_marbles):
-		r = random.randint(i, len(bag) - 1)
-		bag[i], bag[r] = bag[r], bag[i]
-	return bag[0:num_marbles]
+def random_sampling(l, num_items):
+	for i in range(num_items):
+		r = random.randint(i, len(l) - 1)
+		l[i], l[r] = l[r], l[i]
+	return l[0:num_items]
 
 def random_country():
 	countries = list(data['continental']['old-world']) + list(data['continental']['new-world'])
