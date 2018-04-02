@@ -43,9 +43,9 @@ def path(start_country, end_country):
 		predecessor = a[predecessor][1]
 	return ', '.join(path)
 
-def countries_x_countries_away(start_country, x):
+def countries_x_to_y_countries_away(start_country, x, y):
 	a = bfs(start_country)
-	return list(filter(lambda c: a[c][0] == x, a))
+	return list(filter(lambda c: a[c][0] >= x and a[c][0] <= y, a))
 
 def countries_x_or_more_countries_away(start_country, x):
 	a = bfs(start_country)
@@ -61,7 +61,7 @@ def question(country, difficulty):
 	if difficulty == 'easy':
 		answer = random_sampling(countries_x_or_more_countries_away(country, 4), 1)
 	if difficulty == 'hard':
-		answer = random_sampling(countries_x_countries_away(country, 2), 1)
+		answer = random_sampling(countries_x_to_y_countries_away(country, 2, 2), 1)
 
 	choices = possible_wrong_answers + answer
 	choices = random_sampling(choices, len(choices))
