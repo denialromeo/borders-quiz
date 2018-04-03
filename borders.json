@@ -1,5 +1,5 @@
 {
-	"continental": {
+	"land": {
 			"Argentina": ["Bolivia", "Brazil", "Chile", "Paraguay", "Uruguay"],
 			"Belize": ["Guatemala", "Mexico"],
 			"Bolivia": ["Argentina", "Brazil", "Chile", "Paraguay", "Peru"],

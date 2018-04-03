@@ -31,16 +31,24 @@ To get up and going with the project in its current state, open your command pro
 ```
 git clone https://github.com/danielm00re/world-borders-quiz.git
 cd world-borders-quiz
-python -i world-borders-quiz.py
-question(random_country(), "easy")
-question(random_country(), "hard")
+python world-borders-quiz.py
+```
+
+If you're on Windows and don't have Git and Python installed, get up and going with Scoop -
+
+```
+powershell Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+powershell iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+scoop install git python
+git clone https://github.com/danielm00re/world-borders-quiz.git
+cd world-borders-quiz
+python world-borders-quiz.py
 ```
 
 Some notes on the data in [borders.json](/borders.json) -
 
 * Countries taken from [U.S. Dept. of State](https://www.state.gov/misc/list/index.htm). Omitted Hong Kong and Macau, Timor-Leste used as name for East Timor.
 * Borders transcribed from [Wikipedia](https://en.wikipedia.org/wiki/List_of_countries_and_territories_by_land_and_maritime_borders).
-* "continental" means "non-island". "new-world" refers to the Americas. "old-world" refers to Africa, Europe, and Asia.
 
 Fun dev realizations -
 
