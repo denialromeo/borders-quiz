@@ -1,15 +1,8 @@
 import json, random
 
-# Randomly pick and return a given number of items from a list.
-def random_sampling(l, num_items):
-    for i in range(num_items):
-        r = random.randint(i, len(l) - 1)
-        l[i], l[r] = l[r], l[i]
-    return l[0:num_items]
-
 def random_country():
     countries = list(data['continental']['old-world']) + list(data['continental']['new-world'])
-    return random_sampling(countries, 1)[0]
+    return random.sample(countries, 1)[0]
 
 def neighbors(country):
     if country in data['continental']['new-world']:
@@ -56,15 +49,15 @@ def question(country, difficulty):
 
     possible_wrong_answers = neighbors(country)
     if (len(possible_wrong_answers) > 3):
-        possible_wrong_answers = random_sampling(possible_wrong_answers, 3)
+        possible_wrong_answers = random.sample(possible_wrong_answers, 3)
 
     if difficulty == 'easy':
-        answer = random_sampling(countries_x_or_more_countries_away(country, 4), 1)
+        answer = random.sample(countries_x_or_more_countries_away(country, 4), 1)
     if difficulty == 'hard':
-        answer = random_sampling(countries_x_to_y_countries_away(country, 2, 2), 1)
+        answer = random.sample(countries_x_to_y_countries_away(country, 2, 2), 1)
 
     choices = possible_wrong_answers + answer
-    choices = random_sampling(choices, len(choices))
+    choices = random.sample(choices, len(choices))
 
     for idx, choice in enumerate(choices):
         s += '\t{0}. {1}\n'.format(chr(idx + 65), choice)
