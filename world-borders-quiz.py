@@ -2,7 +2,7 @@ import json, random
 
 def random_country():
     countries = list(data['continental']['old-world']) + list(data['continental']['new-world'])
-    return random.sample(countries, 1)[0]
+    return random.choice(countries)
 
 def neighbors(country):
     if country in data['continental']['new-world']:
