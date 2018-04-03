@@ -1,17 +1,16 @@
 {
 	"continental": {
-		"new-world": {
 			"Argentina": ["Bolivia", "Brazil", "Chile", "Paraguay", "Uruguay"],
 			"Belize": ["Guatemala", "Mexico"],
 			"Bolivia": ["Argentina", "Brazil", "Chile", "Paraguay", "Peru"],
-			"Brazil": ["Argentina", "Bolivia", "Colombia", "French Guiana (France)", "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela"],
+			"Brazil": ["Argentina", "Bolivia", "Colombia", "French Guiana", "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela"],
 			"Canada": ["United States"],
 			"Chile": ["Argentina", "Bolivia", "Peru"],
 			"Colombia": ["Brazil", "Ecuador", "Panama", "Peru", "Venezuela"],
 			"Costa Rica": ["Nicaragua", "Panama"],
 			"Ecuador": ["Colombia", "Peru"],
 			"El Salvador": ["Guatemala", "Honduras"],
-			"French Guiana (France)": ["Brazil", "Suriname"],
+			"French Guiana": ["Brazil", "Suriname"],
 			"Guatemala": ["Belize", "El Salvador", "Honduras", "Mexico"],
 			"Guyana": ["Brazil", "Suriname", "Venezuela"],
 			"Honduras": ["El Salvador", "Guatemala", "Nicaragua"],
@@ -20,12 +19,10 @@
 			"Panama": ["Colombia", "Costa Rica"],
 			"Paraguay": ["Argentina", "Bolivia", "Brazil"],
 			"Peru": ["Bolivia", "Brazil", "Chile", "Colombia", "Ecuador"],
-			"Suriname": ["Brazil", "French Guiana (France)", "Guyana"],
+			"Suriname": ["Brazil", "French Guiana", "Guyana"],
 			"United States": ["Canada", "Mexico"],
 			"Uruguay": ["Argentina", "Brazil"],
-			"Venezuela": ["Brazil", "Colombia", "Guyana"]
-		},
-		"old-world": {
+			"Venezuela": ["Brazil", "Colombia", "Guyana"],
 			"Afghanistan": ["China", "Iran", "Pakistan", "Tajikistan", "Turkmenistan", "Uzbekistan"],
 			"Albania": ["Greece", "Kosovo", "Macedonia", "Montenegro"],
 			"Algeria": ["Libya", "Mali", "Mauritania", "Morocco", "Niger", "Tunisia"],
@@ -153,7 +150,6 @@
 			"Yemen": ["Oman", "Saudi Arabia"],
 			"Zambia": ["Angola", "Botswana", "Democratic Republic of the Congo", "Malawi", "Mozambique", "Namibia", "Tanzania", "Zimbabwe"],
 			"Zimbabwe": ["Botswana", "Mozambique", "South Africa", "Zambia"]
-		}
 	},
 
 	"islands": {
