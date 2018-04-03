@@ -1,14 +1,19 @@
 import json, random
 
+def country_neighbors_dict():
+    with open('borders.json') as data_file:
+        data = json.load(data_file)
+        return data['land']
+
 # bfs stands for "breadth-first search". Google this if unfamiliar.
-def bfs(country, country_neighbors_dict):
-    visited = {country: 0}
+def bfs(country, country_neighbors_dict=country_neighbors_dict()):
+    country_distance_dict = {country: 0}
     bfs_queue = [country]
     while bfs_queue != []:
         v = bfs_queue.pop(0)
         for neighbor in country_neighbors_dict[v]:
-            if neighbor not in visited:
-                visited[neighbor] = visited[v] + 1
+            if neighbor not in country_distance_dict:
+                country_distance_dict[neighbor] = country_distance_dict[v] + 1
                 # China and Russia make the "graph distance" difficulty mechanic a little pointless.
                 # If India and Poland are just three countries apart (India → China → Russia → Poland),
                 # a "Hard" question asking if they border each other is a bit too easy.
@@ -20,9 +25,9 @@ def bfs(country, country_neighbors_dict):
                     pass
                 else:
                     bfs_queue.append(neighbor)
-    return visited
+    return country_distance_dict
 
-def question(country, country_neighbors_dict, difficulty):
+def question(country, difficulty, country_neighbors_dict=country_neighbors_dict()):
     s = "\nWhich of these countries does not border {0}?\n\n".format(country)
 
     possible_wrong_answers = country_neighbors_dict[country]
@@ -46,15 +51,11 @@ def question(country, country_neighbors_dict, difficulty):
 
     return s
 
-def country_neighbors_dict():
-    with open('borders.json') as data_file:
-        data = json.load(data_file)
-        return data['land']
+def random_country(country_neighbors_dict=country_neighbors_dict()):
+	return random.choice(list(country_neighbors_dict))
 
 if __name__ == '__main__':
-    country_neighbors_dict = country_neighbors_dict()
     while True:
-        random_country = random.choice(list(country_neighbors_dict))
-        print(question(random_country, country_neighbors_dict, 'hard'))
+        print(question(random_country(), 'hard'))
         print('Hit "Enter" for new question. Enter Ctrl + Z to exit.', end='')
         input()
