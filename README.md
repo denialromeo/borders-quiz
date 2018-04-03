@@ -45,17 +45,8 @@ cd world-borders-quiz
 python world-borders-quiz.py
 ```
 
-Some notes on the data in [borders.json](/borders.json) -
+Some notes on [borders.json](/borders.json) -
 
 * Countries taken from [U.S. Dept. of State](https://www.state.gov/misc/list/index.htm). Omitted Hong Kong and Macau, Timor-Leste used as name for East Timor.
 * Borders transcribed from [Wikipedia](https://en.wikipedia.org/wiki/List_of_countries_and_territories_by_land_and_maritime_borders).
-
-Fun dev realizations -
-
-* I separated countries into islands and non-islands under the assumption that every non-island in either the old or new world was in a connected, complete graph.
-
-    Turns out Malaysia breaks this rule. Malaysia isn't an island, but half of it's overseas on the island of Borneo! So to make this work, I've had to have two definitions for Malaysia. One as a continental country where it only borders Thailand, and another as an island where it also borders Indonesia and Brunei.
-
-* China and Russia make the "graph distance" difficulty mechanic a little pointless. If India and Poland are just three countries apart (India &rarr; China &rarr; Russia &rarr; Poland), a "Hard" question asking if they border each other is a bit too easy.
-
-    So China and Russia are removed from graph searches except when started from the Koreas, Mongolia, and Scandinavia (which exclusively border China and/or Russia).
+* Malaysia is listed twice. Once as a "land" country that only borders Thailand, another time as an "island" that also borders Indonesia and Brunei.

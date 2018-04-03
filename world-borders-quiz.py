@@ -9,7 +9,12 @@ def bfs(country):
         for neighbor in country_neighbors_dict[v]:
             if neighbor not in visited:
                 visited[neighbor] = visited[v] + 1
-                # Ignores paths passing through China/Russia to have challenging "hard" questions.
+                # China and Russia make the "graph distance" difficulty mechanic a little pointless.
+                # If India and Poland are just three countries apart (India → China → Russia → Poland),
+                # a "Hard" question asking if they border each other is a bit too easy.
+                #
+                # So China and Russia are removed from graph searches except when started from countries which 
+                # exclusively border China and/or Russia.
                 keep_china_russia = ['Finland', 'Sweden', 'Norway', 'Mongolia', 'North Korea', 'South Korea']
                 if neighbor in ['China', 'Russia'] and country not in keep_china_russia:
                     pass
