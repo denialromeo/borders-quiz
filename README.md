@@ -1,6 +1,6 @@
 # Borders Quiz
 
-The goal of this project is to construct a fun little game that quizzes the player on his or her knowledge of the world's borders through randomly-generated multiple-choice questions.
+The goal of this project is to construct a fun little game that quizzes the player on his or her knowledge of the world's borders and U.S. state borders through randomly-generated multiple-choice questions.
 
 For example -
 
@@ -29,7 +29,7 @@ This will first take shape as a simple command-line interface, but will hopefull
 To get up and going with the project in its current state, open your command prompt and run -
 
 ```
-git clone https://github.com/danielm00re/world-borders-quiz.git
+git clone https://github.com/danielm00re/borders-quiz.git
 cd borders-quiz
 python borders-quiz.py
 ```
