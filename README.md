@@ -1,4 +1,4 @@
-# World Borders Quiz
+# Borders Quiz
 
 The goal of this project is to construct a fun little game that quizzes the player on his or her knowledge of the world's borders through randomly-generated multiple-choice questions.
 
