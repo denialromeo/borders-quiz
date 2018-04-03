@@ -4,7 +4,7 @@ The goal of this project is to construct a fun little game that quizzes the play
 
 For example -
 
-* Which of these countries does not border Iran?
+* Which of these does not border Iran?
 
     * A. Iraq
     * B. Israel
@@ -13,18 +13,18 @@ For example -
 
 The idea is to have difficulty levels based on graph distance. The above question is relatively difficult, but this one is trivial -
 
-* Which of these countries does not border Iran?
+* Which of these does not border Iran?
 
     * A. Pakistan
     * B. Turkey
     * C. Germany
     * D. Iraq
 
-For variety, there'll also be "Which of these countries borders" questions and some questions with multiple correct answers. Optionally, the player can also include island countries and their maritime borders.
+For variety, there'll also be "Which of these countries borders" questions and some questions with multiple correct answers. Optionally, the player can try their luck with U.S. states.
 
-Personally, I always get flustered when I think about the world's countries (Eastern Europe and Central Africa especially), so this will be a great tool to help me practice.
+Personally, I always get flustered when I think about the world's countries (Eastern Europe and Central Africa especially) and what's where in the U.S. east of Arizona, so this will be a great tool to help me practice.
 
-This will first take shape as a simple command-line interface, but will hopefully end up a web application (maybe using Google Maps in some fun way).
+This will first take shape as a simple command-line interface, but will hopefully end up a web application (maybe using Google Maps in some fun way). One reason I've kept the Python code simple is the expectation that I'll be porting it over to Javascript sooner or later.
 
 To get up and going with the project in its current state, open your command prompt and run -
 
