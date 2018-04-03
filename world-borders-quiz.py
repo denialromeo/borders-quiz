@@ -52,12 +52,12 @@ def question(country, difficulty):
         possible_wrong_answers = random.sample(possible_wrong_answers, 3)
 
     if difficulty == 'easy':
-        answer = random.sample(countries_x_or_more_countries_away(country, 4), 1)
+        answer = random.choice(countries_x_or_more_countries_away(country, 4))
     if difficulty == 'hard':
-        answer = random.sample(countries_x_to_y_countries_away(country, 2, 2), 1)
+        answer = random.choice(countries_x_to_y_countries_away(country, 2, 2))
 
-    choices = possible_wrong_answers + answer
-    choices = random.sample(choices, len(choices))
+    choices = possible_wrong_answers + [answer]
+    random.shuffle(choices)
 
     for idx, choice in enumerate(choices):
         s += '\t{0}. {1}\n'.format(chr(idx + 65), choice)
