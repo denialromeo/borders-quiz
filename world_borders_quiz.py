@@ -46,10 +46,13 @@ def question(country, difficulty):
 
     return s
 
-if __name__ == '__main__':
+def load_data():
     with open('borders.json') as data_file:
         data = json.load(data_file)
-        country_neighbors_dict = data['land']
+        return data['land']
+
+if __name__ == '__main__':
+        country_neighbors_dict = load_data()
         while True:
             print(question(random.choice(list(country_neighbors_dict)), 'hard'))
             print('Hit "Enter" for new question. Enter Ctrl + Z to exit.', end='')
