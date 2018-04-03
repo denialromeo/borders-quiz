@@ -17,7 +17,7 @@ The idea is to have difficulty levels based on graph distance. The above questio
 
     * A. Pakistan
     * B. Turkey
-    * C. Brazil
+    * C. Germany
     * D. Iraq
 
 For variety, there'll also be "Which of these countries borders" questions and some questions with multiple correct answers. Optionally, the player can also include island countries and their maritime borders.
@@ -34,7 +34,7 @@ cd world-borders-quiz
 python world-borders-quiz.py
 ```
 
-If you're on Windows and don't have Git and Python installed, get up and going with Scoop -
+If you're on Windows and don't have Git and Python installed, get up and going with [Scoop](http://scoop.sh) -
 
 ```
 powershell Set-ExecutionPolicy RemoteSigned -scope CurrentUser
