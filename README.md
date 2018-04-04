@@ -20,8 +20,6 @@ The idea is to have difficulty levels based on graph distance. The above questio
     * C. Germany
     * D. Iraq
 
-For variety, there'll also be "Which of these countries borders" questions and some questions with multiple correct answers. Optionally, the player can try their luck with U.S. states.
-
 Personally, I always get flustered when I think about the world's countries (Eastern Europe and Central Africa especially) and what's where in the U.S. east of Arizona, so this will be a great tool to help me practice.
 
 This will first take shape as a simple command-line interface, but will hopefully end up a web application (maybe using Google Maps in some fun way).

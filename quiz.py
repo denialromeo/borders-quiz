@@ -1,4 +1,4 @@
-import argparse, json, random, sys
+import argparse, collections, json, random, sys
 
 def get_args(argv):
     parser = argparse.ArgumentParser(description='A fun quiz!')
@@ -8,7 +8,6 @@ def get_args(argv):
 
 def state_neighbors_dict():
     args = get_args(sys.argv[1:])
-    mode = 'states' if args.states else 'countries'
     with open('borders.json') as data_file:
         data = json.load(data_file)
         if args.states and args.countries:
@@ -25,9 +24,9 @@ def random_state(state_neighbors_dict=state_neighbors_dict()):
 # bfs stands for "breadth-first search". Google this if unfamiliar.
 def bfs(state, state_neighbors_dict=state_neighbors_dict()):
     state_distance_dict = {state: 0}
-    bfs_queue = [state]
-    while bfs_queue != []:
-        v = bfs_queue.pop(0)
+    bfs_queue = collections.deque([state])
+    while bfs_queue:
+        v = bfs_queue.popleft()
         for neighbor in state_neighbors_dict[v]:
             if neighbor not in state_distance_dict:
                 state_distance_dict[neighbor] = state_distance_dict[v] + 1
