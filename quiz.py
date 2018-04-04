@@ -11,10 +11,16 @@ def state_neighbors_dict():
     mode = 'states' if args.states else 'countries'
     with open('borders.json') as data_file:
         data = json.load(data_file)
-        return data[mode]
+        if args.states and args.countries:
+            borders = { **data['countries'], **data['states'] }
+        elif args.states:
+            borders = data['states']
+        else:
+            borders=data['countries']
+        return borders
 
 def random_state(state_neighbors_dict=state_neighbors_dict()):
-	return random.choice(list(state_neighbors_dict))
+    return random.choice(list(state_neighbors_dict))
 
 # bfs stands for "breadth-first search". Google this if unfamiliar.
 def bfs(state, state_neighbors_dict=state_neighbors_dict()):
@@ -39,7 +45,6 @@ def bfs(state, state_neighbors_dict=state_neighbors_dict()):
     return state_distance_dict
 
 def question(state, difficulty, state_neighbors_dict=state_neighbors_dict()):
-    s = "\nWhich of these does not border {0}?\n\n".format(state)
 
     possible_wrong_answers = state_neighbors_dict[state]
     if (len(possible_wrong_answers) > 3):
@@ -52,8 +57,11 @@ def question(state, difficulty, state_neighbors_dict=state_neighbors_dict()):
     if difficulty == 'hard':
         answer = random.choice(list(filter(lambda c: distances[c] == 2, distances)))
 
-    choices = possible_wrong_answers + [answer]
+    # Trailing spaces are stripped because Georgia the country is "Georgia" while Georgia the state is "Georgia ".
+    choices = [choice.strip() for choice in possible_wrong_answers + [answer]]
     random.shuffle(choices)
+
+    s = "\nWhich of these does not border {0}?\n\n".format(state.strip())
 
     for idx, choice in enumerate(choices):
         s += '\t{0}. {1}\n'.format(chr(idx + 65), choice)
