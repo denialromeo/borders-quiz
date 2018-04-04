@@ -1,9 +1,17 @@
-import json, random
+import argparse, json, random, sys
+
+def get_args(argv):
+    parser = argparse.ArgumentParser(description='A fun quiz!')
+    parser.add_argument("--states", help="Try your luck with U.S. states!", action="store_true")
+    parser.add_argument("--countries", help="The nations of the world!", action="store_true")
+    return parser.parse_args(argv)
 
 def state_neighbors_dict():
+    args = get_args(sys.argv[1:])
+    mode = 'states' if args.states else 'countries'
     with open('borders.json') as data_file:
         data = json.load(data_file)
-        return data['states']
+        return data[mode]
 
 def random_state(state_neighbors_dict=state_neighbors_dict()):
 	return random.choice(list(state_neighbors_dict))
@@ -19,9 +27,9 @@ def bfs(state, state_neighbors_dict=state_neighbors_dict()):
                 state_distance_dict[neighbor] = state_distance_dict[v] + 1
                 # China and Russia make the "graph distance" difficulty mechanic a little pointless.
                 # If India and Poland are just three countries apart (India → China → Russia → Poland),
-                # a "Hard" question asking if they border each other is a bit too easy.
+                # a "hard" question asking if they border each other is a bit too easy.
                 #
-                # So China and Russia are removed from graph searches except when started from countries which 
+                # So China and Russia are removed from graph searches except when started from countries which
                 # exclusively border China and/or Russia.
                 keep_china_russia = ['Finland', 'Sweden', 'Norway', 'Mongolia', 'North Korea', 'South Korea']
                 if neighbor in ['China', 'Russia'] and state not in keep_china_russia:
