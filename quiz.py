@@ -45,17 +45,18 @@ def bfs(state, state_neighbors_dict=state_neighbors_dict()):
 
 def question(state, difficulty, state_neighbors_dict=state_neighbors_dict()):
 
-    distances = bfs(state, state_neighbors_dict)
-
     # Trailing spaces are stripped because Georgia the country is "Georgia" while Georgia the state is "Georgia ".
     possible_wrong_answers = state_neighbors_dict[state]
     if (len(possible_wrong_answers) > 3):
-        possible_wrong_answers = [wrong_answer.strip() for wrong_answer in random.sample(possible_wrong_answers, 3)]
+        possible_wrong_answers = [w.strip() for w in random.sample(possible_wrong_answers, 3)]
 
+    state_distance_dict = bfs(state, state_neighbors_dict)
+    possible_answers = None
     if difficulty == 'easy':
-        answer = random.choice(list(filter(lambda c: distances[c] >= 4, distances))).strip()
+    	possible_answers = [state for state in state_distance_dict if state_distance_dict[state] >= 4]
     if difficulty == 'hard':
-        answer = random.choice(list(filter(lambda c: distances[c] == 2, distances))).strip()
+    	possible_answers = [state for state in state_distance_dict if state_distance_dict[state] == 2]
+    answer = random.choice(possible_answers).strip()
 
     choices = possible_wrong_answers + [answer]
     random.shuffle(choices)
