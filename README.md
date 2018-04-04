@@ -24,7 +24,7 @@ For variety, there'll also be "Which of these countries borders" questions and s
 
 Personally, I always get flustered when I think about the world's countries (Eastern Europe and Central Africa especially) and what's where in the U.S. east of Arizona, so this will be a great tool to help me practice.
 
-This will first take shape as a simple command-line interface, but will hopefully end up a web application (maybe using Google Maps in some fun way). One reason I've kept the Python code simple is the expectation that I'll be porting it over to Javascript sooner or later.
+This will first take shape as a simple command-line interface, but will hopefully end up a web application (maybe using Google Maps in some fun way).
 
 To get up and going with the project in its current state, open your command prompt and run -
 
