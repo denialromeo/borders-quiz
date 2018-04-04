@@ -31,7 +31,7 @@ To get up and going with the project in its current state, open your command pro
 ```
 git clone https://github.com/danielm00re/borders-quiz.git
 cd borders-quiz
-python borders-quiz.py
+python quiz.py
 ```
 
 If you're on Windows and don't have Git and Python installed, get up and going with [Scoop](http://scoop.sh) -
@@ -42,7 +42,7 @@ powershell iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
 scoop install git python
 git clone https://github.com/danielm00re/borders-quiz.git
 cd borders-quiz
-python borders-quiz.py
+python quiz.py
 ```
 
 Some notes on [borders.json](/borders.json) -
