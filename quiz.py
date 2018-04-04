@@ -1,15 +1,15 @@
 import argparse, collections, json, random, sys
 
-def get_args(argv):
+def get_args():
     parser = argparse.ArgumentParser(description='A fun quiz!')
     parser.add_argument("--states", help="Try your luck with U.S. states!", action="store_true")
     parser.add_argument("--countries", help="The nations of the world!", action="store_true")
-    return parser.parse_args(argv)
+    return parser.parse_args(sys.argv[1:])
 
 def state_neighbors_dict():
-    args = get_args(sys.argv[1:])
     with open('borders.json') as data_file:
         data = json.load(data_file)
+        args = get_args()
         if args.states and args.countries:
             borders = { **data['countries'], **data['states'] }
         elif args.states:
@@ -45,19 +45,19 @@ def bfs(state, state_neighbors_dict=state_neighbors_dict()):
 
 def question(state, difficulty, state_neighbors_dict=state_neighbors_dict()):
 
-    possible_wrong_answers = state_neighbors_dict[state]
-    if (len(possible_wrong_answers) > 3):
-        possible_wrong_answers = random.sample(possible_wrong_answers, 3)
-
     distances = bfs(state, state_neighbors_dict)
 
-    if difficulty == 'easy':
-        answer = random.choice(list(filter(lambda c: distances[c] >= 4, distances)))
-    if difficulty == 'hard':
-        answer = random.choice(list(filter(lambda c: distances[c] == 2, distances)))
-
     # Trailing spaces are stripped because Georgia the country is "Georgia" while Georgia the state is "Georgia ".
-    choices = [choice.strip() for choice in possible_wrong_answers + [answer]]
+    possible_wrong_answers = state_neighbors_dict[state]
+    if (len(possible_wrong_answers) > 3):
+        possible_wrong_answers = [wrong_answer.strip() for wrong_answer in random.sample(possible_wrong_answers, 3)]
+
+    if difficulty == 'easy':
+        answer = random.choice(list(filter(lambda c: distances[c] >= 4, distances))).strip()
+    if difficulty == 'hard':
+        answer = random.choice(list(filter(lambda c: distances[c] == 2, distances))).strip()
+
+    choices = possible_wrong_answers + [answer]
     random.shuffle(choices)
 
     s = "\nWhich of these does not border {0}?\n\n".format(state.strip())
