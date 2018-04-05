@@ -47,8 +47,12 @@ def question(state, difficulty, state_neighbors_dict=state_neighbors_dict()):
 
     # Trailing spaces are stripped because Georgia the country is "Georgia" while Georgia the state is "Georgia ".
     possible_wrong_answers = state_neighbors_dict[state]
-    if (len(possible_wrong_answers) > 3):
-        possible_wrong_answers = [w.strip() for w in random.sample(possible_wrong_answers, 3)]
+    num_wrong_answers = 3
+    if (len(possible_wrong_answers) > num_wrong_answers):
+        wrong_answers = [w.strip() for w in random.sample(possible_wrong_answers, num_wrong_answers)]
+    else:
+    	wrong_answers = possible_wrong_answers
+    unchosen_wrong_answers = [w.strip() for w in possible_wrong_answers if w not in wrong_answers]
 
     state_distance_dict = bfs(state, state_neighbors_dict)
     possible_answers = None
@@ -58,7 +62,7 @@ def question(state, difficulty, state_neighbors_dict=state_neighbors_dict()):
     	possible_answers = [state for state in state_distance_dict if state_distance_dict[state] == 2]
     answer = random.choice(possible_answers).strip()
 
-    choices = possible_wrong_answers + [answer]
+    choices = wrong_answers + [answer]
     random.shuffle(choices)
 
     s = "\nWhich of these does not border {0}?\n\n".format(state.strip())
@@ -67,6 +71,7 @@ def question(state, difficulty, state_neighbors_dict=state_neighbors_dict()):
         s += '\t{0}. {1}\n'.format(chr(idx + 65), choice)
 
     s += '\nThe answer is {0}. {1}\n'.format(chr(choices.index(answer) + 65), answer)
+    s += '\n{0} also borders {1}\n'.format(state.strip(), unchosen_wrong_answers)
 
     return s
 
