@@ -1,4 +1,4 @@
-import argparse, collections, json, random, os, sys
+import argparse, collections, json, random, re, subprocess, sys
 
 def get_args():
     parser = argparse.ArgumentParser(description='A fun quiz!')
@@ -7,8 +7,8 @@ def get_args():
     return parser.parse_args(sys.argv[1:])
 
 def open_google_maps(state):
-    l = 'https://www.google.com/maps/search/{0}'.format(state)
-    os.system("powershell start-process " + l)
+    l = '+'.join("https://www.google.com/maps/search/{0}".format(state).split(' ')).replace("'","")
+    subprocess.run(['powershell', 'start-process', l])
 
 def state_neighbors_dict():
     with open('borders.json') as data_file:
@@ -87,5 +87,5 @@ if __name__ == '__main__':
         i = input('Hit "Enter" for new question. Enter "m" to see {0} on Google Maps. "e" to exit.'.format(state.strip()))
         if i == 'm':
             open_google_maps(state)
-        if i == 'e':
-            sys.exit()
+        elif i == 'e':
+        	break
