@@ -1,10 +1,14 @@
-import argparse, collections, json, random, sys
+import argparse, collections, json, random, os, sys
 
 def get_args():
     parser = argparse.ArgumentParser(description='A fun quiz!')
     parser.add_argument("--states", help="Try your luck with U.S. states!", action="store_true")
     parser.add_argument("--countries", help="The nations of the world!", action="store_true")
     return parser.parse_args(sys.argv[1:])
+
+def open_google_maps(state):
+    l = 'https://www.google.com/maps/search/{0}'.format(state)
+    os.system("powershell start-process " + l)
 
 def state_neighbors_dict():
     with open('borders.json') as data_file:
@@ -51,15 +55,15 @@ def question(state, difficulty, state_neighbors_dict=state_neighbors_dict()):
     if (len(possible_wrong_answers) > num_wrong_answers):
         wrong_answers = [w.strip() for w in random.sample(possible_wrong_answers, num_wrong_answers)]
     else:
-    	wrong_answers = possible_wrong_answers
+        wrong_answers = possible_wrong_answers
     unchosen_wrong_answers = [w.strip() for w in possible_wrong_answers if w not in wrong_answers]
 
     state_distance_dict = bfs(state, state_neighbors_dict)
     possible_answers = None
     if difficulty == 'easy':
-    	possible_answers = [state for state in state_distance_dict if state_distance_dict[state] >= 4]
+        possible_answers = [state for state in state_distance_dict if state_distance_dict[state] >= 4]
     if difficulty == 'hard':
-    	possible_answers = [state for state in state_distance_dict if state_distance_dict[state] == 2]
+        possible_answers = [state for state in state_distance_dict if state_distance_dict[state] == 2]
     answer = random.choice(possible_answers).strip()
 
     choices = wrong_answers + [answer]
@@ -71,12 +75,17 @@ def question(state, difficulty, state_neighbors_dict=state_neighbors_dict()):
         s += '\t{0}. {1}\n'.format(chr(idx + 65), choice)
 
     s += '\nThe answer is {0}. {1}\n'.format(chr(choices.index(answer) + 65), answer)
+
     s += '\n{0} also borders {1}\n'.format(state.strip(), unchosen_wrong_answers)
 
     return s
 
 if __name__ == '__main__':
     while True:
-        print(question(random_state(), 'hard'))
-        print('Hit "Enter" for new question. Enter Ctrl + Z to exit.', end='')
-        input()
+        state = random_state()
+        print(question(state, 'hard'))
+        i = input('Hit "Enter" for new question. Enter "m" to see {0} on Google Maps. "e" to exit.'.format(state.strip()))
+        if i == 'm':
+            open_google_maps(state)
+        if i == 'e':
+            sys.exit()
