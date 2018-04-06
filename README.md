@@ -22,7 +22,7 @@ The idea is to have difficulty levels based on graph distance. The above questio
 
 Personally, I always get flustered when I think about the world's countries (Eastern Europe and Central Africa especially) and what's where in the U.S. east of Arizona, so this will be a great tool to help me practice.
 
-This will first take shape as a simple command-line prototype, but will hopefully end up a web application (maybe using Google Maps in some fun way).
+This will first take shape as a simple command-line prototype, but will hopefully end up a web application.
 
 To get up and going with the project in its current state, open your command prompt and run -
 
@@ -31,23 +31,19 @@ git clone https://github.com/danielm00re/borders-quiz.git
 cd borders-quiz
 python quiz.py --help
 python quiz.py --countries --states
+python quiz.py --countries --states --restrict-to "India,United States,Cote d'Ivoire,California"
 ```
 
-If you're on Windows and don't have Git and Python installed, get up and going with [Scoop](http://scoop.sh) -
+If you're on Windows and don't have Git and Python installed, quickly install them through [Scoop](http://scoop.sh) -
 
 ```
 powershell Set-ExecutionPolicy RemoteSigned -scope CurrentUser
 powershell iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
 scoop install git python
-git clone https://github.com/danielm00re/borders-quiz.git
-cd borders-quiz
-python quiz.py --help
-python quiz.py --countries --states
 ```
 
 Some notes on [borders.json](/borders.json) -
 
 * Countries taken from [U.S. Dept. of State](https://www.state.gov/misc/list/index.htm). Omitted Hong Kong and Macau, Timor-Leste used as name for East Timor.
 * Borders transcribed from [Wikipedia](https://en.wikipedia.org/wiki/List_of_countries_and_territories_by_land_and_maritime_borders).
-* Malaysia is listed twice. Once as a "land" country that only borders Thailand, another time as an "island" that also borders Indonesia and Brunei.
-* Georgia is both a country and a U.S. state. To deal with this, Georgia the state is listed as "Georgia " while Georgia the country is "Georgia". Trailing spaces are stripped in the code.
+* Whenever there's a chance two territories with the same name will be in the same quiz (e.g. the two Georgias, Mexico as bordering Arizona, Mexico as bordering Belize), one is listed with a trailing space (e.g. "Georgia " vs. "Georgia") so borders-quiz can distinguish between them. Trailing spaces are stripped when presented to the user.
