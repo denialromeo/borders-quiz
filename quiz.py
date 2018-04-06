@@ -27,9 +27,6 @@ def random_state(state_neighbors_dict=state_neighbors_dict()):
     return random.choice(list(state_neighbors_dict))
 
 def exclude_neighbor_from_search(state, neighbor):
-    # When Canada and Mexico are visited from a U.S. state search, we want to exclude them.
-    if neighbor in ['Canada ', 'Mexico ']:
-        return True
     # China and Russia make the "graph distance" difficulty mechanic a little pointless.
     # If India and Poland are just three countries apart (India → China → Russia → Poland),
     # a "hard" question asking if they border each other is a bit too easy.
@@ -37,8 +34,7 @@ def exclude_neighbor_from_search(state, neighbor):
     # So China and Russia are removed from graph searches except when started from countries which
     # exclusively border China and/or Russia.
     keep_china_russia = ['Finland', 'Sweden', 'Norway', 'Mongolia', 'North Korea', 'South Korea']
-    if neighbor in ['China', 'Russia'] and state not in keep_china_russia:
-        return True
+    return neighbor in ['China', 'Russia'] and state not in keep_china_russia
 
 # bfs stands for "breadth-first search". Google this if unfamiliar.
 def bfs(state, state_neighbors_dict=state_neighbors_dict()):
