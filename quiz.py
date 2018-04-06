@@ -8,7 +8,7 @@ def get_args():
     return parser.parse_args(sys.argv[1:])
 
 def open_google_maps(state):
-    l = '+'.join("https://www.google.com/maps/search/{0}".format(state).split(' ')).replace("'","")
+    l = '+'.join("https://www.google.com/maps/search/{0}".format(state).strip().split(' ')).replace("'","")
     subprocess.run(['powershell', 'start-process', l])
 
 def state_neighbors_dict():
