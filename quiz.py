@@ -16,14 +16,13 @@ def state_neighbors_dict():
         data = json.load(data_file)
         args = get_args()
         if args.countries and args.states:
-            borders = { **data['countries'], **data['states'] }
+            return { **data['countries'], **data['states'] }
         elif args.states:
-            borders = data['states']
+            return data['states']
         elif args.countries:
-            borders=data['countries']
+            return data['countries']
         else: # Default behavior
-            borders = { **data['countries'], **data['states'] }
-        return borders
+            return { **data['countries'], **data['states'] }
 
 def random_state(state_neighbors_dict=state_neighbors_dict()):
     return random.choice(list(state_neighbors_dict))
