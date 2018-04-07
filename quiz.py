@@ -19,8 +19,10 @@ def state_neighbors_dict():
             borders = { **data['countries'], **data['states'] }
         elif args.states:
             borders = data['states']
-        else:
+        elif args.countries:
             borders=data['countries']
+        else: # Default behavior
+            borders = { **data['countries'], **data['states'] }
         return borders
 
 def random_state(state_neighbors_dict=state_neighbors_dict()):
