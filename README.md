@@ -30,7 +30,6 @@ To get up and going with the project in its current state, open your command pro
 git clone https://github.com/danielm00re/borders-quiz.git
 cd borders-quiz
 python quiz.py --help
-python quiz.py --countries --states
 python quiz.py --countries --states --restrict-to "India,United States,Cote d'Ivoire,California"
 ```
 
