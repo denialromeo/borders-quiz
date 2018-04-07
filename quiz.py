@@ -2,9 +2,9 @@ import argparse, collections, json, random, re, subprocess, sys
 
 def get_args():
     parser = argparse.ArgumentParser(description='A fun quiz!')
-    parser.add_argument("--states", help="Try your luck with U.S. states!", action="store_true")
-    parser.add_argument("--countries", help="The nations of the world!", action="store_true")
-    parser.add_argument("--restrict-to", help="Pass in territories to ask questions for as comma-delimited string.")
+    parser.add_argument('--states', help='Try your luck with U.S. states!', action='store_true')
+    parser.add_argument('--countries', help='The nations of the world!', action='store_true')
+    parser.add_argument('--restrict-to', help='Pass in territories to ask questions for as comma-delimited string.')
     return parser.parse_args(sys.argv[1:])
 
 def open_google_maps(state):
@@ -15,12 +15,12 @@ def state_neighbors_dict():
     with open('borders.json') as data_file:
         data = json.load(data_file)
         args = get_args()
-        if args.states and args.countries:
-            borders = { **data['countries'], **data['states'] }
+        if args.countries:
+            borders=data['countries']
         elif args.states:
             borders = data['states']
         else:
-            borders=data['countries']
+            borders = { **data['countries'], **data['states'] }
         return borders
 
 def random_state(state_neighbors_dict=state_neighbors_dict()):
@@ -73,7 +73,7 @@ def question(state, difficulty, state_neighbors_dict=state_neighbors_dict()):
     choices = wrong_answers + [answer]
     random.shuffle(choices)
 
-    s = "\nWhich of these does not border {0}?\n\n".format(state.strip())
+    s = '\nWhich of these does not border {0}?\n\n'.format(state.strip())
 
     for idx, choice in enumerate(choices):
         s += '\t{0}. {1}\n'.format(chr(idx + 65), choice)
@@ -87,10 +87,7 @@ def question(state, difficulty, state_neighbors_dict=state_neighbors_dict()):
 if __name__ == '__main__':
     args = get_args()
     while True:
-        if args and args.restrict_to:
-            state = random.choice(args.restrict_to.split(","))
-        else:
-            state = random_state()
+        state = random_state() if not args.restrict_to else random.choice(args.restrict_to.split(','))
         print(question(state, 'hard'))
         i = input('Hit "Enter" for new question. Enter "m" to see {0} on Google Maps. "q" to quit.'.format(state.strip()))
         if i == 'm':
