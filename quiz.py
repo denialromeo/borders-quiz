@@ -52,13 +52,13 @@ def bfs(state, state_neighbors_dict=state_neighbors_dict()):
 def question(state, difficulty, state_neighbors_dict=state_neighbors_dict()):
 
     # Trailing spaces are stripped because Georgia the country is "Georgia" while Georgia the state is "Georgia ".
-    possible_wrong_answers = state_neighbors_dict[state]
+    possible_wrong_answers = [w.strip() for w in state_neighbors_dict[state]]
     num_wrong_answers = 3
     if (len(possible_wrong_answers) > num_wrong_answers):
-        wrong_answers = [w.strip() for w in random.sample(possible_wrong_answers, num_wrong_answers)]
+        wrong_answers = [w for w in random.sample(possible_wrong_answers, num_wrong_answers)]
     else:
         wrong_answers = possible_wrong_answers
-    unchosen_wrong_answers = [w.strip() for w in possible_wrong_answers if w not in wrong_answers]
+    unchosen_wrong_answers = [w for w in possible_wrong_answers if w not in wrong_answers]
 
     state_distance_dict = bfs(state, state_neighbors_dict)
     possible_answers = None
