@@ -84,7 +84,7 @@ def question(territory, difficulty, territory_neighbors_dict=territory_neighbors
 
     s += '\nThe answer is {0}. {1}\n'.format(chr(choices.index(answer) + 65), answer)
 
-    s += '\n{0} also borders {1}\n'.format(territory.strip(), unchosen_wrong_answers)
+    s += '\n{0} also borders {1}'.format(territory.strip(), unchosen_wrong_answers)
 
     return s
 
@@ -93,8 +93,17 @@ if __name__ == '__main__':
     while True:
         territory = random_territory() if not args.restrict_to else random.choice(args.restrict_to.split(','))
         print(question(territory, 'hard'))
-        i = input('Hit "Enter" for new question. Enter "m" to see {} on Google Maps. "q" to quit.'.format(territory.strip()))
-        if i == 'm':
-            open_google_maps(territory)
-        elif i == 'q':
+        quit = False
+        while True:
+            i = input('\nEnter n for next question, m to see {} on Google Maps, q to quit. '.format(territory.strip())).strip()
+            if i == 'm':
+                open_google_maps(territory)
+            elif i == 'n':
+                break
+            elif i == 'q':
+                quit = True
+                break
+            else:
+                continue
+        if quit:
             break
