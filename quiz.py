@@ -27,7 +27,7 @@ def territory_neighbors_dict():
 def random_territory(territory_neighbors_dict=territory_neighbors_dict()):
     return random.choice(list(territory_neighbors_dict))
 
-def exclude_neighbor_from_search(territory, neighbor):
+def should_exclude_neighbor_from_search(territory, neighbor):
     # China and Russia make the "graph distance" difficulty mechanic a little pointless.
     # If India and Poland are just three countries apart (India → China → Russia → Poland),
     # a "hard" question asking if they border each other is a bit too easy.
@@ -37,6 +37,10 @@ def exclude_neighbor_from_search(territory, neighbor):
     if neighbor in ['China', 'Russia']:
         keep_china_russia = ['Finland', 'Sweden', 'Norway', 'Mongolia', 'North Korea', 'South Korea']
         return territory not in keep_china_russia
+    # Likewise for Canada and Mexico when called from a U.S. state. Washington and Maine both border Canada,
+    # but are on opposite sides of the country.
+    if neighbor in ['Canada ', 'Mexico ']:
+        return True
 
 # bfs stands for "breadth-first search". Google this if unfamiliar.
 def bfs(territory, territory_neighbors_dict=territory_neighbors_dict()):
@@ -47,7 +51,7 @@ def bfs(territory, territory_neighbors_dict=territory_neighbors_dict()):
         for neighbor in territory_neighbors_dict[v]:
             if neighbor not in territory_distance_dict:
                 territory_distance_dict[neighbor] = territory_distance_dict[v] + 1
-                if not exclude_neighbor_from_search(territory, neighbor):
+                if not should_exclude_neighbor_from_search(territory, neighbor):
                     bfs_queue.append(neighbor)
     return territory_distance_dict
 
