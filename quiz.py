@@ -42,7 +42,8 @@ def should_exclude_neighbor_from_search(territory, neighbor):
     # exclusively border China and/or Russia.
     if neighbor in ['China', 'Russia']:
         keep_china_russia = ['Finland', 'Sweden', 'Norway', 'Mongolia', 'North Korea', 'South Korea']
-        return territory not in keep_china_russia
+        if territory not in keep_china_russia:
+            return True
     # Likewise for Canada and Mexico when called from a U.S. state. Washington and Maine both border Canada,
     # but are on opposite sides of the country.
     if neighbor in ['Canada ', 'Mexico ']:
