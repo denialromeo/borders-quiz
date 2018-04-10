@@ -98,7 +98,7 @@ if __name__ == '__main__':
             i = input('\nEnter n for next question, m to see {} on Google Maps, q to quit. '.format(territory.strip())).strip()
             if i == 'm':
                 open_google_maps(territory)
-            elif i == 'n':
+            elif i in ['', 'n']:
                 break
             elif i == 'q':
                 quit = True
