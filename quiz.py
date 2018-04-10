@@ -11,6 +11,12 @@ def open_google_maps(territory):
     l = '+'.join("https://www.google.com/maps/search/{0}".format(territory).strip().split(' ')).replace("'","")
     subprocess.run(['powershell', 'start-process', l])
 
+def is_complete_graph(vertex_neighbors_dict):
+    for v in vertex_neighbors_dict:
+        for n in vertex_neighbors_dict[v]:
+            if v not in vertex_neighbors_dict[n]:
+                print('{} is not in {}\'s neighbors!'.format(v, n))
+
 def territory_neighbors_dict():
     with open('borders.json') as data_file:
         data = json.load(data_file)
