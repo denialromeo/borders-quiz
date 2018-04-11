@@ -31,7 +31,7 @@ git clone https://github.com/danielm00re/borders-quiz.git
 cd borders-quiz
 python quiz.py --help
 python quiz.py --countries --states --restrict-to "India,United States,Cote d'Ivoire,California"
-python quiz.py --countries --states --restrict-to "Georgia ,Georgia"
+python quiz.py --countries --states --restrict-to "Mexico ,Mexico"
 ```
 
 If you're on Windows and don't have Git and Python installed, quickly install them through [Scoop](http://scoop.sh) -

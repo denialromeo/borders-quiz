@@ -63,20 +63,20 @@ def bfs(territory, territory_neighbors_dict=territory_neighbors_dict()):
     return territory_distance_dict
 
 def question(territory, difficulty, territory_neighbors_dict=territory_neighbors_dict()):
-    bordering_territories = [w.strip() for w in territory_neighbors_dict[territory]]
+    bordering_territories = territory_neighbors_dict[territory]
     num_wrong_answers = 3
     if (len(bordering_territories) <= num_wrong_answers):
         wrong_answers = bordering_territories
     else:
         wrong_answers = random.sample(bordering_territories, num_wrong_answers)
-    unchosen_wrong_answers = sorted(list(set(bordering_territories) - set(wrong_answers)))
+    unchosen_wrong_answers = set(bordering_territories) - set(wrong_answers)
 
     territory_distance_dict = bfs(territory, territory_neighbors_dict)
     if difficulty == 'easy':
         possible_answers = [t for t in territory_distance_dict if territory_distance_dict[t] >= 4]
     elif difficulty == 'hard':
         possible_answers = [t for t in territory_distance_dict if territory_distance_dict[t] == 2]
-    answer = random.choice(possible_answers).strip()
+    answer = random.choice(possible_answers)
 
     choices = wrong_answers + [answer]
     random.shuffle(choices)
@@ -84,11 +84,11 @@ def question(territory, difficulty, territory_neighbors_dict=territory_neighbors
     s = '\nWhich of these does not border {}?\n\n'.format(territory.strip())
 
     for idx, choice in enumerate(choices):
-        s += '\t{}. {}\n'.format(chr(idx + 65), choice) # 65 is ASCII for 'A'
+        s += '\t{}. {}\n'.format(chr(idx + 65), choice.strip()) # 65 is ASCII for 'A'
 
-    s += '\nThe answer is {}. {}\n'.format(chr(choices.index(answer) + 65), answer)
+    s += '\nThe answer is {}. {}\n'.format(chr(choices.index(answer) + 65), answer.strip())
 
-    s += '\n{} also borders {}'.format(territory.strip(), unchosen_wrong_answers)
+    s += '\n{} also borders {}'.format(territory.strip(), sorted(list(unchosen_wrong_answers)))
 
     return s
 
