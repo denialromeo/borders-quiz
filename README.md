@@ -1,6 +1,6 @@
 # Borders Quiz
 
-The goal of this project is to construct a fun little game that quizzes the player on his or her knowledge of the world's borders and U.S. state borders through randomly-generated multiple-choice questions.
+This is a fun little game that quizzes the player on his or her knowledge of the world's borders and U.S. state borders through randomly-generated multiple-choice questions.
 
 For example -
 
@@ -20,11 +20,11 @@ The idea is to have difficulty levels based on graph distance. The above questio
     * C. Germany
     * D. Iraq
 
-Personally, I always get flustered when I think about the world's countries (Eastern Europe and Central Africa especially) and what's where in the U.S. east of Arizona, so this will be a great tool to help me practice.
+I always get flustered when I think about the world's countries (Eastern Europe and Central Africa especially) and what's where in the U.S. east of Arizona, so this is a fun tool to help me practice.
 
-This will first take shape as a simple command-line prototype, but will hopefully end up a web application.
+This is presently a simple command-line prototype, but will hopefully end up a web application.
 
-To get up and going with the project in its current state, open your command prompt and run -
+To get up and going with the project, open your command prompt and run -
 
 ```
 git clone https://github.com/danielm00re/borders-quiz.git
