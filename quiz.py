@@ -63,22 +63,19 @@ def bfs(territory, territory_neighbors_dict=territory_neighbors_dict()):
     return territory_distance_dict
 
 def question(territory, difficulty, territory_neighbors_dict=territory_neighbors_dict()):
-    possible_wrong_answers = [w.strip() for w in territory_neighbors_dict[territory]]
+    bordering_territories = [w.strip() for w in territory_neighbors_dict[territory]]
     num_wrong_answers = 3
-    if (len(possible_wrong_answers) > num_wrong_answers):
-        wrong_answers = [w for w in random.sample(possible_wrong_answers, num_wrong_answers)]
+    if (len(bordering_territories) <= num_wrong_answers):
+        wrong_answers = bordering_territories
     else:
-        wrong_answers = possible_wrong_answers
-    unchosen_wrong_answers = [w for w in possible_wrong_answers if w not in wrong_answers]
+        wrong_answers = random.sample(bordering_territories, num_wrong_answers)
+    unchosen_wrong_answers = sorted(list(set(bordering_territories) - set(wrong_answers)))
 
     territory_distance_dict = bfs(territory, territory_neighbors_dict)
-    possible_answers = None
     if difficulty == 'easy':
-        possible_answers = [territory for territory in territory_distance_dict if territory_distance_dict[territory] >= 4]
-    if difficulty == 'hard':
-        possible_answers = [territory for territory in territory_distance_dict if territory_distance_dict[territory] == 2]
-    if not possible_answers:
-        possible_answers = list(territory_neighbors_dict)
+        possible_answers = [t for t in territory_distance_dict if territory_distance_dict[t] >= 4]
+    elif difficulty == 'hard':
+        possible_answers = [t for t in territory_distance_dict if territory_distance_dict[t] == 2]
     answer = random.choice(possible_answers).strip()
 
     choices = wrong_answers + [answer]
@@ -87,7 +84,7 @@ def question(territory, difficulty, territory_neighbors_dict=territory_neighbors
     s = '\nWhich of these does not border {}?\n\n'.format(territory.strip())
 
     for idx, choice in enumerate(choices):
-        s += '\t{}. {}\n'.format(chr(idx + 65), choice)
+        s += '\t{}. {}\n'.format(chr(idx + 65), choice) # 65 is ASCII for 'A'
 
     s += '\nThe answer is {}. {}\n'.format(chr(choices.index(answer) + 65), answer)
 
