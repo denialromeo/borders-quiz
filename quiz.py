@@ -8,7 +8,7 @@ def get_args():
     return parser.parse_args(sys.argv[1:])
 
 def open_google_maps(territory):
-    l = '+'.join("https://www.google.com/maps/search/{0}".format(territory).strip().split(' ')).replace("'","")
+    l = '+'.join("https://www.google.com/maps/search/{}".format(territory).strip().split(' ')).replace("'","")
     subprocess.run(['powershell', 'start-process', l])
 
 def is_complete_graph(vertex_neighbors_dict):
@@ -84,14 +84,14 @@ def question(territory, difficulty, territory_neighbors_dict=territory_neighbors
     choices = wrong_answers + [answer]
     random.shuffle(choices)
 
-    s = '\nWhich of these does not border {0}?\n\n'.format(territory.strip())
+    s = '\nWhich of these does not border {}?\n\n'.format(territory.strip())
 
     for idx, choice in enumerate(choices):
-        s += '\t{0}. {1}\n'.format(chr(idx + 65), choice)
+        s += '\t{}. {}\n'.format(chr(idx + 65), choice)
 
-    s += '\nThe answer is {0}. {1}\n'.format(chr(choices.index(answer) + 65), answer)
+    s += '\nThe answer is {}. {}\n'.format(chr(choices.index(answer) + 65), answer)
 
-    s += '\n{0} also borders {1}'.format(territory.strip(), unchosen_wrong_answers)
+    s += '\n{} also borders {}'.format(territory.strip(), unchosen_wrong_answers)
 
     return s
 
