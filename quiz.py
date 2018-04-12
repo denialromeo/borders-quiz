@@ -62,9 +62,40 @@ def bfs(territory, territory_neighbors_dict=territory_neighbors_dict()):
                     bfs_queue.append(neighbor)
     return territory_distance_dict
 
-def question(territory, difficulty, territory_neighbors_dict=territory_neighbors_dict()):
-    bordering_territories = territory_neighbors_dict[territory]
+def does_border_question(territory, difficulty='hard', territory_neighbors_dict=territory_neighbors_dict()):
     num_wrong_answers = 3
+    bordering_territories = territory_neighbors_dict[territory]
+    answer = random.choice(bordering_territories)
+    unchosen_right_answers = set(bordering_territories) - set([answer])
+
+    territory_distance_dict = bfs(territory, territory_neighbors_dict)
+    if difficulty == 'easy':
+        possible_wrong_answers = [t for t in territory_distance_dict if territory_distance_dict[t] >= 4]
+    elif difficulty == 'hard':
+        possible_wrong_answers = [t for t in territory_distance_dict if territory_distance_dict[t] == 2]
+
+    if (len(possible_wrong_answers) <= num_wrong_answers):
+        wrong_answers = possible_wrong_answers
+    else:
+        wrong_answers = random.sample(possible_wrong_answers, num_wrong_answers)
+
+    choices = wrong_answers + [answer]
+    random.shuffle(choices)
+
+    s = '\nWhich of these borders {}?\n\n'.format(territory.strip())
+
+    for idx, choice in enumerate(choices):
+        s += '\t{}. {}\n'.format(chr(idx + 65), choice.strip()) # 65 is ASCII for 'A'
+
+    s += '\nThe answer is {}. {}\n'.format(chr(choices.index(answer) + 65), answer.strip())
+
+    s += '\n{} also borders {}'.format(territory.strip(), sorted(list(unchosen_right_answers)))
+
+    return s
+
+def does_not_border_question(territory, difficulty='hard', territory_neighbors_dict=territory_neighbors_dict()):
+    num_wrong_answers = 3
+    bordering_territories = territory_neighbors_dict[territory]
     if (len(bordering_territories) <= num_wrong_answers):
         wrong_answers = bordering_territories
     else:
@@ -96,7 +127,7 @@ if __name__ == '__main__':
     args = get_args()
     while True:
         territory = random_territory() if not args.restrict_to else random.choice(args.restrict_to.split(','))
-        print(question(territory, 'hard'))
+        print(does_border_question(territory)) if random.random() > 0.5 else print(does_not_border_question(territory))
         quit = False
         while True:
             i = input('\nEnter n for next question, m to see {} on Google Maps, q to quit. '.format(territory.strip())).strip()
