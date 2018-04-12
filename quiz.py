@@ -74,10 +74,14 @@ def does_border_question(territory, difficulty='hard', territory_neighbors_dict=
     elif difficulty == 'hard':
         possible_wrong_answers = [t for t in territory_distance_dict if territory_distance_dict[t] == 2]
 
-    if (len(possible_wrong_answers) <= num_wrong_answers):
-        wrong_answers = possible_wrong_answers
+
+    if possible_wrong_answers:
+    	if (len(possible_wrong_answers) <= num_wrong_answers):
+        	wrong_answers = possible_wrong_answers
+    	else:
+        	wrong_answers = random.sample(possible_wrong_answers, num_wrong_answers)
     else:
-        wrong_answers = random.sample(possible_wrong_answers, num_wrong_answers)
+       	wrong_answers = [random_territory()]
 
     choices = wrong_answers + [answer]
     random.shuffle(choices)
@@ -107,7 +111,11 @@ def does_not_border_question(territory, difficulty='hard', territory_neighbors_d
         possible_answers = [t for t in territory_distance_dict if territory_distance_dict[t] >= 4]
     elif difficulty == 'hard':
         possible_answers = [t for t in territory_distance_dict if territory_distance_dict[t] == 2]
-    answer = random.choice(possible_answers)
+
+    if possible_answers:
+    	answer = random.choice(possible_answers)
+    else:
+    	answer = random_territory()
 
     choices = wrong_answers + [answer]
     random.shuffle(choices)
