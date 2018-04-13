@@ -4,6 +4,8 @@ def get_args():
     parser = argparse.ArgumentParser(description='A fun quiz!')
     parser.add_argument('--states', help='Try your luck with U.S. states!', action='store_true')
     parser.add_argument('--countries', help='The nations of the world!', action='store_true')
+    parser.add_argument('--does-not-border', help='Restrict questions to "Which of these does not border. . .?"', action='store_true')
+    parser.add_argument('--does-border', help='Restrict questions to "Which of these borders. . .?"', action='store_true')
     parser.add_argument('--restrict-to', help='Pass in territories to ask questions for as comma-delimited string.')
     return parser.parse_args(sys.argv[1:])
 
@@ -139,7 +141,15 @@ if __name__ == '__main__':
     args = get_args()
     while True:
         territory = random_territory() if not args.restrict_to else random.choice(args.restrict_to.split(','))
-        print(does_border_question(territory)) if random.random() > 0.5 else print(does_not_border_question(territory))
+        if args.does_not_border:
+        	print(does_not_border_question(territory))
+        elif args.does_border:
+        	print(does_border_question(territory))
+        else:
+        	if random.random() > 0.5:
+        		print(does_border_question(territory)) 
+        	else:
+        		print(does_not_border_question(territory))
         quit = False
         while True:
             i = input('\nEnter n for next question, m to see {} on Google Maps, q to quit. '.format(territory.strip())).strip()
