@@ -12,10 +12,13 @@ def open_google_maps(territory):
     subprocess.run(['powershell', 'start-process', l])
 
 def is_complete_graph(vertex_neighbors_dict):
+    complete = True
     for v in vertex_neighbors_dict:
         for n in vertex_neighbors_dict[v]:
             if v not in vertex_neighbors_dict[n]:
+                complete = False
                 print('{} is not in {}\'s neighbors!'.format(v, n))
+    return complete
 
 def territory_neighbors_dict():
     with open('borders.json') as data_file:
@@ -30,8 +33,9 @@ def territory_neighbors_dict():
         else: # Default behavior
             return { **data['countries'], **data['states'] }
 
-def random_territory(territory_neighbors_dict=territory_neighbors_dict()):
-    return random.choice(list(territory_neighbors_dict))
+def random_territory(territory_neighbors_dict=territory_neighbors_dict(), exclude=[]):
+    choices = list(set(territory_neighbors_dict) - set(exclude))
+    return random.choice(choices)
 
 def should_exclude_neighbor_from_search(territory, neighbor):
     # China and Russia make the "graph distance" difficulty mechanic a little pointless.
@@ -81,7 +85,7 @@ def does_border_question(territory, difficulty='hard', territory_neighbors_dict=
         else:
             wrong_answers = random.sample(possible_wrong_answers, num_wrong_answers)
     else:
-        wrong_answers = [random_territory()]
+        wrong_answers = [random_territory(exclude=[territory])]
 
     choices = wrong_answers + [answer]
     random.shuffle(choices)
@@ -115,7 +119,7 @@ def does_not_border_question(territory, difficulty='hard', territory_neighbors_d
     if possible_answers:
         answer = random.choice(possible_answers)
     else:
-        answer = random_territory()
+        answer = random_territory(exclude=[territory])
 
     choices = wrong_answers + [answer]
     random.shuffle(choices)
