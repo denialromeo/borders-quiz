@@ -22,6 +22,11 @@ def is_complete_graph(vertex_neighbors_dict):
                 print('{} is not in {}\'s neighbors!'.format(v, n))
     return complete
 
+def get_dict(key):
+    with open('borders.json') as data_file:
+        data = json.load(data_file)
+        return data[key]
+
 def territory_neighbors_dict():
     with open('borders.json') as data_file:
         data = json.load(data_file)
@@ -72,7 +77,7 @@ def does_border_question(territory, difficulty='hard', territory_neighbors_dict=
     num_wrong_answers = 3
     bordering_territories = territory_neighbors_dict[territory]
     answer = random.choice(bordering_territories)
-    unchosen_right_answers = set(bordering_territories) - set([answer])
+    other_bordering_territories = set(bordering_territories) - set([answer])
 
     territory_distance_dict = bfs(territory, territory_neighbors_dict)
     if difficulty == 'easy':
@@ -99,7 +104,7 @@ def does_border_question(territory, difficulty='hard', territory_neighbors_dict=
 
     s += '\nThe answer is {}. {}\n'.format(chr(choices.index(answer) + 65), answer.strip())
 
-    s += '\n{} also borders {}'.format(territory.strip(), sorted(list(unchosen_right_answers)))
+    s += '\n{} also borders {}'.format(territory.strip(), sorted(list(other_bordering_territories)))
 
     return s
 
@@ -110,7 +115,7 @@ def does_not_border_question(territory, difficulty='hard', territory_neighbors_d
         wrong_answers = bordering_territories
     else:
         wrong_answers = random.sample(bordering_territories, num_wrong_answers)
-    unchosen_wrong_answers = set(bordering_territories) - set(wrong_answers)
+    other_bordering_territories = set(bordering_territories) - set(wrong_answers)
 
     territory_distance_dict = bfs(territory, territory_neighbors_dict)
     if difficulty == 'easy':
@@ -133,7 +138,7 @@ def does_not_border_question(territory, difficulty='hard', territory_neighbors_d
 
     s += '\nThe answer is {}. {}\n'.format(chr(choices.index(answer) + 65), answer.strip())
 
-    s += '\n{} also borders {}'.format(territory.strip(), sorted(list(unchosen_wrong_answers)))
+    s += '\n{} also borders {}'.format(territory.strip(), sorted(list(other_bordering_territories)))
 
     return s
 
