@@ -4,42 +4,43 @@ This is a fun little game that quizzes the player on his or her knowledge of the
 
 For example -
 
-* Which of these does not border Belize?
+* Which of these does not border Iran?
 
-    * A. Mexico
-    * B. Guatemala
-    * C. Honduras
+    * A. Iraq
+    * B. Israel
+    * C. Pakistan
+    * D. Turkey
 
-(The answer is Honduras.)
+The idea is to have difficulty levels based on graph distance. The above question is relatively difficult, but this one is trivial -
+
+* Which of these does not border Iran?
+
+    * A. Pakistan
+    * B. Turkey
+    * C. Germany
+    * D. Iraq
 
 I always get flustered when I think about the world's countries (Eastern Europe and Central Africa especially) and what's where in the U.S. east of Arizona, so this is a fun tool to help me practice.
 
-To play with this, all you have to do is start `index.html` on a local server!
+This is presently a simple command-line prototype, but will hopefully end up a web application.
 
-Here's how to do this using Jekyll.
+To get up and going with the project, open your command prompt and run -
 
 ```
 git clone https://github.com/danielm00re/borders-quiz.git
 cd borders-quiz
-jekyll serve --port 4000
+python quiz.py --help
+python quiz.py --countries --states --restrict-to "India,United States,Cote d'Ivoire,California"
+python quiz.py --countries --states --restrict-to "Mexico ,Mexico"
 ```
 
-Now you can play the game at `http://localhost:4000`!
-
-To install Jekyll using [Scoop](http://scoop.sh) -
+If you're on Windows and don't have Git and Python installed, quickly install them through [Scoop](http://scoop.sh) -
 
 ```
 powershell Set-ExecutionPolicy RemoteSigned -scope CurrentUser
 powershell iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
-scoop install ruby
-exit
+scoop install git python
 ```
-
-```
-gem install jekyll
-```
-
-The game can also be played on my website [here](http://danielmoore.us/borders-quiz). The version of the game on my website will always be the most updated, though I'll try to update this repo as well if I make any major changes.
 
 Some notes on [borders.json](/borders.json) -
 
