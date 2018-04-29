@@ -26,7 +26,7 @@ jekyll serve --port 4000
 
 Now you can play the game at `http://localhost:4000`!
 
-To install Jekyll using [Scoop](http://scoop.sh) -
+To install Jekyll using [Scoop](http://scoop.sh) (I assume you're using Windows.) -
 
 ```
 powershell Set-ExecutionPolicy RemoteSigned -scope CurrentUser
