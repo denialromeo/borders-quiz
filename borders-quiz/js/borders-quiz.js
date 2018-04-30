@@ -19,6 +19,9 @@ function parse_url() {
     	if (fields.india_states) {
     		dict_names = dict_names.concat("india_states")
     	}
+        if (fields.canada_provinces) {
+            dict_names = dict_names.concat("canada_provinces")
+        }
     	return dict_names
     }
 }
@@ -191,7 +194,7 @@ function neighbors_to_sentence(territory) {
 function prepend_the(territory, start_of_sentence=false) {
     var the = start_of_sentence ? "The " : "the "
     function should_prepend_the() {
-        return ['United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo'].indexOf(territory) >= 0
+        return ['United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo'].indexOf(territory) >= 0
     }
     return (should_prepend_the() ? the : "")
 }
@@ -290,10 +293,14 @@ function embed_map(question_info) {
 
 function embed_question(question_info) {
     var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
-    question  = "<div style='padding-left:20%;padding-top:20%;font-size:20px;font-family:Helvetica'>"
+    question  = "<div style='padding-left:15%;padding-top:17%;font-size:20px;font-family:Helvetica'>"
+    question += "<table style='table-layout:fixed'>"
+    question += "<tr>"
     question += "<p>Which of these does not border "
     question += pretty_print(question_info.territory)
     question += "?</p>"
+    question += "<td style='height:100px'>"
+    question += "<div>"
     question += "<form>"
     for (i = 0; i < choices.length; i++) {
         var choice = choices[i]
@@ -310,7 +317,34 @@ function embed_question(question_info) {
         question += pretty_print(choice, true)
         question += "</label><br>"
     }
+    question += "</form>"
     question += "</div>"
+    question += "</td>"
+    question += "</tr>"
+    question += "</table>"
+    question += "</div>"
+    /*
+    question += "<div style='padding-top:20%;padding-left:25%;font-size:15px;font-family:Helvetica'>"
+    var options = ["World countries", "America&#39;s states", "India&#39;s states", "Canada&#39;s provinces"]
+    var option_names = ["countries", "america_states", "india_states", "canada_provinces"]
+    question += "<form>"
+    for (i = 0; i < options.length; i++) {
+        var choice = options[i]
+        question += "<input type='checkbox' id='"
+        question += choice
+        question += "' value='"
+        question += choice
+        question += "' name='"
+        question += pretty_print(option_names[i])
+        question += "'><label for='"
+        question += choice
+        question += "'>"
+        question += pretty_print(choice, true)
+        question += "</label>"
+    }
+    question += "</form>"
+    question += "</div>"
+    */
     embed(question)
 
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663

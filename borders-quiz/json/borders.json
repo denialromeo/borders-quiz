@@ -1,5 +1,19 @@
 {
     "canada_provinces": {
+        "Alaska ": ["British Columbia", "Yukon Territory"],
+        "Alberta": ["British Columbia", "Saskatchewan", "Northwest Territories", "United States (Continental)"],
+        "British Columbia": ["Alaska ", "Alberta", "United States (Continental)", "Northwest Territories", "Yukon Territory"],
+        "Manitoba": ["Northwest Territories", "Nunavut", "Ontario", "Saskatchewan", "United States (Continental)"],
+        "New Brunswick": ["Nova Scotia", "Quebec", "United States (Continental)"],
+        "Newfoundland and Labrador": ["Quebec"],
+        "Northwest Territories": ["Alberta", "British Columbia", "Manitoba", "Nunavut", "Saskatchewan", "Yukon Territory"],
+        "Nova Scotia": ["New Brunswick"],
+        "Nunavut": ["Manitoba", "Northwest Territories", "Saskatchewan"],
+        "Ontario": ["Manitoba", "Quebec", "United States (Continental)"],
+        "Quebec": ["Ontario", "New Brunswick", "Newfoundland and Labrador", "United States (Continental)"],
+        "Saskatchewan": ["Alberta", "Manitoba", "Northwest Territories", "Nunavut", "United States (Continental)"],
+        "United States (Continental)": ["British Columbia", "Alberta", "Saskatchewan", "Manitoba", "Ontario", "Quebec", "New Brunswick"],
+        "Yukon Territory": ["Alaska ", "British Columbia", "Northwest Territories"]
     },
 
     "india_states": {

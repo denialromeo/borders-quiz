@@ -43,7 +43,7 @@ The game can also be played on my website [here](http://danielmoore.us/borders-q
 
 You can be tested on different parts of the world by modifying the URL parameters.
 
-Try visiting `http://localhost:4000/#?india_states=true` and `http://localhost:4000/#?india_states=true&countries=true`.
+Try visiting `http://localhost:4000/#?india_states=true&countries=true` and `http://localhost:4000/#?india_states=true&canada_provinces=true&america_states=true`.
 
 Some notes on [borders.json](/borders.json) -
 
