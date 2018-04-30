@@ -3,13 +3,33 @@ var google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 var borders_json_path = "/borders-quiz/json/borders.json"
 var google_maps_zoom_levels_json_path = "/borders-quiz/json/google_maps_zoom_levels.json"
 
+function parse_url() {
+    var fields =  URI(window.location.href).fragment(true)
+    if ($.isEmptyObject(fields)) {
+    	return ['america_states', 'countries']
+    }
+    else {
+    	var dict_names = []
+    	if (fields.america_states) {
+    		dict_names = dict_names.concat("america_states")
+    	}
+    	if (fields.countries) {
+    		dict_names = dict_names.concat("countries")
+    	}
+    	if (fields.india_states) {
+    		dict_names = dict_names.concat("india_states")
+    	}
+    	return dict_names
+    }
+}
+
 function territories() {
     var json = {}
     $.ajax({ url: borders_json_path, async: false, success: function (r) { json = r } })
     var combined_keys = []
-    for (var dict in json) {
-        if (dict == 'india_states') { continue }
-        combined_keys = combined_keys.concat(Object.keys(json[dict]))
+    var dict_names = parse_url()
+    for (i = 0; i < dict_names.length; i++) {
+    	combined_keys = combined_keys.concat(Object.keys(json[dict_names[i]]))
     }
     return combined_keys
 }
@@ -23,7 +43,7 @@ function neighbors(territory) {
     		return json[dict][territory]
     	}
     }
-    return null
+    return []
 }
 
 function google_maps_zoom_level(territory) {
@@ -57,6 +77,9 @@ function shuffle(l) {
     return l
 }
 function sample(l, k) {
+    if (!l) {
+        return []
+    }
     for (var j=0; j < l.length; j++) {
         l.swap(j, random(l.length))
     }
@@ -131,32 +154,36 @@ function build_question(territory) {
         possible_answers = ['France', 'Netherlands', 'Belgium']
     }
     if (['Dominican Republic', 'Haiti'].indexOf(territory) >= 0) {
-        possible_answers = ['Guatemala', 'Belize']
+        possible_answers = ['Cuba', 'Jamaica']
     }
     // This is just to play with the user, since most countries bordering Russia obviously don't border Scandinavia.
     if (['Finland', 'Sweden', 'Norway'].indexOf(territory) >= 0) {
-        possible_answers = ['Denmark']
+        possible_answers = ['Denmark', 'Iceland']
     }
     var answer = choice(possible_answers)
     return {territory: territory, answer: answer, wrong_answers: wrong_answers, chosen:null}
 }
 
-function to_sentence(l) {
+function neighbors_to_sentence(territory) {
     var s = ""
-    if (l.length == 1) {
-        s += " only "
-        s += pretty_print(l[0])
+    var neighbors_ = neighbors(territory)
+    if (neighbors_.length == 0) {
+        return " nothing!"
     }
-    else if (l.length == 2) {
-        s += (pretty_print(l[0]) + " and " + pretty_print(l[1]))
+    if (neighbors_.length == 1) {
+        s += " only "
+        s += pretty_print(neighbors_[0])
+    }
+    else if (neighbors_.length == 2) {
+        s += (pretty_print(neighbors_[0]) + " and " + pretty_print(neighbors_[1]))
     }
     else {
-        for (i = 0; i < l.length - 1; i++) {
-            s += pretty_print(l[i])
+        for (i = 0; i < neighbors_.length - 1; i++) {
+            s += pretty_print(neighbors_[i])
             s += ", "
         }
         s += "and "
-        s += pretty_print(l[l.length - 1])
+        s += pretty_print(neighbors_[neighbors_.length - 1])
     }
     return (s + ".")
 }
@@ -190,6 +217,9 @@ function embed(src) {
 
 function embed_map(question_info) {
     var territory = ""
+    if (!question_info.chosen) {
+        question_info.chosen = question_info.territory
+    }
     question_info.chosen = question_info.chosen.replace(/'/g,'&#39;')
     if (question_info.chosen == question_info.answer) {
         territory = question_info.chosen
@@ -232,7 +262,7 @@ function embed_map(question_info) {
     content += "<p style='font-family:Helvetica'>"
     content += pretty_print(territory, true)
     content += " borders "
-    content += to_sentence(neighbors(territory))
+    content += neighbors_to_sentence(territory)
     content += "</p>"
     content += "<button name='next'></button>"
     content += "</center>"

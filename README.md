@@ -41,6 +41,10 @@ gem install jekyll
 
 The game can also be played on my website [here](http://danielmoore.us/borders-quiz). The version of the game on my website will always be the most updated, though I'll try to update this repo as well if I make any major changes.
 
+You can be tested on different parts of the world by modifying the URL parameters.
+
+Try visiting `http://localhost:4000/#?india_states=true` and `http://localhost:4000/#?india_states=true&countries=true`.
+
 Some notes on [borders.json](/borders.json) -
 
 * Countries taken from [U.S. Dept. of State](https://www.state.gov/misc/list/index.htm). Omitted Hong Kong and Macau, Timor-Leste used as name for East Timor.
