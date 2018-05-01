@@ -3,15 +3,17 @@ var google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 var borders_json_path = "/borders-quiz/json/borders.json"
 var google_maps_zoom_levels_json_path = "/borders-quiz/json/google_maps_zoom_levels.json"
 
+Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
+
 function parse_url() {
     var fields =  URI(window.location.href).fragment(true)
-    if ($.isEmptyObject(fields)) {
-    	return ['america_states', 'countries']
+    if ($.isEmptyObject(fields)) { // Default behavior.
+    	return ["countries"]
     }
     else {
     	var dict_names = []
-    	if (fields.america_states) {
-    		dict_names = dict_names.concat("america_states")
+    	if (fields.usa_states) {
+    		dict_names = dict_names.concat("usa_states")
     	}
     	if (fields.countries) {
     		dict_names = dict_names.concat("countries")
@@ -63,10 +65,20 @@ function geocode(address) {
 }
 
 function coordinates(address) {
+    if (address == 'China ') {
+        address = 'Nepal' // We're only interested in China's border with India.
+    }
+    if (address == 'India') {
+        address = 'Nepal' // For a clearer view of India's northern borders.
+    }
+    if (address == 'Italy') {
+        address = 'San Marino' // For a clearer view of Italy's northern borders.
+    }
     var coordinates = geocode(address).results[0].geometry.location
     return (coordinates.lat + ',' + coordinates.lng)
 }
 
+// Taken from http://web.archive.org/web/20120326084113/http://www.merlyn.demon.co.uk/js-shufl.htm
 function random(x) {
   return Math.floor(x*(Math.random()%1)) 
 }
@@ -100,19 +112,21 @@ function remove_neighbor_from_search(territory, neighbor) {
     // So China and Russia are removed from graph searches except when started from countries which
     // exclusively border China and/or Russia.
     if (neighbor == 'China') {
-        keep_china = ['Mongolia', 'North Korea', 'South Korea']
-        if (keep_china.indexOf(territory) < 0) {
+        if (!['Mongolia', 'North Korea', 'South Korea'].contains(territory)) {
             return true
         }
     }
     if (neighbor == 'Russia') {
         return true
     }
+    // China as bordering India poses the same problem.
+    if (neighbor == 'China ') {
+        return true
+    }
     // Likewise for Canada and Mexico when called from a U.S. state. Washington and Maine both border Canada,
     // but are on opposite sides of the country.
-    if (['Canada ', 'Mexico '].indexOf(neighbor) >= 0) {
-        keep_canada = ['Alaska']
-        if (keep_canada.indexOf(territory) < 0) {
+    if (['Canada ', 'Mexico '].contains(neighbor)) {
+        if (territory != 'Alaska') {
             return true
         }
     }
@@ -153,14 +167,14 @@ function build_question(territory) {
         }
     }
     // These are needed because otherwise there'd be no possible answers and we'd hit a game-breaking bug.
-    if (['United Kingdom', 'Ireland'].indexOf(territory) >= 0) {
+    if (['United Kingdom', 'Ireland'].contains(territory)) {
         possible_answers = ['France', 'Netherlands', 'Belgium']
     }
-    if (['Dominican Republic', 'Haiti'].indexOf(territory) >= 0) {
+    if (['Dominican Republic', 'Haiti'].contains(territory)) {
         possible_answers = ['Cuba', 'Jamaica']
     }
     // This is just to play with the user, since most countries bordering Russia obviously don't border Scandinavia.
-    if (['Finland', 'Sweden', 'Norway'].indexOf(territory) >= 0) {
+    if (['Finland', 'Sweden', 'Norway'].contains(territory)) {
         possible_answers = ['Denmark', 'Iceland']
     }
     var answer = choice(possible_answers)
@@ -194,7 +208,7 @@ function neighbors_to_sentence(territory) {
 function prepend_the(territory, start_of_sentence=false) {
     var the = start_of_sentence ? "The " : "the "
     function should_prepend_the() {
-        return ['United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo'].indexOf(territory) >= 0
+        return ['Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo'].contains(territory)
     }
     return (should_prepend_the() ? the : "")
 }
@@ -206,10 +220,19 @@ function pretty_print(territory, start_of_sentence=false) {
 }
 
 // Only for testing.
-function test_question(s) {
-   a = build_question(s)
-   a.chosen = a.answer
-   next_question(a)
+function test_map(t) {
+    embed_map(build_question(t))
+}
+function test_question(t) {
+    test_map(t)
+    function next_question_button() {
+        var next_button = document.getElementById(container_id).contentWindow.document.getElementsByName("next")[0]
+        if (document.getElementById(container_id).contentWindow.document.getElementsByName("next").length == 0) {
+            window.requestAnimationFrame(next_question_button);
+        }
+        next_button.click()
+    }
+    next_question_button()
 }
 // Above code can be freely removed.
 
@@ -326,7 +349,7 @@ function embed_question(question_info) {
     /*
     question += "<div style='padding-top:20%;padding-left:25%;font-size:15px;font-family:Helvetica'>"
     var options = ["World countries", "America&#39;s states", "India&#39;s states", "Canada&#39;s provinces"]
-    var option_names = ["countries", "america_states", "india_states", "canada_provinces"]
+    var option_names = ["countries", "usa_states", "india_states", "canada_provinces"]
     question += "<form>"
     for (i = 0; i < options.length; i++) {
         var choice = options[i]
