@@ -167,16 +167,28 @@ function build_question(territory) {
         }
     }
     // These are needed because otherwise there'd be no possible answers and we'd hit a game-breaking bug.
+    //
+    // This is also our only chance to include island countries, which we can't put in borders.json.
     if (['United Kingdom', 'Ireland'].contains(territory)) {
         possible_answers = ['France', 'Netherlands', 'Belgium']
     }
     if (['Dominican Republic', 'Haiti'].contains(territory)) {
         possible_answers = ['Cuba', 'Jamaica']
     }
-    // This is just to play with the user, since most countries bordering Russia obviously don't border Scandinavia.
+    // These are just to play with the player by giving them less obvious answers.
     if (['Finland', 'Sweden', 'Norway'].contains(territory)) {
         possible_answers = ['Denmark', 'Iceland']
     }
+    if (['North Korea', 'South Korea'].contains(territory)) {
+        possible_answers = ['Japan']
+    }
+    if (territory == 'Mongolia') {
+        possible_answers = ['Kazakhstan']
+    }
+    if (['Malaysia', 'Indonesia'].contains(territory)) {
+        possible_answers = possible_answers.concat(['Singapore'])
+    }
+    ////
     var answer = choice(possible_answers)
     return {territory: territory, answer: answer, wrong_answers: wrong_answers, chosen:null}
 }
@@ -208,7 +220,7 @@ function neighbors_to_sentence(territory) {
 function prepend_the(territory, start_of_sentence=false) {
     var the = start_of_sentence ? "The " : "the "
     function should_prepend_the() {
-        return ['Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo'].contains(territory)
+        return ['Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo'].contains(territory)
     }
     return (should_prepend_the() ? the : "")
 }
