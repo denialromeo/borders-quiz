@@ -186,7 +186,7 @@ function build_question(territory) {
     else if (['North Korea', 'South Korea'].contains(territory)) {
         possible_answers = ['Japan']
     }
-    else if (territory == 'Mongolia') {
+    else if (['Mongolia'].contains(territory)) {
         possible_answers = ['Kazakhstan']
     }
     else if (['Malaysia', 'Indonesia'].contains(territory)) {
@@ -194,6 +194,9 @@ function build_question(territory) {
     }
     else if (['Saudi Arabia', 'Qatar', 'United Arab Emirates'].contains(territory)) {
         possible_answers = possible_answers.concat(['Bahrain'])
+    }
+    else if (['Israel', 'Lebanon', 'Syria', 'Turkey'].contains(territory)) {
+        possible_answers = possible_answers.concat(['Cyprus'])
     }
     ////
     var answer = choice(possible_answers)
