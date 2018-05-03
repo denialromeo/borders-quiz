@@ -130,6 +130,10 @@ function remove_neighbor_from_search(territory, neighbor) {
             return true
         }
     }
+    // Too many of Canada's provinces border the U.S.
+    if (neighbor == 'United States (Continental)') {
+        return true
+    }
     return false
 }
 
@@ -172,25 +176,28 @@ function build_question(territory) {
     if (['United Kingdom', 'Ireland'].contains(territory)) {
         possible_answers = ['France', 'Netherlands', 'Belgium']
     }
-    if (['Dominican Republic', 'Haiti'].contains(territory)) {
+    else if (['Dominican Republic', 'Haiti'].contains(territory)) {
         possible_answers = ['Cuba', 'Jamaica']
     }
     // These are just to play with the player by giving them less obvious answers.
-    if (['Finland', 'Sweden', 'Norway'].contains(territory)) {
+    else if (['Finland', 'Sweden', 'Norway'].contains(territory)) {
         possible_answers = ['Denmark', 'Iceland']
     }
-    if (['North Korea', 'South Korea'].contains(territory)) {
+    else if (['North Korea', 'South Korea'].contains(territory)) {
         possible_answers = ['Japan']
     }
-    if (territory == 'Mongolia') {
+    else if (territory == 'Mongolia') {
         possible_answers = ['Kazakhstan']
     }
-    if (['Malaysia', 'Indonesia'].contains(territory)) {
+    else if (['Malaysia', 'Indonesia'].contains(territory)) {
         possible_answers = possible_answers.concat(['Singapore'])
+    }
+    else if (['Saudi Arabia', 'Qatar', 'United Arab Emirates'].contains(territory)) {
+        possible_answers = possible_answers.concat(['Bahrain'])
     }
     ////
     var answer = choice(possible_answers)
-    return {territory: territory, answer: answer, wrong_answers: wrong_answers, chosen:null}
+    return {territory: territory, answer: answer, wrong_answers: wrong_answers, chosen:""}
 }
 
 function neighbors_to_sentence(territory) {
@@ -254,33 +261,23 @@ function embed(src) {
 }
 
 function embed_map(question_info, score) {
-    var territory = ""
-    if (!question_info.chosen) {
-        question_info.chosen = question_info.territory
-    }
-    question_info.chosen = question_info.chosen.replace(/'/g,'&#39;')
-    if (question_info.chosen == question_info.answer) {
-        territory = question_info.chosen
-    }
-    else {
-        territory = question_info.territory
-    }
-    zoom = google_maps_zoom_level(territory)
-    if (territory == 'Georgia') {
-        var formatted = coordinates(territory + ' country')
-    }
-    else {
-        var formatted = coordinates(territory)
-    }
-    var url = URI("https://www.google.com/maps/embed/v1/view").search({"key": google_maps_api_key, "zoom": zoom, "center": formatted}).toString()
-    var map = ""
-    if ($(document).width() > 760) {
-        map = "<iframe width='80%' height='350' frameborder='0' src='" + url + "' ></iframe>"
-    }
+    question_info.chosen = question_info.chosen.replace(/\'/g,'&#39;')
+    question_info.answer = question_info.answer.replace(/\'/g,'&#39;')
+    var territory = (question_info.chosen == question_info.answer ? question_info.chosen : question_info.territory)
+    var zoom = google_maps_zoom_level(territory)
+    var coordinates_ = (territory == 'Georgia' ? coordinates(territory + ' country') : coordinates(territory))
+    var url = URI("https://www.google.com/maps/embed/v1/view").search({"key": google_maps_api_key, "zoom": zoom, "center": coordinates_}).toString()
+
     // Hacky way of styling on mobile.
-    else {
-        map = "<iframe width='80%' height='200' frameborder='0' src='" + url + "' ></iframe>"
-    }
+    var map_height = ($(document).width() > 760 ? 350 : 200)
+    var map_width = "80%"
+    var map = "<iframe width='"
+    map += map_width
+    map += "' height='"
+    map += map_height
+    map += "' frameborder='0' src='"
+    map += url
+    map += "'></iframe>"
 
     function top_message() {
         var success = " does not border "
@@ -293,7 +290,8 @@ function embed_map(question_info, score) {
         }
     }
 
-    var content = "<center><p style='font-family:Helvetica'>"
+    var content = "<center>"
+    content += "<p style='font-family:Helvetica'>"
     content += top_message()
     content += "</p>"
     content += map
