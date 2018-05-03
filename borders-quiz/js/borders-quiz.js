@@ -233,7 +233,7 @@ function pretty_print(territory, start_of_sentence=false) {
 
 // Only for testing.
 function test_map(t) {
-    embed_map(build_question(t))
+    embed_map(build_question(t), {correct:0,wrong:0})
 }
 function test_question(t) {
     test_map(t)
@@ -253,7 +253,7 @@ function embed(src) {
     document.getElementById(container_id).style = "border: 2px solid black"
 }
 
-function embed_map(question_info) {
+function embed_map(question_info, score) {
     var territory = ""
     if (!question_info.chosen) {
         question_info.chosen = question_info.territory
@@ -314,11 +314,13 @@ function embed_map(question_info) {
         else {
             var next_button = document.getElementById(container_id).contentWindow.document.getElementsByName("next")[0]
             if (question_info.chosen == question_info.answer) {
-                next_button.onclick = function() { return next_question() }
+                score.correct += 1
+                next_button.onclick = function() { return next_question(null, score) }
                 next_button.innerHTML = "Next"
             }
             else {
-                next_button.onclick = function() { return next_question(question_info) }
+                score.wrong += 1
+                next_button.onclick = function() { return next_question(question_info, score) }
                 next_button.innerHTML = "Try Again"
             }
     	}
@@ -326,7 +328,7 @@ function embed_map(question_info) {
     next_question_button()
 }
 
-function embed_question(question_info) {
+function embed_question(question_info, score) {
     var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
     question  = "<div style='padding-left:15%;padding-top:17%;font-size:20px;font-family:Helvetica'>"
     question += "<table style='table-layout:fixed'>"
@@ -358,28 +360,18 @@ function embed_question(question_info) {
     question += "</tr>"
     question += "</table>"
     question += "</div>"
-    /*
-    question += "<div style='padding-top:20%;padding-left:25%;font-size:15px;font-family:Helvetica'>"
-    var options = ["World countries", "America&#39;s states", "India&#39;s states", "Canada&#39;s provinces"]
-    var option_names = ["countries", "usa_states", "india_states", "canada_provinces"]
-    question += "<form>"
-    for (i = 0; i < options.length; i++) {
-        var choice = options[i]
-        question += "<input type='checkbox' id='"
-        question += choice
-        question += "' value='"
-        question += choice
-        question += "' name='"
-        question += pretty_print(option_names[i])
-        question += "'><label for='"
-        question += choice
-        question += "'>"
-        question += pretty_print(choice, true)
-        question += "</label>"
-    }
-    question += "</form>"
-    question += "</div>"
-    */
+
+    // question += "<div style='float:right;padding-top:20%;padding-right:5%;font-size:15px;font-family:Helvetica'>"
+    // question += "<p>"
+    // question += "<i>"
+    // question += "Correct: "
+    // question += score.correct
+    // question += "&nbsp;&nbsp;Wrong: "
+    // question += score.wrong
+    // question += "</i>"
+    // question += "</p>"
+    // question += "</div>"
+    
     embed(question)
 
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
@@ -392,7 +384,7 @@ function embed_question(question_info) {
             for (i = 0; i < choices.length; i++) {
                 choices[i].onclick = function() {
                     question_info.chosen = this.id
-                    embed_map(question_info)
+                    embed_map(question_info, score)
                 }
             }
         }
@@ -400,11 +392,11 @@ function embed_question(question_info) {
     detect_player_choice()
 }
 
-function next_question(question_info=null) {
+function next_question(question_info=null, score={correct:0, wrong:0}) {
     if (question_info) {
-        embed_question(question_info)
+        embed_question(question_info, score)
     }
     else {
-        embed_question(build_question(choice(territories())))
+        embed_question(build_question(choice(territories())), score)
     }
 }
