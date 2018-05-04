@@ -7,42 +7,39 @@ Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
 function parse_url() {
     var fields =  URI(window.location.href).fragment(true)
-    if ($.isEmptyObject(fields)) { // Default behavior.
-    	return ["countries"]
+	var dict_names = []
+    if (fields.countries) {
+        dict_names = dict_names.concat("countries")
     }
-    else {
-    	var dict_names = []
-    	if (fields.usa_states) {
-    		dict_names = dict_names.concat("usa_states")
-    	}
-    	if (fields.countries) {
-    		dict_names = dict_names.concat("countries")
-    	}
-    	if (fields.india_states) {
-    		dict_names = dict_names.concat("india_states")
-    	}
-        if (fields.canada_provinces) {
-            dict_names = dict_names.concat("canada_provinces")
-        }
-    	return dict_names
+	if (fields.usa_states) {
+		dict_names = dict_names.concat("usa_states")
+	}
+	if (fields.india_states) {
+		dict_names = dict_names.concat("india_states")
+	}
+    if (fields.canada_provinces) {
+        dict_names = dict_names.concat("canada_provinces")
     }
+    if (dict_names.length == 0) { // Default behavior when app visited.
+        dict_names = ["countries"]
+    }
+	return dict_names
 }
 
 function territories() {
     var json = {}
     $.ajax({ url: borders_json_path, async: false, success: function (r) { json = r } })
-    var combined_keys = []
+    var territories_ = []
     var dict_names = parse_url()
     for (i = 0; i < dict_names.length; i++) {
-    	combined_keys = combined_keys.concat(Object.keys(json[dict_names[i]]))
+    	territories_ = territories_.concat(Object.keys(json[dict_names[i]]))
     }
-    return combined_keys
+    return territories_
 }
 
 function neighbors(territory) {
     var json = {}
     $.ajax({ url: borders_json_path, async: false, success: function (r) { json = r } })
-    var combined_keys = []
     for (var dict in json) {
     	if (json[dict][territory]) {
     		return json[dict][territory]
@@ -79,11 +76,11 @@ function coordinates(address) {
 }
 
 // Taken from http://web.archive.org/web/20120326084113/http://www.merlyn.demon.co.uk/js-shufl.htm
-function random(x) {
-  return Math.floor(x*(Math.random()%1)) 
-}
 Array.prototype.swap = function(j, k) {
   var t = this[j] ; this[j] = this[k] ; this[k] = t
+}
+function random(x) {
+  return Math.floor(x*(Math.random()%1)) 
 }
 function shuffle(l) {
     for (var j=l.length-1; j>0; j--) { 
@@ -103,6 +100,7 @@ function sample(l, k) {
 function choice(l) {
     return l[random(l.length)]
 }
+////
 
 function remove_neighbor_from_search(territory, neighbor) {
     // China and Russia make the "graph distance" difficulty mechanic a little pointless.
@@ -130,7 +128,7 @@ function remove_neighbor_from_search(territory, neighbor) {
             return true
         }
     }
-    // Too many of Canada's provinces border the U.S.
+    // Likewise for the U.S. when called from Canada. Alberta and New Brunswick are on opposite sides of the country.
     if (neighbor == 'United States (Continental)') {
         return true
     }
@@ -228,17 +226,14 @@ function neighbors_to_sentence(territory) {
 }
 
 function prepend_the(territory, start_of_sentence=false) {
-    var the = start_of_sentence ? "The " : "the "
-    function should_prepend_the() {
-        return ['Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo'].contains(territory)
-    }
-    return (should_prepend_the() ? the : "")
+    var the = (start_of_sentence ? "The " : "the ")
+    var territories_to_prepend = ['Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
+    return (territories_to_prepend.contains(territory) ? the : "")
 }
 
 function pretty_print(territory, start_of_sentence=false) {
     var the = prepend_the(territory, start_of_sentence)
-    territory = $.trim(territory).replace(/\s/g,'&nbsp;')
-    return (the + territory)
+    return (the + $.trim(territory).replace(/\s/g,'&nbsp;'))
 }
 
 // Only for testing.
