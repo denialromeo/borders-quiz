@@ -132,6 +132,10 @@ function remove_neighbor_from_search(territory, neighbor) {
     if (neighbor == 'United States (Continental)') {
         return true
     }
+    // Brazil borders every country in South America except Ecuador and Chile!
+    if (neighbor == 'Brazil') {
+        return true
+    }
     return false
 }
 
@@ -187,6 +191,12 @@ function build_question(territory) {
     else if (['Mongolia'].contains(territory)) {
         possible_answers = ['Kazakhstan']
     }
+    else if (['China'].contains(territory)) {
+        possible_answers = possible_answers.concat(['Taiwan'])
+    }
+    else if (['Vietnam'].contains(territory)) {
+        possible_answers = possible_answers.concat(['Philippines'])
+    }
     else if (['Malaysia', 'Indonesia'].contains(territory)) {
         possible_answers = possible_answers.concat(['Singapore'])
     }
@@ -227,7 +237,7 @@ function neighbors_to_sentence(territory) {
 
 function prepend_the(territory, start_of_sentence=false) {
     var the = (start_of_sentence ? "The " : "the ")
-    var territories_to_prepend = ['Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
+    var territories_to_prepend = ['Philippines', 'Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
     return (territories_to_prepend.contains(territory) ? the : "")
 }
 
