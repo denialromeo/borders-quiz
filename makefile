@@ -6,3 +6,6 @@ else
 	git commit -m "$(m)"
 	git push
 endif
+
+l:
+	jekyll serve --port 4000
