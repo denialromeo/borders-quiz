@@ -1,4 +1,6 @@
 var container_id = "game-container"
+var timer_id = "timer"
+var timer_process_id = null
 var google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 var borders_json_path = "/borders-quiz/json/borders.json"
 var google_maps_zoom_levels_json_path = "/borders-quiz/json/google_maps_zoom_levels.json"
@@ -19,6 +21,9 @@ function parse_url() {
 	}
     if (fields.canada_provinces) {
         dict_names = dict_names.concat("canada_provinces")
+    }
+    if (fields.mexico_states) {
+        dict_names = dict_names.concat("mexico_states")
     }
     if (dict_names.length == 0) { // Default behavior when app visited.
         dict_names = ["countries"]
@@ -48,6 +53,17 @@ function neighbors(territory) {
     return []
 }
 
+function dict_name(territory) {
+    var json = {}
+    $.ajax({ url: borders_json_path, async: false, success: function (r) { json = r } })
+    for (var dict in json) {
+        if (json[dict][territory]) {
+            return dict
+        }
+    }
+    return ""
+}
+
 function google_maps_zoom_level(territory) {
     var json = {}
     $.ajax({ url: google_maps_zoom_levels_json_path, async: false, success: function (r) { json = r } })
@@ -64,6 +80,12 @@ function geocode(address) {
 function coordinates(address) {
     if (address == 'China ') {
         address = 'Nepal' // We're only interested in China's border with India.
+    }
+    if (address == 'Durango') {
+        address = 'Durango Mexico' // Not the city in Colorado.
+    }
+    if (address == 'Georgia') {
+        address = 'Georgia country' // Not the U.S. state.
     }
     if (address == 'India') {
         address = 'Nepal' // For a clearer view of India's northern borders.
@@ -102,23 +124,25 @@ function choice(l) {
 }
 ////
 
-function remove_neighbor_from_search(territory, neighbor) {
-    // China and Russia make the "graph distance" difficulty mechanic a little pointless.
+function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
+    // China and Russia make the "graph distance" answer mechanic a little pointless.
     // If India and Poland are just three countries apart (India → China → Russia → Poland),
     // a question asking if they border each other is a bit too easy.
-    //
-    // So China and Russia are removed from graph searches except when started from countries which
-    // exclusively border China and/or Russia.
-    if (neighbor == 'China') {
-        if (!['Mongolia', 'North Korea', 'South Korea'].contains(territory)) {
-            return true
-        }
-    }
-    if (neighbor == 'Russia') {
+    if (['China', 'Russia'].contains(neighbor)) {
         return true
     }
     // China as bordering India poses the same problem.
     if (neighbor == 'China ') {
+        return true
+    }
+    // East and West Europe are a bit too easy to discern between. So we block all roads through Germany and Italy.
+    if (['Germany', 'Italy'].contains(neighbor)) {
+        if (!['Denmark', 'Vatican City', 'San Marino'].contains(territory)) {
+            return true
+        }
+    }
+    // Turkey similarly borders a few obviously different regions, so let's block roads through it.
+    if (neighbor == 'Turkey') {
         return true
     }
     // Likewise for Canada and Mexico when called from a U.S. state. Washington and Maine both border Canada,
@@ -152,7 +176,7 @@ function breadth_first_search(territory, depth) {
                 if (territory_distance_dict[neighbor] == depth + 1) {
                     return territory_distance_dict // Terminate BFS at given depth.
                 }
-                if (!remove_neighbor_from_search(territory, neighbor)) {
+                if (!remove_neighbors_of_neighbor_from_bfs(territory, neighbor)) {
                     bfs_queue.push(neighbor)
                 }
             }
@@ -197,14 +221,35 @@ function build_question(territory) {
     else if (['Vietnam'].contains(territory)) {
         possible_answers = possible_answers.concat(['Philippines'])
     }
+    else if (['San Marino'].contains(territory)) {
+        possible_answers = ['Vatican City']
+    }
+    else if (['Vatican City'].contains(territory)) {
+        possible_answers = ['San Marino']
+    }
     else if (['Malaysia', 'Indonesia'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Singapore'])
+        possible_answers = possible_answers.concat(['Singapore', 'Philippines'])
+    }
+    else if (['Italy', 'Libya', 'Tunisia'].contains(territory)) {
+        possible_answers = possible_answers.concat(['Malta'])
+    }
+    else if (['Mauritania', 'Senegal', 'The Gambia', 'Guinea-Bissau', 'Guinea'].contains(territory)) {
+        possible_answers = possible_answers.concat(['Cape Verde'])
+    }
+    else if (['Nigeria', 'Cameroon', 'Equatorial Guinea', 'Gabon'].contains(territory)) {
+        possible_answers = possible_answers.concat(['Sao Tome and Principe'])
+    }
+    else if (['Mozambique', 'Tanzania'].contains(territory)) {
+        possible_answers = possible_answers.concat(['Madagascar', 'Comoros', 'Seychelles', 'Mauritius'])
     }
     else if (['Saudi Arabia', 'Qatar', 'United Arab Emirates'].contains(territory)) {
         possible_answers = possible_answers.concat(['Bahrain'])
     }
     else if (['Israel', 'Lebanon', 'Syria', 'Turkey'].contains(territory)) {
         possible_answers = possible_answers.concat(['Cyprus'])
+    }
+    else if (['India', 'Bangladesh'].contains(territory)) {
+        possible_answers = possible_answers.concat(['Sri Lanka', 'Maldives'])
     }
     ////
     var answer = choice(possible_answers)
@@ -237,13 +282,13 @@ function neighbors_to_sentence(territory) {
 
 function prepend_the(territory, start_of_sentence=false) {
     var the = (start_of_sentence ? "The " : "the ")
-    var territories_to_prepend = ['Philippines', 'Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
+    var territories_to_prepend = ['Maldives', 'Seychelles', 'Philippines', 'Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
     return (territories_to_prepend.contains(territory) ? the : "")
 }
 
 function pretty_print(territory, start_of_sentence=false) {
     var the = prepend_the(territory, start_of_sentence)
-    return (the + $.trim(territory).replace(/\s/g,'&nbsp;'))
+    return (the + ($.trim(territory)).replace(/\s/g,'&nbsp;'))
 }
 
 // Only for testing.
@@ -263,17 +308,39 @@ function test_question(t) {
 }
 // Above code can be freely removed.
 
+// Timer code.
+function format_time(raw_date) {
+    function prepend_zero(time) {
+        return (time < 10 ? "0" + time : time)
+    }
+    var total_seconds = raw_date/1000
+    var hours = prepend_zero(Math.floor(total_seconds/60/60))
+    var minutes = prepend_zero(Math.floor((total_seconds/60) % 60))
+    var seconds = prepend_zero(Math.floor(total_seconds % 60))
+    var time = minutes + ":" + seconds
+    return (hours > 0 ? hours + ":" + time : time)
+}
+function timer(start_time) {
+    var time_elapsed = format_time(Date.now() - start_time)
+    document.getElementById(container_id).contentWindow.document.getElementById("timer").innerHTML = time_elapsed
+}
+function start_timer(start_time=Date.now()) {
+    timer_process_id = setInterval(function() { timer(start_time) }, 1000)
+    return start_time
+}
+////
+
 function embed(src) {     
     document.getElementById(container_id).srcdoc=src
     document.getElementById(container_id).style = "border: 2px solid black"
 }
 
-function embed_map(question_info, score) {
+function embed_map(question_info, score, start_time) {
     question_info.chosen = question_info.chosen.replace(/\'/g,'&#39;')
     question_info.answer = question_info.answer.replace(/\'/g,'&#39;')
     var territory = (question_info.chosen == question_info.answer ? question_info.chosen : question_info.territory)
     var zoom = google_maps_zoom_level(territory)
-    var coordinates_ = (territory == 'Georgia' ? coordinates(territory + ' country') : coordinates(territory))
+    var coordinates_ = coordinates(territory)
     var url = URI("https://www.google.com/maps/embed/v1/view").search({"key": google_maps_api_key, "zoom": zoom, "center": coordinates_}).toString()
 
     // Hacky way of styling on mobile.
@@ -321,12 +388,12 @@ function embed_map(question_info, score) {
             var next_button = document.getElementById(container_id).contentWindow.document.getElementsByName("next")[0]
             if (question_info.chosen == question_info.answer) {
                 score.correct += 1
-                next_button.onclick = function() { return next_question(null, score) }
+                next_button.onclick = function() { return next_question(null, score, start_time) }
                 next_button.innerHTML = "Next"
             }
             else {
                 score.wrong += 1
-                next_button.onclick = function() { return next_question(question_info, score) }
+                next_button.onclick = function() { return next_question(question_info, score, start_time) }
                 next_button.innerHTML = "Try Again"
             }
     	}
@@ -334,16 +401,41 @@ function embed_map(question_info, score) {
     next_question_button()
 }
 
-function embed_question(question_info, score) {
+function bottom_right_message(score, start_time) {
+    question = "" 
+    question += "<div style='position:absolute;right:5%;bottom:0;font-size:15px;font-family:Helvetica'>"
+    question += "<p style='float:right'>"
+    question += "<i>"
+    question += "Correct: "
+    question += score.correct
+    question += "&nbsp;&nbsp;Wrong: "
+    question += score.wrong
+    question += "</i>"
+    question += "<br><span id='timer' style='float:right'>"
+    question += format_time(Date.now() - start_time)
+    question += "</span>"
+    question += "</p>"
+    question += "</div>"
+    function time() {
+        if (document.getElementById(container_id).contentWindow.document.getElementById("timer") == null) {
+            window.requestAnimationFrame(time);
+        }
+        else {
+            clearInterval(timer_process_id)
+            start_timer(start_time)
+        }
+    }
+    time()
+    return question 
+}
+
+function embed_question(question_info, score, start_time) {
     var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
-    question  = "<div style='padding-left:15%;padding-top:17%;font-size:20px;font-family:Helvetica'>"
-    question += "<table style='table-layout:fixed'>"
-    question += "<tr>"
+    question  = "<div style='position:relative;min-height:490px;'>"
+    question += "<div style='padding-left:15%;padding-top:17%;font-size:20px;font-family:Helvetica'>"
     question += "<p>Which of these does not border "
     question += pretty_print(question_info.territory)
     question += "?</p>"
-    question += "<td style='height:100px'>"
-    question += "<div>"
     question += "<form>"
     for (i = 0; i < choices.length; i++) {
         var choice = choices[i]
@@ -362,22 +454,9 @@ function embed_question(question_info, score) {
     }
     question += "</form>"
     question += "</div>"
-    question += "</td>"
-    question += "</tr>"
-    question += "</table>"
+    question += bottom_right_message(score, start_time)
     question += "</div>"
 
-    // question += "<div style='float:right;padding-top:20%;padding-right:5%;font-size:15px;font-family:Helvetica'>"
-    // question += "<p>"
-    // question += "<i>"
-    // question += "Correct: "
-    // question += score.correct
-    // question += "&nbsp;&nbsp;Wrong: "
-    // question += score.wrong
-    // question += "</i>"
-    // question += "</p>"
-    // question += "</div>"
-    
     embed(question)
 
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
@@ -390,7 +469,7 @@ function embed_question(question_info, score) {
             for (i = 0; i < choices.length; i++) {
                 choices[i].onclick = function() {
                     question_info.chosen = this.id
-                    embed_map(question_info, score)
+                    embed_map(question_info, score, start_time)
                 }
             }
         }
@@ -398,11 +477,11 @@ function embed_question(question_info, score) {
     detect_player_choice()
 }
 
-function next_question(question_info=null, score={correct:0, wrong:0}) {
+function next_question(question_info, score, start_time) {
     if (question_info) {
-        embed_question(question_info, score)
+        embed_question(question_info, score, start_time)
     }
     else {
-        embed_question(build_question(choice(territories())), score)
+        embed_question(build_question(choice(territories())), score, start_time)
     }
 }
