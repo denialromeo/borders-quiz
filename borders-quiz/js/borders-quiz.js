@@ -365,7 +365,8 @@ function embed_map(question_info, score, start_time) {
         }
     }
 
-    var content = "<center>"
+    content  = "<div style='position:relative;min-height:480px;'>"
+    content += "<center>"
     content += "<p style='font-family:Helvetica'>"
     content += top_message()
     content += "</p>"
@@ -377,6 +378,8 @@ function embed_map(question_info, score, start_time) {
     content += "</p>"
     content += "<button name='next'></button>"
     content += "</center>"
+    content += bottom_right_message_map(territory)
+    content += "</div>"
     embed(content)
 
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
@@ -399,6 +402,18 @@ function embed_map(question_info, score, start_time) {
     	}
     }
     next_question_button()
+}
+
+function bottom_right_message_map(territory) {
+    question = "" 
+    question += "<div style='position:absolute;right:5%;bottom:0;font-size:15px;font-family:Helvetica'>"
+    question += "<p style='float:right'>"
+    if (dict_name(territory) == 'mexico_states') {
+        question += "(Clearer map <a href='http://ontheworldmap.com/mexico/mexico-states-map.jpg' target='_blank'>here</a>.)"
+    }
+    question += "</p>"
+    question += "</div>"
+    return question 
 }
 
 function bottom_right_message(score, start_time) {
