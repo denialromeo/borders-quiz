@@ -411,6 +411,9 @@ function bottom_right_message_map(territory) {
     if (dict_name(territory) == 'mexico_states') {
         question += "(Clearer map <a href='http://ontheworldmap.com/mexico/mexico-states-map.jpg' target='_blank'>here</a>.)"
     }
+    if (dict_name(territory) == 'india_states') {
+        question += "(Clearer map <a href='https://www.mapsofindia.com/maps/india/india-large-color-map.jpg' target='_blank'>here</a>.)"
+    }
     question += "</p>"
     question += "</div>"
     return question 
