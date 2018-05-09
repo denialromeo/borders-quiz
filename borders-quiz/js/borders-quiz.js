@@ -81,7 +81,7 @@ function geocode(address) {
 }
 
 function coordinates(address) {
-    if (address == 'China ') {
+    if (address == 'China_') {
         address = 'Nepal' // We're only interested in China's border with India.
     }
     if (address == 'Durango') {
@@ -267,7 +267,7 @@ function prepend_the(territory, start_of_sentence=false) {
 
 function pretty_print(territory, start_of_sentence=false) {
     var the = prepend_the(territory, start_of_sentence)
-    return (the + ($.trim(territory)).replace(/\s/g,'&nbsp;'))
+    return (the + territory.replace(/_/g,'').replace(/\s/g,'&nbsp;'))
 }
 
 function neighbors_to_sentence(territory) {

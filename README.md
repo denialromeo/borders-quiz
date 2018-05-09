@@ -1,5 +1,4 @@
-# Borders Quiz
-
+# Borders Quiz 
 This is a fun little game that quizzes the player on his or her knowledge of the world's borders and U.S. state borders through randomly-generated multiple-choice questions.
 
 For example -
@@ -41,12 +40,8 @@ gem install jekyll
 
 The game can also be played on my website [here](http://danielmoore.us/borders-quiz). The version of the game on my website will always be the most updated, though I'll try to update this repo as well if I make any major changes.
 
-You can be tested on different parts of the world by modifying the URL parameters.
-
-Try visiting `http://localhost:4000/#?india_states=true&countries=true` and `http://localhost:4000/#?india_states=true&canada_provinces=true&america_states=true`.
-
 Some notes on [borders.json](/borders.json) -
 
 * Countries taken from [U.S. Dept. of State](https://www.state.gov/misc/list/index.htm). Omitted Hong Kong and Macau, Timor-Leste used as name for East Timor.
 * Borders transcribed from [Wikipedia](https://en.wikipedia.org/wiki/List_of_countries_and_territories_by_land_and_maritime_borders).
-* Whenever there's a chance two territories with the same name will be in the same quiz (e.g. the two Georgias, Mexico as bordering Arizona, Mexico as bordering Belize), one is listed with a trailing space (e.g. "Georgia " vs. "Georgia") so borders-quiz can distinguish between them. Trailing spaces are stripped when presented to the user.
+* Whenever there's a chance multiple territories with the same name will be in the same quiz (e.g. Mexico as bordering Arizona, Mexico as bordering Guatemala), they're distinguished between by different numbers of trailing underscores (e.g. "Mexico" vs. "Mexico_") so borders-quiz can distinguish between them. Underscores are stripped when presented to the user.
