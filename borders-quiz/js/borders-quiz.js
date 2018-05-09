@@ -28,6 +28,9 @@ function parse_url() {
     if (fields.china_provinces) {
         dict_names = dict_names.concat("china_provinces")
     }
+    if (fields.japan_prefectures) {
+        dict_names = dict_names.concat("japan_prefectures")
+    }
     if (dict_names.length == 0) { // Default behavior when app visited.
         dict_names = ["countries"]
     }
@@ -343,6 +346,9 @@ function embed_map(question_info, score, start_time) {
     question_info.answer = question_info.answer.replace(/\'/g,'&#39;')
     var territory = (question_info.chosen == question_info.answer ? question_info.chosen : question_info.territory)
     var zoom = google_maps_zoom_level(territory)
+    if (dict_name(territory) == 'japan_prefectures') {
+        zoom = 7
+    }
     var coordinates_ = coordinates(territory)
     var url = URI("https://www.google.com/maps/embed/v1/view").search({"key": google_maps_api_key, "zoom": zoom, "center": coordinates_}).toString()
 
@@ -419,6 +425,9 @@ function bottom_right_message_map(territory) {
     }
     else if (dict_name(territory) == 'china_provinces') {
         question += "(Clearer map <a href='http://www.sacu.org/maps/provmap.png' target='_blank'>here</a>.)"
+    }
+    else if (dict_name(territory) == 'japan_prefectures') {
+        question += "(Clearer map <a href='https://upload.wikimedia.org/wikipedia/commons/5/5a/Regions_and_Prefectures_of_Japan.png' target='_blank'>here</a>.)"
     }
     question += "</p>"
     question += "</div>"
