@@ -25,6 +25,9 @@ function parse_url() {
     if (fields.mexico_states) {
         dict_names = dict_names.concat("mexico_states")
     }
+    if (fields.china_provinces) {
+        dict_names = dict_names.concat("china_provinces")
+    }
     if (dict_names.length == 0) { // Default behavior when app visited.
         dict_names = ["countries"]
     }
@@ -256,6 +259,17 @@ function build_question(territory) {
     return {territory: territory, answer: answer, wrong_answers: wrong_answers, chosen:""}
 }
 
+function prepend_the(territory, start_of_sentence=false) {
+    var the = (start_of_sentence ? "The " : "the ")
+    var territories_to_prepend = ['Maldives', 'Seychelles', 'Philippines', 'Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
+    return (territories_to_prepend.contains(territory) ? the : "")
+}
+
+function pretty_print(territory, start_of_sentence=false) {
+    var the = prepend_the(territory, start_of_sentence)
+    return (the + ($.trim(territory)).replace(/\s/g,'&nbsp;'))
+}
+
 function neighbors_to_sentence(territory) {
     var s = ""
     var neighbors_ = neighbors(territory)
@@ -278,17 +292,6 @@ function neighbors_to_sentence(territory) {
         s += pretty_print(neighbors_[neighbors_.length - 1])
     }
     return (s + ".")
-}
-
-function prepend_the(territory, start_of_sentence=false) {
-    var the = (start_of_sentence ? "The " : "the ")
-    var territories_to_prepend = ['Maldives', 'Seychelles', 'Philippines', 'Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
-    return (territories_to_prepend.contains(territory) ? the : "")
-}
-
-function pretty_print(territory, start_of_sentence=false) {
-    var the = prepend_the(territory, start_of_sentence)
-    return (the + ($.trim(territory)).replace(/\s/g,'&nbsp;'))
 }
 
 // Only for testing.
@@ -411,8 +414,11 @@ function bottom_right_message_map(territory) {
     if (dict_name(territory) == 'mexico_states') {
         question += "(Clearer map <a href='http://ontheworldmap.com/mexico/mexico-states-map.jpg' target='_blank'>here</a>.)"
     }
-    if (dict_name(territory) == 'india_states') {
+    else if (dict_name(territory) == 'india_states') {
         question += "(Clearer map <a href='https://www.mapsofindia.com/maps/india/india-large-color-map.jpg' target='_blank'>here</a>.)"
+    }
+    else if (dict_name(territory) == 'china_provinces') {
+        question += "(Clearer map <a href='http://www.sacu.org/maps/provmap.png' target='_blank'>here</a>.)"
     }
     question += "</p>"
     question += "</div>"
