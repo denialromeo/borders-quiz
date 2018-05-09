@@ -1,6 +1,6 @@
 var container_id = "game-container"
 var timer_id = "timer"
-var timer_process_id = null
+var timer_process_id = 0
 var google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 var borders_json_path = "/borders-quiz/json/borders.json"
 var google_maps_zoom_levels_json_path = "/borders-quiz/json/google_maps_zoom_levels.json"
@@ -84,6 +84,9 @@ function geocode(address) {
 }
 
 function coordinates(address) {
+    if (dict_name(address) == 'japan_prefectures') {
+        address += " Japan"
+    }
     if (address == 'China_') {
         address = 'Nepal' // We're only interested in China's border with India.
     }
@@ -211,6 +214,9 @@ function build_question(territory) {
     else if (['Dominican Republic', 'Haiti'].contains(territory)) {
         possible_answers = ['Cuba', 'Jamaica']
     }
+    else if (['Ehime', 'Tokushima'].contains(territory)) {
+        possible_answers = ['Okinawa', 'Hokkaido']
+    }
     // These are just to play with the player by giving them less obvious answers.
     else if (['Finland', 'Sweden', 'Norway'].contains(territory)) {
         possible_answers = ['Denmark', 'Iceland']
@@ -331,6 +337,7 @@ function timer(start_time) {
     document.getElementById(container_id).contentWindow.document.getElementById("timer").innerHTML = time_elapsed
 }
 function start_timer(start_time=Date.now()) {
+    clearInterval(timer_process_id)
     timer_process_id = setInterval(function() { timer(start_time) }, 1000)
     return start_time
 }
@@ -454,7 +461,6 @@ function bottom_right_message(score, start_time) {
             window.requestAnimationFrame(time);
         }
         else {
-            clearInterval(timer_process_id)
             start_timer(start_time)
         }
     }
