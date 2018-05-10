@@ -32,13 +32,13 @@ def territory_neighbors_dict():
         data = json.load(data_file)
         args = get_args()
         if args.countries and args.states:
-            return { **data['countries'], **data['states'] }
+            return { **data['countries'], **data['usa_states'] }
         elif args.states:
-            return data['states']
+            return data['usa_states']
         elif args.countries:
             return data['countries']
         else: # Default behavior
-            return { **data['countries'], **data['states'] }
+            return { **data['countries'], **data['usa_states'] }
 
 def random_territory(territory_neighbors_dict=territory_neighbors_dict(), exclude=[]):
     choices = list(set(territory_neighbors_dict) - set(exclude))
