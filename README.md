@@ -44,4 +44,4 @@ The game can also be played on my website [here](http://danielmoore.us/borders-q
 Some notes on [borders.json](/borders-quiz/json/borders.json) -
 
 * Country borders transcribed from [Wikipedia](https://en.wikipedia.org/wiki/List_of_countries_and_territories_by_land_and_maritime_borders).
-* Whenever there's a chance multiple territories with the same name will be in the same quiz (e.g. Mexico as bordering Arizona, Mexico as bordering Guatemala), they're distinguished between by different numbers of trailing underscores (e.g. "Mexico" vs. "Mexico_") so borders-quiz can distinguish between them. Underscores are stripped when presented to the user.
+* Whenever there's a chance multiple territories with the same name will be in the same quiz (e.g. Mexico as bordering Arizona, Mexico as bordering Guatemala), they're distinguished between by different numbers of trailing underscores (e.g. "Mexico" vs. "Mexico_"). Underscores are stripped when presented to the user.
