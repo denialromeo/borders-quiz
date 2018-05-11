@@ -1,6 +1,6 @@
 # Borders Quiz 
 
-This is a fun little game that quizzes the player on his or her knowledge of the world's borders and U.S. state borders through randomly-generated multiple-choice questions.
+This is a fun little game that quizzes the player on his or her knowledge of the world's borders through randomly-generated multiple-choice questions.
 
 For example -
 
@@ -12,7 +12,17 @@ For example -
 
 (The answer is Honduras.)
 
-I always get flustered when I think about the world's countries (Eastern Europe and Central Africa especially) and what's where in the U.S. east of Arizona, so this is a fun tool to help me practice.
+You can presently hone your geography knowledge of -
+
+* World countries.
+* U.S. states.
+* Canada's provinces.
+* Mexico's states.
+* India's states.
+* China's provinces.
+* Japan's prefectures.
+* South Korea's provinces.
+* Australia's states.
 
 To play with this, all you have to do is start `index.html` on a local server!
 
