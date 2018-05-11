@@ -1,4 +1,23 @@
 {
+
+    "south_korea_provinces": {
+        "Busan": ["Gyeongnam", "Ulsan"],
+        "Chungbuk": ["Chungnam", "Daejeon", "Gangwon", "Gyeonggi", "Gyeongbuk", "Jeonbuk"],
+        "Chungnam": ["Chungbuk", "Daejeon", "Gyeonggi", "Jeonbuk"],
+        "Daegu": ["Gyeongbuk", "Gyeongnam"],
+        "Daejeon": ["Chungbuk", "Chungnam"],
+        "Gangwon": ["Chungbuk", "Gyeonggi", "Gyeongbuk"],
+        "Gwangju": ["Jeonnam"],
+        "Gyeonggi": ["Chungbuk", "Chungnam", "Gangwon", "Incheon", "Seoul"],
+        "Gyeongbuk": ["Chungbuk", "Daegu", "Gangwon", "Gyeongnam", "Jeonbuk", "Ulsan"],
+        "Gyeongnam": ["Busan", "Daegu", "Gyeongbuk", "Jeonnam", "Jeonbuk", "Ulsan"],
+        "Incheon": ["Gyeonggi"],
+        "Jeonnam": ["Gwangju", "Gyeongnam", "Jeonbuk"],
+        "Jeonbuk": ["Chungbuk", "Chungnam", "Gyeongbuk", "Gyeongnam", "Jeonnam"],
+        "Seoul": ["Gyeonggi"],
+        "Ulsan": ["Busan", "Gyeongbuk", "Gyeongnam"]
+    },
+
     "australia_states": {
         "Australian Capital Territory": ["New South Wales"],
         "New South Wales": ["Australian Capital Territory", "Queensland", "South Australia", "Victoria"],

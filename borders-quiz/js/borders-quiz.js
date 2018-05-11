@@ -34,6 +34,9 @@ function parse_url() {
     if (fields.australia_states) {
         dict_names = dict_names.concat("australia_states")
     }
+    if (fields.south_korea_provinces) {
+        dict_names = dict_names.concat("south_korea_provinces")
+    }
     if (dict_names.length == 0) { // Default behavior when app visited.
         dict_names = ["countries"]
     }
@@ -375,6 +378,9 @@ function embed_map(question_info, score, start_time) {
     if (dict_name(territory) == 'japan_prefectures') {
         zoom = 7
     }
+    else if (dict_name(territory) == 'south_korea_provinces') {
+        zoom = 7
+    }
     var coordinates_ = coordinates(territory)
     var url = URI("https://www.google.com/maps/embed/v1/view").search({"key": google_maps_api_key, "zoom": zoom, "center": coordinates_}).toString()
 
@@ -447,13 +453,16 @@ function bottom_right_message_map(territory) {
         question += "(Clearer map <a href='http://ontheworldmap.com/mexico/mexico-states-map.jpg' target='_blank'>here</a>.)"
     }
     else if (dict_name(territory) == 'india_states') {
-        question += "(Clearer map <a href='https://i.imgur.com/h5I35fn.png' target='_blank'>here</a>.)"
+        question += "(Clearer map <a href='https://www.mapsofindia.com/maps/india/india-large-color-map.jpg' target='_blank'>here</a>.)"
     }
     else if (dict_name(territory) == 'china_provinces') {
         question += "(Clearer map <a href='http://www.sacu.org/maps/provmap.png' target='_blank'>here</a>.)"
     }
     else if (dict_name(territory) == 'japan_prefectures') {
         question += "(Clearer map <a href='https://upload.wikimedia.org/wikipedia/commons/5/5a/Regions_and_Prefectures_of_Japan.png' target='_blank'>here</a>.)"
+    }
+    else if (dict_name(territory) == 'south_korea_provinces') {
+        question += "(Clearer map <a href='https://en.wikipedia.org/wiki/Provinces_of_Korea#/media/File:Provinces_of_South_Korea_(numbered_map).png' target='_blank'>here</a>.)"
     }
     question += "</p>"
     question += "</div>"
