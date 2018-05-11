@@ -31,6 +31,9 @@ function parse_url() {
     if (fields.japan_prefectures) {
         dict_names = dict_names.concat("japan_prefectures")
     }
+    if (fields.australia_states) {
+        dict_names = dict_names.concat("australia_states")
+    }
     if (dict_names.length == 0) { // Default behavior when app visited.
         dict_names = ["countries"]
     }
@@ -242,6 +245,9 @@ function build_question(territory) {
     else if (['Malaysia', 'Indonesia'].contains(territory)) {
         possible_answers = possible_answers.concat(['Singapore', 'Philippines'])
     }
+    else if (['New South Wales', 'Victoria', 'South Australia'].contains(territory)) {
+        possible_answers = possible_answers.concat(['Tasmania', 'New Zealand'])
+    }
     else if (['Italy', 'Libya', 'Tunisia'].contains(territory)) {
         possible_answers = possible_answers.concat(['Malta'])
     }
@@ -270,7 +276,7 @@ function build_question(territory) {
 
 function prepend_the(territory, start_of_sentence=false) {
     var the = (start_of_sentence ? "The " : "the ")
-    var territories_to_prepend = ['Maldives', 'Seychelles', 'Philippines', 'Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
+    var territories_to_prepend = ['Australian Capital Territory', 'Northern Territory', 'Maldives', 'Seychelles', 'Philippines', 'Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
     return (territories_to_prepend.contains(territory) ? the : "")
 }
 
@@ -334,7 +340,10 @@ function format_time(raw_date) {
 }
 function timer(start_time) {
     var time_elapsed = format_time(Date.now() - start_time)
-    document.getElementById(container_id).contentWindow.document.getElementById("timer").innerHTML = time_elapsed
+    var timer_span = document.getElementById(container_id).contentWindow.document.getElementById("timer")
+    if (timer_span) {
+        timer_span.innerHTML = time_elapsed
+    }
 }
 function start_timer(start_time=Date.now()) {
     clearInterval(timer_process_id)
@@ -428,7 +437,7 @@ function bottom_right_message_map(territory) {
         question += "(Clearer map <a href='http://ontheworldmap.com/mexico/mexico-states-map.jpg' target='_blank'>here</a>.)"
     }
     else if (dict_name(territory) == 'india_states') {
-        question += "(Clearer map <a href='https://www.mapsofindia.com/maps/india/india-large-color-map.jpg' target='_blank'>here</a>.)"
+        question += "(Clearer map <a href='https://i.imgur.com/h5I35fn.png' target='_blank'>here</a>.)"
     }
     else if (dict_name(territory) == 'china_provinces') {
         question += "(Clearer map <a href='http://www.sacu.org/maps/provmap.png' target='_blank'>here</a>.)"
