@@ -90,11 +90,14 @@ function coordinates(address) {
     if (dict_name(address) == 'japan_prefectures') {
         address += " Japan"
     }
+    if (dict_name(address) == 'australia_states') {
+        address += " Australia"
+    }
+    if (dict_name(address) == 'mexico_states') {
+        address += " Mexico"
+    }
     if (address == 'China_') {
         address = 'Nepal' // We're only interested in China's border with India.
-    }
-    if (address == 'Durango') {
-        address = 'Durango Mexico' // Not the city in Colorado.
     }
     if (address == 'Georgia') {
         address = 'Georgia country' // Not the U.S. state.
@@ -152,6 +155,10 @@ function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
         if (!['Denmark', 'Vatican City', 'San Marino'].contains(territory)) {
             return true
         }
+    }
+    // Morocco borders Spain through Ceuta. Algeria pretty obviously doesn't border Spain.
+    if (neighbor == 'Morocco') {
+        return true
     }
     // Turkey similarly borders a few obviously different regions, so let's block roads through it.
     if (neighbor == 'Turkey') {
@@ -268,6 +275,9 @@ function build_question(territory) {
     }
     else if (['India', 'Bangladesh'].contains(territory)) {
         possible_answers = possible_answers.concat(['Sri Lanka', 'Maldives'])
+    }
+    else if (['Venezuela'].contains(territory)) {
+        possible_answers = possible_answers.concat(['Trinidad and Tobago'])
     }
     ////
     var answer = choice(possible_answers)
