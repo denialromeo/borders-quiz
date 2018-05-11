@@ -12,18 +12,6 @@ For example -
 
 (The answer is Honduras.)
 
-You can presently hone your geography knowledge of -
-
-* World countries.
-* U.S. states.
-* Canada's provinces.
-* Mexico's states.
-* India's states.
-* China's provinces.
-* Japan's prefectures.
-* South Korea's provinces.
-* Australia's states.
-
 To play with this, all you have to do is start `index.html` on a local server!
 
 Here's how to do this using Jekyll.
