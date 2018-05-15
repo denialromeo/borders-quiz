@@ -22,5 +22,4 @@ def get_dict(key):
 #
 # Example Usage: python test_complete_graph.py india_states
 if __name__ == '__main__':
-    key = sys.argv[1]
-    is_complete_graph(get_dict(key))
+    is_complete_graph(get_dict(sys.argv[1]))

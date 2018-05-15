@@ -9,47 +9,47 @@ Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
 function parse_url() {
     var fields =  URI(window.location.href).fragment(true)
-	var dict_names = []
+	var modes = []
     if (fields.countries) {
-        dict_names = dict_names.concat("countries")
+        modes = modes.concat("countries")
     }
 	if (fields.usa_states) {
-		dict_names = dict_names.concat("usa_states")
+		modes = modes.concat("usa_states")
 	}
 	if (fields.india_states) {
-		dict_names = dict_names.concat("india_states")
+		modes = modes.concat("india_states")
 	}
     if (fields.canada_provinces) {
-        dict_names = dict_names.concat("canada_provinces")
+        modes = modes.concat("canada_provinces")
     }
     if (fields.mexico_states) {
-        dict_names = dict_names.concat("mexico_states")
+        modes = modes.concat("mexico_states")
     }
     if (fields.china_provinces) {
-        dict_names = dict_names.concat("china_provinces")
+        modes = modes.concat("china_provinces")
     }
     if (fields.japan_prefectures) {
-        dict_names = dict_names.concat("japan_prefectures")
+        modes = modes.concat("japan_prefectures")
     }
     if (fields.australia_states) {
-        dict_names = dict_names.concat("australia_states")
+        modes = modes.concat("australia_states")
     }
     if (fields.south_korea_provinces) {
-        dict_names = dict_names.concat("south_korea_provinces")
+        modes = modes.concat("south_korea_provinces")
     }
-    if (dict_names.length == 0) { // Default behavior when app visited.
-        dict_names = ["countries"]
+    if (modes.length == 0) { // Default behavior when app visited.
+        modes = ["countries"]
     }
-	return dict_names
+	return modes
 }
 
 function territories() {
     var json = {}
     $.ajax({ url: borders_json_path, async: false, success: function (r) { json = r } })
     var territories_ = []
-    var dict_names = parse_url()
-    for (i = 0; i < dict_names.length; i++) {
-    	territories_ = territories_.concat(Object.keys(json[dict_names[i]]))
+    var modes = parse_url()
+    for (i = 0; i < modes.length; i++) {
+    	territories_ = territories_.concat(Object.keys(json[modes[i]]))
     }
     return territories_
 }
@@ -93,6 +93,9 @@ function coordinates(address) {
     if (dict_name(address) == 'japan_prefectures') {
         address += " Japan"
     }
+    if (dict_name(address) == 'south_korea_provinces') {
+        address += " South Korea"
+    }
     if (dict_name(address) == 'australia_states') {
         address += " Australia"
     }
@@ -110,6 +113,12 @@ function coordinates(address) {
     }
     if (address == 'Italy') {
         address = 'San Marino' // For a clearer view of Italy's northern borders.
+    }
+    if (address == 'Washington') {
+        address = 'Washington State' // So we don't get the map for Washington, D.C.
+    }
+    if (address == 'North Korea_') {
+        address = 'Cheorwon South Korea' // For a clear view of South Korea's northern border.
     }
     var coordinates = geocode(address).results[0].geometry.location
     return (coordinates.lat + ',' + coordinates.lng)
@@ -129,9 +138,6 @@ function shuffle(l) {
     return l
 }
 function sample(l, k) {
-    if (!l) {
-        return []
-    }
     for (var j=0; j < l.length; j++) {
         l.swap(j, random(l.length))
     }
@@ -150,7 +156,7 @@ function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
         return true
     }
     // China as bordering India poses the same problem.
-    if (neighbor == 'China ') {
+    if (neighbor == 'China_') {
         return true
     }
     // East and West Europe are a bit too easy to discern between. So we block all roads through Germany and Italy.
@@ -163,13 +169,18 @@ function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
     if (neighbor == 'Morocco') {
         return true
     }
+    if (neighbor == 'Spain') {
+        if (!['Portugal'].contains(territory)) {
+            return true
+        }
+    }
     // Turkey similarly borders a few obviously different regions, so let's block roads through it.
     if (neighbor == 'Turkey') {
         return true
     }
     // Likewise for Canada and Mexico when called from a U.S. state. Washington and Maine both border Canada,
     // but are on opposite sides of the country.
-    if (['Canada ', 'Mexico '].contains(neighbor)) {
+    if (['Canada_', 'Mexico_'].contains(neighbor)) {
         if (territory != 'Alaska') {
             return true
         }
@@ -265,7 +276,7 @@ function build_question(territory) {
         possible_answers = possible_answers.concat(['Cape Verde'])
     }
     else if (['Nigeria', 'Cameroon', 'Equatorial Guinea', 'Gabon'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Sao Tome and Principe'])
+        possible_answers = possible_answers.concat(['São Tomé and Principe'])
     }
     else if (['Mozambique', 'Tanzania'].contains(territory)) {
         possible_answers = possible_answers.concat(['Madagascar', 'Comoros', 'Seychelles', 'Mauritius'])
@@ -298,26 +309,25 @@ function pretty_print(territory, start_of_sentence=false) {
     return (the + territory.replace(/_/g,'').replace(/\s/g,'&nbsp;'))
 }
 
-function neighbors_to_sentence(territory) {
+function to_sentence(a) {
     var s = ""
-    var neighbors_ = neighbors(territory)
-    if (neighbors_.length == 0) {
+    if (a.length == 0) {
         return " nothing!"
     }
-    if (neighbors_.length == 1) {
+    if (a.length == 1) {
         s += " only "
-        s += pretty_print(neighbors_[0])
+        s += pretty_print(a[0])
     }
-    else if (neighbors_.length == 2) {
-        s += (pretty_print(neighbors_[0]) + " and " + pretty_print(neighbors_[1]))
+    else if (a.length == 2) {
+        s += (pretty_print(a[0]) + " and " + pretty_print(a[1]))
     }
     else {
-        for (i = 0; i < neighbors_.length - 1; i++) {
-            s += pretty_print(neighbors_[i])
+        for (i = 0; i < a.length - 1; i++) {
+            s += pretty_print(a[i])
             s += ", "
         }
         s += "and "
-        s += pretty_print(neighbors_[neighbors_.length - 1])
+        s += pretty_print(a[a.length - 1])
     }
     return (s + ".")
 }
@@ -329,8 +339,8 @@ function test_map(t) {
 function test_question(t) {
     test_map(t)
     function next_question_button() {
-        var next_button = document.getElementById(container_id).contentWindow.document.getElementsByName("next")[0]
-        if (document.getElementById(container_id).contentWindow.document.getElementsByName("next").length == 0) {
+        var next_button = document.getElementById(container_id).contentWindow.document.getElementById("next")
+        if (!next_button) {
             window.requestAnimationFrame(next_question_button);
         }
         next_button.click()
@@ -365,9 +375,13 @@ function start_timer(start_time=Date.now()) {
 }
 ////
 
+function on_mobile_device() {
+    return $(document).width() <= 760
+}
+
 function embed(src) {     
-    document.getElementById(container_id).srcdoc=src
-    document.getElementById(container_id).style = "border: 2px solid black"
+    document.getElementById(container_id).srcdoc ="<head><link rel='stylesheet' href='/borders-quiz/css/borders-quiz.css'/></head><body>" + src + "</body>"
+    document.getElementById(container_id).style="border: 2px solid black;"
 }
 
 function embed_map(question_info, score, start_time) {
@@ -385,7 +399,7 @@ function embed_map(question_info, score, start_time) {
     var url = URI("https://www.google.com/maps/embed/v1/view").search({"key": google_maps_api_key, "zoom": zoom, "center": coordinates_}).toString()
 
     // Hacky way of styling on mobile.
-    var map_height = ($(document).width() > 760 ? 350 : 200)
+    var map_height = on_mobile_device() ? 200 : 350
     var map_width = "80%"
     var map = "<iframe width='"
     map += map_width
@@ -396,40 +410,64 @@ function embed_map(question_info, score, start_time) {
     map += "'></iframe>"
 
     function top_message() {
-        var success = " does not border "
-        var failure = " does border "
-        if (question_info.chosen == question_info.answer) {
-            return ("Correct! " + pretty_print(question_info.chosen, true) + success + pretty_print(question_info.territory) + "!")
+        var success = question_info.chosen == question_info.answer
+        if (success) {
+            return ("Correct! " + pretty_print(question_info.chosen, true) + " does not border " + pretty_print(question_info.territory) + "!")
         }
         else {
-            return ("Sorry! " + pretty_print(question_info.territory, true) + failure + pretty_print(question_info.chosen) + "!")
+            return ("Sorry! " + pretty_print(question_info.territory, true) + " does border " + pretty_print(question_info.chosen) + "!")
         }
     }
 
-    content  = "<div style='position:relative;min-height:480px;'>"
+    function bottom_message(territory) {
+        return pretty_print(territory, true) + " borders " + to_sentence(neighbors(territory))
+    }
+
+    function bottom_right_message_map(territory) {
+        question = "" 
+        question += "<p id='clearer-map-message'>"
+        if (dict_name(territory) == 'mexico_states') {
+            question += "(Clearer map <a href='http://ontheworldmap.com/mexico/mexico-states-map.jpg' target='_blank'>here</a>.)"
+        }
+        else if (dict_name(territory) == 'india_states') {
+            question += "(Clearer map <a href='https://i.imgur.com/h5I35fn.png' target='_blank'>here</a>.)"
+        }
+        else if (dict_name(territory) == 'china_provinces') {
+            question += "(Clearer map <a href='http://www.sacu.org/maps/provmap.png' target='_blank'>here</a>.)"
+        }
+        else if (dict_name(territory) == 'japan_prefectures') {
+            question += "(Clearer map <a href='https://upload.wikimedia.org/wikipedia/commons/5/5a/Regions_and_Prefectures_of_Japan.png' target='_blank'>here</a>.)"
+        }
+        else if (dict_name(territory) == 'south_korea_provinces') {
+            question += "(Clearer map <a href='https://en.wikipedia.org/wiki/Provinces_of_Korea#/media/File:Provinces_of_South_Korea_(numbered_map).png' target='_blank'>here</a>.)"
+        }
+        question += "</p>"
+        return question 
+    }
+
+    content  = "<div id='map-container'>"
     content += "<center>"
-    content += "<p style='font-family:Helvetica'>"
+    content += "<p>"
     content += top_message()
     content += "</p>"
     content += map
-    content += "<p style='font-family:Helvetica'>"
-    content += pretty_print(territory, true)
-    content += " borders "
-    content += neighbors_to_sentence(territory)
+    content += "<p>"
+    content += bottom_message(territory)
     content += "</p>"
-    content += "<button name='next'></button>"
-    content += "</center>"
+    content += "<button id='next'></button>"
     content += bottom_right_message_map(territory)
+    content += "</center>"
     content += "</div>"
+
     embed(content)
 
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function next_question_button() {
-        if (document.getElementById(container_id).contentWindow.document.getElementsByName("next").length == 0) {
+        var next_button = document.getElementById(container_id).contentWindow.document.getElementById("next")
+        if (!next_button) {
             window.requestAnimationFrame(next_question_button);
         }
         else {
-            var next_button = document.getElementById(container_id).contentWindow.document.getElementsByName("next")[0]
             if (question_info.chosen == question_info.answer) {
                 score.correct += 1
                 next_button.onclick = function() { return next_question(null, score, start_time) }
@@ -445,47 +483,22 @@ function embed_map(question_info, score, start_time) {
     next_question_button()
 }
 
-function bottom_right_message_map(territory) {
-    question = "" 
-    question += "<div style='position:absolute;right:5%;bottom:0;font-size:15px;font-family:Helvetica'>"
-    question += "<p style='float:right'>"
-    if (dict_name(territory) == 'mexico_states') {
-        question += "(Clearer map <a href='http://ontheworldmap.com/mexico/mexico-states-map.jpg' target='_blank'>here</a>.)"
-    }
-    else if (dict_name(territory) == 'india_states') {
-        question += "(Clearer map <a href='https://www.mapsofindia.com/maps/india/india-large-color-map.jpg' target='_blank'>here</a>.)"
-    }
-    else if (dict_name(territory) == 'china_provinces') {
-        question += "(Clearer map <a href='http://www.sacu.org/maps/provmap.png' target='_blank'>here</a>.)"
-    }
-    else if (dict_name(territory) == 'japan_prefectures') {
-        question += "(Clearer map <a href='https://upload.wikimedia.org/wikipedia/commons/5/5a/Regions_and_Prefectures_of_Japan.png' target='_blank'>here</a>.)"
-    }
-    else if (dict_name(territory) == 'south_korea_provinces') {
-        question += "(Clearer map <a href='https://en.wikipedia.org/wiki/Provinces_of_Korea#/media/File:Provinces_of_South_Korea_(numbered_map).png' target='_blank'>here</a>.)"
-    }
-    question += "</p>"
-    question += "</div>"
-    return question 
-}
-
 function bottom_right_message(score, start_time) {
     question = "" 
-    question += "<div style='position:absolute;right:5%;bottom:0;font-size:15px;font-family:Helvetica'>"
-    question += "<p style='float:right'>"
+    question += "<p id='score_and_timer'>"
     question += "<i>"
     question += "Correct: "
     question += score.correct
     question += "&nbsp;&nbsp;Wrong: "
     question += score.wrong
     question += "</i>"
-    question += "<br><span id='timer' style='float:right'>"
+    question += "<br><span id='timer'>"
     question += format_time(Date.now() - start_time)
     question += "</span>"
     question += "</p>"
-    question += "</div>"
     function time() {
-        if (document.getElementById(container_id).contentWindow.document.getElementById("timer") == null) {
+        var timer_node = document.getElementById(container_id).contentWindow.document.getElementById("timer")
+        if (!timer_node) {
             window.requestAnimationFrame(time);
         }
         else {
@@ -498,8 +511,8 @@ function bottom_right_message(score, start_time) {
 
 function embed_question(question_info, score, start_time) {
     var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
-    question  = "<div style='position:relative;min-height:490px;'>"
-    question += "<div style='padding-left:15%;padding-top:17%;font-size:20px;font-family:Helvetica'>"
+    question  = "<div id='question-container'>"
+    question += "<div id='question-text'>"
     question += "<p>Which of these does not border "
     question += pretty_print(question_info.territory)
     question += "?</p>"
@@ -528,11 +541,11 @@ function embed_question(question_info, score, start_time) {
 
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function detect_player_choice() {
-        if (document.getElementById(container_id).contentWindow.document.getElementsByName("choice").length == 0) {
+        var choices = document.getElementById(container_id).contentWindow.document.getElementsByName("choice")
+        if (!choices[0]) {
             window.requestAnimationFrame(detect_player_choice);
         }
         else {
-            var choices = document.getElementById(container_id).contentWindow.document.getElementsByName("choice")
             for (i = 0; i < choices.length; i++) {
                 choices[i].onclick = function() {
                     question_info.chosen = this.id
