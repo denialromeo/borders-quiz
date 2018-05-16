@@ -442,7 +442,7 @@ function embed_map(question_info, score, start_time) {
     }
 
     var map_id = on_mobile_device() ? "map-mobile" : "map"
-    var map = "<iframe id='" + map_id + "' frameborder=0 src='" + url + "'></iframe>"
+    var map = "<iframe id='" + map_id + "' scrolling='no' frameborder=0 src='" + url + "'></iframe>"
 
     function top_message() {
         var success = question_info.chosen == question_info.answer
@@ -460,7 +460,7 @@ function embed_map(question_info, score, start_time) {
 
     function bottom_right_message_map(territory) {
         var message = "" 
-        message += "<p id='clearer-map-message'>"
+        message += "<p id='click-the-states-message'>"
         if (dict_name(territory) == 'mexico_states') {
             message += "(Click the states!)"
         }
@@ -472,6 +472,9 @@ function embed_map(question_info, score, start_time) {
         }
         else if (dict_name(territory) == 'japan_prefectures') {
             message += "(Click the prefectures!)"
+        }
+        else if (dict_name(territory) == 'usa_states') {
+            message += "(Click the states!)"
         }
         else if (dict_name(territory) == 'south_korea_provinces') {
             message += "(Clearer map <a href='https://en.wikipedia.org/wiki/Provinces_of_Korea#/media/File:Provinces_of_South_Korea_(numbered_map).png' target='_blank'>here</a>.)"
