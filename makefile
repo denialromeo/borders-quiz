@@ -1,11 +1,11 @@
-push:
 ifeq ($(m),)
-	@echo usage: make m='"Your commit message."'
-else
-	git add --all .
-	git commit -m "$(m)"
-	git push
+	m="Updated game to latest version."
 endif
+
+push:
+	git add --all .
+	git commit -m $m
+	git push
 
 l:
 	jekyll serve --port 4000

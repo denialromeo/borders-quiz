@@ -470,6 +470,9 @@ function embed_map(question_info, score, start_time) {
         else if (dict_name(territory) == 'china_provinces') {
             message += "(Click the provinces!)"
         }
+        else if (dict_name(territory) == 'canada_provinces') {
+            message += "(Click the provinces!)"
+        }
         else if (dict_name(territory) == 'japan_prefectures') {
             message += "(Click the prefectures!)"
         }
