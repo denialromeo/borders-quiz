@@ -37,6 +37,9 @@ function parse_url() {
     if (fields.south_korea_provinces) {
         modes = modes.concat("south_korea_provinces")
     }
+    if (fields.california_counties) {
+        modes = modes.concat("california_counties")
+    }
     if (modes.length == 0) { // Default behavior when app visited.
         modes = ["countries"]
     }
@@ -96,11 +99,17 @@ function coordinates(address) {
     if (dict_name(address) == 'south_korea_provinces') {
         address += " South Korea"
     }
+    if (dict_name(address) == 'california_counties') {
+        address += " County California"
+    }
     if (dict_name(address) == 'australia_states') {
         address += " Australia"
     }
-    if (dict_name(address) == 'mexico_states') {
+    if (address == 'Durango') {
         address += " Mexico"
+    }
+    if (address == 'México') {
+        address += " State"
     }
     if (address == 'China_') {
         address = 'Nepal' // We're only interested in China's border with India.
@@ -120,8 +129,7 @@ function coordinates(address) {
     if (address == 'North Korea_') {
         address = 'Cheorwon South Korea' // For a clear view of South Korea's northern border.
     }
-    var coordinates = geocode(address).results[0].geometry.location
-    return (coordinates.lat + ',' + coordinates.lng)
+    return geocode(address).results[0].geometry.location
 }
 
 // Taken from http://web.archive.org/web/20120326084113/http://www.merlyn.demon.co.uk/js-shufl.htm
@@ -298,14 +306,14 @@ function build_question(territory) {
     return {territory: territory, answer: answer, wrong_answers: wrong_answers, chosen:""}
 }
 
-function prepend_the(territory, start_of_sentence=false) {
-    var the = (start_of_sentence ? "The " : "the ")
-    var territories_to_prepend = ['Australian Capital Territory', 'Northern Territory', 'Maldives', 'Seychelles', 'Philippines', 'Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
+function prepend_the(territory, capitalize_the=false) {
+    var the = (capitalize_the ? "The " : "the ")
+    var territories_to_prepend = ['Persian Gulf', 'State of Mexico', 'Australian Capital Territory', 'Northern Territory', 'Maldives', 'Seychelles', 'Philippines', 'Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
     return (territories_to_prepend.contains(territory) ? the : "")
 }
 
-function pretty_print(territory, start_of_sentence=false) {
-    var the = prepend_the(territory, start_of_sentence)
+function pretty_print(territory, capitalize_the=false) {
+    var the = prepend_the(territory, capitalize_the)
     return (the + territory.replace(/_/g,'').replace(/\s/g,'&nbsp;'))
 }
 
@@ -395,19 +403,46 @@ function embed_map(question_info, score, start_time) {
     else if (dict_name(territory) == 'south_korea_provinces') {
         zoom = 7
     }
-    var coordinates_ = coordinates(territory)
-    var url = URI("https://www.google.com/maps/embed/v1/view").search({"key": google_maps_api_key, "zoom": zoom, "center": coordinates_}).toString()
+    else if (dict_name(territory) == 'california_counties') {
+        zoom = 7
+    }
 
-    // Hacky way of styling on mobile.
-    var map_height = on_mobile_device() ? 200 : 350
-    var map_width = "80%"
-    var map = "<iframe width='"
-    map += map_width
-    map += "' height='"
-    map += map_height
-    map += "' frameborder='0' src='"
-    map += url
-    map += "'></iframe>"
+    var coordinates_ = coordinates(territory)
+    var url = ""
+    if (dict_name(territory) == 'california_counties') {
+        url = "https://fusiontables.google.com/embedviz?q=select+col4+from+1QxmdyxJWnq5IgFpS5zGv9M1v25l84InpK8y-yY_m&viz=MAP&h=false&t=1&l=col4"
+        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
+    }
+    else if (dict_name(territory) == 'mexico_states') {
+    	url = "https://fusiontables.google.com/embedviz?q=select+col5+from+19KyBvfdcDLNkVwn466Aa9asNfTMsPhwsasNdimAP&viz=MAP&h=false&t=1&l=col5"
+        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
+    }
+    else if (dict_name(territory) == 'japan_prefectures') {
+    	url = "https://fusiontables.google.com/embedviz?q=select+col2+from+1e1KEhbC1opeDS1IhQCVCyyR4X9U1D1eVB_gfmIdy&viz=MAP&h=false&t=1&l=col2"
+        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
+    }
+    else if (dict_name(territory) == 'usa_states') {
+    	url = "https://fusiontables.google.com/embedviz?q=select+col3+from+1wm55ugZ3RffprAFPRklG254KDInGYwtYy_-5oQQX&viz=MAP&h=false&t=1&l=col3"
+        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
+    }
+    else if (dict_name(territory) == 'china_provinces') {
+    	url = "https://fusiontables.google.com/embedviz?q=select+col2+from+1yznS-hBIPnKOjlzQxyKrj74Zg2o6hZP9aWp7t0Vr&viz=MAP&h=false&t=1&l=col2"
+        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
+    }
+    else if (dict_name(territory) == 'india_states') {
+    	url = "https://fusiontables.google.com/embedviz?q=select+col3+from+1ic8zKmb8ROuFbiQMLXvdA6u9EPJaJjWq6pyZDC83&viz=MAP&h=false&t=1&l=col3"
+        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
+    }
+    else if (dict_name(territory) == 'canada_provinces') {
+    	url = "https://fusiontables.google.com/embedviz?q=select+col4+from+1WLNv__CToy_grFi67jOIKJPmy5KlA0Ihh6j0sW0H&viz=MAP&h=false&t=1&l=col4"
+        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
+    }
+    else {
+        url = URI("https://www.google.com/maps/embed/v1/view").search({"key": google_maps_api_key, "zoom": zoom, "center": (coordinates_.lat + ',' + coordinates_.lng) }).toString()
+    }
+
+    var map_id = on_mobile_device() ? "map-mobile" : "map"
+    var map = "<iframe id='" + map_id + "' frameborder=0 src='" + url + "'></iframe>"
 
     function top_message() {
         var success = question_info.chosen == question_info.answer
@@ -424,25 +459,28 @@ function embed_map(question_info, score, start_time) {
     }
 
     function bottom_right_message_map(territory) {
-        question = "" 
-        question += "<p id='clearer-map-message'>"
+        var message = "" 
+        message += "<p id='clearer-map-message'>"
         if (dict_name(territory) == 'mexico_states') {
-            question += "(Clearer map <a href='http://ontheworldmap.com/mexico/mexico-states-map.jpg' target='_blank'>here</a>.)"
+            message += "(Click the states!)"
         }
         else if (dict_name(territory) == 'india_states') {
-            question += "(Clearer map <a href='https://i.imgur.com/h5I35fn.png' target='_blank'>here</a>.)"
+            message += "(Click the states!)"
         }
         else if (dict_name(territory) == 'china_provinces') {
-            question += "(Clearer map <a href='http://www.sacu.org/maps/provmap.png' target='_blank'>here</a>.)"
+            message += "(Click the provinces!)"
         }
         else if (dict_name(territory) == 'japan_prefectures') {
-            question += "(Clearer map <a href='https://upload.wikimedia.org/wikipedia/commons/5/5a/Regions_and_Prefectures_of_Japan.png' target='_blank'>here</a>.)"
+            message += "(Click the prefectures!)"
         }
         else if (dict_name(territory) == 'south_korea_provinces') {
-            question += "(Clearer map <a href='https://en.wikipedia.org/wiki/Provinces_of_Korea#/media/File:Provinces_of_South_Korea_(numbered_map).png' target='_blank'>here</a>.)"
+            message += "(Clearer map <a href='https://en.wikipedia.org/wiki/Provinces_of_Korea#/media/File:Provinces_of_South_Korea_(numbered_map).png' target='_blank'>here</a>.)"
         }
-        question += "</p>"
-        return question 
+        else if (dict_name(territory) == 'california_counties') {
+            message += "(Click the counties!)"
+        }
+        message += "</p>"
+        return message 
     }
 
     content  = "<div id='map-container'>"
@@ -511,7 +549,8 @@ function bottom_right_message(score, start_time) {
 
 function embed_question(question_info, score, start_time) {
     var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
-    question  = "<div id='question-container'>"
+    var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
+    question  = "<div id='" + question_container_id + "'>"
     question += "<div id='question-text'>"
     question += "<p>Which of these does not border "
     question += pretty_print(question_info.territory)
