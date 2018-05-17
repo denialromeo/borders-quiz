@@ -315,8 +315,63 @@ function prepend_the(territory, capitalize_the=false) {
     return (territories_to_prepend.contains(territory) ? the : "")
 }
 
+function truncate_for_mobile(territory) {
+	if (on_mobile_device()) {
+		if (territory == "Democratic Republic of the Congo") {
+			return "DRC"
+		}
+		if (territory == "Republic of the Congo") {
+			return "ROC"
+		}
+		if (territory == "Central African Republic") {
+			return "CAR"
+		}
+		if (territory == "United Arab Emirates") {
+			return "UAE"
+		}
+		if (territory == "Dominican Republic") {
+			return "Dominican Rep."
+		}
+		if (territory == "Bosnia and Herzegovina") {
+			return "Bosnia"
+		}
+		if (territory == "Papua New Guinea") {
+			return "New Guinea"
+		}
+		if (territory == "Western Sahara") {
+			return "W. Sahara"
+		}
+		if (territory == "United Kingdom") {
+			return "UK"
+		}
+		if (territory == "São Tomé and Principe") {
+			return "São Tomé"
+		}
+		if (territory == "Mediterranean Sea") {
+			return "Mediterranean"
+		}
+		if (territory == "Neimongol (Inner Mongolia)") {
+			return "Neimongol"
+		}
+		if (territory == "Australian Capital Territory") {
+			return "ACT"
+		}
+		if (territory == "Northern Territory") {
+			return "NT"
+		}
+		if (territory == "United States (Continental)") {
+			return "USA Mainland"
+		}
+		if (territory == "Northwest Territories") {
+			return "NW Territories"
+		}
+	}
+	return territory
+}
+
 function pretty_print(territory, capitalize_the=false) {
     var the = prepend_the(territory, capitalize_the)
+    territory = truncate_for_mobile(territory)
     return (the + territory.replace(/_/g,'').replace(/\s/g,'&nbsp;'))
 }
 
@@ -429,7 +484,7 @@ function embed_map(question_info, score, start_time) {
         url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
     }
     else if (dict_name(territory) == 'china_provinces') {
-    	url = "https://fusiontables.google.com/embedviz?q=select+col2+from+1yznS-hBIPnKOjlzQxyKrj74Zg2o6hZP9aWp7t0Vr&viz=MAP&h=false&t=1&l=col2"
+        url = "https://fusiontables.google.com/embedviz?q=select+col12+from+1ZpUS_-CvOh40_HaHXJ4TGjfOO0n9VPglLpTtlFg9&viz=MAP&h=false&t=1&l=col12"
         url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
     }
     else if (dict_name(territory) == 'india_states') {
@@ -509,7 +564,9 @@ function embed_map(question_info, score, start_time) {
     content += bottom_message(territory)
     content += "</p>"
     content += "<button id='next'></button>"
-    content += bottom_right_message_map(territory)
+    if (!on_mobile_device()) {
+    	content += bottom_right_message_map(territory)
+    }
     content += "</center>"
     content += "</div>"
 
@@ -567,7 +624,9 @@ function embed_question(question_info, score, start_time) {
     var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
     var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
     question  = "<div id='" + question_container_id + "'>"
-    question += "<div id='question-text'>"
+    question += "<div id='"
+    question += (on_mobile_device() ? "question-text-mobile" : "question-text")
+    question += "'>"
     question += "<p>Which of these does not border "
     question += pretty_print(question_info.territory)
     question += "?</p>"
