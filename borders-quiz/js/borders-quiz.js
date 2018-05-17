@@ -76,6 +76,9 @@ function dict_name(territory) {
             return dict
         }
     }
+    if (['Tasmania'].contains(territory)) {
+        return "australia_states"
+    }
     return ""
 }
 
@@ -275,7 +278,7 @@ function build_question(territory) {
         possible_answers = possible_answers.concat(['Singapore', 'Philippines'])
     }
     else if (['New South Wales', 'Victoria', 'South Australia'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Tasmania', 'New Zealand'])
+        possible_answers = possible_answers.concat(['Tasmania'])
     }
     else if (['Italy', 'Libya', 'Tunisia'].contains(territory)) {
         possible_answers = possible_answers.concat(['Malta'])
@@ -437,6 +440,10 @@ function embed_map(question_info, score, start_time) {
     	url = "https://fusiontables.google.com/embedviz?q=select+col4+from+1WLNv__CToy_grFi67jOIKJPmy5KlA0Ihh6j0sW0H&viz=MAP&h=false&t=1&l=col4"
         url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
     }
+    else if (dict_name(territory) == 'australia_states') {
+    	url = "https://fusiontables.google.com/embedviz?q=select+col2+from+1AyYgmyEMeKnAqdAGoeQCfkOROAGAQYnzlzvV92Bo&viz=MAP&h=false&t=1&l=col2"
+        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
+    }
     else {
         url = URI("https://www.google.com/maps/embed/v1/view").search({"key": google_maps_api_key, "zoom": zoom, "center": (coordinates_.lat + ',' + coordinates_.lng) }).toString()
     }
@@ -465,6 +472,9 @@ function embed_map(question_info, score, start_time) {
             message += "(Click the states!)"
         }
         else if (dict_name(territory) == 'india_states') {
+            message += "(Click the states!)"
+        }
+        else if (dict_name(territory) == 'australia_states') {
             message += "(Click the states!)"
         }
         else if (dict_name(territory) == 'china_provinces') {

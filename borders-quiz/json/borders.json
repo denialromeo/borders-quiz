@@ -1,4 +1,5 @@
 {
+
     "california_counties": {
         "Alameda": ["Contra Costa", "San Francisco", "San Joaquin", "San Mateo", "Santa Clara", "Stanislaus"],
         "Alpine": ["Amador", "Calaveras", "El Dorado", "Mono", "Tuolumne"],
@@ -236,12 +237,13 @@
         "Bangladesh_": ["Assam", "Meghalaya", "Mizoram", "Myanmar_", "Tripura", "West Bengal"],
         "Bhutan_": ["Arunachal Pradesh", "Assam", "China_", "Sikkim", "West Bengal"],
         "Bihar": ["Jharkhand", "Nepal_", "Uttar Pradesh", "West Bengal"],
+        "Chandigarh": ["Haryana", "Punjab"],
         "Chattisgarh": ["Andhra Pradesh", "Jharkhand", "Madhya Pradesh", "Maharashtra", "Odisha", "Telangana", "Uttar Pradesh"],
         "China_": ["Arunachal Pradesh", "Bhutan_", "Himachal Pradesh", "Jammu and Kashmir", "Myanmar_", "Nepal_", "Pakistan_", "Sikkim", "Uttarakhand"],
         "Delhi": ["Haryana", "Uttar Pradesh"],
         "Goa": ["Karnataka", "Maharashtra"],
         "Gujarat": ["Madhya Pradesh", "Maharashtra", "Pakistan_", "Rajasthan"],
-        "Haryana": ["Delhi", "Himachal Pradesh", "Punjab", "Rajasthan", "Uttar Pradesh"],
+        "Haryana": ["Chandigarh", "Delhi", "Himachal Pradesh", "Punjab", "Rajasthan", "Uttar Pradesh"],
         "Himachal Pradesh": ["China_", "Haryana", "Jammu and Kashmir", "Punjab", "Uttarakhand", "Uttar Pradesh"],
         "Jammu and Kashmir": ["China_", "Himachal Pradesh", "Pakistan_", "Punjab"],
         "Jharkhand": ["Bihar", "Chattisgarh", "Odisha", "Uttar Pradesh", "West Bengal"],
@@ -257,7 +259,7 @@
         "Nepal_": ["Bihar", "China_", "Sikkim", "Uttar Pradesh", "Uttarakhand", "West Bengal"],
         "Odisha": ["Andhra Pradesh", "Chattisgarh", "Jharkhand", "West Bengal"],
         "Pakistan_": ["China_", "Gujarat", "Jammu and Kashmir", "Punjab", "Rajasthan"],
-        "Punjab": ["Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Pakistan_", "Rajasthan"],
+        "Punjab": ["Chandigarh", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Pakistan_", "Rajasthan"],
         "Rajasthan": ["Gujarat", "Haryana", "Madhya Pradesh", "Pakistan_", "Punjab", "Uttar Pradesh"],
         "Sikkim": ["Bhutan_", "China_", "Nepal_", "West Bengal"],
         "Tamil Nadu": ["Andhra Pradesh", "Karnataka", "Kerala"],
