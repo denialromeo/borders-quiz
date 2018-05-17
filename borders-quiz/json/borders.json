@@ -1,5 +1,20 @@
 {
 
+    "pakistan_administrative_units": {
+        "Afghanistan_": ["Balochistan", "Federally Administered Tribal Areas", "Gilgit-Baltistan", "Khyber Pakhtunkhwa"],
+        "Azad Jammu and Kashmir": ["Gilgit-Baltistan", "India_", "Khyber Pakhtunkhwa", "Punjab_"],
+        "Balochistan": ["Afghanistan_", "Federally Administered Tribal Areas", "Iran_", "Punjab_", "Sindh"],
+        "China__": ["Gilgit-Baltistan"],
+        "Federally Administered Tribal Areas": ["Afghanistan_", "Balochistan", "Khyber Pakhtunkhwa", "Punjab_"],
+        "Gilgit-Baltistan": ["Afghanistan_", "Azad Jammu and Kashmir", "China__", "India_", "Khyber Pakhtunkhwa"],
+        "India_": ["Azad Jammu and Kashmir", "Gilgit-Baltistan", "Punjab_", "Sindh"],
+        "Iran_": ["Balochistan"],
+        "Islamabad Capital Territory": ["Khyber Pakhtunkhwa", "Punjab_"],
+        "Khyber Pakhtunkhwa": ["Afghanistan_", "Azad Jammu and Kashmir", "Federally Administered Tribal Areas", "Gilgit-Baltistan", "Islamabad Capital Territory", "Punjab_"],
+        "Punjab_": ["Azad Jammu and Kashmir", "Balochistan", "Federally Administered Tribal Areas", "India_", "Islamabad Capital Territory", "Khyber Pakhtunkhwa", "Sindh"],
+        "Sindh": ["Balochistan", "India_", "Punjab_"]
+    },
+
     "california_counties": {
         "Alameda": ["Contra Costa", "San Francisco", "San Joaquin", "San Mateo", "Santa Clara", "Stanislaus"],
         "Alpine": ["Amador", "Calaveras", "El Dorado", "Mono", "Tuolumne"],

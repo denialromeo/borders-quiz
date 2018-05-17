@@ -1,6 +1,6 @@
 import json, sys
 
-borders_json_path = 'json/borders.json'
+borders_json_path = 'borders.json'
 
 def is_complete_graph(vertex_neighbors_dict):
     complete = True

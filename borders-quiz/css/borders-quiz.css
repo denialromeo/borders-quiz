@@ -9,6 +9,12 @@
 #map-container {
 	position:relative;
 	font-family:Helvetica;
+	min-height: 480px;
+}
+
+#map-container-mobile {
+	position:relative;
+	font-family:Helvetica;
 }
 
 #score_and_timer {

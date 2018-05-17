@@ -19,6 +19,9 @@ function parse_url() {
 	if (fields.india_states) {
 		modes = modes.concat("india_states")
 	}
+	if (fields.pakistan_administrative_units) {
+		modes = modes.concat("pakistan_administrative_units")
+	}
     if (fields.canada_provinces) {
         modes = modes.concat("canada_provinces")
     }
@@ -116,6 +119,18 @@ function coordinates(address) {
     }
     if (address == 'China_') {
         address = 'Nepal' // We're only interested in China's border with India.
+    }
+    if (address == 'China__') {
+        address = 'Gilgit-Baltistan' // For the China-Pakistan border.
+    }
+    if (address == 'Punjab_') {
+        address = 'Punjab Pakistan' // To distinguish from Punjab, India.
+    }
+    if (address == 'Afghanistan_') {
+        address = 'FATA Pakistan' // For the Afghanistan-Pakistan border.
+    }
+    if (address == 'Iran_') {
+        address = 'Sefidabeh' // For the Iran-Pakistan border.
     }
     if (address == 'Georgia') {
         address = 'Georgia country' // Not the U.S. state.
@@ -274,8 +289,11 @@ function build_question(territory) {
     else if (['Vatican City'].contains(territory)) {
         possible_answers = ['San Marino']
     }
-    else if (['Malaysia', 'Indonesia'].contains(territory)) {
+    else if (['Malaysia'].contains(territory)) {
         possible_answers = possible_answers.concat(['Singapore', 'Philippines'])
+    }
+    else if (['Indonesia'].contains(territory)) {
+        possible_answers = possible_answers.concat(['Singapore', 'Australia', 'New Zealand'])
     }
     else if (['New South Wales', 'Victoria', 'South Australia'].contains(territory)) {
         possible_answers = possible_answers.concat(['Tasmania'])
@@ -311,7 +329,7 @@ function build_question(territory) {
 
 function prepend_the(territory, capitalize_the=false) {
     var the = (capitalize_the ? "The " : "the ")
-    var territories_to_prepend = ['Persian Gulf', 'State of Mexico', 'Australian Capital Territory', 'Northern Territory', 'Maldives', 'Seychelles', 'Philippines', 'Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
+    var territories_to_prepend = ['Federally Administered Tribal Areas', 'Islamabad Capital Territory', 'Persian Gulf', 'State of Mexico', 'Australian Capital Territory', 'Northern Territory', 'Maldives', 'Seychelles', 'Philippines', 'Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
     return (territories_to_prepend.contains(territory) ? the : "")
 }
 
@@ -364,6 +382,18 @@ function truncate_for_mobile(territory) {
 		}
 		if (territory == "Northwest Territories") {
 			return "NW Territories"
+		}
+		if (territory == "Federally Administered Tribal Areas") {
+			return "FATA"
+		}
+		if (territory == "Islamabad Capital Territory") {
+			return "ICT"
+		}
+		if (territory == "Azad Jammu and Kashmir") {
+			return "AJK"
+		}
+		if (territory == "Khyber Pakhtunkhwa") {
+			return "KP"
 		}
 	}
 	return territory
@@ -499,6 +529,10 @@ function embed_map(question_info, score, start_time) {
     	url = "https://fusiontables.google.com/embedviz?q=select+col2+from+1AyYgmyEMeKnAqdAGoeQCfkOROAGAQYnzlzvV92Bo&viz=MAP&h=false&t=1&l=col2"
         url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
     }
+    else if (dict_name(territory) == 'pakistan_administrative_units') {
+    	url = "https://fusiontables.google.com/embedviz?q=select+col0+from+1CFcoHdOuF_S98-v5E8RuFOobTOFYzq6Gz4FfVoK5&viz=MAP&h=false&t=1&l=col0"
+        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
+    }
     else {
         url = URI("https://www.google.com/maps/embed/v1/view").search({"key": google_maps_api_key, "zoom": zoom, "center": (coordinates_.lat + ',' + coordinates_.lng) }).toString()
     }
@@ -529,6 +563,9 @@ function embed_map(question_info, score, start_time) {
         else if (dict_name(territory) == 'india_states') {
             message += "(Click the states!)"
         }
+        else if (dict_name(territory) == 'pakistan_administrative_units') {
+            message += "(Click the administrative units!)"
+        }
         else if (dict_name(territory) == 'australia_states') {
             message += "(Click the states!)"
         }
@@ -554,7 +591,9 @@ function embed_map(question_info, score, start_time) {
         return message 
     }
 
-    content  = "<div id='map-container'>"
+    content  = "<div id='"
+    content += (on_mobile_device() ? "map-container-mobile" : "map-container")
+    content += "'>"
     content += "<center>"
     content += "<p>"
     content += top_message()
