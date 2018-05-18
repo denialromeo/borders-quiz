@@ -141,6 +141,12 @@ function coordinates(address) {
     if (address == 'India') {
         address = 'Nepal' // For a clearer view of India's northern borders.
     }
+    if (address == 'India__') {
+        address = 'Gomo Co Tibet' // For a clearer view of the India-China border.
+    }
+    if (address == 'Russia_') {
+        address = 'Ulan Bator' // For a clearer view of the Russia-China border.
+    }
     if (address == 'Italy') {
         address = 'San Marino' // For a clearer view of Italy's northern borders.
     }
@@ -389,6 +395,9 @@ function truncate_for_mobile(territory) {
         if (territory == "Northwest Territories") {
             return "NW Territories"
         }
+        if (territory == "Newfoundland and Labrador") {
+            return "NL"
+        }
         if (territory == "Federally Administered Tribal Areas") {
             return "FATA"
         }
@@ -409,29 +418,6 @@ function pretty_print(territory, capitalize_the=false) {
     var the = prepend_the(territory, capitalize_the)
     territory = truncate_for_mobile(territory)
     return (the + territory.replace(/_/g,'').replace(/\s/g,'&nbsp;'))
-}
-
-function to_sentence(a) {
-    var s = ""
-    if (a.length == 0) {
-        return " nothing!"
-    }
-    if (a.length == 1) {
-        s += " only "
-        s += pretty_print(a[0])
-    }
-    else if (a.length == 2) {
-        s += (pretty_print(a[0]) + " and " + pretty_print(a[1]))
-    }
-    else {
-        for (i = 0; i < a.length - 1; i++) {
-            s += pretty_print(a[i])
-            s += ", "
-        }
-        s += "and "
-        s += pretty_print(a[a.length - 1])
-    }
-    return (s + ".")
 }
 
 // Only for testing.
@@ -484,6 +470,31 @@ function on_mobile_device() {
 function embed(src) {     
     document.getElementById(container_id).srcdoc ="<head><link rel='stylesheet' href='/borders-quiz/css/borders-quiz.css'/></head><body>" + src + "</body>"
     document.getElementById(container_id).style="border: 2px solid black;"
+}
+
+function bottom_message(territory) {
+
+    var a = neighbors(territory)
+
+    var s = ""
+    if (a.length == 0) {
+        s = "nothing!"
+    }
+    else if (a.length == 1) {
+        s = " only " + pretty_print(a[0]) + "."
+    }
+    else if (a.length == 2) {
+        s = (pretty_print(a[0]) + " and " + pretty_print(a[1])) + "."
+    }
+    else {
+        for (i = 0; i < a.length - 1; i++) {
+            s += pretty_print(a[i])
+            s += ", "
+        }
+        s += ("and " + pretty_print(a[a.length - 1]) + ".")
+    }
+
+    return (pretty_print(territory, true) + " borders " + s)
 }
 
 function embed_map(question_info, score, start_time) {
@@ -560,18 +571,14 @@ function embed_map(question_info, score, start_time) {
         }
     }
 
-    function bottom_message(territory) {
-        return pretty_print(territory, true) + " borders " + to_sentence(neighbors(territory))
-    }
-
     function bottom_right_message_map(territory) {
         var message = "" 
         message += "<p id='click-the-states-message'>"
-        if (dict_name(territory) == 'mexico_states') {
-            message += "(Click the states!)"
-        }
         if (dict_name(territory) == 'countries') {
             message += "(Click the countries!)"
+        }
+        else if (dict_name(territory) == 'mexico_states') {
+            message += "(Click the states!)"
         }
         else if (dict_name(territory) == 'india_states') {
             message += "(Click the states!)"
@@ -672,10 +679,47 @@ function bottom_right_message(score, start_time) {
     return question 
 }
 
+function title() {
+    var modes = parse_url()
+    if (modes.contains('countries')) {
+        return "World Countries"
+    }
+    if (modes.contains('usa_states')) {
+        return "USA States"
+    }
+    if (modes.contains('california_counties')) {
+        return "California Counties"
+    }
+    if (modes.contains('mexico_states')) {
+        return "Mexico States"
+    }
+    if (modes.contains('canada_provinces')) {
+        return "Canada Provinces"
+    }
+    if (modes.contains('india_states')) {
+        return "India States"
+    }
+    if (modes.contains('pakistan_administrative_units')) {
+        return "Pakistan Administrative Units"
+    }
+    if (modes.contains('china_provinces')) {
+        return "China Provinces"
+    }
+    if (modes.contains('japan_prefectures')) {
+        return "Japan Prefectures"
+    }
+    if (modes.contains('australia_states')) {
+        return "Australia States"
+    }
+}
+
 function embed_question(question_info, score, start_time) {
     var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
     var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
     question  = "<div id='" + question_container_id + "'>"
+    question += "<div id='quiz_title'>"
+    question += title()
+    question += "</div>"
     question += "<div id='"
     question += (on_mobile_device() ? "question-text-mobile" : "question-text")
     question += "'>"

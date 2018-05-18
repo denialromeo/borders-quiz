@@ -1,11 +1,3 @@
-#click-the-states-message {
-	float:right;
-	position:absolute;
-	right:5%;
-	bottom:0;
-	font-size:15px;
-}
-
 #map-container {
 	position:relative;
 	font-family:Helvetica;
@@ -17,6 +9,15 @@
 	font-family:Helvetica;
 }
 
+#quiz_title {
+	position:absolute;
+	left:5%;
+	top:20px;
+	font-size:18px;
+	font-family:Helvetica;
+	float:left;
+}
+
 #score_and_timer {
 	position:absolute;
 	right:5%;
@@ -24,6 +25,14 @@
 	font-size:15px;
 	font-family:Helvetica;
 	float:right;
+}
+
+#click-the-states-message {
+	float:right;
+	position:absolute;
+	right:5%;
+	bottom:0;
+	font-size:15px;
 }
 
 #timer {
