@@ -105,9 +105,18 @@ function coordinates(address) {
     if (dict_name(address) == 'south_korea_provinces') {
         address += " South Korea"
     }
-    if (dict_name(address) == 'california_counties') {
+
+    // California's neighbors should be treated differently from California's counties.
+    if (address == 'Pacific Ocean') {
+        address = "Cooperstown California"
+    }
+    else if (address == 'Mexico__') {
+        address = "Baja California"
+    }
+    else if (dict_name(address) == 'california_counties') {
         address += " County California"
     }
+
     if (dict_name(address) == 'australia_states') {
         address += " Australia"
     }
@@ -305,7 +314,7 @@ function build_question(territory) {
         possible_answers = possible_answers.concat(['Singapore', 'Philippines'])
     }
     else if (['Indonesia'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Singapore', 'Australia', 'New Zealand'])
+        possible_answers = possible_answers.concat(['Singapore', 'Australia', 'New Zealand', 'Fiji'])
     }
     else if (['New South Wales', 'Victoria', 'South Australia'].contains(territory)) {
         possible_answers = possible_answers.concat(['Tasmania'])
@@ -341,7 +350,7 @@ function build_question(territory) {
 
 function prepend_the(territory, capitalize_the=false) {
     var the = (capitalize_the ? "The " : "the ")
-    var territories_to_prepend = ['Federally Administered Tribal Areas', 'Islamabad Capital Territory', 'Persian Gulf', 'State of Mexico', 'Australian Capital Territory', 'Northern Territory', 'Maldives', 'Seychelles', 'Philippines', 'Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
+    var territories_to_prepend = ['Pacific Ocean', 'Federally Administered Tribal Areas', 'Islamabad Capital Territory', 'Persian Gulf', 'State of Mexico', 'Australian Capital Territory', 'Northern Territory', 'Maldives', 'Seychelles', 'Philippines', 'Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
     return (territories_to_prepend.contains(territory) ? the : "")
 }
 
@@ -509,7 +518,12 @@ function embed_map(question_info, score, start_time) {
         zoom = 7
     }
     else if (dict_name(territory) == 'california_counties') {
-        zoom = 7
+        if (['Pacific Ocean', 'Oregon_', 'Mexico__', 'Nevada_', 'Arizona__'].contains(territory)) {
+            zoom = 5
+        }
+        else {
+            zoom = 7
+        }
     }
 
     var coordinates_ = coordinates(territory)
