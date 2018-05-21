@@ -1,4 +1,5 @@
-var container_id = "game-container"
+var game_iframe = document.getElementById("game-container")
+var game_css_path = "/borders-quiz/css/borders-quiz.css"
 var google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 var borders_json_path = "/borders-quiz/json/borders.json"
 var google_maps_zoom_levels_json_path = "/borders-quiz/json/google_maps_zoom_levels.json"
@@ -6,10 +7,12 @@ var quiz_modes_json_path = "/borders-quiz/json/quiz_modes.json"
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
+quiz_modes_metadata_json = null
 function quiz_modes_metadata() {
-    var json = {}
-    $.ajax({ url: quiz_modes_json_path, async: false, success: function (r) { json = r } })
-    return json
+    if (!quiz_modes_metadata_json) {
+        $.ajax({ url: quiz_modes_json_path, async: false, success: function (r) { quiz_modes_metadata_json = r } })
+    }
+    return quiz_modes_metadata_json
 }
 
 function parse_url() {
@@ -21,7 +24,8 @@ function parse_url() {
         }
     }
     if (modes.length == 0) { // Default behavior when app visited.
-        modes = ["countries"]
+        all_modes = Object.keys(quiz_modes_metadata())
+        return all_modes.slice(all_modes.length - 1, all_modes.length) // Last entry in quiz_modes.json.
     }
     return modes
 }
@@ -32,69 +36,77 @@ function load_url(newLocation) {
 }
 
 function game_page_bottom_message() {
-    message  = "<p>You can also try these quiz modes!</p>"
-    message += "<ul>"
     var modes_json = quiz_modes_metadata()
     var fields = parse_url()
+
+    message  = "<p>You can also try these quiz modes!</p>"
+    message += "<ul>"
     for (var mode in modes_json) {
-        if (fields.contains(mode)) { 
+        if (fields.contains(mode)) {
             continue 
         }
-        var mode_metadata = modes_json[mode]
         message += "<li>"
-        message += "<a onclick='load_url(this.href)' href='#?"
-        message += mode
-        message += "=true'>"
-        message += mode_metadata.anthem
-        message += "</a>"
-        message += "&nbsp;"
-        message += mode_metadata.description
+            message += "<a onclick='load_url(this.href)' href='#?"
+            message += mode
+            message += "=true'>"
+                message += modes_json[mode].anthem
+            message += "</a>&nbsp;"
+            message += modes_json[mode].description
         message += "</li>"
     }
     message += "</ul>"
+    
     return message
 }
 
+var borders_json = null
 function territories() {
-    var json = {}
-    $.ajax({ url: borders_json_path, async: false, success: function (r) { json = r } })
+    if (!borders_json) {
+        $.ajax({ url: borders_json_path, async: false, success: function (r) { borders_json = r } })
+    }
     var territories_ = []
     var modes = parse_url()
     for (i = 0; i < modes.length; i++) {
-        territories_ = territories_.concat(Object.keys(json[modes[i]]))
+        territories_ = territories_.concat(Object.keys(borders_json[modes[i]]))
     }
     return territories_
 }
 
 function neighbors(territory) {
-    var json = {}
-    $.ajax({ url: borders_json_path, async: false, success: function (r) { json = r } })
-    for (var dict in json) {
-        if (json[dict][territory]) {
-            return json[dict][territory]
+    if (!borders_json) {
+        $.ajax({ url: borders_json_path, async: false, success: function (r) { borders_json = r } })
+    }
+    for (var dict in borders_json) {
+        if (borders_json[dict][territory]) {
+            return borders_json[dict][territory]
         }
     }
     return []
 }
 
 function dict_name(territory) {
-    var json = {}
-    $.ajax({ url: borders_json_path, async: false, success: function (r) { json = r } })
-    for (var dict in json) {
-        if (json[dict][territory]) {
+    if (!borders_json) {
+        $.ajax({ url: borders_json_path, async: false, success: function (r) { borders_json = r } })
+    }
+    for (var dict in borders_json) {
+        if (borders_json[dict][territory]) {
             return dict
         }
     }
-    if (['Tasmania'].contains(territory)) {
-        return "australia_states"
-    }
-    return ""
+
+    return "countries"
 }
 
+var google_maps_zoom_levels_json = null
 function google_maps_zoom_level(territory) {
-    var json = {}
-    $.ajax({ url: google_maps_zoom_levels_json_path, async: false, success: function (r) { json = r } })
-    return (json[territory] ? json[territory] : 5)
+    if (!google_maps_zoom_levels_json) {
+        $.ajax({ url: google_maps_zoom_levels_json_path, async: false, success: function (r) { google_maps_zoom_levels_json = r } })
+    }
+    if (google_maps_zoom_levels_json[territory]) {
+        return google_maps_zoom_levels_json[territory]
+    }
+
+    return quiz_modes_metadata()[dict_name(territory)].default_zoom_level
 }
 
 function geocode(address) {
@@ -105,72 +117,33 @@ function geocode(address) {
 }
 
 function coordinates(address) {
-    if (dict_name(address) == 'japan_prefectures') {
-        address += " Japan"
+
+    address += quiz_modes_metadata()[dict_name(address)].geocode_append
+
+    // To give the best view of the borders we want to show on the embedded map.
+    tweaked_addresses = {
+        'Afghanistan_': 'FATA Pakistan',
+        'China_': 'Nepal',
+        'China__': 'Gilgit-Baltistan',
+        'Georgia': 'Georgia Country',
+        'Georgia__': 'Georgia Country',
+        'India': 'Nepal',
+        'India_': 'Dharakh India',
+        'India__': 'Gomo Co Tibet',
+        'Iran_': 'Sefidabeh',
+        'Italy': 'San Marino',
+        'Mexico__': "Baja California",
+        'North Korea_': 'Cheorwon South Korea',
+        'Pacific Ocean': "Cooperstown California",
+        'Punjab_': 'Punjab Pakistan',
+        'Russia_': 'Ulan Bator',
+        'Washington': 'Washington State'
     }
-    if (dict_name(address) == 'south_korea_provinces') {
-        address += " South Korea"
+    
+    if (tweaked_addresses[address]) {
+        address = tweaked_addresses[address]
     }
 
-    // California's neighbors should be treated differently from California's counties.
-    if (address == 'Pacific Ocean') {
-        address = "Cooperstown California"
-    }
-    else if (address == 'Mexico__') {
-        address = "Baja California"
-    }
-    else if (dict_name(address) == 'california_counties') {
-        address += " County California"
-    }
-
-    if (dict_name(address) == 'australia_states') {
-        address += " Australia"
-    }
-    if (address == 'Durango') {
-        address += " Mexico"
-    }
-    if (address == 'México') {
-        address += " State"
-    }
-    if (address == 'China_') {
-        address = 'Nepal' // We're only interested in China's border with India.
-    }
-    if (address == 'China__') {
-        address = 'Gilgit-Baltistan' // For the China-Pakistan border.
-    }
-    if (address == 'Punjab_') {
-        address = 'Punjab Pakistan' // To distinguish from Punjab, India.
-    }
-    if (address == 'India_') {
-        address = 'Dharakh India' // To see the full India-Pakistan border.
-    }
-    if (address == 'Afghanistan_') {
-        address = 'FATA Pakistan' // For the Afghanistan-Pakistan border.
-    }
-    if (address == 'Iran_') {
-        address = 'Sefidabeh' // For the Iran-Pakistan border.
-    }
-    if (address == 'Georgia') {
-        address = 'Georgia country' // Not the U.S. state.
-    }
-    if (address == 'India') {
-        address = 'Nepal' // For a clearer view of India's northern borders.
-    }
-    if (address == 'India__') {
-        address = 'Gomo Co Tibet' // For a clearer view of the India-China border.
-    }
-    if (address == 'Russia_') {
-        address = 'Ulan Bator' // For a clearer view of the Russia-China border.
-    }
-    if (address == 'Italy') {
-        address = 'San Marino' // For a clearer view of Italy's northern borders.
-    }
-    if (address == 'Washington') {
-        address = 'Washington State' // So we don't get the map for Washington, D.C.
-    }
-    if (address == 'North Korea_') {
-        address = 'Cheorwon South Korea' // For a clear view of South Korea's northern border.
-    }
     return geocode(address).results[0].geometry.location
 }
 
@@ -268,6 +241,9 @@ function breadth_first_search(territory, depth) {
     return territory_distance_dict
 }
 
+
+// Constraint: Input must have at least one bordering territory and one two territories away.
+// If not, must add case to this function or game will break.
 function build_question(territory) {
     var num_wrong_answers = 3
     var wrong_answers = sample(neighbors(territory), num_wrong_answers)
@@ -325,6 +301,9 @@ function build_question(territory) {
     else if (['New South Wales', 'Victoria', 'South Australia'].contains(territory)) {
         possible_answers = possible_answers.concat(['Tasmania'])
     }
+    else if (['Nova Scotia', 'New Brunswick'].contains(territory)) {
+        possible_answers = possible_answers.concat(['Prince Edward Island'])
+    }
     else if (['Italy', 'Libya', 'Tunisia'].contains(territory)) {
         possible_answers = possible_answers.concat(['Malta'])
     }
@@ -356,83 +335,72 @@ function build_question(territory) {
 
 function prepend_the(territory, capitalize_the=false) {
     var the = (capitalize_the ? "The " : "the ")
-    var territories_to_prepend = ['Pacific Ocean', 'Federally Administered Tribal Areas', 'Islamabad Capital Territory', 'Persian Gulf', 'State of Mexico', 'Australian Capital Territory', 'Northern Territory', 'Maldives', 'Seychelles', 'Philippines', 'Red Sea', 'Western Sahara', 'Baltic Sea', 'Caspian Sea', 'Black Sea', 'United States (Continental)', 'Northwest Territories', 'Yukon Territory', 'United Kingdom', 'United States', 'Netherlands', 'Central African Republic', 'United Arab Emirates', 'Democratic Republic of the Congo', 'Dominican Republic', 'Mediterranean Sea', 'Mississippi River', 'Republic of the Congo']
-    return (territories_to_prepend.contains(territory) ? the : "")
+    var should_prepend_the = [ 'Australian Capital Territory',
+                               'Baltic Sea',
+                               'Black Sea',
+                               'Caspian Sea',
+                               'Central African Republic',
+                               'Democratic Republic of the Congo',
+                               'Dominican Republic',
+                               'Federally Administered Tribal Areas',
+                               'Islamabad Capital Territory',
+                               'Maldives',
+                               'Mediterranean Sea',
+                               'Mississippi River',
+                               'Netherlands',
+                               'Northern Territory',
+                               'Northwest Territories',
+                               'Pacific Ocean',
+                               'Persian Gulf',
+                               'Philippines',
+                               'Red Sea',
+                               'Republic of the Congo',
+                               'Seychelles',
+                               'State of Mexico',
+                               'United Arab Emirates',
+                               'United Kingdom',
+                               'United States (Continental)',
+                               'United States',
+                               'Western Sahara',
+                               'Yukon Territory' ]
+    return ((should_prepend_the.contains(territory) ? the : "") + territory)
 }
 
 function truncate_for_mobile(territory) {
     if (on_mobile_device()) {
-        if (territory == "Democratic Republic of the Congo") {
-            return "DRC"
+        abbreviations = {
+            "Australian Capital Territory": "ACT",
+            "Azad Jammu and Kashmir": "AJK",
+            "Bosnia and Herzegovina": "Bosnia",
+            "Central African Republic": "CAR",
+            "Democratic Republic of the Congo": "DRC",
+            "Dominican Republic": "Dominican Rep.",
+            "Federally Administered Tribal Areas": "FATA",
+            "Islamabad Capital Territory": "ICT",
+            "Khyber Pakhtunkhwa": "KP",
+            "Mediterranean Sea": "Mediterranean",
+            "Neimongol (Inner Mongolia)": "Neimongol",
+            "Newfoundland and Labrador": "NL",
+            "Northern Territory": "NT",
+            "Northwest Territories": "NW Territories",
+            "Papua New Guinea": "New Guinea",
+            "Republic of the Congo": "ROC",
+            "São Tomé and Principe": "São Tomé",
+            "United Arab Emirates": "UAE",
+            "United Kingdom": "UK",
+            "United States (Continental)": "USA Mainland",
+            "Western Sahara": "W. Sahara"
         }
-        if (territory == "Republic of the Congo") {
-            return "ROC"
-        }
-        if (territory == "Central African Republic") {
-            return "CAR"
-        }
-        if (territory == "United Arab Emirates") {
-            return "UAE"
-        }
-        if (territory == "Dominican Republic") {
-            return "Dominican Rep."
-        }
-        if (territory == "Bosnia and Herzegovina") {
-            return "Bosnia"
-        }
-        if (territory == "Papua New Guinea") {
-            return "New Guinea"
-        }
-        if (territory == "Western Sahara") {
-            return "W. Sahara"
-        }
-        if (territory == "United Kingdom") {
-            return "UK"
-        }
-        if (territory == "São Tomé and Principe") {
-            return "São Tomé"
-        }
-        if (territory == "Mediterranean Sea") {
-            return "Mediterranean"
-        }
-        if (territory == "Neimongol (Inner Mongolia)") {
-            return "Neimongol"
-        }
-        if (territory == "Australian Capital Territory") {
-            return "ACT"
-        }
-        if (territory == "Northern Territory") {
-            return "NT"
-        }
-        if (territory == "United States (Continental)") {
-            return "USA Mainland"
-        }
-        if (territory == "Northwest Territories") {
-            return "NW Territories"
-        }
-        if (territory == "Newfoundland and Labrador") {
-            return "NL"
-        }
-        if (territory == "Federally Administered Tribal Areas") {
-            return "FATA"
-        }
-        if (territory == "Islamabad Capital Territory") {
-            return "ICT"
-        }
-        if (territory == "Azad Jammu and Kashmir") {
-            return "AJK"
-        }
-        if (territory == "Khyber Pakhtunkhwa") {
-            return "KP"
-        }
+        return (abbreviations[territory] ? abbreviations[territory] : territory)
     }
     return territory
 }
 
 function pretty_print(territory, capitalize_the=false) {
-    var the = prepend_the(territory, capitalize_the)
     territory = truncate_for_mobile(territory)
-    return (the + territory.replace(/_/g,'').replace(/\s/g,'&nbsp;'))
+    territory = prepend_the(territory, capitalize_the)
+    territory = territory.replace(/_/g,'').replace(/\s/g,'&nbsp;').replace(/-/g, '&#8209;')
+    return territory
 }
 
 // Only for testing.
@@ -442,7 +410,7 @@ function test_map(t) {
 function test_question(t) {
     test_map(t)
     function next_question_button() {
-        var next_button = document.getElementById(container_id).contentWindow.document.getElementById("next")
+        var next_button = game_iframe.contentWindow.document.getElementById("next")
         if (!next_button) {
             window.requestAnimationFrame(next_question_button);
         }
@@ -468,7 +436,7 @@ function format_time(raw_date) {
 }
 function timer(start_time) {
     var time_elapsed = format_time(Date.now() - start_time)
-    var timer_span = document.getElementById(container_id).contentWindow.document.getElementById(timer_id)
+    var timer_span = game_iframe.contentWindow.document.getElementById(timer_id)
     if (timer_span) {
         timer_span.innerHTML = time_elapsed
     }
@@ -485,7 +453,7 @@ function on_mobile_device() {
 }
 
 function embed(src) {     
-    document.getElementById(container_id).srcdoc ="<head><link rel='stylesheet' href='/borders-quiz/css/borders-quiz.css'/></head><body>" + src + "</body>"
+    game_iframe.srcdoc ="<head><link rel='stylesheet' href='" + game_css_path + "'/></head><body>" + src + "</body>"
 }
 
 function bottom_message(territory) {
@@ -517,36 +485,12 @@ function embed_map(question_info, score, start_time) {
     question_info.chosen = question_info.chosen.replace(/\'/g,'&#39;')
     question_info.answer = question_info.answer.replace(/\'/g,'&#39;')
     var territory = (question_info.chosen == question_info.answer ? question_info.chosen : question_info.territory)
-    var zoom = google_maps_zoom_level(territory)
-    if (dict_name(territory) == 'japan_prefectures') {
-        zoom = 7
-    }
-    else if (dict_name(territory) == 'south_korea_provinces') {
-        zoom = 7
-    }
-    else if (dict_name(territory) == 'russia_federal_subjects') {
-        zoom = 3
-    }
-    else if (dict_name(territory) == 'california_counties') {
-        if (['Pacific Ocean', 'Oregon_', 'Mexico__', 'Nevada_', 'Arizona__'].contains(territory)) {
-            zoom = 5
-        }
-        else {
-            zoom = 7
-        }
-    }
 
     var coordinates_ = coordinates(territory)
+    var zoom = google_maps_zoom_level(territory)
 
-    url = ""
-    var modes_json = quiz_modes_metadata()
-    for (var mode in modes_json) {
-        if (dict_name(territory) == mode) {
-            url = modes_json[mode].map_embed_base_url
-            url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
-            break
-        }
-    }
+    var url = quiz_modes_metadata()[dict_name(territory)].map_embed_base_url
+    url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
 
     var map_id = on_mobile_device() ? "map-mobile" : "map"
     var map = "<iframe id='" + map_id + "' scrolling='no' frameborder=0 src='" + url + "'></iframe>"
@@ -564,13 +508,7 @@ function embed_map(question_info, score, start_time) {
     function bottom_right_message_map(territory) {
         var message = "" 
         message += "<p id='click-the-states-message'>"
-        var modes_json = quiz_modes_metadata()
-        for (var mode in modes_json) {
-            if (dict_name(territory) == mode) {
-                message += modes_json[mode].click_message
-                break
-            }
-        }
+        message += quiz_modes_metadata()[dict_name(territory)].click_message
         message += "</p>"
         return message 
     }
@@ -597,7 +535,7 @@ function embed_map(question_info, score, start_time) {
 
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function next_question_button() {
-        var next_button = document.getElementById(container_id).contentWindow.document.getElementById("next")
+        var next_button = game_iframe.contentWindow.document.getElementById("next")
         if (!next_button) {
             window.requestAnimationFrame(next_question_button);
         }
@@ -631,7 +569,7 @@ function bottom_right_message(score, start_time) {
     question += "</span>"
     question += "</p>"
     function time() {
-        var timer_node = document.getElementById(container_id).contentWindow.document.getElementById("timer")
+        var timer_node = game_iframe.contentWindow.document.getElementById("timer")
         if (!timer_node) {
             window.requestAnimationFrame(time);
         }
@@ -643,21 +581,12 @@ function bottom_right_message(score, start_time) {
     return question 
 }
 
-function quiz_title(territory) {
-    var modes_json = quiz_modes_metadata()
-    for (var mode in modes_json) {
-        if (dict_name(territory) == mode) {
-            return modes_json[mode].title
-        }
-    }
-}
-
 function embed_question(question_info, score, start_time) {
     var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
     var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
     question  = "<div id='" + question_container_id + "'>"
     question += "<div id='quiz_title'>"
-    question += quiz_title(question_info.territory)
+    question += quiz_modes_metadata()[dict_name(question_info.territory)].title
     question += "</div>"
     question += "<div id='"
     question += (on_mobile_device() ? "question-text-mobile" : "question-text")
@@ -690,7 +619,7 @@ function embed_question(question_info, score, start_time) {
 
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function detect_player_choice() {
-        var choices = document.getElementById(container_id).contentWindow.document.getElementsByName("choice")
+        var choices = game_iframe.contentWindow.document.getElementsByName("choice")
         if (!choices[0]) {
             window.requestAnimationFrame(detect_player_choice);
         }
@@ -706,11 +635,17 @@ function embed_question(question_info, score, start_time) {
     detect_player_choice()
 }
 
+function random_territory() {
+    var territory = choice(territories())
+    while (neighbors(territory).length == 0) {
+        territory = choice(territories())
+    }
+    return territory
+}
+
 function next_question(question_info, score, start_time) {
-    if (question_info) {
-        embed_question(question_info, score, start_time)
+    if (!question_info) {
+        question_info = build_question(random_territory())
     }
-    else {
-        embed_question(build_question(choice(territories())), score, start_time)
-    }
+    embed_question(question_info, score, start_time)
 }
