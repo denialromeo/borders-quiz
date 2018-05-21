@@ -1,0 +1,89 @@
+{
+	"countries": {
+		"anthem": "\"Pale Blue Dot\"",
+		"click_message": "(Click the countries!)",
+		"description": "(The world's countries.)",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+1rkqDW9ccbr840fEN9Ao5sq2fVrYXPkirKjnN4oyD&viz=MAP&h=false&t=1&l=col3",
+		"title": "World Countries"
+	},
+
+	"usa_states": {
+		"anthem": "\"The Star-Spangled Banner\"",
+		"click_message": "(Click the states!)",
+		"description": "(U.S. states.)",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+1wm55ugZ3RffprAFPRklG254KDInGYwtYy_-5oQQX&viz=MAP&h=false&t=1&l=col3",
+		"title": "USA States"
+	},
+
+	"california_counties": {
+		"anthem": "\"I Love You, California\"",
+		"click_message": "(Click the counties!)",
+		"description": "(California's counties.)",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col4+from+1QxmdyxJWnq5IgFpS5zGv9M1v25l84InpK8y-yY_m&viz=MAP&h=false&t=1&l=col4",
+		"title": "California Counties"
+	},
+	
+	"canada_provinces": {
+		"anthem": "\"O Canada!\"",
+		"click_message": "(Click the countries!)",
+		"description": "(Canada's provinces.)",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col4+from+1WLNv__CToy_grFi67jOIKJPmy5KlA0Ihh6j0sW0H&viz=MAP&h=false&t=1&l=col4",
+		"title": "Canada Provinces"
+	},
+	
+	"mexico_states": {
+		"anthem": "\"Mexicanos, al Grito de Guerra!\"",
+		"click_message": "(Click the states!)",
+		"description": "(Mexico's states.)",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col5+from+19KyBvfdcDLNkVwn466Aa9asNfTMsPhwsasNdimAP&viz=MAP&h=false&t=1&l=col5",
+		"title": "Mexico States"
+	},
+	
+	"india_states": {
+		"anthem": "\"Jana Gana Mana\"",
+		"click_message": "(Click the states!)",
+		"description": "(India's states.)",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+1ic8zKmb8ROuFbiQMLXvdA6u9EPJaJjWq6pyZDC83&viz=MAP&h=false&t=1&l=col3",
+		"title": "India States"
+	},
+	
+	"pakistan_administrative_units": {
+		"anthem": "\"Qaumi Taranah\"",
+		"click_message": "(Click the administrative units!)",
+		"description": "(Pakistan's administrative units.)",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1CFcoHdOuF_S98-v5E8RuFOobTOFYzq6Gz4FfVoK5&viz=MAP&h=false&t=1&l=col0",
+		"title": "Pakistan Administrative Units"
+	},
+	
+	"china_provinces": {
+		"anthem": "\"Yiyongjun Jinxingqu\"",
+		"click_message": "(Click the provinces!)",
+		"description": "(China's provinces.)",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col12+from+1ZpUS_-CvOh40_HaHXJ4TGjfOO0n9VPglLpTtlFg9&viz=MAP&h=false&t=1&l=col12",
+		"title": "China Provinces"
+	},
+	
+	"japan_prefectures": {
+		"anthem": "\"Kimigayo\"",
+		"click_message": "(Click the prefectures!)",
+		"description": "(Japan's prefectures.)",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1e1KEhbC1opeDS1IhQCVCyyR4X9U1D1eVB_gfmIdy&viz=MAP&h=false&t=1&l=col2",
+		"title": "Japan Prefectures"
+	},
+	
+	"russia_federal_subjects": {
+		"anthem": "\"Patrioticheskaya Pesnya\"",
+		"click_message": "(Click the federal subjects!)",
+		"description": "(Russia's federal subjects.)",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1HPB9NFQFQECAii23-N-ZhjptEt2AJMOV7Onwl_Kz&viz=MAP&h=false&t=1&l=col2",
+		"title": "Russia Federal Subjects"
+	},
+	
+	"australia_states": {
+		"anthem": "\"Advance Australia Fair\"",
+		"click_message": "(Click the states!)",
+		"description": "(Australia's states.)",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1AyYgmyEMeKnAqdAGoeQCfkOROAGAQYnzlzvV92Bo&viz=MAP&h=false&t=1&l=col2",
+		"title": "Australia States"
+	}
+}

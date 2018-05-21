@@ -1,52 +1,58 @@
 var container_id = "game-container"
-var timer_id = "timer"
-var timer_process_id = 0
 var google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 var borders_json_path = "/borders-quiz/json/borders.json"
 var google_maps_zoom_levels_json_path = "/borders-quiz/json/google_maps_zoom_levels.json"
+var quiz_modes_json_path = "/borders-quiz/json/quiz_modes.json"
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
+
+function quiz_modes_metadata() {
+    var json = {}
+    $.ajax({ url: quiz_modes_json_path, async: false, success: function (r) { json = r } })
+    return json
+}
 
 function parse_url() {
     var fields =  URI(window.location.href).fragment(true)
     var modes = []
-    if (fields.countries) {
-        modes = modes.concat("countries")
-    }
-    if (fields.usa_states) {
-        modes = modes.concat("usa_states")
-    }
-    if (fields.india_states) {
-        modes = modes.concat("india_states")
-    }
-    if (fields.pakistan_administrative_units) {
-        modes = modes.concat("pakistan_administrative_units")
-    }
-    if (fields.canada_provinces) {
-        modes = modes.concat("canada_provinces")
-    }
-    if (fields.mexico_states) {
-        modes = modes.concat("mexico_states")
-    }
-    if (fields.china_provinces) {
-        modes = modes.concat("china_provinces")
-    }
-    if (fields.japan_prefectures) {
-        modes = modes.concat("japan_prefectures")
-    }
-    if (fields.australia_states) {
-        modes = modes.concat("australia_states")
-    }
-    if (fields.south_korea_provinces) {
-        modes = modes.concat("south_korea_provinces")
-    }
-    if (fields.california_counties) {
-        modes = modes.concat("california_counties")
+    for (var mode in quiz_modes_metadata()) {
+        if (fields[mode]) {
+            modes.push(mode)
+        }
     }
     if (modes.length == 0) { // Default behavior when app visited.
         modes = ["countries"]
     }
     return modes
+}
+
+function load_url(newLocation) {
+    window.location.href = newLocation
+    window.location.reload()
+}
+
+function game_page_bottom_message() {
+    message  = "<p>You can also try these quiz modes!</p>"
+    message += "<ul>"
+    var modes_json = quiz_modes_metadata()
+    var fields = parse_url()
+    for (var mode in modes_json) {
+        if (fields.contains(mode)) { 
+            continue 
+        }
+        var mode_metadata = modes_json[mode]
+        message += "<li>"
+        message += "<a onclick='load_url(this.href)' href='#?"
+        message += mode
+        message += "=true'>"
+        message += mode_metadata.anthem
+        message += "</a>"
+        message += "&nbsp;"
+        message += mode_metadata.description
+        message += "</li>"
+    }
+    message += "</ul>"
+    return message
 }
 
 function territories() {
@@ -447,11 +453,13 @@ function test_question(t) {
 // Above code can be freely removed.
 
 // Timer code.
+var timer_process_id = 0
+var timer_id = "timer"
 function format_time(raw_date) {
     function prepend_zero(time) {
         return (time < 10 ? "0" + time : time)
     }
-    var total_seconds = raw_date/1000
+    var total_seconds = Math.floor(raw_date/1000)
     var hours = prepend_zero(Math.floor(total_seconds/60/60))
     var minutes = prepend_zero(Math.floor((total_seconds/60) % 60))
     var seconds = prepend_zero(Math.floor(total_seconds % 60))
@@ -460,7 +468,7 @@ function format_time(raw_date) {
 }
 function timer(start_time) {
     var time_elapsed = format_time(Date.now() - start_time)
-    var timer_span = document.getElementById(container_id).contentWindow.document.getElementById("timer")
+    var timer_span = document.getElementById(container_id).contentWindow.document.getElementById(timer_id)
     if (timer_span) {
         timer_span.innerHTML = time_elapsed
     }
@@ -478,7 +486,6 @@ function on_mobile_device() {
 
 function embed(src) {     
     document.getElementById(container_id).srcdoc ="<head><link rel='stylesheet' href='/borders-quiz/css/borders-quiz.css'/></head><body>" + src + "</body>"
-    document.getElementById(container_id).style="border: 2px solid black;"
 }
 
 function bottom_message(territory) {
@@ -517,6 +524,9 @@ function embed_map(question_info, score, start_time) {
     else if (dict_name(territory) == 'south_korea_provinces') {
         zoom = 7
     }
+    else if (dict_name(territory) == 'russia_federal_subjects') {
+        zoom = 3
+    }
     else if (dict_name(territory) == 'california_counties') {
         if (['Pacific Ocean', 'Oregon_', 'Mexico__', 'Nevada_', 'Arizona__'].contains(territory)) {
             zoom = 5
@@ -527,46 +537,15 @@ function embed_map(question_info, score, start_time) {
     }
 
     var coordinates_ = coordinates(territory)
-    var url = ""
-    if (dict_name(territory) == 'california_counties') {
-        url = "https://fusiontables.google.com/embedviz?q=select+col4+from+1QxmdyxJWnq5IgFpS5zGv9M1v25l84InpK8y-yY_m&viz=MAP&h=false&t=1&l=col4"
-        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
-    }
-    else if (dict_name(territory) == 'mexico_states') {
-        url = "https://fusiontables.google.com/embedviz?q=select+col5+from+19KyBvfdcDLNkVwn466Aa9asNfTMsPhwsasNdimAP&viz=MAP&h=false&t=1&l=col5"
-        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
-    }
-    else if (dict_name(territory) == 'japan_prefectures') {
-        url = "https://fusiontables.google.com/embedviz?q=select+col2+from+1e1KEhbC1opeDS1IhQCVCyyR4X9U1D1eVB_gfmIdy&viz=MAP&h=false&t=1&l=col2"
-        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
-    }
-    else if (dict_name(territory) == 'usa_states') {
-        url = "https://fusiontables.google.com/embedviz?q=select+col3+from+1wm55ugZ3RffprAFPRklG254KDInGYwtYy_-5oQQX&viz=MAP&h=false&t=1&l=col3"
-        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
-    }
-    else if (dict_name(territory) == 'china_provinces') {
-        url = "https://fusiontables.google.com/embedviz?q=select+col12+from+1ZpUS_-CvOh40_HaHXJ4TGjfOO0n9VPglLpTtlFg9&viz=MAP&h=false&t=1&l=col12"
-        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
-    }
-    else if (dict_name(territory) == 'india_states') {
-        url = "https://fusiontables.google.com/embedviz?q=select+col3+from+1ic8zKmb8ROuFbiQMLXvdA6u9EPJaJjWq6pyZDC83&viz=MAP&h=false&t=1&l=col3"
-        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
-    }
-    else if (dict_name(territory) == 'canada_provinces') {
-        url = "https://fusiontables.google.com/embedviz?q=select+col4+from+1WLNv__CToy_grFi67jOIKJPmy5KlA0Ihh6j0sW0H&viz=MAP&h=false&t=1&l=col4"
-        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
-    }
-    else if (dict_name(territory) == 'australia_states') {
-        url = "https://fusiontables.google.com/embedviz?q=select+col2+from+1AyYgmyEMeKnAqdAGoeQCfkOROAGAQYnzlzvV92Bo&viz=MAP&h=false&t=1&l=col2"
-        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
-    }
-    else if (dict_name(territory) == 'pakistan_administrative_units') {
-        url = "https://fusiontables.google.com/embedviz?q=select+col0+from+1CFcoHdOuF_S98-v5E8RuFOobTOFYzq6Gz4FfVoK5&viz=MAP&h=false&t=1&l=col0"
-        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
-    }
-    else {
-        url = "https://fusiontables.google.com/embedviz?q=select+col3+from+1rkqDW9ccbr840fEN9Ao5sq2fVrYXPkirKjnN4oyD&viz=MAP&h=false&t=1&l=col3"
-        url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
+
+    url = ""
+    var modes_json = quiz_modes_metadata()
+    for (var mode in modes_json) {
+        if (dict_name(territory) == mode) {
+            url = modes_json[mode].map_embed_base_url
+            url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
+            break
+        }
     }
 
     var map_id = on_mobile_device() ? "map-mobile" : "map"
@@ -585,38 +564,12 @@ function embed_map(question_info, score, start_time) {
     function bottom_right_message_map(territory) {
         var message = "" 
         message += "<p id='click-the-states-message'>"
-        if (dict_name(territory) == 'mexico_states') {
-            message += "(Click the states!)"
-        }
-        else if (dict_name(territory) == 'india_states') {
-            message += "(Click the states!)"
-        }
-        else if (dict_name(territory) == 'pakistan_administrative_units') {
-            message += "(Click the administrative units!)"
-        }
-        else if (dict_name(territory) == 'australia_states') {
-            message += "(Click the states!)"
-        }
-        else if (dict_name(territory) == 'china_provinces') {
-            message += "(Click the provinces!)"
-        }
-        else if (dict_name(territory) == 'canada_provinces') {
-            message += "(Click the provinces!)"
-        }
-        else if (dict_name(territory) == 'japan_prefectures') {
-            message += "(Click the prefectures!)"
-        }
-        else if (dict_name(territory) == 'usa_states') {
-            message += "(Click the states!)"
-        }
-        else if (dict_name(territory) == 'south_korea_provinces') {
-            message += "(Clearer map <a href='https://en.wikipedia.org/wiki/Provinces_of_Korea#/media/File:Provinces_of_South_Korea_(numbered_map).png' target='_blank'>here</a>.)"
-        }
-        else if (dict_name(territory) == 'california_counties') {
-            message += "(Click the counties!)"
-        }
-        else {
-            message += "(Click the countries!)"
+        var modes_json = quiz_modes_metadata()
+        for (var mode in modes_json) {
+            if (dict_name(territory) == mode) {
+                message += modes_json[mode].click_message
+                break
+            }
         }
         message += "</p>"
         return message 
@@ -690,36 +643,12 @@ function bottom_right_message(score, start_time) {
     return question 
 }
 
-function title(territory) {
-    if (dict_name(territory) == 'countries') {
-        return "World Countries"
-    }
-    if (dict_name(territory) == 'usa_states') {
-        return "USA States"
-    }
-    if (dict_name(territory) == 'california_counties') {
-        return "California Counties"
-    }
-    if (dict_name(territory) == 'mexico_states') {
-        return "Mexico States"
-    }
-    if (dict_name(territory) == 'canada_provinces') {
-        return "Canada Provinces"
-    }
-    if (dict_name(territory) == 'india_states') {
-        return "India States"
-    }
-    if (dict_name(territory) == 'pakistan_administrative_units') {
-        return "Pakistan Administrative Units"
-    }
-    if (dict_name(territory) == 'china_provinces') {
-        return "China Provinces"
-    }
-    if (dict_name(territory) == 'japan_prefectures') {
-        return "Japan Prefectures"
-    }
-    if (dict_name(territory) == 'australia_states') {
-        return "Australia States"
+function quiz_title(territory) {
+    var modes_json = quiz_modes_metadata()
+    for (var mode in modes_json) {
+        if (dict_name(territory) == mode) {
+            return modes_json[mode].title
+        }
     }
 }
 
@@ -728,7 +657,7 @@ function embed_question(question_info, score, start_time) {
     var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
     question  = "<div id='" + question_container_id + "'>"
     question += "<div id='quiz_title'>"
-    question += title(question_info.territory)
+    question += quiz_title(question_info.territory)
     question += "</div>"
     question += "<div id='"
     question += (on_mobile_device() ? "question-text-mobile" : "question-text")

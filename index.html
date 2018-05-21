@@ -1,5 +1,11 @@
 <html>
 	<body>
+
+		<iframe id="game-container" width="40%" height="510px" scrolling="yes" ></iframe>
+		<span style="display:block;margin-bottom:15px;"></span>
+
+		<link rel="stylesheet" href="/borders-quiz/css/game-page.css"/>
+
 		<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<script src="borders-quiz/js/URI.js"></script>
 		<script src="borders-quiz/js/borders-quiz.js"></script>
@@ -11,53 +17,11 @@
 			    }
 				next_question(null, {correct:0, wrong:0}, Date.now())
 			});
-			function load_url(newLocation) {
-			    window.location.href = newLocation
-			    window.location.reload()
-			}
 		</script>
-
-		<iframe id="game-container" width="40%" height="510px" scrolling="yes" ></iframe>
-		<span style="display:block;margin-bottom:15px;"></span>
 
 		<script>
-		var dict_names = parse_url()
-		if (dict_names.length > 0) {
-		    document.write("<p>You can also try these quiz modes!</p>")
-		    document.write("<ul>")
-		    if (!dict_names.contains('usa_states')) {
-		        document.write("<li>&#34<a href='#?usa_states=true' onclick='load_url(this.href)'>The Star-Spangled Banner</a>&#34; (U.S. states.)</li>")
-		    }
-		    if (!dict_names.contains('california_counties')) {
-		        document.write("<li>&#34<a href='#?california_counties=true' onclick='load_url(this.href)'>I Love You, California</a>&#34; (California's counties.)</li>")
-		    }
-		    if (!dict_names.contains('mexico_states')) {
-		        document.write("<li>&#34;<a href='#?mexico_states=true' onclick='load_url(this.href)'>Mexicanos, al grito de guerra!</a>&#34; (Mexico's states.)</li>")
-		    }
-		    if (!dict_names.contains('canada_provinces')) {
-		        document.write("<li>&#34;<a href='#?canada_provinces=true' onclick='load_url(this.href)'>O Canada!</a>&#34; (Canada's provinces.)</li>")
-		    }
-		    if (!dict_names.contains('india_states')) {
-		        document.write("<li>&#34<a href='#?india_states=true' onclick='load_url(this.href)'>Jana Gana Mana</a>&#34; (India's states.)</li>")
-		    }
-		    if (!dict_names.contains('pakistan_administrative_units')) {
-		        document.write("<li>&#34<a href='#?pakistan_administrative_units=true' onclick='load_url(this.href)'>Qaumi Taranah</a>&#34; (Pakistan's administrative units.)</li>")
-		    }
-		    if (!dict_names.contains('china_provinces')) {
-		        document.write("<li>&#34<a href='#?china_provinces=true' onclick='load_url(this.href)'>Yiyongjun Jinxingqu</a>&#34; (China's provinces.)</li>")
-		    }
-		    if (!dict_names.contains('japan_prefectures')) {
-		        document.write("<li>&#34<a href='#?japan_prefectures=true' onclick='load_url(this.href)'>Kimigayo</a>&#34; (Japan's prefectures.)</li>")
-		    }
-		    if (!dict_names.contains('australia_states')) {
-		        document.write("<li>&#34<a href='#?australia_states=true' onclick='load_url(this.href)'>Advance Australia Fair</a>&#34; (Australia's states.)</li>")
-		    }
-		    if (!dict_names.contains('countries')) {
-		        document.write("<li>&#34<a href='#?countries=true' onclick='load_url(this.href)'>Pale Blue Dot</a>&#34; (The world's countries.)</li>")
-		    }
-		    document.write("</ul>")
-		}
+		    document.write(game_page_bottom_message())
 		</script>
-		
+
 	</body>
 </html>
