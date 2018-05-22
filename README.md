@@ -39,7 +39,13 @@ gem install jekyll
 
 The game can also be played on my website [here](http://danielmoore.us/borders-quiz). The version of the game on my website will always be the most updated, though I'll try to update this repo as well if I make any major changes.
 
-Some notes on [borders.json](/borders-quiz/json/borders.json) -
+**Development Guide**
 
-* Country borders transcribed from [Wikipedia](https://en.wikipedia.org/wiki/List_of_countries_and_territories_by_land_and_maritime_borders).
-* Whenever there's a chance multiple territories with the same name will be in the same quiz (e.g. Mexico as bordering Arizona, Mexico as bordering Guatemala), they're distinguished between by different numbers of trailing underscores (e.g. "Mexico" vs. "Mexico_"). Underscores are stripped when presented to the user.
+Adding a quiz is simple. Just add relevant entries to [borders.json](/borders-quiz/json/borders.json) and [quiz_modes.json](/borders-quiz/json/quiz_modes.json). You only need to deal with the JavaScript if you want specialized control of exactly where maps are centered or to tweak answer choices.
+
+However, you must observe these rules or the game will break -
+
+* The top-level labels of borders.json and quiz_modes.json *must* match.
+* All entries in borders.json *must* be unique. Add trailing underscores when needed to avoid conflicts with entries in existing quiz modess.
+
+You can find fusion table data for the map overlays [here](https://research.google.com/tables?source=ft2573812&corpus=fusion)
