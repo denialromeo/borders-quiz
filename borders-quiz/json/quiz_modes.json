@@ -101,6 +101,16 @@
 		"title": "Germany States"
 	},
 	
+	"england_ceremonial_counties": {
+		"anthem": "\"God Save the Queen\"",
+		"click_message": "(Click the counties!)",
+		"default_zoom_level": 7,
+		"description": "(England's ceremonial counties.)",
+		"geocode_append": " County England",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1JXIDp4FOMTOES9t1EuZlSurdA_LgLhhHQK1MhVFa&viz=MAP&h=false&t=1&l=col2",
+		"title": "England Ceremonial Counties"
+	},
+
 	"australia_states": {
 		"anthem": "\"Advance Australia Fair\"",
 		"click_message": "(Click the states!)",
