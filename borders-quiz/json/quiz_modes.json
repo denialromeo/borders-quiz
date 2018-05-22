@@ -22,7 +22,7 @@
 	
 	"canada_provinces": {
 		"anthem": "\"O Canada!\"",
-		"click_message": "(Click the countries!)",
+		"click_message": "(Click the provinces!)",
 		"default_zoom_level": 5,
 		"description": "(Canada's provinces.)",
 		"geocode_append": "",
@@ -83,11 +83,22 @@
 	"russia_federal_subjects": {
 		"anthem": "\"Patrioticheskaya Pesnya\"",
 		"click_message": "(Click the federal subjects!)",
-		"default_zoom_level": 3,
+		"default_zoom_level": 4,
 		"description": "(Russia's federal subjects.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1HPB9NFQFQECAii23-N-ZhjptEt2AJMOV7Onwl_Kz&viz=MAP&h=false&t=1&l=col2",
 		"title": "Russia Federal Subjects"
+	},
+	
+	"germany_states": {
+		"anthem": "\"Deutschlandlied\"",
+		"click_message": "(Click the states!)",
+		"default_zoom_level": 5,
+		"description": "(Germany's states.)",
+		"geocode_append": "",
+		"map_embed_base_url": "",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1LJBiyxxI5VmRg5ELJ6wMXIUuxbDf-YsYgkmldZ3V&viz=MAP&h=false&t=1&l=col0",
+		"title": "Germany States"
 	},
 	
 	"australia_states": {

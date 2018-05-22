@@ -30,11 +30,6 @@ function parse_url() {
     return modes
 }
 
-function load_url(newLocation) {
-    window.location.href = newLocation
-    window.location.reload()
-}
-
 function game_page_bottom_message() {
     var modes_json = quiz_modes_metadata()
     var fields = parse_url()
@@ -46,7 +41,7 @@ function game_page_bottom_message() {
             continue 
         }
         message += "<li>"
-            message += "<a onclick='load_url(this.href)' href='#?"
+            message += "<a onclick='window.location.href=this.href;window.location.reload()' href='#?"
             message += mode
             message += "=true'>"
                 message += modes_json[mode].anthem
@@ -84,7 +79,7 @@ function neighbors(territory) {
     return []
 }
 
-function dict_name(territory) {
+function quiz_mode_of(territory) {
     if (!borders_json) {
         $.ajax({ url: borders_json_path, async: false, success: function (r) { borders_json = r } })
     }
@@ -106,7 +101,7 @@ function google_maps_zoom_level(territory) {
         return google_maps_zoom_levels_json[territory]
     }
 
-    return quiz_modes_metadata()[dict_name(territory)].default_zoom_level
+    return quiz_modes_metadata()[quiz_mode_of(territory)].default_zoom_level
 }
 
 function geocode(address) {
@@ -118,30 +113,37 @@ function geocode(address) {
 
 function coordinates(address) {
 
-    address += quiz_modes_metadata()[dict_name(address)].geocode_append
-
     // To give the best view of the borders we want to show on the embedded map.
     tweaked_addresses = {
-        'Afghanistan_': 'FATA Pakistan',
-        'China_': 'Nepal',
-        'China__': 'Gilgit-Baltistan',
-        'Georgia': 'Georgia Country',
-        'Georgia__': 'Georgia Country',
-        'India': 'Nepal',
-        'India_': 'Dharakh India',
-        'India__': 'Gomo Co Tibet',
-        'Iran_': 'Sefidabeh',
-        'Italy': 'San Marino',
-        'Mexico__': "Baja California",
-        'North Korea_': 'Cheorwon South Korea',
-        'Pacific Ocean': "Cooperstown California",
-        'Punjab_': 'Punjab Pakistan',
-        'Russia_': 'Ulan Bator',
-        'Washington': 'Washington State'
+        "Afghanistan_": "FATA Pakistan",
+        "Arizona_": "Arizona USA",
+        "California_": "California State",
+        "China_": "Nepal",
+        "China__": "Gilgit-Baltistan",
+        "France_": "Burgen Germany",
+        "Georgia": "Georgia Country",
+        "Georgia__": "Georgia Country",
+        "India": "Nepal",
+        "India_": "Dharakh India",
+        "India__": "Gomo Co Tibet",
+        "Iran_": "Sefidabeh",
+        "Italy": "San Marino",
+        "Maldives": "Addu City",
+        "Mexico__": "Baja California",
+        "New Mexico_": "New Mexico State",
+        "North Korea_": "Cheorwon South Korea",
+        "Pacific Ocean": "Cooperstown California",
+        "Punjab_": "Punjab Pakistan",
+        "Russia_": "Ulan Bator",
+        "Texas_": "Texas State",
+        "Washington": "Washington State"
     }
     
     if (tweaked_addresses[address]) {
         address = tweaked_addresses[address]
+    }
+    else {
+        address += quiz_modes_metadata()[quiz_mode_of(address)].geocode_append
     }
 
     return geocode(address).results[0].geometry.location
@@ -172,50 +174,26 @@ function choice(l) {
 ////
 
 function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
-    // China and Russia make the "graph distance" answer mechanic a little pointless.
-    // If India and Poland are just three countries apart (India → China → Russia → Poland),
-    // a question asking if they border each other is a bit too easy.
-    if (['China', 'Russia'].contains(neighbor)) {
-        return true
-    }
-    // China as bordering India poses the same problem.
-    if (neighbor == 'China_') {
-        return true
-    }
-    // East and West Europe are a bit too easy to discern between. So we block all roads through Germany and Italy.
-    if (['Germany', 'Italy'].contains(neighbor)) {
-        if (!['Denmark', 'Vatican City', 'San Marino'].contains(territory)) {
-            return true
+
+    // Brazil borders all but two countries in South America, so to give tighter answer choices,
+    // we exclude it from graph searches.
+    remove_paths_through = [ "Brazil", "Canada_", "China", "China_", "Germany", "Italy", "Mexico_",
+                             "Morocco", "Russia", "Spain", "Turkey", "United States (Continental)"]
+
+    // But some territories only border that one territory, so we need to keep those paths in the loop.
+    unless_started_from = { "Canada_": ["Alaska"],
+                            "Germany": ["Denmark"],
+                            "Italy": ["Vatican City", "San Marino"],
+                            "Spain": ["Portugal"]
+                          }
+
+    if (remove_paths_through.contains(neighbor)) {
+        if (unless_started_from[neighbor]) {
+            return !unless_started_from[neighbor].contains(territory)
         }
-    }
-    // Morocco borders Spain through Ceuta. Algeria pretty obviously doesn't border Spain.
-    if (neighbor == 'Morocco') {
         return true
     }
-    if (neighbor == 'Spain') {
-        if (!['Portugal'].contains(territory)) {
-            return true
-        }
-    }
-    // Turkey similarly borders a few obviously different regions, so let's block roads through it.
-    if (neighbor == 'Turkey') {
-        return true
-    }
-    // Likewise for Canada and Mexico when called from a U.S. state. Washington and Maine both border Canada,
-    // but are on opposite sides of the country.
-    if (['Canada_', 'Mexico_'].contains(neighbor)) {
-        if (territory != 'Alaska') {
-            return true
-        }
-    }
-    // Likewise for the U.S. when called from Canada. Alberta and New Brunswick are on opposite sides of the country.
-    if (neighbor == 'United States (Continental)') {
-        return true
-    }
-    // Brazil borders every country in South America except Ecuador and Chile!
-    if (neighbor == 'Brazil') {
-        return true
-    }
+    
     return false
 }
 
@@ -241,9 +219,8 @@ function breadth_first_search(territory, depth) {
     return territory_distance_dict
 }
 
-
 // Constraint: Input must have at least one bordering territory and one two territories away.
-// If not, must add case to this function or game will break.
+// If input has no territories two away, add entry to replace_possible_answers or game will break.
 function build_question(territory) {
     var num_wrong_answers = 3
     var wrong_answers = sample(neighbors(territory), num_wrong_answers)
@@ -255,114 +232,104 @@ function build_question(territory) {
             possible_answers.push(t)
         }
     }
-    // These are needed because otherwise there'd be no possible answers and we'd hit a game-breaking bug.
-    //
-    // This is also our only chance to include island countries, which we can't put in borders.json.
-    if (['United Kingdom', 'Ireland'].contains(territory)) {
-        possible_answers = ['France', 'Netherlands', 'Belgium']
+    
+    // Note that all of the added territories are islands.
+    var add_possible_answers = {
+        "Bangladesh": ["Maldives", "Sri Lanka"],
+        "Cameroon": ["São Tomé and Principe"],
+        "China": ["Taiwan"],
+        "Equatorial Guinea": ["São Tomé and Principe"],
+        "Gabon": ["São Tomé and Principe"],
+        "Guinea": ["Cape Verde"],
+        "Guinea-Bissau": ["Cape Verde"],
+        "India": ["Maldives", "Sri Lanka"],
+        "Indonesia": ["Australia", "Fiji", "New Zealand", "Singapore"],
+        "Israel": ["Cyprus"],
+        "Italy": ["Malta"],
+        "Lebanon": ["Cyprus"],
+        "Libya": ["Malta"],
+        "Malaysia": ["Philippines", "Singapore"],
+        "Mauritania": ["Cape Verde"],
+        "Mozambique": ["Comoros", "Madagascar", "Mauritius", "Seychelles"],
+        "New Brunswick": ["Prince Edward Island"],
+        "New South Wales": ["Tasmania"],
+        "Nigeria": ["São Tomé and Principe"],
+        "Nova Scotia": ["Prince Edward Island"],
+        "Qatar": ["Bahrain"],
+        "Saudi Arabia": ["Bahrain"],
+        "Senegal": ["Cape Verde"],
+        "South Australia": ["Tasmania"],
+        "Syria": ["Cyprus"],
+        "Tanzania": ["Comoros", "Madagascar", "Mauritius", "Seychelles"],
+        "The Gambia": ["Cape Verde"],
+        "Tunisia": ["Malta"],
+        "Turkey": ["Cyprus"],
+        "United Arab Emirates": ["Bahrain"],
+        "Venezuela": ["Trinidad and Tobago"],
+        "Victoria": ["Tasmania"],
+        "Vietnam": ["Philippines"]
     }
-    else if (['Dominican Republic', 'Haiti'].contains(territory)) {
-        possible_answers = ['Cuba', 'Jamaica']
+
+    var replace_possible_answers = {
+        "Canada": ["Greenland"],
+        "Dominican Republic": ["Cuba", "Jamaica"], // If removed, game will break.
+        "Ehime": ["Hokkaido", "Okinawa"], // If removed, game will break.
+        "Finland": ["Denmark", "Greenland", "Iceland"],
+        "Haiti": ["Cuba", "Jamaica"], // If removed, game will break.
+        "Ireland": ["Belgium", "France", "Netherlands"], // If removed, game will break.
+        "Mongolia": ["Kazakhstan"],
+        "North Korea": ["Japan"],
+        "Norway": ["Denmark", "Greenland", "Iceland"],
+        "San Marino": ["Vatican City"],
+        "South Korea": ["Japan"],
+        "Sweden": ["Denmark", "Greenland", "Iceland"],
+        "Tokushima": ["Hokkaido", "Okinawa"], // If removed, game will break.
+        "United Kingdom": ["Belgium", "France", "Netherlands"], // If removed, game will break.
+        "Vatican City": ["San Marino"]
     }
-    else if (['Ehime', 'Tokushima'].contains(territory)) {
-        possible_answers = ['Okinawa', 'Hokkaido']
+
+    if (add_possible_answers[territory]) {
+        possible_answers = possible_answers.concat(add_possible_answers[territory])
     }
-    // These are just to play with the player by giving them less obvious answers.
-    else if (['Finland', 'Sweden', 'Norway'].contains(territory)) {
-        possible_answers = ['Denmark', 'Iceland', 'Greenland']
+    else if (replace_possible_answers[territory]) {
+        possible_answers = replace_possible_answers[territory]
     }
-    else if (['Canada'].contains(territory)) {
-        possible_answers = ['Greenland']
-    }
-    else if (['North Korea', 'South Korea'].contains(territory)) {
-        possible_answers = ['Japan']
-    }
-    else if (['Mongolia'].contains(territory)) {
-        possible_answers = ['Kazakhstan']
-    }
-    else if (['China'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Taiwan'])
-    }
-    else if (['Vietnam'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Philippines'])
-    }
-    else if (['San Marino'].contains(territory)) {
-        possible_answers = ['Vatican City']
-    }
-    else if (['Vatican City'].contains(territory)) {
-        possible_answers = ['San Marino']
-    }
-    else if (['Malaysia'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Singapore', 'Philippines'])
-    }
-    else if (['Indonesia'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Singapore', 'Australia', 'New Zealand', 'Fiji'])
-    }
-    else if (['New South Wales', 'Victoria', 'South Australia'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Tasmania'])
-    }
-    else if (['Nova Scotia', 'New Brunswick'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Prince Edward Island'])
-    }
-    else if (['Italy', 'Libya', 'Tunisia'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Malta'])
-    }
-    else if (['Mauritania', 'Senegal', 'The Gambia', 'Guinea-Bissau', 'Guinea'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Cape Verde'])
-    }
-    else if (['Nigeria', 'Cameroon', 'Equatorial Guinea', 'Gabon'].contains(territory)) {
-        possible_answers = possible_answers.concat(['São Tomé and Principe'])
-    }
-    else if (['Mozambique', 'Tanzania'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Madagascar', 'Comoros', 'Seychelles', 'Mauritius'])
-    }
-    else if (['Saudi Arabia', 'Qatar', 'United Arab Emirates'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Bahrain'])
-    }
-    else if (['Israel', 'Lebanon', 'Syria', 'Turkey'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Cyprus'])
-    }
-    else if (['India', 'Bangladesh'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Sri Lanka', 'Maldives'])
-    }
-    else if (['Venezuela'].contains(territory)) {
-        possible_answers = possible_answers.concat(['Trinidad and Tobago'])
-    }
-    ////
+
     var answer = choice(possible_answers)
     return {territory: territory, answer: answer, wrong_answers: wrong_answers, chosen:""}
 }
 
 function prepend_the(territory, capitalize_the=false) {
     var the = (capitalize_the ? "The " : "the ")
-    var should_prepend_the = [ 'Australian Capital Territory',
-                               'Baltic Sea',
-                               'Black Sea',
-                               'Caspian Sea',
-                               'Central African Republic',
-                               'Democratic Republic of the Congo',
-                               'Dominican Republic',
-                               'Federally Administered Tribal Areas',
-                               'Islamabad Capital Territory',
-                               'Maldives',
-                               'Mediterranean Sea',
-                               'Mississippi River',
-                               'Netherlands',
-                               'Northern Territory',
-                               'Northwest Territories',
-                               'Pacific Ocean',
-                               'Persian Gulf',
-                               'Philippines',
-                               'Red Sea',
-                               'Republic of the Congo',
-                               'Seychelles',
-                               'State of Mexico',
-                               'United Arab Emirates',
-                               'United Kingdom',
-                               'United States (Continental)',
-                               'United States',
-                               'Western Sahara',
-                               'Yukon Territory' ]
+    var should_prepend_the = [ "Australian Capital Territory",
+                               "Baltic Sea",
+                               "Black Sea",
+                               "Caspian Sea",
+                               "Central African Republic",
+                               "Democratic Republic of the Congo",
+                               "Dominican Republic",
+                               "Federally Administered Tribal Areas",
+                               "Islamabad Capital Territory",
+                               "Maldives",
+                               "Mediterranean Sea",
+                               "Mississippi River",
+                               "Netherlands",
+                               "Netherlands_",
+                               "Northern Territory",
+                               "Northwest Territories",
+                               "Pacific Ocean",
+                               "Persian Gulf",
+                               "Philippines",
+                               "Red Sea",
+                               "Republic of the Congo",
+                               "Seychelles",
+                               "State of Mexico",
+                               "United Arab Emirates",
+                               "United Kingdom",
+                               "United States (Continental)",
+                               "United States",
+                               "Western Sahara",
+                               "Yukon Territory" ]
     return ((should_prepend_the.contains(territory) ? the : "") + territory)
 }
 
@@ -427,7 +394,7 @@ function format_time(raw_date) {
     function prepend_zero(time) {
         return (time < 10 ? "0" + time : time)
     }
-    var total_seconds = Math.floor(raw_date/1000)
+    var total_seconds = Math.round(raw_date/1000)
     var hours = prepend_zero(Math.floor(total_seconds/60/60))
     var minutes = prepend_zero(Math.floor((total_seconds/60) % 60))
     var seconds = prepend_zero(Math.floor(total_seconds % 60))
@@ -458,7 +425,7 @@ function embed(src) {
 
 function bottom_message(territory) {
 
-    var a = neighbors(territory)
+    var a = neighbors(territory).sort()
 
     var s = ""
     if (a.length == 0) {
@@ -489,7 +456,7 @@ function embed_map(question_info, score, start_time) {
     var coordinates_ = coordinates(territory)
     var zoom = google_maps_zoom_level(territory)
 
-    var url = quiz_modes_metadata()[dict_name(territory)].map_embed_base_url
+    var url = quiz_modes_metadata()[quiz_mode_of(territory)].map_embed_base_url
     url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
 
     var map_id = on_mobile_device() ? "map-mobile" : "map"
@@ -508,7 +475,7 @@ function embed_map(question_info, score, start_time) {
     function bottom_right_message_map(territory) {
         var message = "" 
         message += "<p id='click-the-states-message'>"
-        message += quiz_modes_metadata()[dict_name(territory)].click_message
+        message += quiz_modes_metadata()[quiz_mode_of(territory)].click_message
         message += "</p>"
         return message 
     }
@@ -558,15 +525,15 @@ function embed_map(question_info, score, start_time) {
 function bottom_right_message(score, start_time) {
     question = "" 
     question += "<p id='score_and_timer'>"
-    question += "<i>"
-    question += "Correct: "
-    question += score.correct
-    question += "&nbsp;&nbsp;Wrong: "
-    question += score.wrong
-    question += "</i>"
-    question += "<br><span id='timer'>"
-    question += format_time(Date.now() - start_time)
-    question += "</span>"
+        question += "<i id='score'>"
+            question += "Correct: "
+            question += score.correct
+            question += "&nbsp;&nbsp;Wrong: "
+            question += score.wrong
+        question += "</i><br>"
+        question += "<span id='timer'>"
+            question += format_time(Date.now() - start_time)
+        question += "</span>"
     question += "</p>"
     function time() {
         var timer_node = game_iframe.contentWindow.document.getElementById("timer")
@@ -585,34 +552,34 @@ function embed_question(question_info, score, start_time) {
     var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
     var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
     question  = "<div id='" + question_container_id + "'>"
-    question += "<div id='quiz_title'>"
-    question += quiz_modes_metadata()[dict_name(question_info.territory)].title
-    question += "</div>"
-    question += "<div id='"
-    question += (on_mobile_device() ? "question-text-mobile" : "question-text")
-    question += "'>"
-    question += "<p>Which of these does not border "
-    question += pretty_print(question_info.territory)
-    question += "?</p>"
-    question += "<form>"
-    for (i = 0; i < choices.length; i++) {
-        var choice = choices[i]
-        var letter = String.fromCharCode(i + 65)
-        question += "<input type='radio' id='"
-        question += choice
-        question += "' value='"
-        question += choice
-        question += "' name='choice'><label for='"
-        question += choice
-        question += "'>&emsp;"
-        question += letter
-        question += ". "
-        question += pretty_print(choice, true)
-        question += "</label><br>"
-    }
-    question += "</form>"
-    question += "</div>"
-    question += bottom_right_message(score, start_time)
+	    question += "<div id='quiz_title'>"
+		    question += quiz_modes_metadata()[quiz_mode_of(question_info.territory)].title
+	    question += "</div>"
+	    question += "<div id='"
+	    question += (on_mobile_device() ? "question-text-mobile" : "question-text")
+	    question += "'>"
+	    	question += "<p>Which of these does not border "
+	    	question += pretty_print(question_info.territory)
+	    	question += "?</p>"
+		    question += "<form>"
+			    for (i = 0; i < choices.length; i++) {
+			        var choice = choices[i]
+			        var letter = String.fromCharCode(i + 65)
+			        question += "<input type='radio' id='"
+			        question += choice
+			        question += "' value='"
+			        question += choice
+			        question += "' name='choice'><label for='"
+			        question += choice
+			        question += "'>&emsp;"
+			        question += letter
+			        question += ". "
+			        question += pretty_print(choice, true)
+			        question += "</label><br>"
+			    }
+		    question += "</form>"
+	    question += "</div>"
+	    question += bottom_right_message(score, start_time)
     question += "</div>"
 
     embed(question)
@@ -637,12 +604,14 @@ function embed_question(question_info, score, start_time) {
 
 function random_territory() {
     var territory = choice(territories())
-    while (neighbors(territory).length == 0) {
+    while (neighbors(territory).length == 0) { // To avoid grabbing an island.
         territory = choice(territories())
     }
     return territory
 }
 
+// A sample question_info object is
+// { territory: "United States", answer: "Guatemala", wrong_answers: ["Mexico", "Canada"], chosen:""}
 function next_question(question_info, score, start_time) {
     if (!question_info) {
         question_info = build_question(random_territory())

@@ -1,4 +1,32 @@
 {
+    
+    "germany_states": {
+        "Austria_": ["Baden-Württemberg", "Czechia_", "Switzerland_", "Bavaria"],
+        "Baden-Württemberg": ["Austria_", "Switzerland_", "France_", "Rhineland-Palatinate", "Hesse", "Bavaria"],
+        "Bavaria": ["Austria_", "Czechia_", "Switzerland_", "Baden-Württemberg", "Hesse", "Thuringia", "Saxony"],
+        "Belgium_": ["France_", "Netherlands_", "Luxembourg_", "North Rhine-Westphalia", "Rhineland-Palatinate"],
+        "Berlin": ["Brandenburg"],
+        "Brandenburg": ["Berlin", "Poland__", "Mecklenburg-West Pomerania", "Lower Saxony", "Saxony-Anhalt", "Saxony"],
+        "Bremen": ["Lower Saxony"],
+        "Czechia_": ["Austria_", "Poland__", "Bavaria", "Saxony"],
+        "Denmark_": ["Schleswig-Holstein"],
+        "France_": ["Belgium_", "Luxembourg_", "Saarland", "Rhineland-Palatinate", "Baden-Württemberg", "Switzerland_"],
+        "Hamburg": ["Lower Saxony", "Schleswig-Holstein"],
+        "Hesse": ["Lower Saxony", "North Rhine-Westphalia", "Rhineland-Palatinate", "Baden-Württemberg", "Bavaria", "Thuringia"],
+        "Luxembourg_": ["Rhineland-Palatinate", "Saarland", "France_", "Belgium_"],
+        "Lower Saxony": ["Bremen", "Netherlands_", "North Rhine-Westphalia", "Hesse", "Thuringia", "Saxony-Anhalt", "Brandenburg", "Mecklenburg-West Pomerania", "Schleswig-Holstein", "Hamburg"],
+        "Mecklenburg-West Pomerania": ["Brandenburg", "Poland__", "Schleswig-Holstein", "Lower Saxony"],
+        "Netherlands_": ["Belgium_", "North Rhine-Westphalia", "Lower Saxony"],
+        "North Rhine-Westphalia": ["Hesse", "Lower Saxony", "Rhineland-Palatinate", "Netherlands_", "Belgium_"],
+        "Poland__": ["Czechia_", "Saxony", "Brandenburg", "Mecklenburg-West Pomerania"],
+        "Rhineland-Palatinate": ["Luxembourg_", "Hesse", "North Rhine-Westphalia", "Saarland", "Baden-Württemberg", "Belgium_", "France_"],
+        "Saarland": ["Rhineland-Palatinate", "France_", "Luxembourg_"],
+        "Saxony": ["Czechia_", "Brandenburg", "Poland__", "Saxony-Anhalt", "Thuringia", "Bavaria"],
+        "Saxony-Anhalt": ["Saxony", "Brandenburg", "Lower Saxony", "Thuringia"],
+        "Schleswig-Holstein": ["Denmark_", "Hamburg", "Lower Saxony", "Mecklenburg-West Pomerania"],
+        "Switzerland_": ["Austria_", "France_", "Bavaria", "Baden-Württemberg"],
+        "Thuringia": ["Bavaria", "Hesse", "Lower Saxony", "Saxony-Anhalt", "Saxony"]
+    },
 
     "russia_federal_subjects": {
         "Adygea": ["Krasnodar Krai"],
@@ -15,7 +43,7 @@
         "Buryatia": ["Irkutsk Oblast", "Mongolia__", "Tuva", "Zabaykalsky Krai"],
         "Chechnya": ["Dagestan", "Georgia__", "Ingushetia", "North Ossetia-Alania", "Stavropol Krai"],
         "Chelyabinsk Oblast": ["Bashkortostan", "Kazakhstan__", "Kurgan Oblast", "Orenburg Oblast", "Sverdlovskaya Oblast"],
-        "China___": ["Altai Republic", "Zabaykalsky Krai", "Amur Oblast", "Jewish Autonomous Oblast", "Khabarovsk Krai", "Primorsky Krai"],
+        "China___": ["Altai Republic", "Zabaykalsky Krai", "Amur Oblast", "Jewish Autonomous Oblast", "Khabarovsk Krai", "Mongolia__", "Primorsky Krai"],
         "Chukotka Autonomous Okrug": ["Kamchatka Krai", "Magadan Oblast", "Sakha Republic"],
         "Chuvashia": ["Mari El", "Mordovia", "Nizhny Novgorod Oblast", "Tatarstan", "Ulyanovsk Oblast"],
         "Dagestan": ["Azerbaijan_", "Chechnya", "Georgia__", "Kalmykia", "Stavropol Krai"],
@@ -50,7 +78,7 @@
         "Lithuania_": ["Belarus_", "Kaliningrad Oblast", "Latvia_", "Poland_"],
         "Magadan Oblast": ["Chukotka Autonomous Okrug", "Kamchatka Krai", "Khabarovsk Krai", "Sakha Republic"],
         "Mari El": ["Chuvashia", "Kirov Oblast", "Nizhny Novgorod Oblast", "Tatarstan"],
-        "Mongolia__": ["Altai Republic", "Tuva", "Buryatia", "Zabaykalsky Krai"],
+        "Mongolia__": ["Altai Republic", "China___", "Tuva", "Buryatia", "Zabaykalsky Krai"],
         "Mordovia": ["Chuvashia", "Nizhny Novgorod Oblast", "Penza Oblast", "Ryazan Oblast", "Ulyanovsk Oblast"],
         "Moscow Oblast": ["Kaluga Oblast", "Ryazan Oblast", "Smolensk Oblast", "Tula Oblast", "Tver Oblast", "Vladimir Oblast", "Yaroslavl Oblast"],
         "Murmansk Oblast": ["Finland_", "Norway_", "Republic of Karelia"],
@@ -98,7 +126,7 @@
     },
 
     "pakistan_administrative_units": {
-        "Afghanistan_": ["Balochistan", "China__", "Federally Administered Tribal Areas", "Gilgit-Baltistan", "Iran_", "Khyber Pakhtunkhwa"],
+        "Afghanistan_": ["China__", "Gilgit-Baltistan", "Khyber Pakhtunkhwa", "Federally Administered Tribal Areas", "Balochistan", "Iran_"],
         "Azad Jammu and Kashmir": ["Gilgit-Baltistan", "India_", "Khyber Pakhtunkhwa", "Punjab_"],
         "Balochistan": ["Afghanistan_", "Federally Administered Tribal Areas", "Iran_", "Punjab_", "Sindh"],
         "China__": ["Afghanistan_", "Gilgit-Baltistan"],
@@ -302,7 +330,7 @@
         "Tianjin": ["Beijing", "Hebei"],
         "Vietnam_": ["Guangxi", "Laos_", "Yunnan"],
         "Xinjiang": ["Afghanistan__", "Gansu", "India__", "Kazakhstan_", "Kyrgyzstan_", "Mongolia_", "Pakistan__", "Qinghai", "Russia_", "Tajikistan_", "Xizang (Tibet)"],
-        "Xizang (Tibet)": ["India__", "Nepal__", "Bhutan__", "Myanmar__", "Qinghai", "Sichuan", "Xinjiang", "Yunnan"],
+        "Xizang (Tibet)": ["India__", "Nepal__", "Bhutan__", "Myanmar__", "Yunnan", "Sichuan", "Qinghai", "Xinjiang"],
         "Yunnan": ["Guangxi", "Guizhou", "Laos_", "Myanmar__", "Sichuan", "Vietnam_", "Xizang (Tibet)"],
         "Zhejiang": ["Anhui", "Fujian", "Jiangsu", "Jiangxi", "Shanghai"]
     },
@@ -341,7 +369,7 @@
         "Sonora": ["Arizona_", "Baja California", "Chihuahua", "New Mexico_", "Sinaloa"],
         "Tabasco": ["Campeche", "Chiapas", "Guatemala_", "Veracruz"],
         "Tamaulipas": ["Nuevo León", "San Luis Potosí", "Texas_", "Veracruz"],
-        "Texas_": ["Chihuahua", "Coahuila", "New Mexico_", "Nuevo León", "Tamaulipas"],
+        "Texas_": ["New Mexico_", "Chihuahua", "Coahuila", "Nuevo León", "Tamaulipas"],
         "Tlaxcala": ["Hidalgo", "State of Mexico", "Puebla"],
         "Veracruz": ["Chiapas", "Hidalgo", "Oaxaca", "Puebla", "San Luis Potosí", "Tabasco", "Tamaulipas"],
         "Yucatán": ["Campeche", "Quintana Roo"],
@@ -394,7 +422,7 @@
         "Nagaland": ["Arunachal Pradesh", "Assam", "Manipur", "Myanmar_"],
         "Nepal_": ["Bihar", "China_", "Sikkim", "Uttar Pradesh", "Uttarakhand", "West Bengal"],
         "Odisha": ["Andhra Pradesh", "Chattisgarh", "Jharkhand", "Telangana", "West Bengal"],
-        "Pakistan_": ["China_", "Gujarat", "Jammu and Kashmir", "Punjab", "Rajasthan"],
+        "Pakistan_": ["China_", "Jammu and Kashmir", "Punjab", "Rajasthan", "Gujarat"],
         "Punjab": ["Chandigarh", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Pakistan_", "Rajasthan"],
         "Rajasthan": ["Gujarat", "Haryana", "Madhya Pradesh", "Pakistan_", "Punjab", "Uttar Pradesh"],
         "Sikkim": ["Bhutan_", "China_", "Nepal_", "West Bengal"],
@@ -635,4 +663,5 @@
             "Zambia": ["Angola", "Botswana", "Democratic Republic of the Congo", "Malawi", "Mozambique", "Namibia", "Tanzania", "Zimbabwe"],
             "Zimbabwe": ["Botswana", "Mozambique", "South Africa", "Zambia"]
     }
+    
 }
