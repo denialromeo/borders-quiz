@@ -425,24 +425,26 @@ function embed(src) {
 
 function bottom_message(territory) {
 
-    var a = neighbors(territory).sort()
+    var a = neighbors(territory).slice().sort()
+    for (i = 0; i < a.length; i++) {
+        a[i] = pretty_print(a[i])
+    }
 
     var s = ""
     if (a.length == 0) {
         s = "nothing!"
     }
     else if (a.length == 1) {
-        s = " only " + pretty_print(a[0]) + "."
+        s = "only " + a[0] + "."
     }
     else if (a.length == 2) {
-        s = (pretty_print(a[0]) + " and " + pretty_print(a[1])) + "."
+        s = a[0] + " and " + a[1] + "."
     }
     else {
         for (i = 0; i < a.length - 1; i++) {
-            s += pretty_print(a[i])
-            s += ", "
+            s += (a[i] + ", ")
         }
-        s += ("and " + pretty_print(a[a.length - 1]) + ".")
+        s += "and " + a[a.length - 1] + "."
     }
 
     return (pretty_print(territory, true) + " borders " + s)
@@ -453,10 +455,9 @@ function embed_map(question_info, score, start_time) {
     question_info.answer = question_info.answer.replace(/\'/g,'&#39;')
     var territory = (question_info.chosen == question_info.answer ? question_info.chosen : question_info.territory)
 
+    var url = quiz_modes_metadata()[quiz_mode_of(territory)].map_embed_base_url
     var coordinates_ = coordinates(territory)
     var zoom = google_maps_zoom_level(territory)
-
-    var url = quiz_modes_metadata()[quiz_mode_of(territory)].map_embed_base_url
     url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
 
     var map_id = on_mobile_device() ? "map-mobile" : "map"
@@ -552,34 +553,34 @@ function embed_question(question_info, score, start_time) {
     var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
     var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
     question  = "<div id='" + question_container_id + "'>"
-	    question += "<div id='quiz_title'>"
-		    question += quiz_modes_metadata()[quiz_mode_of(question_info.territory)].title
-	    question += "</div>"
-	    question += "<div id='"
-	    question += (on_mobile_device() ? "question-text-mobile" : "question-text")
-	    question += "'>"
-	    	question += "<p>Which of these does not border "
-	    	question += pretty_print(question_info.territory)
-	    	question += "?</p>"
-		    question += "<form>"
-			    for (i = 0; i < choices.length; i++) {
-			        var choice = choices[i]
-			        var letter = String.fromCharCode(i + 65)
-			        question += "<input type='radio' id='"
-			        question += choice
-			        question += "' value='"
-			        question += choice
-			        question += "' name='choice'><label for='"
-			        question += choice
-			        question += "'>&emsp;"
-			        question += letter
-			        question += ". "
-			        question += pretty_print(choice, true)
-			        question += "</label><br>"
-			    }
-		    question += "</form>"
-	    question += "</div>"
-	    question += bottom_right_message(score, start_time)
+        question += "<div id='quiz_title'>"
+            question += quiz_modes_metadata()[quiz_mode_of(question_info.territory)].title
+        question += "</div>"
+        question += "<div id='"
+        question += (on_mobile_device() ? "question-text-mobile" : "question-text")
+        question += "'>"
+            question += "<p>Which of these does not border "
+            question += pretty_print(question_info.territory)
+            question += "?</p>"
+            question += "<form>"
+                for (i = 0; i < choices.length; i++) {
+                    var choice = choices[i]
+                    var letter = String.fromCharCode(i + 65)
+                    question += "<input type='radio' id='"
+                    question += choice
+                    question += "' value='"
+                    question += choice
+                    question += "' name='choice'><label for='"
+                    question += choice
+                    question += "'>&emsp;"
+                    question += letter
+                    question += ". "
+                    question += pretty_print(choice, true)
+                    question += "</label><br>"
+                }
+            question += "</form>"
+        question += "</div>"
+        question += bottom_right_message(score, start_time)
     question += "</div>"
 
     embed(question)
