@@ -46,6 +46,6 @@ Adding a quiz is simple. Just add relevant entries to [borders.json](/borders-qu
 However, you must observe these rules or the game will break -
 
 * The top-level labels of borders.json and quiz_modes.json *must* match.
-* All entries in borders.json *must* be unique. Add trailing underscores when needed to avoid conflicts with entries in existing quiz modess.
+* All entries in borders.json *must* be unique. Add trailing underscores when needed to avoid conflicts with entries in existing quiz modes.
 
 You can find fusion table data for the map overlays [here](https://research.google.com/tables?source=ft2573812&corpus=fusion).
