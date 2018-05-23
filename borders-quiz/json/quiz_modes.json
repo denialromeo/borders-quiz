@@ -21,7 +21,7 @@
 	},
 	
 	"canada_provinces": {
-		"anthem": "\"O Canada!\"",
+		"anthem": "\"O Canada\"",
 		"click_message": "(Click the provinces!)",
 		"default_zoom_level": 5,
 		"description": "(Canada's provinces.)",
@@ -72,12 +72,12 @@
 	
 	"south_korea_provinces": {
 		"anthem": "\"Aegukga\"",
-		"click_message": "(Click the provinces!)",
+		"click_message": "(Click the administrative divisions!)",
 		"default_zoom_level": 7,
-		"description": "(South Korea's provinces.)",
+		"description": "(South Korea's administrative divisions.)",
 		"geocode_append": " South Korea",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1mXgLcmURA7HTJvsWHchCErieTTykv5xqS9WDWjDA&viz=MAP&h=false&t=1&l=col2",
-		"title": "South Korea Provinces"
+		"title": "South Korea Administrative Divisions"
 	},
 	
 	"japan_prefectures": {

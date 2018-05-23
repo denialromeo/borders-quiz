@@ -339,7 +339,7 @@ function prepend_the(territory, capitalize_the=false) {
     return ((should_prepend_the.contains(territory) ? the : "") + territory)
 }
 
-function truncate_for_mobile(territory) {
+function truncate_for_mobile(text) {
     if (on_mobile_device()) {
         abbreviations = {
             "Australian Capital Territory": "ACT",
@@ -359,14 +359,15 @@ function truncate_for_mobile(territory) {
             "Papua New Guinea": "New Guinea",
             "Republic of the Congo": "ROC",
             "São Tomé and Principe": "São Tomé",
+            "South Korea Administrative Divisions": "South Korea Admin. Divisions",
             "United Arab Emirates": "UAE",
             "United Kingdom": "UK",
             "United States (Continental)": "USA Mainland",
             "Western Sahara": "W. Sahara"
         }
-        return (abbreviations[territory] ? abbreviations[territory] : territory)
+        return (abbreviations[text] ? abbreviations[text] : text)
     }
-    return territory
+    return text
 }
 
 function pretty_print(territory, capitalize_the) {
@@ -560,7 +561,7 @@ function embed_question(question_info, score, start_time) {
     var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
     question  = "<div id='" + question_container_id + "'>"
         question += "<div id='quiz_title'>"
-            question += quiz_modes_metadata()[quiz_mode_of(question_info.territory)].title
+            question += truncate_for_mobile(quiz_modes_metadata()[quiz_mode_of(question_info.territory)].title)
         question += "</div>"
         question += "<div id='"
         question += (on_mobile_device() ? "question-text-mobile" : "question-text")
