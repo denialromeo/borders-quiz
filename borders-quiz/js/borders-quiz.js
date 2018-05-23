@@ -120,6 +120,7 @@ function coordinates(address) {
         "California_": "California State",
         "China_": "Nepal",
         "China__": "Gilgit-Baltistan",
+        "China___": "Mongolia",
         "France_": "Burgen Germany",
         "Georgia": "Georgia Country",
         "Georgia__": "Georgia Country",
