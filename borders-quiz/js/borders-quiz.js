@@ -135,6 +135,7 @@ function coordinates(address) {
         "Pacific Ocean": "Cooperstown California",
         "Punjab_": "Punjab Pakistan",
         "Russia_": "Ulan Bator",
+        "Scotland": "Dumfries Scotland",
         "Texas_": "Texas State",
         "Washington": "Washington State"
     }
@@ -363,7 +364,7 @@ function truncate_for_mobile(territory) {
     return territory
 }
 
-function pretty_print(territory, capitalize_the=false) {
+function pretty_print(territory, capitalize_the) {
     territory = truncate_for_mobile(territory)
     territory = prepend_the(territory, capitalize_the)
     territory = territory.replace(/_/g,'').replace(/\s/g,'&nbsp;').replace(/-/g, '&#8209;')
@@ -427,7 +428,7 @@ function bottom_message(territory) {
 
     var a = neighbors(territory).slice().sort()
     for (i = 0; i < a.length; i++) {
-        a[i] = pretty_print(a[i])
+        a[i] = pretty_print(a[i], false)
     }
 
     var s = ""
@@ -560,7 +561,7 @@ function embed_question(question_info, score, start_time) {
         question += (on_mobile_device() ? "question-text-mobile" : "question-text")
         question += "'>"
             question += "<p>Which of these does not border "
-            question += pretty_print(question_info.territory)
+            question += pretty_print(question_info.territory, false)
             question += "?</p>"
             question += "<form>"
                 for (i = 0; i < choices.length; i++) {
