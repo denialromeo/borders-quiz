@@ -129,6 +129,7 @@ function coordinates(address) {
         "India__": "Gomo Co Tibet",
         "Iran_": "Sefidabeh",
         "Italy": "San Marino",
+        "Italy_": "Dosimo Italy",
         "Maldives": "Addu City",
         "Mexico__": "Baja California",
         "New Mexico_": "New Mexico State",
@@ -137,6 +138,7 @@ function coordinates(address) {
         "Punjab_": "Punjab Pakistan",
         "Russia_": "Ulan Bator",
         "Scotland": "Dumfries Scotland",
+        "Sudan": "Al Dabbah Sudan",
         "Texas_": "Texas State",
         "Washington": "Washington State"
     }
@@ -432,7 +434,7 @@ function embed(src) {
 
 function bottom_message(territory) {
 
-    var a = neighbors(territory).slice().sort()
+    var a = neighbors(territory).slice().sort() // slice() makes a copy of the array so we don't mess with the original.
     for (i = 0; i < a.length; i++) {
         a[i] = pretty_print(a[i], false)
     }
@@ -458,10 +460,7 @@ function bottom_message(territory) {
 }
 
 function embed_map(question_info, score, start_time) {
-    question_info.chosen = question_info.chosen.replace(/\'/g,'&#39;')
-    question_info.answer = question_info.answer.replace(/\'/g,'&#39;')
     var territory = (question_info.chosen == question_info.answer ? question_info.chosen : question_info.territory)
-
     var url = quiz_modes_metadata()[quiz_mode_of(territory)].map_embed_base_url
     var coordinates_ = coordinates(territory)
     var zoom = google_maps_zoom_level(territory)
@@ -534,10 +533,8 @@ function bottom_right_message(score, start_time) {
     question = "" 
     question += "<p id='score_and_timer'>"
         question += "<i id='score'>"
-            question += "Correct: "
-            question += score.correct
-            question += "&nbsp;&nbsp;Wrong: "
-            question += score.wrong
+            question += ("Correct: " + score.correct + "&nbsp;&nbsp;")
+            question += ("Wrong: " + score.wrong)
         question += "</i><br>"
         question += "<span id='timer'>"
             question += format_time(Date.now() - start_time)
@@ -573,13 +570,15 @@ function embed_question(question_info, score, start_time) {
                 for (i = 0; i < choices.length; i++) {
                     var choice = choices[i]
                     var letter = String.fromCharCode(i + 65)
-                    question += "<input type='radio' id='"
+                    // Do not remove the escaped double-quotes or game will break on territories like "Cote d'Ivoire".
+                    question += "<input type='radio' id=\""
                     question += choice
-                    question += "' value='"
+                    question += "\" value='"
                     question += choice
-                    question += "' name='choice'><label for='"
+                    // Do not remove the escaped double-quotes or game will break on territories like "Cote d'Ivoire".
+                    question += "' name='choice'><label for=\""
                     question += choice
-                    question += "'>&emsp;"
+                    question += "\">&emsp;"
                     question += letter
                     question += ". "
                     question += pretty_print(choice, true)
