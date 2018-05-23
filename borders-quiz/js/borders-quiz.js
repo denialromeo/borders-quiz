@@ -240,10 +240,12 @@ function build_question(territory) {
         "Bangladesh": ["Maldives", "Sri Lanka"],
         "Cameroon": ["São Tomé and Principe"],
         "China": ["Taiwan"],
+        "Dorset": ["Isle of Wight"],
         "Equatorial Guinea": ["São Tomé and Principe"],
         "Gabon": ["São Tomé and Principe"],
         "Guinea": ["Cape Verde"],
         "Guinea-Bissau": ["Cape Verde"],
+        "Hampshire": ["Isle of Wight"],
         "India": ["Maldives", "Sri Lanka"],
         "Indonesia": ["Australia", "Fiji", "New Zealand", "Singapore"],
         "Israel": ["Cyprus"],
@@ -269,7 +271,8 @@ function build_question(territory) {
         "United Arab Emirates": ["Bahrain"],
         "Venezuela": ["Trinidad and Tobago"],
         "Victoria": ["Tasmania"],
-        "Vietnam": ["Philippines"]
+        "Vietnam": ["Philippines"],
+        "West Sussex": ["Isle of Wight"],
     }
 
     var replace_possible_answers = {
@@ -312,6 +315,7 @@ function prepend_the(territory, capitalize_the=false) {
                                "Dominican Republic",
                                "Federally Administered Tribal Areas",
                                "Islamabad Capital Territory",
+                               "Isle of Wight",
                                "Maldives",
                                "Mediterranean Sea",
                                "Mississippi River",
