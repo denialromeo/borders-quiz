@@ -70,6 +70,16 @@
 		"title": "China Provinces"
 	},
 	
+	"south_korea_provinces": {
+		"anthem": "\"Aegukga\"",
+		"click_message": "(Click the provinces!)",
+		"default_zoom_level": 7,
+		"description": "(South Korea's provinces.)",
+		"geocode_append": " South Korea",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1mXgLcmURA7HTJvsWHchCErieTTykv5xqS9WDWjDA&viz=MAP&h=false&t=1&l=col2",
+		"title": "South Korea Provinces"
+	},
+	
 	"japan_prefectures": {
 		"anthem": "\"Kimigayo\"",
 		"click_message": "(Click the prefectures!)",

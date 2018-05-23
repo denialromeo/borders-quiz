@@ -261,22 +261,22 @@
     },
 
     "south_korea_provinces": {
-        "Busan": ["Gyeongnam", "Ulsan"],
-        "Chungbuk": ["Chungnam", "Daejeon", "Gangwon", "Gyeonggi", "Gyeongbuk", "Jeonbuk"],
-        "Chungnam": ["Chungbuk", "Daejeon", "Gyeonggi", "Jeonbuk"],
-        "Daegu": ["Gyeongbuk", "Gyeongnam"],
-        "Daejeon": ["Chungbuk", "Chungnam"],
-        "Gangwon": ["Chungbuk", "Gyeonggi", "Gyeongbuk", "North Korea_"],
-        "Gwangju": ["Jeonnam"],
-        "Gyeonggi": ["Chungbuk", "Chungnam", "Gangwon", "North Korea_", "Incheon", "Seoul"],
-        "Gyeongbuk": ["Chungbuk", "Daegu", "Gangwon", "Gyeongnam", "Jeonbuk", "Ulsan"],
-        "Gyeongnam": ["Busan", "Daegu", "Gyeongbuk", "Jeonnam", "Jeonbuk", "Ulsan"],
-        "Incheon": ["Gyeonggi"],
-        "Jeonnam": ["Gwangju", "Gyeongnam", "Jeonbuk"],
-        "Jeonbuk": ["Chungbuk", "Chungnam", "Gyeongbuk", "Gyeongnam", "Jeonnam"],
-        "North Korea_": ["Gangwon", "Gyeonggi"],
-        "Seoul": ["Gyeonggi"],
-        "Ulsan": ["Busan", "Gyeongbuk", "Gyeongnam"]
+        "Busan": ["Gyeongsangnam-do", "Ulsan"],
+        "Chungcheongbuk-do": ["Chungcheongnam-do", "Daejeon", "Gangwon-do", "Gyeonggi-do", "Gyeongsangbuk-do", "Jeollabuk-do"],
+        "Chungcheongnam-do": ["Chungcheongbuk-do", "Daejeon", "Gyeonggi-do", "Jeollabuk-do"],
+        "Daegu": ["Gyeongsangbuk-do", "Gyeongsangnam-do"],
+        "Daejeon": ["Chungcheongbuk-do", "Chungcheongnam-do"],
+        "Gangwon-do": ["Chungcheongbuk-do", "Gyeonggi-do", "Gyeongsangbuk-do", "North Korea_"],
+        "Gwangju": ["Jeollanam-do"],
+        "Gyeonggi-do": ["Chungcheongbuk-do", "Chungcheongnam-do", "Gangwon-do", "North Korea_", "Incheon", "Seoul"],
+        "Gyeongsangbuk-do": ["Chungcheongbuk-do", "Daegu", "Gangwon-do", "Gyeongsangnam-do", "Jeollabuk-do", "Ulsan"],
+        "Gyeongsangnam-do": ["Busan", "Daegu", "Gyeongsangbuk-do", "Jeollanam-do", "Jeollabuk-do", "Ulsan"],
+        "Incheon": ["Gyeonggi-do"],
+        "Jeollanam-do": ["Gwangju", "Gyeongsangnam-do", "Jeollabuk-do"],
+        "Jeollabuk-do": ["Chungcheongbuk-do", "Chungcheongnam-do", "Gyeongsangbuk-do", "Gyeongsangnam-do", "Jeollanam-do"],
+        "North Korea_": ["Gangwon-do", "Gyeonggi-do"],
+        "Seoul": ["Gyeonggi-do"],
+        "Ulsan": ["Busan", "Gyeongsangbuk-do", "Gyeongsangnam-do"]
     },
 
     "australia_states": {

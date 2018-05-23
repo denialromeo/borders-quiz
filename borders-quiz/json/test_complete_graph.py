@@ -1,3 +1,8 @@
+# This simple script tests whether a given adjacency matrix encodes a complete graph.
+#
+# Borders are always undirected graphs, so this is a simple way of checking if we missed something.
+#
+# Example Usage: python test_complete_graph.py india_states
 import json, sys
 
 borders_json_path = 'borders.json'
@@ -11,15 +16,10 @@ def is_complete_graph(vertex_neighbors_dict):
                 print('{} is not in {}\'s neighbors!'.format(v, n))
     print(complete)
 
-def get_dict(key):
+def get_matrix(key):
     with open(borders_json_path) as data_file:
         data = json.load(data_file)
         return data[key]
 
-# This simple script tests whether a given dictionary encodes a complete graph.
-#
-# Borders are always undirected graphs, so this is a simple way of checking if we missed something.
-#
-# Example Usage: python test_complete_graph.py india_states
 if __name__ == '__main__':
-    is_complete_graph(get_dict(sys.argv[1]))
+    is_complete_graph(get_matrix(sys.argv[1]))
