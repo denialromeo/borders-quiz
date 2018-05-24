@@ -140,6 +140,16 @@
 		"title": "Germany States"
 	},
 	
+	"italy_regions": {
+		"anthem": "\"Fratelli d'Italia\"",
+		"click_message": "(Click the regions!)",
+		"default_zoom_level": 6,
+		"description": "(Italy's regions.)",
+		"geocode_append": "",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1smAC5HzCv5KAQ0MOb-80aTGavsZK_rIV-D8yGqdh&viz=MAP&h=false&t=1&l=col2",
+		"title": "Italy Regions"
+	},
+	
 	"france_regions": {
 		"anthem": "\"La Marseillaise\"",
 		"click_message": "(Click the regions!)",

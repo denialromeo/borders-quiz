@@ -1,5 +1,34 @@
 {
 
+    "italy_regions": {
+        "Abruzzo": ["Molise", "Lazio", "Marche"],
+        "Apulia": ["Molise", "Campania", "Basilicata"],
+        "Austria__": ["Switzerland___", "Slovenia_", "Trentino-Alto Adige", "Veneto", "Friuli-Venezia Giulia"],
+        "Basilicata": ["Apulia", "Calabria", "Campania"],
+        "Calabria": ["Basilicata"],
+        "Campania": ["Basilicata", "Apulia", "Molise", "Lazio"],
+        "Emilia-Romagna": ["Veneto", "Marche", "San Marino_", "Tuscany", "Liguria", "Piemonte", "Lombardia"],
+        "France___": ["Switzerland___", "Valle d'Aosta", "Piemonte", "Liguria"],
+        "Friuli-Venezia Giulia": ["Veneto", "Slovenia_", "Austria__"],
+        "Lazio": ["Tuscany", "Vatican City_", "Umbria", "Marche", "Abruzzo", "Molise", "Campania"],
+        "Liguria": ["Piemonte", "Emilia-Romagna", "Tuscany", "France___"],
+        "Lombardia": ["Trentino-Alto Adige", "Veneto", "Emilia-Romagna", "Piemonte", "Switzerland___"],
+        "Marche": ["San Marino_", "Emilia-Romagna", "Tuscany", "Umbria", "Lazio", "Abruzzo"],
+        "Molise": ["Abruzzo", "Lazio", "Campania", "Apulia"],
+        "Piemonte": ["France___", "Valle d'Aosta", "Switzerland___", "Lombardia", "Liguria", "Emilia-Romagna"],
+        "San Marino_": ["Emilia-Romagna", "Marche"],
+        "Sardinia": [],
+        "Sicily": [],
+        "Slovenia_": ["Austria__", "Friuli-Venezia Giulia"],
+        "Switzerland___": ["France___", "Austria__", "Trentino-Alto Adige", "Lombardia", "Piemonte", "Valle d'Aosta"],
+        "Tuscany": ["Liguria", "Emilia-Romagna", "Marche", "Umbria", "Lazio"],
+        "Trentino-Alto Adige": ["Veneto", "Lombardia", "Austria__", "Switzerland___"],
+        "Umbria": ["Marche", "Lazio", "Tuscany"],
+        "Valle d'Aosta": ["Piemonte", "France___", "Switzerland___"],
+        "Vatican City_": ["Lazio"],
+        "Veneto": ["Friuli-Venezia Giulia", "Austria__", "Trentino-Alto Adige", "Lombardia", "Emilia-Romagna"]
+    },
+
     "malaysia_states": {
         "Brunei_": ["Sarawak"],
         "Indonesia_": ["Sabah", "Sarawak"],

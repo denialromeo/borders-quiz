@@ -121,6 +121,7 @@ function coordinates(address) {
         "China__": "Gilgit-Baltistan",
         "China___": "Mongolia",
         "France_": "Burgen Germany",
+        "France___": "Solda Italy",
         "Georgia": "Georgia Country",
         "Georgia__": "Georgia Country",
         "India": "Nepal",
