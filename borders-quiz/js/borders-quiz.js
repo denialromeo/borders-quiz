@@ -41,9 +41,7 @@ function game_page_bottom_message() {
             continue 
         }
         message += "<li>"
-            message += "<a onclick='window.location.href=this.href;window.location.reload()' href='#?"
-            message += mode
-            message += "=true'>"
+            message += "<a onclick='window.location.href=this.href;window.location.reload()' href='#?" + mode + "=true'>"
                 message += modes_json[mode].anthem
             message += "</a>&nbsp;"
             message += modes_json[mode].description
@@ -180,11 +178,12 @@ function choice(l) {
 function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
 
     // Brazil borders all but two countries in South America, so to give tighter answer choices,
-    // we exclude it from graph searches.
+    // we exclude its neighbors from graph searches.
     remove_paths_through = [ "Brazil", "Canada_", "China", "China_", "Germany", "Italy", "Mexico_",
                              "Morocco", "Russia", "Spain", "Turkey", "United States (Continental)"]
 
-    // But some territories only border that one territory, so we need to keep those paths in the loop.
+    // But some territories only border that one territory, so we need to keep those paths in the loop,
+    // or the game will break.
     unless_started_from = { "Canada_": ["Alaska"],
                             "Germany": ["Denmark"],
                             "Italy": ["Vatican City", "San Marino"],
@@ -240,6 +239,7 @@ function build_question(territory) {
     // Note that all of the added territories are islands.
     var add_possible_answers = {
         "Bangladesh": ["Maldives", "Sri Lanka"],
+        "California": ["Hawaii"],
         "Cameroon": ["São Tomé and Principe"],
         "China": ["Taiwan"],
         "Dorset": ["Isle of Wight"],
@@ -313,11 +313,13 @@ function prepend_the(territory, capitalize_the=false) {
                                "Black Sea",
                                "Caspian Sea",
                                "Central African Republic",
+                               "City of London",
                                "Democratic Republic of the Congo",
                                "Dominican Republic",
                                "Federally Administered Tribal Areas",
                                "Islamabad Capital Territory",
                                "Isle of Wight",
+                               "Jewish Autonomous Oblast",
                                "Maldives",
                                "Mediterranean Sea",
                                "Mississippi River",
@@ -354,7 +356,7 @@ function truncate_for_mobile(text) {
             "Islamabad Capital Territory": "ICT",
             "Khyber Pakhtunkhwa": "KP",
             "Mediterranean Sea": "Mediterranean",
-            "Neimongol (Inner Mongolia)": "Neimongol",
+            "Nei Mongol (Inner Mongolia)": "Nei Mongol",
             "Newfoundland and Labrador": "NL",
             "Northern Territory": "NT",
             "Northwest Territories": "NW Territories",
@@ -362,6 +364,7 @@ function truncate_for_mobile(text) {
             "Republic of the Congo": "ROC",
             "São Tomé and Principe": "São Tomé",
             "South Korea Administrative Divisions": "South Korea Admin. Divisions",
+            "Taiwan Administrative Divisions": "Taiwan Admin. Divisions",
             "United Arab Emirates": "UAE",
             "United Kingdom": "UK",
             "United States (Continental)": "USA Mainland",
@@ -459,6 +462,19 @@ function bottom_message(territory) {
     return (pretty_print(territory, true) + " borders " + s)
 }
 
+function bottom_right_message_map(territory) {
+    return "<p id='click-the-states-message'>" + quiz_modes_metadata()[quiz_mode_of(territory)].click_message + "</p>"
+}
+
+function top_message(question_info) {
+    if (question_info.chosen == question_info.answer) {
+        return ("Correct! " + pretty_print(question_info.chosen, true) + " does not border " + pretty_print(question_info.territory) + "!")
+    }
+    else {
+        return ("Sorry! " + pretty_print(question_info.territory, true) + " does border " + pretty_print(question_info.chosen) + "!")
+    }
+}
+
 function embed_map(question_info, score, start_time) {
     var territory = (question_info.chosen == question_info.answer ? question_info.chosen : question_info.territory)
     var url = quiz_modes_metadata()[quiz_mode_of(territory)].map_embed_base_url
@@ -466,43 +482,18 @@ function embed_map(question_info, score, start_time) {
     var zoom = google_maps_zoom_level(territory)
     url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
 
-    var map_id = on_mobile_device() ? "map-mobile" : "map"
-    var map = "<iframe id='" + map_id + "' scrolling='no' frameborder=0 src='" + url + "'></iframe>"
+    var map = "<iframe id='" + (on_mobile_device() ? "map-mobile" : "map") + "' scrolling='no' frameborder=0 src='" + url + "'></iframe>"
 
-    function top_message() {
-        var success = question_info.chosen == question_info.answer
-        if (success) {
-            return ("Correct! " + pretty_print(question_info.chosen, true) + " does not border " + pretty_print(question_info.territory) + "!")
-        }
-        else {
-            return ("Sorry! " + pretty_print(question_info.territory, true) + " does border " + pretty_print(question_info.chosen) + "!")
-        }
-    }
-
-    function bottom_right_message_map(territory) {
-        var message = "" 
-        message += "<p id='click-the-states-message'>"
-        message += quiz_modes_metadata()[quiz_mode_of(territory)].click_message
-        message += "</p>"
-        return message 
-    }
-
-    content  = "<div id='"
-    content += (on_mobile_device() ? "map-container-mobile" : "map-container")
-    content += "'>"
-    content += "<center>"
-    content += "<p>"
-    content += top_message()
-    content += "</p>"
-    content += map
-    content += "<p>"
-    content += bottom_message(territory)
-    content += "</p>"
-    content += "<button id='next'></button>"
-    if (!on_mobile_device()) {
-        content += bottom_right_message_map(territory)
-    }
-    content += "</center>"
+    content = "<div id='" + (on_mobile_device() ? "map-container-mobile" : "map-container") + "'>"
+        content += "<center>"
+            content += "<p>" + top_message(question_info) + "</p>"
+            content += map
+            content += "<p>" + bottom_message(territory) + "</p>"
+            content += "<button id='next'></button>"
+            if (!on_mobile_device()) {
+                content += bottom_right_message_map(territory)
+            }
+        content += "</center>"
     content += "</div>"
 
     embed(content)
@@ -533,12 +524,10 @@ function bottom_right_message(score, start_time) {
     question = "" 
     question += "<p id='score_and_timer'>"
         question += "<i id='score'>"
-            question += ("Correct: " + score.correct + "&nbsp;&nbsp;")
-            question += ("Wrong: " + score.wrong)
+            question += "Correct: " + score.correct + "&nbsp;&nbsp;"
+            question += "Wrong: " + score.wrong
         question += "</i><br>"
-        question += "<span id='timer'>"
-            question += format_time(Date.now() - start_time)
-        question += "</span>"
+        question += "<span id='timer'>" + format_time(Date.now() - start_time) + "</span>"
     question += "</p>"
     function time() {
         var timer_node = game_iframe.contentWindow.document.getElementById("timer")
@@ -557,32 +546,16 @@ function embed_question(question_info, score, start_time) {
     var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
     var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
     question  = "<div id='" + question_container_id + "'>"
-        question += "<div id='quiz_title'>"
-            question += truncate_for_mobile(quiz_modes_metadata()[quiz_mode_of(question_info.territory)].title)
-        question += "</div>"
-        question += "<div id='"
-        question += (on_mobile_device() ? "question-text-mobile" : "question-text")
-        question += "'>"
-            question += "<p>Which of these does not border "
-            question += pretty_print(question_info.territory, false)
-            question += "?</p>"
+        question += "<div id='quiz_title'>" + truncate_for_mobile(quiz_modes_metadata()[quiz_mode_of(question_info.territory)].title) + "</div>"
+        question += "<div id='" + (on_mobile_device() ? "question-text-mobile" : "question-text") + "'>"
+            question += "<p>Which of these does not border " + pretty_print(question_info.territory, false) + "?</p>"
             question += "<form>"
                 for (i = 0; i < choices.length; i++) {
                     var choice = choices[i]
                     var letter = String.fromCharCode(i + 65)
                     // Do not remove the escaped double-quotes or game will break on territories like "Cote d'Ivoire".
-                    question += "<input type='radio' id=\""
-                    question += choice
-                    question += "\" value='"
-                    question += choice
-                    // Do not remove the escaped double-quotes or game will break on territories like "Cote d'Ivoire".
-                    question += "' name='choice'><label for=\""
-                    question += choice
-                    question += "\">&emsp;"
-                    question += letter
-                    question += ". "
-                    question += pretty_print(choice, true)
-                    question += "</label><br>"
+                    question += "<input type='radio' id=\"" + choice + "\" value=\"" + choice + "\" name='choice'>"
+                    question += "<label for=\"" + choice + "\">&emsp;" + letter + ". " + pretty_print(choice, true) + "</label><br>"
                 }
             question += "</form>"
         question += "</div>"

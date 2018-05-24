@@ -20,16 +20,6 @@
 		"title": "California Counties"
 	},
 	
-	"canada_provinces": {
-		"anthem": "\"O Canada\"",
-		"click_message": "(Click the provinces!)",
-		"default_zoom_level": 5,
-		"description": "(Canada's provinces.)",
-		"geocode_append": "",
-		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col4+from+1WLNv__CToy_grFi67jOIKJPmy5KlA0Ihh6j0sW0H&viz=MAP&h=false&t=1&l=col4",
-		"title": "Canada Provinces"
-	},
-	
 	"mexico_states": {
 		"anthem": "\"Mexicanos, al Grito de Guerra!\"",
 		"click_message": "(Click the states!)",
@@ -38,6 +28,16 @@
 		"geocode_append": " Mexico",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col5+from+19KyBvfdcDLNkVwn466Aa9asNfTMsPhwsasNdimAP&viz=MAP&h=false&t=1&l=col5",
 		"title": "Mexico States"
+	},
+	
+	"canada_provinces": {
+		"anthem": "\"O Canada\"",
+		"click_message": "(Click the provinces!)",
+		"default_zoom_level": 3,
+		"description": "(Canada's provinces.)",
+		"geocode_append": "",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col4+from+1WLNv__CToy_grFi67jOIKJPmy5KlA0Ihh6j0sW0H&viz=MAP&h=false&t=1&l=col4",
+		"title": "Canada Provinces"
 	},
 	
 	"india_states": {
@@ -50,14 +50,14 @@
 		"title": "India States"
 	},
 	
-	"pakistan_administrative_units": {
+	"pakistan_provinces": {
 		"anthem": "\"Qaumi Taranah\"",
-		"click_message": "(Click the administrative units!)",
+		"click_message": "(Click the provinces!)",
 		"default_zoom_level": 5,
-		"description": "(Pakistan's administrative units.)",
+		"description": "(Pakistan's provinces.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1CFcoHdOuF_S98-v5E8RuFOobTOFYzq6Gz4FfVoK5&viz=MAP&h=false&t=1&l=col0",
-		"title": "Pakistan Administrative Units"
+		"title": "Pakistan Provinces"
 	},
 	
 	"china_provinces": {
@@ -70,14 +70,24 @@
 		"title": "China Provinces"
 	},
 	
+	"taiwan_counties": {
+		"anthem": "\"Sanmin Zhuyi\"",
+		"click_message": "(Click the counties!)",
+		"default_zoom_level": 7,
+		"description": "(Taiwan's counties.)",
+		"geocode_append": "",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+12zcluwsLcKnPYh42DRReW60ZjZIXNRS8sWkOpv5w&viz=MAP&h=false&t=1&l=col2",
+		"title": "Taiwan Counties"
+	},
+	
 	"south_korea_provinces": {
 		"anthem": "\"Aegukga\"",
-		"click_message": "(Click the administrative divisions!)",
+		"click_message": "(Click the provinces!)",
 		"default_zoom_level": 7,
-		"description": "(South Korea's administrative divisions.)",
+		"description": "(South Korea's provinces.)",
 		"geocode_append": " South Korea",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1mXgLcmURA7HTJvsWHchCErieTTykv5xqS9WDWjDA&viz=MAP&h=false&t=1&l=col2",
-		"title": "South Korea Administrative Divisions"
+		"title": "South Korea Provinces"
 	},
 	
 	"japan_prefectures": {
@@ -98,6 +108,16 @@
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1HPB9NFQFQECAii23-N-ZhjptEt2AJMOV7Onwl_Kz&viz=MAP&h=false&t=1&l=col2",
 		"title": "Russia Federal Subjects"
+	},
+	
+	"ukraine_oblasts": {
+		"anthem": "\"Shche ne vmerla Ukraina\"",
+		"click_message": "(Click the oblasts!)",
+		"default_zoom_level": 5,
+		"description": "(Ukraine's oblasts.)",
+		"geocode_append": "",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col16+from+1ps0MS1fqxkcmnrGklSD5HEVNCoVTSL8MkhrT4vyl&viz=MAP&h=false&t=1&l=col16",
+		"title": "Ukraine Oblasts"
 	},
 	
 	"germany_states": {
@@ -133,7 +153,7 @@
 	"australia_states": {
 		"anthem": "\"Advance Australia Fair\"",
 		"click_message": "(Click the states!)",
-		"default_zoom_level": 5,
+		"default_zoom_level": 4,
 		"description": "(Australia's states.)",
 		"geocode_append": " Australia",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1AyYgmyEMeKnAqdAGoeQCfkOROAGAQYnzlzvV92Bo&viz=MAP&h=false&t=1&l=col2",
