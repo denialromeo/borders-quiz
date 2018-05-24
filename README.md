@@ -49,3 +49,10 @@ However, you must observe these rules or the game will break -
 * All entries in borders.json *must* be unique. Add trailing underscores when needed to avoid conflicts with entries in existing quiz modes.
 
 You can find fusion table data for the map overlays [here](https://research.google.com/tables?source=ft2573812&corpus=fusion) and U.S.-specific information [here](https://support.google.com/fusiontables/answer/1182141?hl=en).
+
+**Known Bugs**
+
+I know how to fix these, but haven't gotten around to them yet.
+
+* Long territory names in more recent quiz modes aren't appropriately abbreviated on mobile, resulting in text overlap.
+* The Wikipedia links in some quiz modes' map overlays aren't specific enough (e.g. showing Punjab the historical region instead of Punjab, Pakistan). The fix for this is [dynamic templating](https://support.google.com/fusiontables/answer/3081246?hl=en&ref_topic=2575652) in the info windows.
