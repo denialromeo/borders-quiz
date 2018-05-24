@@ -115,6 +115,7 @@ function coordinates(address) {
     tweaked_addresses = {
         "Afghanistan_": "FATA Pakistan",
         "Arizona_": "Arizona USA",
+        "Brunei_": "Brunei",
         "California_": "California State",
         "China_": "Nepal",
         "China__": "Gilgit-Baltistan",
@@ -125,6 +126,7 @@ function coordinates(address) {
         "India": "Nepal",
         "India_": "Dharakh India",
         "India__": "Gomo Co Tibet",
+        "Indonesia_": "Kalimantan Indonesia",
         "Iran_": "Sefidabeh",
         "Italy": "San Marino",
         "Italy_": "Dosimo Italy",
@@ -252,6 +254,7 @@ function build_question(territory) {
         "Indonesia": ["Australia", "Fiji", "New Zealand", "Singapore"],
         "Israel": ["Cyprus"],
         "Italy": ["Malta"],
+        "Johor": ["Singapore_"],
         "Lebanon": ["Cyprus"],
         "Libya": ["Malta"],
         "Malaysia": ["Philippines", "Singapore"],
@@ -439,7 +442,7 @@ function bottom_message(territory) {
 
     var a = neighbors(territory).slice().sort() // slice() makes a copy of the array so we don't mess with the original.
     for (i = 0; i < a.length; i++) {
-        a[i] = pretty_print(a[i], false)
+        a[i] = pretty_print(a[i])
     }
 
     var s = ""
@@ -548,7 +551,7 @@ function embed_question(question_info, score, start_time) {
     question  = "<div id='" + question_container_id + "'>"
         question += "<div id='quiz_title'>" + truncate_for_mobile(quiz_modes_metadata()[quiz_mode_of(question_info.territory)].title) + "</div>"
         question += "<div id='" + (on_mobile_device() ? "question-text-mobile" : "question-text") + "'>"
-            question += "<p>Which of these does not border " + pretty_print(question_info.territory, false) + "?</p>"
+            question += "<p>Which of these does not border " + pretty_print(question_info.territory) + "?</p>"
             question += "<form>"
                 for (i = 0; i < choices.length; i++) {
                     var choice = choices[i]

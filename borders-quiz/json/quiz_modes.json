@@ -80,6 +80,16 @@
 		"title": "Taiwan Counties"
 	},
 	
+	"malaysia_states": {
+		"anthem": "\"Negaraku\"",
+		"click_message": "(Click the states!)",
+		"default_zoom_level": 6,
+		"description": "(Malaysia's states.)",
+		"geocode_append": " Malaysia",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1oY7JvyX3rW_yaOwSW-cLkCn7FYOjCnZbJ8OzMB2L&viz=MAP&h=false&t=1&l=col2",
+		"title": "Malaysia States"
+	},
+	
 	"south_korea_provinces": {
 		"anthem": "\"Aegukga\"",
 		"click_message": "(Click the provinces!)",
@@ -138,6 +148,16 @@
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1muJSWzcqq9Xja9GEsNRGt5oljHJ0WwaKy-Ud7OMg&viz=MAP&h=false&t=1&l=col0",
 		"title": "France Regions"
+	},
+	
+	"spain_provinces": {
+		"anthem": "\"Marcha Real\"",
+		"click_message": "(Click the provinces!)",
+		"default_zoom_level": 6,
+		"description": "(Spain's provinces.)",
+		"geocode_append": " Spain",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col1+from+1vvax3u5XC0ipY71DsLsn8yWVxZk_C54bPAnJdorl&viz=MAP&h=false&t=1&l=col1",
+		"title": "Spain Provinces"
 	},
 	
 	"england_ceremonial_counties": {
