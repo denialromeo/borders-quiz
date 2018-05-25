@@ -239,7 +239,6 @@ function build_question(territory) {
         }
     }
     
-    // Note that all of the added territories are islands.
     var add_possible_answers = {
         "Bangladesh": ["Maldives", "Sri Lanka"],
         "California": ["Hawaii"],

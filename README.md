@@ -52,7 +52,4 @@ You can find fusion table data for the map overlays [here](https://research.goog
 
 **Known Bugs**
 
-I know how to fix these, but haven't gotten around to them yet.
-
 * Long territory names in more recent quiz modes aren't appropriately abbreviated on mobile, resulting in text overlap.
-* The Wikipedia links in some quiz modes' map overlays aren't specific enough (e.g. showing Punjab the historical region instead of Punjab, Pakistan). The fix for this is [dynamic templating](https://support.google.com/fusiontables/answer/3081246?hl=en&ref_topic=2575652) in the info windows.
