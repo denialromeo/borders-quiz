@@ -124,6 +124,7 @@ function coordinates(address) {
         "France___": "Solda Italy",
         "Georgia": "Georgia Country",
         "Georgia__": "Georgia Country",
+        "Gibraltar": "Gibraltar UK",
         "India": "Nepal",
         "India_": "Dharakh India",
         "India__": "Gomo Co Tibet",
@@ -133,6 +134,7 @@ function coordinates(address) {
         "Italy_": "Dosimo Italy",
         "Maldives": "Addu City",
         "Mexico__": "Baja California",
+        "Morocco_": "Tangier Morocco",
         "New Mexico_": "New Mexico State",
         "North Korea_": "Cheorwon South Korea",
         "Pacific Ocean": "Cooperstown California",
@@ -288,6 +290,7 @@ function build_question(territory) {
         "Haiti": ["Cuba", "Jamaica"], // If removed, game will break.
         "Ireland": ["Belgium", "France", "Netherlands"], // If removed, game will break.
         "Mongolia": ["Kazakhstan"],
+        "Morocco_": ["Cádiz"], // If removed, game will break.
         "North Korea": ["Japan"],
         "Norway": ["Denmark", "Greenland", "Iceland"],
         "Nusa Tenggara Timur": ["Maluku"], // If removed, game will break.
