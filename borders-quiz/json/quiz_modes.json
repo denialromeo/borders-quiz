@@ -100,6 +100,26 @@
 		"title": "Malaysia States"
 	},
 	
+	"indonesia_provinces": {
+		"anthem": "\"Indonesia Raya\"",
+		"click_message": "(Click the provinces!)",
+		"default_zoom_level": 5,
+		"description": "(Indonesia's provinces.)",
+		"geocode_append": " Indonesia",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+194aFJNWEGO3l47407GuckyOjzgLdL3qCtVGvlTVT&viz=MAP&h=false&t=1&l=col3",
+		"title": "Indonesia Provinces"
+	},
+	
+	"australia_states": {
+		"anthem": "\"Advance Australia Fair\"",
+		"click_message": "(Click the states!)",
+		"default_zoom_level": 4,
+		"description": "(Australia's states.)",
+		"geocode_append": " Australia",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1AyYgmyEMeKnAqdAGoeQCfkOROAGAQYnzlzvV92Bo&viz=MAP&h=false&t=1&l=col2",
+		"title": "Australia States"
+	},
+
 	"south_korea_provinces": {
 		"anthem": "\"Aegukga\"",
 		"click_message": "(Click the provinces!)",
@@ -190,14 +210,14 @@
 		"title": "England Ceremonial Counties"
 	},
 
-	"australia_states": {
-		"anthem": "\"Advance Australia Fair\"",
-		"click_message": "(Click the states!)",
-		"default_zoom_level": 4,
-		"description": "(Australia's states.)",
-		"geocode_append": " Australia",
-		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1AyYgmyEMeKnAqdAGoeQCfkOROAGAQYnzlzvV92Bo&viz=MAP&h=false&t=1&l=col2",
-		"title": "Australia States"
+	"ireland_counties": {
+		"anthem": "\"Amhrán na bhFiann\"",
+		"click_message": "(Click the counties!)",
+		"default_zoom_level": 7,
+		"description": "(Ireland's counties.)",
+		"geocode_append": " County Ireland",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+13PyOxVhuAzhyIUFaHaswDcKssO7xtPqDkhqBV2Sm&viz=MAP&h=false&t=1&l=col2",
+		"title": "Ireland Counties"
 	},
 
 	"countries": {

@@ -290,9 +290,11 @@ function build_question(territory) {
         "Mongolia": ["Kazakhstan"],
         "North Korea": ["Japan"],
         "Norway": ["Denmark", "Greenland", "Iceland"],
+        "Nusa Tenggara Timur": ["Maluku"], // If removed, game will break.
         "San Marino": ["Vatican City"],
         "South Korea": ["Japan"],
         "Sweden": ["Denmark", "Greenland", "Iceland"],
+        "Timor-Leste_": ["Maluku"], // If removed, game will break.
         "Tokushima": ["Hokkaido", "Okinawa"], // If removed, game will break.
         "United Kingdom": ["Belgium", "France", "Netherlands"], // If removed, game will break.
         "Vatican City": ["San Marino"]
@@ -339,6 +341,7 @@ function prepend_the(territory, capitalize_the=false) {
                                "State of Mexico",
                                "United Arab Emirates",
                                "United Kingdom",
+                               "United Kingdom_",
                                "United States (Continental)",
                                "United States",
                                "Western Sahara",
