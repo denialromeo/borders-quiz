@@ -295,6 +295,7 @@ function build_question(territory) {
         "Norway": ["Denmark", "Greenland", "Iceland"],
         "Nusa Tenggara Timur": ["Maluku"], // If removed, game will break.
         "San Marino": ["Vatican City"],
+        "Sarawak": ["Singapore_"], // If removed, game will break.
         "South Korea": ["Japan"],
         "Sweden": ["Denmark", "Greenland", "Iceland"],
         "Timor-Leste_": ["Maluku"], // If removed, game will break.
