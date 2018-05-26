@@ -140,6 +140,7 @@ function coordinates(address) {
         "Pacific Ocean": "Cooperstown California",
         "Punjab_": "Punjab Pakistan",
         "Russia_": "Ulan Bator",
+        "Russia___": "Kaliningrad",
         "Scotland": "Dumfries Scotland",
         "Sudan": "Al Dabbah Sudan",
         "Texas_": "Texas State",
@@ -394,7 +395,7 @@ function pretty_print(territory, capitalize_the) {
 
 // Only for testing.
 function test_map(t) {
-    embed_map(build_question(t), {correct:0,wrong:0})
+    embed_map(build_question(t), {correct:0,wrong:0}, Date.now())
 }
 function test_question(t) {
     test_map(t)
