@@ -48,7 +48,7 @@ However, you must observe these rules or the game will break -
 * The top-level labels of borders.json and quiz_modes.json *must* match.
 * All entries in borders.json *must* be unique. Add trailing underscores when needed to avoid conflicts with entries in existing quiz modes.
 
-You can find fusion table data for the map overlays [here](https://research.google.com/tables?source=ft2573812&corpus=fusion) and U.S.-specific information [here](https://support.google.com/fusiontables/answer/1182141?hl=en).
+You can search public fusion table data [here](https://research.google.com/tables?source=ft2573812&corpus=fusion), find U.S. data [here](https://support.google.com/fusiontables/answer/1182141?hl=en), and find world state/province level data [here](https://fusiontables.google.com/DataSource?docid=1uK6JhwbCLeJWmTmoWTIKFOmdZuTxhfeT_Gy05QXy).
 
 **Known Bugs**
 

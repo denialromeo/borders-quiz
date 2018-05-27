@@ -41,7 +41,7 @@ function game_page_bottom_message() {
             continue 
         }
         message += "<li>"
-            message += "<a onclick='window.location.href=this.href;window.location.reload()' href='#?" + mode + "=true'>"
+            message += "<a onclick='window.location.replace(this.href);window.location.reload()' href='#?" + mode + "=true'>"
                 message += modes_json[mode].anthem
             message += "</a>&nbsp;"
             message += modes_json[mode].description
@@ -144,6 +144,7 @@ function coordinates(address) {
         "Scotland": "Dumfries Scotland",
         "Sudan": "Al Dabbah Sudan",
         "Texas_": "Texas State",
+        "Ukraine__": "Lviv Ukraine",
         "Washington": "Washington State"
     }
     
@@ -197,7 +198,7 @@ function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
                           }
 
     if (remove_paths_through.contains(neighbor)) {
-        if (unless_started_from[neighbor]) {
+        if (unless_started_from[neighbor] != null) {
             return !unless_started_from[neighbor].contains(territory)
         }
         return true
@@ -206,8 +207,14 @@ function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
     return false
 }
 
+function test_remove_neighbors_of_neighbor_from_bfs() {
+    console.log(remove_neighbors_of_neighbor_from_bfs("Alaska", "Canada_") == false)
+    console.log(remove_neighbors_of_neighbor_from_bfs("Guyana", "Brazil") == true)
+    console.log(remove_neighbors_of_neighbor_from_bfs("Germany", "Italy") == true)
+}
+
 function breadth_first_search(territory, depth) {
-    var territory_distance_dict = { [territory]:0 }
+    var territory_distance_dict = { [territory]: 0 }
     var bfs_queue = [territory]
     while (bfs_queue.length > 0) {
         var v = bfs_queue.shift()
@@ -313,7 +320,7 @@ function build_question(territory) {
     }
 
     var answer = choice(possible_answers)
-    return {territory: territory, answer: answer, wrong_answers: wrong_answers, chosen:""}
+    return { territory: territory, answer: answer, wrong_answers: wrong_answers, chosen:"" }
 }
 
 function prepend_the(territory, capitalize_the=false) {
@@ -354,6 +361,11 @@ function prepend_the(territory, capitalize_the=false) {
     return ((should_prepend_the.contains(territory) ? the : "") + territory)
 }
 
+function test_prepend_the() {
+    console.log(prepend_the("Philippines", true) == "The Philippines")
+    console.log(prepend_the("Philippines", false) == "the Philippines")
+}
+
 function truncate_for_mobile(text) {
     if (on_mobile_device()) {
         abbreviations = {
@@ -374,11 +386,9 @@ function truncate_for_mobile(text) {
             "Papua New Guinea": "New Guinea",
             "Republic of the Congo": "ROC",
             "São Tomé and Principe": "São Tomé",
-            "South Korea Administrative Divisions": "South Korea Admin. Divisions",
-            "Taiwan Administrative Divisions": "Taiwan Admin. Divisions",
             "United Arab Emirates": "UAE",
             "United Kingdom": "UK",
-            "United States (Continental)": "USA Mainland",
+            "United States (Continental)": "Continental USA",
             "Western Sahara": "W. Sahara"
         }
         return (abbreviations[text] ? abbreviations[text] : text)
@@ -518,13 +528,13 @@ function embed_map(question_info, score, start_time) {
         else {
             if (question_info.chosen == question_info.answer) {
                 score.correct += 1
-                next_button.onclick = function() { return next_question(null, score, start_time) }
                 next_button.innerHTML = "Next"
+                next_button.onclick = function() { next_question(null, score, start_time) }
             }
             else {
                 score.wrong += 1
-                next_button.onclick = function() { return next_question(question_info, score, start_time) }
                 next_button.innerHTML = "Try Again"
+                next_button.onclick = function() { next_question(question_info, score, start_time) }
             }
         }
     }
