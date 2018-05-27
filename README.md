@@ -12,6 +12,8 @@ For example -
 
 (The answer is Honduras.)
 
+**Installation**
+
 To play with this, all you have to do is start `index.html` on a local server!
 
 Here's how to do this using Jekyll.
