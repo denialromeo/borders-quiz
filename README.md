@@ -1,6 +1,6 @@
 # Borders Quiz 
 
-This is a fun little game that quizzes the player on his or her knowledge of the world's borders through randomly-generated multiple-choice questions.
+This game tests the player's knowledge of the world's borders through procedurally generated multiple-choice questions.
 
 For example -
 
