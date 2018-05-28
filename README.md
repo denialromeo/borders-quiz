@@ -12,7 +12,7 @@ For example -
 
 (The answer is Honduras.)
 
-**Installation**
+## Installation
 
 To play with this, all you have to do is start `index.html` on a local server!
 
@@ -41,7 +41,7 @@ gem install jekyll
 
 The game can also be played on my website [here](http://danielmoore.us/borders-quiz). The version of the game on my website will always be the most updated, though I'll try to update this repo as well if I make any major changes.
 
-**Development Guide**
+## Development Guide
 
 Adding a quiz is simple. Just add relevant entries to [borders.json](/borders-quiz/json/borders.json) and [quiz_modes.json](/borders-quiz/json/quiz_modes.json). You only need to deal with the JavaScript if you want specialized control of exactly where maps are centered or to tweak answer choices.
 
@@ -52,6 +52,6 @@ However, you must observe these rules or the game will break -
 
 You can search public fusion table data [here](https://research.google.com/tables?source=ft2573812&corpus=fusion), find U.S. data [here](https://support.google.com/fusiontables/answer/1182141?hl=en), and find world state/province level data [here](https://fusiontables.google.com/DataSource?docid=1uK6JhwbCLeJWmTmoWTIKFOmdZuTxhfeT_Gy05QXy).
 
-**Known Bugs**
+## Known Bugs
 
 * Long territory names in more recent quiz modes aren't appropriately abbreviated on mobile, resulting in text overlap.

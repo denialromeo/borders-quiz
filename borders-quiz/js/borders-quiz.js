@@ -302,14 +302,12 @@ function build_question(territory) {
         "North Korea": ["Japan"],
         "Norway": ["Denmark", "Greenland", "Iceland"],
         "Nusa Tenggara Timur": ["Maluku"], // If removed, game will break.
-        "San Marino": ["Vatican City"],
         "Sarawak": ["Singapore_"], // If removed, game will break.
         "South Korea": ["Japan"],
         "Sweden": ["Denmark", "Greenland", "Iceland"],
         "Timor-Leste_": ["Maluku"], // If removed, game will break.
         "Tokushima": ["Hokkaido", "Okinawa"], // If removed, game will break.
-        "United Kingdom": ["Belgium", "France", "Netherlands"], // If removed, game will break.
-        "Vatican City": ["San Marino"]
+        "United Kingdom": ["Belgium", "France", "Netherlands"] // If removed, game will break.
     }
 
     if (add_possible_answers[territory]) {
@@ -366,7 +364,7 @@ function test_prepend_the() {
     console.log(prepend_the("Philippines", false) == "the Philippines")
 }
 
-function truncate_for_mobile(text) {
+function truncate_for_mobile(territory) {
     if (on_mobile_device()) {
         abbreviations = {
             "Australian Capital Territory": "ACT",
@@ -391,9 +389,9 @@ function truncate_for_mobile(text) {
             "United States (Continental)": "Continental USA",
             "Western Sahara": "W. Sahara"
         }
-        return (abbreviations[text] ? abbreviations[text] : text)
+        return (abbreviations[territory] ? abbreviations[territory] : territory)
     }
-    return text
+    return territory
 }
 
 function pretty_print(territory, capitalize_the) {
@@ -422,7 +420,6 @@ function test_question(t) {
 
 // Timer code.
 var timer_process_id = 0
-var timer_id = "timer"
 function format_time(raw_date) {
     function prepend_zero(time) {
         return (time < 10 ? "0" + time : time)
@@ -434,16 +431,15 @@ function format_time(raw_date) {
     var time = minutes + ":" + seconds
     return (hours > 0 ? hours + ":" + time : time)
 }
-function timer(start_time) {
+function update_dom_time(start_time, timer_dom_node) {
     var time_elapsed = format_time(Date.now() - start_time)
-    var timer_span = game_iframe.contentWindow.document.getElementById(timer_id)
-    if (timer_span) {
-        timer_span.innerHTML = time_elapsed
+    if (timer_dom_node) {
+        timer_dom_node.innerHTML = time_elapsed
     }
 }
-function start_timer(start_time=Date.now()) {
+function start_timer(start_time, timer_dom_node) {
     clearInterval(timer_process_id)
-    timer_process_id = setInterval(function() { timer(start_time) }, 1000)
+    timer_process_id = setInterval(function() { update_dom_time(start_time, timer_dom_node) }, 1000)
     return start_time
 }
 ////
@@ -550,16 +546,6 @@ function bottom_right_message(score, start_time) {
         question += "</i><br>"
         question += "<span id='timer'>" + format_time(Date.now() - start_time) + "</span>"
     question += "</p>"
-    function time() {
-        var timer_node = game_iframe.contentWindow.document.getElementById("timer")
-        if (!timer_node) {
-            window.requestAnimationFrame(time);
-        }
-        else {
-            start_timer(start_time)
-        }
-    }
-    time()
     return question 
 }
 
@@ -584,6 +570,19 @@ function embed_question(question_info, score, start_time) {
     question += "</div>"
 
     embed(question)
+
+    // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
+    function begin_timing() {
+        var timer_id = "timer"
+        var timer_dom_node = game_iframe.contentWindow.document.getElementById(timer_id)
+        if (!timer_dom_node) {
+            window.requestAnimationFrame(begin_timing);
+        }
+        else {
+            start_timer(start_time, timer_dom_node)
+        }
+    }
+    begin_timing()
 
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function detect_player_choice() {
