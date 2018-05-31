@@ -103,6 +103,14 @@ function google_maps_zoom_level(territory) {
     return quiz_modes_metadata()[quiz_mode_of(territory)].default_zoom_level
 }
 
+var settings_json = null
+function settings() {
+    if (settings_json == null) {
+        $.ajax({ url: quiz_settings_path, async: false, success: function (r) { settings_json = r } })
+    }
+    return settings_json
+}
+
 function geocode(address) {
     var url = "https://maps.googleapis.com/maps/api/geocode/json"
     var json = {}
@@ -110,14 +118,11 @@ function geocode(address) {
     return json
 }
 
-var tweaked_addresses_json = null
 function coordinates(address) {
-    if (!tweaked_addresses_json) {
-        $.ajax({ url: quiz_settings_path, async: false, success: function (r) { tweaked_addresses_json = r.tweaked_addresses } })
-    }
+    var tweaked_addresses = settings().tweaked_addresses
 
-    if (tweaked_addresses_json[address] != null) {
-        address = tweaked_addresses_json[address]
+    if (tweaked_addresses[address] != null) {
+        address = tweaked_addresses[address]
     }
     else {
         address += quiz_modes_metadata()[quiz_mode_of(address)].geocode_append
@@ -190,8 +195,6 @@ function breadth_first_search(territory, depth) {
     return territory_distance_dict
 }
 
-var add_possible_answers = null
-var replace_possible_answers = null
 function build_question(territory) {
     var num_wrong_answers = 3
     var wrong_answers = sample(neighbors(territory), num_wrong_answers)
@@ -203,14 +206,10 @@ function build_question(territory) {
             possible_answers.push(t)
         }
     }
-    
-    if (add_possible_answers == null) {
-        $.ajax({ url: quiz_settings_path, async: false, success: function (r) { add_possible_answers = r.add_possible_answers } })
-    }
-    if (replace_possible_answers == null) {
-        $.ajax({ url: quiz_settings_path, async: false, success: function (r) { replace_possible_answers = r.replace_possible_answers } })
-    }
 
+    var add_possible_answers = settings().add_possible_answers
+    var replace_possible_answers = settings().replace_possible_answers
+    
     if (add_possible_answers[territory]) {
         possible_answers = possible_answers.concat(add_possible_answers[territory])
     }
@@ -222,31 +221,25 @@ function build_question(territory) {
     return { territory: territory, answer: answer, wrong_answers: wrong_answers, chosen:"" }
 }
 
-var should_prepend_the = null
 function prepend_the(territory, capitalize_the=false) {
     var the = (capitalize_the ? "The " : "the ")
-    if (should_prepend_the == null) {
-        $.ajax({ url: quiz_settings_path, async: false, success: function (r) { should_prepend_the = r.should_prepend_the } })
-    }
-    return ((should_prepend_the.contains(territory) ? the : "") + territory)
+    var should_prepend_the = settings().should_prepend_the
+    return (should_prepend_the.contains(territory) ? the : "")
 }
 
-var abbreviations_json = null
 function truncate_for_mobile(territory) {
     if (on_mobile_device()) {
-        if (!abbreviations_json) {
-            $.ajax({ url: quiz_settings_path, async: false, success: function (r) { abbreviations_json = r.abbreviations_for_mobile } })
-        }
-        return (abbreviations_json[territory] != null ? abbreviations_json[territory] : territory)
+        var abbreviations = settings().abbreviations_for_mobile
+        return (abbreviations[territory] != null ? abbreviations[territory] : territory)
     }
     return territory
 }
 
 function pretty_print(territory, capitalize_the) {
+    var the = prepend_the(territory, capitalize_the)
     territory = truncate_for_mobile(territory)
-    territory = prepend_the(territory, capitalize_the)
     territory = territory.replace(/_/g,'').replace(/\s/g,'&nbsp;').replace(/-/g, '&#8209;')
-    return territory
+    return (the + territory)
 }
 
 // Only for testing.
@@ -305,15 +298,12 @@ function embed(src) {
     game_iframe.srcdoc ="<head><link rel='stylesheet' href='" + game_css_path + "'/></head><body>" + src + "</body>"
 }
 
-var dont_sort_neighbors_json = null
 function bottom_message(territory) {
 
-    if (dont_sort_neighbors_json == null) {
-        $.ajax({ url: quiz_settings_path, async: false, success: function (r) { dont_sort_neighbors_json = r.dont_sort_neighbors } })
-    }
+    var dont_sort_neighbors = settings().dont_sort_neighbors
 
     var a = neighbors(territory)
-    if (!dont_sort_neighbors_json.contains(territory)) {
+    if (!dont_sort_neighbors.contains(territory)) {
         a.sort()
     }
 
