@@ -1,6 +1,6 @@
 {
 
-	"tweaked_addresses": {
+    "tweaked_addresses": {
         "Afghanistan_": "FATA Pakistan",
         "Arizona_": "Arizona USA",
         "Brunei_": "Brunei",
@@ -34,9 +34,9 @@
         "Texas_": "Texas State",
         "Ukraine__": "Lviv Ukraine",
         "Washington": "Washington State"
-	},
+    },
 
-	"abbreviations_for_mobile": {
+    "abbreviations_for_mobile": {
         "Australian Capital Territory": "ACT",
         "Azad Jammu and Kashmir": "AJK",
         "Bosnia and Herzegovina": "Bosnia",
@@ -57,44 +57,44 @@
         "United Kingdom": "UK",
         "United States (Continental)": "Continental USA",
         "Western Sahara": "W. Sahara"
-	},
+    },
 
-	"should_prepend_the": [
-		"Australian Capital Territory",
-		"Baltic Sea",
-		"Black Sea",
-		"Caspian Sea",
-		"Central African Republic",
-		"City of London",
-		"Democratic Republic of the Congo",
-		"Dominican Republic",
-	    "Federally Administered Tribal Areas",
-	    "Islamabad Capital Territory",
-	    "Isle of Wight",
-	    "Jewish Autonomous Oblast",
-	    "Maldives",
-	    "Mediterranean Sea",
-	    "Mississippi River",
-	    "Netherlands",
-	    "Netherlands_",
-	    "Northern Territory",
-	    "Northwest Territories",
-	    "Pacific Ocean",
-	    "Persian Gulf",
-	    "Philippines",
-	    "Red Sea",
-	    "Republic of the Congo",
-	    "State of Mexico",
-	    "United Arab Emirates",
-	    "United Kingdom",
-	    "United Kingdom_",
-	    "United States (Continental)",
-	    "United States",
-	    "Western Sahara",
-	    "Yukon Territory" 
-	],
+    "should_prepend_the": [
+        "Australian Capital Territory",
+        "Baltic Sea",
+        "Black Sea",
+        "Caspian Sea",
+        "Central African Republic",
+        "City of London",
+        "Democratic Republic of the Congo",
+        "Dominican Republic",
+        "Federally Administered Tribal Areas",
+        "Islamabad Capital Territory",
+        "Isle of Wight",
+        "Jewish Autonomous Oblast",
+        "Maldives",
+        "Mediterranean Sea",
+        "Mississippi River",
+        "Netherlands",
+        "Netherlands_",
+        "Northern Territory",
+        "Northwest Territories",
+        "Pacific Ocean",
+        "Persian Gulf",
+        "Philippines",
+        "Red Sea",
+        "Republic of the Congo",
+        "State of Mexico",
+        "United Arab Emirates",
+        "United Kingdom",
+        "United Kingdom_",
+        "United States (Continental)",
+        "United States",
+        "Western Sahara",
+        "Yukon Territory" 
+    ],
 
-	"add_possible_answers": {
+    "add_possible_answers": {
         "Bangladesh": ["Maldives", "Sri Lanka"],
         "California": ["Hawaii"],
         "Cameroon": ["São Tomé and Principe"],
@@ -135,7 +135,7 @@
         "West Sussex": ["Isle of Wight"]
     },
 
-	"replace_possible_answers": {
+    "replace_possible_answers": {
         "Dominican Republic": ["Cuba", "Jamaica"],
         "Ehime": ["Hokkaido", "Okinawa"],
         "Haiti": ["Cuba", "Jamaica"],
@@ -154,6 +154,6 @@
         "Norway": ["Denmark", "Greenland", "Iceland"],
         "South Korea": ["Japan"],
         "Sweden": ["Denmark", "Greenland", "Iceland"]
-	}
-	
+    }
+    
 }
