@@ -43,12 +43,13 @@ The game can also be played on my website [here](http://danielmoore.us/borders-q
 
 ## Development Guide
 
-Adding a quiz is simple. Just add relevant entries to [borders.json](/borders-quiz/json/borders.json) and [quiz_modes.json](/borders-quiz/json/quiz_modes.json). You only need to deal with the JavaScript if you want specialized control of exactly where maps are centered or to tweak answer choices.
+Adding a quiz is simple. Just add relevant entries to [borders.json](/borders-quiz/json/borders.json) and [quiz_modes.json](/borders-quiz/json/quiz_modes.json). You can also play with some (optional) settings in [quiz_tweaks.json](/borders-quiz/json/quiz_tweaks.json) that enhance the player's experience (e.g. more precise maps, prepending "the", manually giving tougher answers choices than the default algorithm).
 
 However, you must observe these rules or the game will break -
 
 * The top-level labels of borders.json and quiz_modes.json *must* match.
 * All entries in borders.json *must* be unique. Add trailing underscores when needed to avoid conflicts with entries in existing quiz modes.
+* If a territory is on an island and borders every other territory on that island (e.g. Haiti and the Dominican Republic), you *must* manually add alternative answer choices in [quiz_tweaks.json](/borders-quiz/json/quiz_tweaks.json) or the game will break.
 
 You can search public fusion table data [here](https://research.google.com/tables?source=ft2573812&corpus=fusion), find U.S. data [here](https://support.google.com/fusiontables/answer/1182141?hl=en), and find world state/province level data [here](https://fusiontables.google.com/DataSource?docid=1uK6JhwbCLeJWmTmoWTIKFOmdZuTxhfeT_Gy05QXy).
 

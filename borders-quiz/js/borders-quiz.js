@@ -4,6 +4,7 @@ var google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 var borders_json_path = "/borders-quiz/json/borders.json"
 var google_maps_zoom_levels_json_path = "/borders-quiz/json/google_maps_zoom_levels.json"
 var quiz_modes_json_path = "/borders-quiz/json/quiz_modes.json"
+var quiz_tweaks_path = "/borders-quiz/json/quiz_tweaks.json"
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
@@ -109,47 +110,14 @@ function geocode(address) {
     return json
 }
 
+var tweaked_addresses_json = null
 function coordinates(address) {
-
-    // To give the best view of the borders we want to show on the embedded map.
-    tweaked_addresses = {
-        "Afghanistan_": "FATA Pakistan",
-        "Arizona_": "Arizona USA",
-        "Brunei_": "Brunei",
-        "California_": "California State",
-        "China_": "Nepal",
-        "China__": "Gilgit-Baltistan",
-        "China___": "Mongolia",
-        "France_": "Burgen Germany",
-        "France___": "Solda Italy",
-        "Georgia": "Georgia Country",
-        "Georgia__": "Georgia Country",
-        "Gibraltar": "Gibraltar UK",
-        "India": "Nepal",
-        "India_": "Dharakh India",
-        "India__": "Gomo Co Tibet",
-        "Indonesia_": "Kalimantan Indonesia",
-        "Iran_": "Sefidabeh",
-        "Italy": "San Marino",
-        "Italy_": "Dosimo Italy",
-        "Maldives": "Addu City",
-        "Mexico__": "Baja California",
-        "Morocco_": "Tangier Morocco",
-        "New Mexico_": "New Mexico State",
-        "North Korea_": "Cheorwon South Korea",
-        "Pacific Ocean": "Cooperstown California",
-        "Punjab_": "Punjab Pakistan",
-        "Russia_": "Ulan Bator",
-        "Russia___": "Kaliningrad",
-        "Scotland": "Dumfries Scotland",
-        "Sudan": "Al Dabbah Sudan",
-        "Texas_": "Texas State",
-        "Ukraine__": "Lviv Ukraine",
-        "Washington": "Washington State"
+    if (!tweaked_addresses_json) {
+        $.ajax({ url: quiz_tweaks_path, async: false, success: function (r) { tweaked_addresses_json = r.tweaked_addresses } })
     }
-    
-    if (tweaked_addresses[address]) {
-        address = tweaked_addresses[address]
+
+    if (tweaked_addresses_json[address] != null) {
+        address = tweaked_addresses_json[address]
     }
     else {
         address += quiz_modes_metadata()[quiz_mode_of(address)].geocode_append
@@ -207,12 +175,6 @@ function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
     return false
 }
 
-function test_remove_neighbors_of_neighbor_from_bfs() {
-    console.log(remove_neighbors_of_neighbor_from_bfs("Alaska", "Canada_") == false)
-    console.log(remove_neighbors_of_neighbor_from_bfs("Guyana", "Brazil") == true)
-    console.log(remove_neighbors_of_neighbor_from_bfs("Germany", "Italy") == true)
-}
-
 function breadth_first_search(territory, depth) {
     var territory_distance_dict = { [territory]: 0 }
     var bfs_queue = [territory]
@@ -223,7 +185,7 @@ function breadth_first_search(territory, depth) {
             var neighbor = neighbors_[i]
             if (territory_distance_dict[neighbor] == null) {
                 territory_distance_dict[neighbor] = territory_distance_dict[v] + 1
-                if (territory_distance_dict[neighbor] == depth + 1) {
+                if (territory_distance_dict[neighbor] > depth) {
                     return territory_distance_dict // Terminate BFS at given depth.
                 }
                 if (!remove_neighbors_of_neighbor_from_bfs(territory, neighbor)) {
@@ -235,8 +197,8 @@ function breadth_first_search(territory, depth) {
     return territory_distance_dict
 }
 
-// Constraint: Input must have at least one bordering territory and one two territories away.
-// If input has no territories two away, add entry to replace_possible_answers or game will break.
+var add_possible_answers = null
+var replace_possible_answers = null
 function build_question(territory) {
     var num_wrong_answers = 3
     var wrong_answers = sample(neighbors(territory), num_wrong_answers)
@@ -249,65 +211,11 @@ function build_question(territory) {
         }
     }
     
-    var add_possible_answers = {
-        "Bangladesh": ["Maldives", "Sri Lanka"],
-        "California": ["Hawaii"],
-        "Cameroon": ["São Tomé and Principe"],
-        "China": ["Taiwan"],
-        "Dorset": ["Isle of Wight"],
-        "Equatorial Guinea": ["São Tomé and Principe"],
-        "Gabon": ["São Tomé and Principe"],
-        "Guinea": ["Cape Verde"],
-        "Guinea-Bissau": ["Cape Verde"],
-        "Hampshire": ["Isle of Wight"],
-        "India": ["Maldives", "Sri Lanka"],
-        "Indonesia": ["Australia", "Fiji", "New Zealand", "Singapore"],
-        "Israel": ["Cyprus"],
-        "Italy": ["Malta"],
-        "Johor": ["Singapore_"],
-        "Lebanon": ["Cyprus"],
-        "Libya": ["Malta"],
-        "Malaysia": ["Philippines", "Singapore"],
-        "Mauritania": ["Cape Verde"],
-        "Mozambique": ["Comoros", "Madagascar", "Mauritius", "Seychelles"],
-        "New Brunswick": ["Prince Edward Island"],
-        "New South Wales": ["Tasmania"],
-        "Nigeria": ["São Tomé and Principe"],
-        "Nova Scotia": ["Prince Edward Island"],
-        "Qatar": ["Bahrain"],
-        "Saudi Arabia": ["Bahrain"],
-        "Senegal": ["Cape Verde"],
-        "South Australia": ["Tasmania"],
-        "Syria": ["Cyprus"],
-        "Tanzania": ["Comoros", "Madagascar", "Mauritius", "Seychelles"],
-        "The Gambia": ["Cape Verde"],
-        "Tunisia": ["Malta"],
-        "Turkey": ["Cyprus"],
-        "United Arab Emirates": ["Bahrain"],
-        "Venezuela": ["Trinidad and Tobago"],
-        "Victoria": ["Tasmania"],
-        "Vietnam": ["Philippines"],
-        "West Sussex": ["Isle of Wight"],
+    if (add_possible_answers == null) {
+        $.ajax({ url: quiz_tweaks_path, async: false, success: function (r) { add_possible_answers = r.add_possible_answers } })
     }
-
-    var replace_possible_answers = {
-        "Canada": ["Greenland"],
-        "Dominican Republic": ["Cuba", "Jamaica"], // If removed, game will break.
-        "Ehime": ["Hokkaido", "Okinawa"], // If removed, game will break.
-        "Finland": ["Denmark", "Greenland", "Iceland"],
-        "Haiti": ["Cuba", "Jamaica"], // If removed, game will break.
-        "Ireland": ["Belgium", "France", "Netherlands"], // If removed, game will break.
-        "Mongolia": ["Kazakhstan"],
-        "Morocco_": ["Cádiz"], // If removed, game will break.
-        "North Korea": ["Japan"],
-        "Norway": ["Denmark", "Greenland", "Iceland"],
-        "Nusa Tenggara Timur": ["Maluku"], // If removed, game will break.
-        "Sarawak": ["Singapore_"], // If removed, game will break.
-        "South Korea": ["Japan"],
-        "Sweden": ["Denmark", "Greenland", "Iceland"],
-        "Timor-Leste_": ["Maluku"], // If removed, game will break.
-        "Tokushima": ["Hokkaido", "Okinawa"], // If removed, game will break.
-        "United Kingdom": ["Belgium", "France", "Netherlands"] // If removed, game will break.
+    if (replace_possible_answers == null) {
+        $.ajax({ url: quiz_tweaks_path, async: false, success: function (r) { replace_possible_answers = r.replace_possible_answers } })
     }
 
     if (add_possible_answers[territory]) {
@@ -321,75 +229,22 @@ function build_question(territory) {
     return { territory: territory, answer: answer, wrong_answers: wrong_answers, chosen:"" }
 }
 
+var should_prepend_the = null
 function prepend_the(territory, capitalize_the=false) {
     var the = (capitalize_the ? "The " : "the ")
-    var should_prepend_the = [ "Australian Capital Territory",
-                               "Baltic Sea",
-                               "Black Sea",
-                               "Caspian Sea",
-                               "Central African Republic",
-                               "City of London",
-                               "Democratic Republic of the Congo",
-                               "Dominican Republic",
-                               "Federally Administered Tribal Areas",
-                               "Islamabad Capital Territory",
-                               "Isle of Wight",
-                               "Jewish Autonomous Oblast",
-                               "Maldives",
-                               "Mediterranean Sea",
-                               "Mississippi River",
-                               "Netherlands",
-                               "Netherlands_",
-                               "Northern Territory",
-                               "Northwest Territories",
-                               "Pacific Ocean",
-                               "Persian Gulf",
-                               "Philippines",
-                               "Red Sea",
-                               "Republic of the Congo",
-                               "Seychelles",
-                               "State of Mexico",
-                               "United Arab Emirates",
-                               "United Kingdom",
-                               "United Kingdom_",
-                               "United States (Continental)",
-                               "United States",
-                               "Western Sahara",
-                               "Yukon Territory" ]
+    if (should_prepend_the == null) {
+        $.ajax({ url: quiz_tweaks_path, async: false, success: function (r) { should_prepend_the = r.should_prepend_the } })
+    }
     return ((should_prepend_the.contains(territory) ? the : "") + territory)
 }
 
-function test_prepend_the() {
-    console.log(prepend_the("Philippines", true) == "The Philippines")
-    console.log(prepend_the("Philippines", false) == "the Philippines")
-}
-
+var abbreviations_json = null
 function truncate_for_mobile(territory) {
     if (on_mobile_device()) {
-        abbreviations = {
-            "Australian Capital Territory": "ACT",
-            "Azad Jammu and Kashmir": "AJK",
-            "Bosnia and Herzegovina": "Bosnia",
-            "Central African Republic": "CAR",
-            "Democratic Republic of the Congo": "DRC",
-            "Dominican Republic": "Dominican Rep.",
-            "Federally Administered Tribal Areas": "FATA",
-            "Islamabad Capital Territory": "ICT",
-            "Khyber Pakhtunkhwa": "KP",
-            "Mediterranean Sea": "Mediterranean",
-            "Nei Mongol (Inner Mongolia)": "Nei Mongol",
-            "Newfoundland and Labrador": "NL",
-            "Northern Territory": "NT",
-            "Northwest Territories": "NW Territories",
-            "Papua New Guinea": "New Guinea",
-            "Republic of the Congo": "ROC",
-            "São Tomé and Principe": "São Tomé",
-            "United Arab Emirates": "UAE",
-            "United Kingdom": "UK",
-            "United States (Continental)": "Continental USA",
-            "Western Sahara": "W. Sahara"
+        if (!abbreviations_json) {
+            $.ajax({ url: quiz_tweaks_path, async: false, success: function (r) { abbreviations_json = r.abbreviations_for_mobile } })
         }
-        return (abbreviations[territory] ? abbreviations[territory] : territory)
+        return (abbreviations_json[territory] != null ? abbreviations_json[territory] : territory)
     }
     return territory
 }
@@ -415,6 +270,11 @@ function test_question(t) {
         next_button.click()
     }
     next_question_button()
+}
+function test_remove_neighbors_of_neighbor_from_bfs() {
+    console.log(remove_neighbors_of_neighbor_from_bfs("Alaska", "Canada_") == false)
+    console.log(remove_neighbors_of_neighbor_from_bfs("Guyana", "Brazil") == true)
+    console.log(remove_neighbors_of_neighbor_from_bfs("Germany", "Italy") == true)
 }
 // Above code can be freely removed.
 
@@ -518,7 +378,7 @@ function embed_map(question_info, score, start_time) {
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function next_question_button() {
         var next_button = game_iframe.contentWindow.document.getElementById("next")
-        if (!next_button) {
+        if (next_button == null) {
             window.requestAnimationFrame(next_question_button);
         }
         else {
@@ -573,9 +433,8 @@ function embed_question(question_info, score, start_time) {
 
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function begin_timing() {
-        var timer_id = "timer"
-        var timer_dom_node = game_iframe.contentWindow.document.getElementById(timer_id)
-        if (!timer_dom_node) {
+        var timer_dom_node = game_iframe.contentWindow.document.getElementById("timer")
+        if (timer_dom_node == null) {
             window.requestAnimationFrame(begin_timing);
         }
         else {
@@ -587,7 +446,7 @@ function embed_question(question_info, score, start_time) {
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function detect_player_choice() {
         var choices = game_iframe.contentWindow.document.getElementsByName("choice")
-        if (!choices[0]) {
+        if (choices[0] == null) {
             window.requestAnimationFrame(detect_player_choice);
         }
         else {
