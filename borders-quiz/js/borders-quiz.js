@@ -4,7 +4,7 @@ var google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 var borders_json_path = "/borders-quiz/json/borders.json"
 var google_maps_zoom_levels_json_path = "/borders-quiz/json/google_maps_zoom_levels.json"
 var quiz_modes_json_path = "/borders-quiz/json/quiz_modes.json"
-var quiz_tweaks_path = "/borders-quiz/json/quiz_tweaks.json"
+var quiz_settings_path = "/borders-quiz/json/settings.json"
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
@@ -72,7 +72,7 @@ function neighbors(territory) {
     }
     for (var dict in borders_json) {
         if (borders_json[dict][territory]) {
-            return borders_json[dict][territory]
+            return borders_json[dict][territory].slice() // slice() makes a copy of the array so we don't mess with the original.
         }
     }
     return []
@@ -113,7 +113,7 @@ function geocode(address) {
 var tweaked_addresses_json = null
 function coordinates(address) {
     if (!tweaked_addresses_json) {
-        $.ajax({ url: quiz_tweaks_path, async: false, success: function (r) { tweaked_addresses_json = r.tweaked_addresses } })
+        $.ajax({ url: quiz_settings_path, async: false, success: function (r) { tweaked_addresses_json = r.tweaked_addresses } })
     }
 
     if (tweaked_addresses_json[address] != null) {
@@ -159,16 +159,9 @@ function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
 
     // But some territories only border that one territory, so we need to keep those paths in the loop,
     // or the game will break.
-    unless_started_from = { "Canada_": ["Alaska"],
-                            "Germany": ["Denmark"],
-                            "Italy": ["Vatican City", "San Marino"],
-                            "Spain": ["Portugal"]
-                          }
+    unless_started_from = ["Alaska", "Denmark", "Portugal", "San Marino", "Vatican City"]
 
-    if (remove_paths_through.contains(neighbor)) {
-        if (unless_started_from[neighbor] != null) {
-            return !unless_started_from[neighbor].contains(territory)
-        }
+    if (remove_paths_through.contains(neighbor) && !unless_started_from.contains(territory)) {
         return true
     }
     
@@ -212,10 +205,10 @@ function build_question(territory) {
     }
     
     if (add_possible_answers == null) {
-        $.ajax({ url: quiz_tweaks_path, async: false, success: function (r) { add_possible_answers = r.add_possible_answers } })
+        $.ajax({ url: quiz_settings_path, async: false, success: function (r) { add_possible_answers = r.add_possible_answers } })
     }
     if (replace_possible_answers == null) {
-        $.ajax({ url: quiz_tweaks_path, async: false, success: function (r) { replace_possible_answers = r.replace_possible_answers } })
+        $.ajax({ url: quiz_settings_path, async: false, success: function (r) { replace_possible_answers = r.replace_possible_answers } })
     }
 
     if (add_possible_answers[territory]) {
@@ -233,7 +226,7 @@ var should_prepend_the = null
 function prepend_the(territory, capitalize_the=false) {
     var the = (capitalize_the ? "The " : "the ")
     if (should_prepend_the == null) {
-        $.ajax({ url: quiz_tweaks_path, async: false, success: function (r) { should_prepend_the = r.should_prepend_the } })
+        $.ajax({ url: quiz_settings_path, async: false, success: function (r) { should_prepend_the = r.should_prepend_the } })
     }
     return ((should_prepend_the.contains(territory) ? the : "") + territory)
 }
@@ -242,7 +235,7 @@ var abbreviations_json = null
 function truncate_for_mobile(territory) {
     if (on_mobile_device()) {
         if (!abbreviations_json) {
-            $.ajax({ url: quiz_tweaks_path, async: false, success: function (r) { abbreviations_json = r.abbreviations_for_mobile } })
+            $.ajax({ url: quiz_settings_path, async: false, success: function (r) { abbreviations_json = r.abbreviations_for_mobile } })
         }
         return (abbreviations_json[territory] != null ? abbreviations_json[territory] : territory)
     }
@@ -312,9 +305,18 @@ function embed(src) {
     game_iframe.srcdoc ="<head><link rel='stylesheet' href='" + game_css_path + "'/></head><body>" + src + "</body>"
 }
 
+var dont_sort_neighbors_json = null
 function bottom_message(territory) {
 
-    var a = neighbors(territory).slice().sort() // slice() makes a copy of the array so we don't mess with the original.
+    if (dont_sort_neighbors_json == null) {
+        $.ajax({ url: quiz_settings_path, async: false, success: function (r) { dont_sort_neighbors_json = r.dont_sort_neighbors } })
+    }
+
+    var a = neighbors(territory)
+    if (!dont_sort_neighbors_json.contains(territory)) {
+        a.sort()
+    }
+
     for (i = 0; i < a.length; i++) {
         a[i] = pretty_print(a[i])
     }
