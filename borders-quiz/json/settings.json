@@ -26,6 +26,7 @@
         "New Mexico_": "New Mexico State",
         "North Korea_": "Cheorwon South Korea",
         "Pacific Ocean": "Cooperstown California",
+        "Portugal_": "Lardosa Portugal",
         "Punjab_": "Punjab Pakistan",
         "Russia_": "Ulan Bator",
         "Russia___": "Kaliningrad",
@@ -159,7 +160,11 @@
     "dont_sort_neighbors": [
         "Mississippi River",
         "Caspian Sea",
-        "Black Sea"
+        "Black Sea",
+        "Canada_",
+        "Mexico_",
+        "Mediterranean Sea",
+        "Portugal_"
     ]
 
 }

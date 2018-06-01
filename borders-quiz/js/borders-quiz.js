@@ -54,37 +54,37 @@ function game_page_bottom_message() {
 }
 
 var borders_json = null
-function territories() {
+function borders() {
     if (!borders_json) {
         $.ajax({ url: borders_json_path, async: false, success: function (r) { borders_json = r } })
     }
+    return borders_json
+}
+
+function territories() {
     var territories_ = []
     var modes = parse_url()
     for (i = 0; i < modes.length; i++) {
-        territories_ = territories_.concat(Object.keys(borders_json[modes[i]]))
+        territories_ = territories_.concat(Object.keys(borders()[modes[i]]))
     }
     return territories_
 }
 
 function neighbors(territory) {
-    if (!borders_json) {
-        $.ajax({ url: borders_json_path, async: false, success: function (r) { borders_json = r } })
-    }
-    for (var dict in borders_json) {
-        if (borders_json[dict][territory]) {
-            return borders_json[dict][territory].slice() // slice() makes a copy of the array so we don't mess with the original.
+    var all_borders = borders()
+    for (var country in all_borders) {
+        if (all_borders[country][territory]) {
+            return all_borders[country][territory].slice() // slice() makes a copy of the array so we don't mess with the original.
         }
     }
     return []
 }
 
 function quiz_mode_of(territory) {
-    if (!borders_json) {
-        $.ajax({ url: borders_json_path, async: false, success: function (r) { borders_json = r } })
-    }
-    for (var dict in borders_json) {
-        if (borders_json[dict][territory]) {
-            return dict
+    var all_borders = borders()
+    for (var country in all_borders) {
+        if (borders_json[country][territory]) {
+            return country
         }
     }
 
