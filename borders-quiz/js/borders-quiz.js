@@ -2,7 +2,6 @@ var game_iframe = document.getElementById("game-container")
 var game_css_path = "/borders-quiz/css/borders-quiz.css"
 var google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 var borders_json_path = "/borders-quiz/json/borders.json"
-var google_maps_zoom_levels_json_path = "/borders-quiz/json/google_maps_zoom_levels.json"
 var quiz_modes_json_path = "/borders-quiz/json/quiz_modes.json"
 var quiz_settings_path = "/borders-quiz/json/settings.json"
 
@@ -26,7 +25,7 @@ function parse_url() {
     }
     if (modes.length == 0) { // Default behavior when app visited.
         all_modes = Object.keys(quiz_modes_metadata())
-        return all_modes.slice(all_modes.length - 1, all_modes.length) // Last entry in quiz_modes.json.
+        return [all_modes[all_modes.length - 1]]
     }
     return modes
 }
@@ -91,24 +90,20 @@ function quiz_mode_of(territory) {
     return "countries"
 }
 
-var google_maps_zoom_levels_json = null
-function google_maps_zoom_level(territory) {
-    if (!google_maps_zoom_levels_json) {
-        $.ajax({ url: google_maps_zoom_levels_json_path, async: false, success: function (r) { google_maps_zoom_levels_json = r } })
-    }
-    if (google_maps_zoom_levels_json[territory]) {
-        return google_maps_zoom_levels_json[territory]
-    }
-
-    return quiz_modes_metadata()[quiz_mode_of(territory)].default_zoom_level
-}
-
 var settings_json = null
 function settings() {
     if (settings_json == null) {
         $.ajax({ url: quiz_settings_path, async: false, success: function (r) { settings_json = r } })
     }
     return settings_json
+}
+
+function google_maps_zoom_level(territory) {
+    var custom_zoom_levels = settings().custom_zoom_levels
+    if (custom_zoom_levels[territory] != null) {
+        return custom_zoom_levels[territory]
+    }
+    return quiz_modes_metadata()[quiz_mode_of(territory)].default_zoom_level
 }
 
 function geocode(address) {
@@ -411,10 +406,10 @@ function embed_question(question_info, score, start_time) {
             question += "<form>"
                 for (i = 0; i < choices.length; i++) {
                     var choice = choices[i]
-                    var letter = String.fromCharCode(i + 65)
+                    var letter = "&emsp;" + String.fromCharCode(i + 65) + ". "
                     // Do not remove the escaped double-quotes or game will break on territories like "Cote d'Ivoire".
                     question += "<input type='radio' id=\"" + choice + "\" value=\"" + choice + "\" name='choice'>"
-                    question += "<label for=\"" + choice + "\">&emsp;" + letter + ". " + pretty_print(choice, true) + "</label><br>"
+                    question += "<label for=\"" + choice + "\">" + letter + pretty_print(choice, true) + "</label><br>"
                 }
             question += "</form>"
         question += "</div>"
@@ -463,8 +458,8 @@ function random_territory() {
 
 // A sample question_info object is
 // { territory: "United States", answer: "Guatemala", wrong_answers: ["Mexico", "Canada"], chosen:""}
-function next_question(question_info, score, start_time) {
-    if (!question_info) {
+function next_question(question_info=null, score={correct:0,wrong:0}, start_time=Date.now()) {
+    if (question_info == null) {
         question_info = build_question(random_territory())
     }
     embed_question(question_info, score, start_time)
