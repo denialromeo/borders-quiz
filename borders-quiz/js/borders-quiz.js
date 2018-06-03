@@ -9,42 +9,42 @@ Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
 quiz_modes_metadata_json = null
 function quiz_modes_metadata() {
-    if (!quiz_modes_metadata_json) {
+    if (quiz_modes_metadata_json == null) {
         $.ajax({ url: quiz_modes_json_path, async: false, success: function (r) { quiz_modes_metadata_json = r } })
     }
     return quiz_modes_metadata_json
 }
 
-function parse_url() {
-    var fields =  URI(window.location.href).fragment(true)
-    var modes = []
-    for (var mode in quiz_modes_metadata()) {
-        if (fields[mode]) {
-            modes.push(mode)
+function current_quiz_modes() {
+    var parameters =  URI(window.location.href).fragment(true)
+    var current_quiz_modes_ = []
+    for (var quiz_mode in quiz_modes_metadata()) {
+        if (parameters[quiz_mode]) {
+            current_quiz_modes_.push(quiz_mode)
         }
     }
-    if (modes.length == 0) { // Default behavior when app visited.
-        all_modes = Object.keys(quiz_modes_metadata())
-        return [all_modes[all_modes.length - 1]]
+    if (current_quiz_modes_.length == 0) { // Default behavior when app visited.
+        all_quiz_modes = Object.keys(quiz_modes_metadata())
+        return [all_quiz_modes[all_quiz_modes.length - 1]]
     }
-    return modes
+    return current_quiz_modes_
 }
 
 function game_page_bottom_message() {
     var modes_json = quiz_modes_metadata()
-    var fields = parse_url()
+    var current_quiz_modes_ = current_quiz_modes()
 
     message  = "<p>You can also try these quiz modes!</p>"
     message += "<ul>"
-    for (var mode in modes_json) {
-        if (fields.contains(mode)) {
+    for (var quiz_mode in modes_json) {
+        if (current_quiz_modes_.contains(quiz_mode)) {
             continue 
         }
         message += "<li>"
-            message += "<a onclick='window.location.replace(this.href);window.location.reload()' href='#?" + mode + "=true'>"
-                message += modes_json[mode].anthem
+            message += "<a onclick='window.location.replace(this.href);window.location.reload()' href='#?" + quiz_mode + "=true'>"
+                message += modes_json[quiz_mode].anthem
             message += "</a>&nbsp;"
-            message += modes_json[mode].description
+            message += modes_json[quiz_mode].description
         message += "</li>"
     }
     message += "</ul>"
@@ -54,7 +54,7 @@ function game_page_bottom_message() {
 
 var borders_json = null
 function borders() {
-    if (!borders_json) {
+    if (borders_json == null) {
         $.ajax({ url: borders_json_path, async: false, success: function (r) { borders_json = r } })
     }
     return borders_json
@@ -62,9 +62,9 @@ function borders() {
 
 function territories() {
     var territories_ = []
-    var modes = parse_url()
-    for (i = 0; i < modes.length; i++) {
-        territories_ = territories_.concat(Object.keys(borders()[modes[i]]))
+    var current_quiz_modes_ = current_quiz_modes()
+    for (i = 0; i < current_quiz_modes_.length; i++) {
+        territories_ = territories_.concat(Object.keys(borders()[current_quiz_modes_[i]]))
     }
     return territories_
 }
@@ -81,12 +81,11 @@ function neighbors(territory) {
 
 function quiz_mode_of(territory) {
     var all_borders = borders()
-    for (var country in all_borders) {
-        if (borders_json[country][territory]) {
-            return country
+    for (var quiz_mode in all_borders) {
+        if (all_borders[quiz_mode][territory]) {
+            return quiz_mode
         }
     }
-
     return "countries"
 }
 
@@ -133,20 +132,20 @@ Array.prototype.swap = function(j, k) {
 function random(x) {
   return Math.floor(x*(Math.random()%1)) 
 }
-function shuffle(l) {
-    for (var j=l.length-1; j>0; j--) { 
-        l.swap(j, random(j+1)) 
+function shuffle(a) {
+    for (var j=a.length-1; j>0; j--) { 
+        a.swap(j, random(j+1)) 
     }
-    return l
+    return a
 }
-function sample(l, k) {
-    for (var j=0; j < l.length; j++) {
-        l.swap(j, random(l.length))
+function sample(a, k) {
+    for (var j=0; j < a.length; j++) {
+        a.swap(j, random(a.length))
     }
-    return l.slice(0,k)
+    return a.slice(0,k)
 }
-function choice(l) {
-    return l[random(l.length)]
+function choice(a) {
+    return a[random(a.length)]
 }
 ////
 
@@ -449,9 +448,10 @@ function embed_question(question_info, score, start_time) {
 }
 
 function random_territory() {
-    var territory = choice(territories())
+    var territories_ = territories()
+    var territory = choice(territories_)
     while (neighbors(territory).length == 0) { // To avoid grabbing an island.
-        territory = choice(territories())
+        territory = choice(territories_)
     }
     return territory
 }
