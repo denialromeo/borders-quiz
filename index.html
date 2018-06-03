@@ -11,16 +11,11 @@
 		<script src="borders-quiz/js/borders-quiz.js"></script>
 
 		<script>
-			$( document ).ready(function() { 
-			    window.onbeforeunload = function () {
-			        window.scrollTo(0, 0); // Scroll to top on load.
-			    }
-				next_question(null, {correct:0, wrong:0}, Date.now())
-			});
-		</script>
-
-		<script>
-		    document.write(game_page_bottom_message())
+		$(document).ready(function() { 
+		    window.onbeforeunload = function() { window.scrollTo(0, 0) }
+		    next_question()
+		})
+		document.write(game_page_bottom_message())
 		</script>
 
 	</body>
