@@ -2,36 +2,36 @@ var game_iframe = document.getElementById("game-container")
 var game_css_path = "/borders-quiz/css/borders-quiz.css"
 var google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 var borders_json_path = "/borders-quiz/json/borders.json"
-var quiz_modes_json_path = "/borders-quiz/json/quiz_modes.json"
-var quiz_settings_path = "/borders-quiz/json/settings.json"
+var quiz_modes_settings_json_path = "/borders-quiz/json/quiz_modes.json"
+var settings_json_path = "/borders-quiz/json/settings.json"
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
-quiz_modes_metadata_json = null
-function quiz_modes_metadata() {
-    if (quiz_modes_metadata_json == null) {
-        $.ajax({ url: quiz_modes_json_path, async: false, success: function (r) { quiz_modes_metadata_json = r } })
+quiz_modes_settings_json = null
+function quiz_modes_settings() {
+    if (quiz_modes_settings_json == null) {
+        $.ajax({ url: quiz_modes_settings_json_path, async: false, success: function (r) { quiz_modes_settings_json = r } })
     }
-    return quiz_modes_metadata_json
+    return quiz_modes_settings_json
 }
 
 function current_quiz_modes() {
     var parameters =  URI(window.location.href).fragment(true)
     var current_quiz_modes_ = []
-    for (var quiz_mode in quiz_modes_metadata()) {
+    for (var quiz_mode in quiz_modes_settings()) {
         if (parameters[quiz_mode]) {
             current_quiz_modes_.push(quiz_mode)
         }
     }
     if (current_quiz_modes_.length == 0) { // Default behavior when app visited.
-        all_quiz_modes = Object.keys(quiz_modes_metadata())
+        all_quiz_modes = Object.keys(quiz_modes_settings())
         return [all_quiz_modes[all_quiz_modes.length - 1]]
     }
     return current_quiz_modes_
 }
 
 function game_page_bottom_message() {
-    var modes_json = quiz_modes_metadata()
+    var modes_json = quiz_modes_settings()
     var current_quiz_modes_ = current_quiz_modes()
 
     message  = "<p>You can also try these quiz modes!</p>"
@@ -92,7 +92,7 @@ function quiz_mode_of(territory) {
 var settings_json = null
 function settings() {
     if (settings_json == null) {
-        $.ajax({ url: quiz_settings_path, async: false, success: function (r) { settings_json = r } })
+        $.ajax({ url: settings_json_path, async: false, success: function (r) { settings_json = r } })
     }
     return settings_json
 }
@@ -102,7 +102,7 @@ function google_maps_zoom_level(territory) {
     if (custom_zoom_levels[territory] != null) {
         return custom_zoom_levels[territory]
     }
-    return quiz_modes_metadata()[quiz_mode_of(territory)].default_zoom_level
+    return quiz_modes_settings()[quiz_mode_of(territory)].default_zoom_level
 }
 
 function geocode(address) {
@@ -119,7 +119,7 @@ function coordinates(address) {
         address = tweaked_addresses[address]
     }
     else {
-        address += quiz_modes_metadata()[quiz_mode_of(address)].geocode_append
+        address += quiz_modes_settings()[quiz_mode_of(address)].geocode_append
     }
 
     return geocode(address).results[0].geometry.location
@@ -149,22 +149,20 @@ function choice(a) {
 }
 ////
 
+// This is an optional method for pruning the breadth-first search.
+// Performance improvement is minimal, but it really does a good job of removing obvious answers.
 function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
 
     // Brazil borders all but two countries in South America, so to give tighter answer choices,
-    // we exclude its neighbors from graph searches.
-    remove_paths_through = [ "Brazil", "Canada_", "China", "China_", "Germany", "Italy", "Mexico_",
+    // we exclude its neighbors from graph searches. Similar rationale for other members.
+    remove_paths_through = [ "Brazil", "Canada_", "China", "China_", "Egypt", "Germany", "Iran", "Italy",
                              "Morocco", "Russia", "Spain", "Turkey", "United States (Continental)"]
 
     // But some territories only border that one territory, so we need to keep those paths in the loop,
     // or the game will break.
     unless_started_from = ["Alaska", "Denmark", "Portugal", "San Marino", "Vatican City"]
 
-    if (remove_paths_through.contains(neighbor) && !unless_started_from.contains(territory)) {
-        return true
-    }
-    
-    return false
+    return (remove_paths_through.contains(neighbor) && !unless_started_from.contains(territory))
 }
 
 function breadth_first_search(territory, depth) {
@@ -192,11 +190,11 @@ function breadth_first_search(territory, depth) {
 function build_question(territory) {
     var num_wrong_answers = 3
     var wrong_answers = sample(neighbors(territory), num_wrong_answers)
+    var answer_distance = 2
+    var territory_distance_dict = breadth_first_search(territory, answer_distance)
     var possible_answers = []
-    var bfs_depth = 2
-    var territory_distance_dict = breadth_first_search(territory, bfs_depth)
     for (var t in territory_distance_dict) {
-        if (territory_distance_dict[t] == bfs_depth) {
+        if (territory_distance_dict[t] == answer_distance) {
             possible_answers.push(t)
         }
     }
@@ -212,7 +210,7 @@ function build_question(territory) {
     }
 
     var answer = choice(possible_answers)
-    return { territory: territory, answer: answer, wrong_answers: wrong_answers, chosen:"" }
+    return { territory: territory, answer: answer, wrong_answers: wrong_answers, chosen: "" }
 }
 
 function prepend_the(territory, capitalize_the=false) {
@@ -259,7 +257,7 @@ function test_remove_neighbors_of_neighbor_from_bfs() {
 // Above code can be freely removed.
 
 // Timer code.
-var timer_process_id = 0
+var timer_process_id = null
 function format_time(raw_date) {
     function prepend_zero(time) {
         return (time < 10 ? "0" + time : time)
@@ -273,12 +271,14 @@ function format_time(raw_date) {
 }
 function update_dom_time(start_time, timer_dom_node) {
     var time_elapsed = format_time(Date.now() - start_time)
-    if (timer_dom_node) {
+    if (timer_dom_node != null) {
         timer_dom_node.innerHTML = time_elapsed
     }
 }
 function start_timer(start_time, timer_dom_node) {
-    clearInterval(timer_process_id)
+    if (timer_process_id != null) {
+        clearInterval(timer_process_id)
+    }
     timer_process_id = setInterval(function() { update_dom_time(start_time, timer_dom_node) }, 1000)
     return start_time
 }
@@ -326,7 +326,7 @@ function bottom_message(territory) {
 }
 
 function bottom_right_message_map(territory) {
-    return "<p id='click-the-states-message'>" + quiz_modes_metadata()[quiz_mode_of(territory)].click_message + "</p>"
+    return "<p id='click-the-states-message'>" + quiz_modes_settings()[quiz_mode_of(territory)].click_message + "</p>"
 }
 
 function top_message(question_info) {
@@ -340,10 +340,10 @@ function top_message(question_info) {
 
 function embed_map(question_info, score, start_time) {
     var territory = (question_info.chosen == question_info.answer ? question_info.chosen : question_info.territory)
-    var url = quiz_modes_metadata()[quiz_mode_of(territory)].map_embed_base_url
+    var url = quiz_modes_settings()[quiz_mode_of(territory)].map_embed_base_url
     var coordinates_ = coordinates(territory)
-    var zoom = google_maps_zoom_level(territory)
-    url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom }).toString()
+    var zoom_level = google_maps_zoom_level(territory)
+    url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom_level }).toString()
 
     var map = "<iframe id='" + (on_mobile_device() ? "map-mobile" : "map") + "' scrolling='no' frameborder=0 src='" + url + "'></iframe>"
 
@@ -399,7 +399,7 @@ function embed_question(question_info, score, start_time) {
     var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
     var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
     question  = "<div id='" + question_container_id + "'>"
-        question += "<div id='quiz_title'>" + truncate_for_mobile(quiz_modes_metadata()[quiz_mode_of(question_info.territory)].title) + "</div>"
+        question += "<div id='quiz_title'>" + truncate_for_mobile(quiz_modes_settings()[quiz_mode_of(question_info.territory)].title) + "</div>"
         question += "<div id='" + (on_mobile_device() ? "question-text-mobile" : "question-text") + "'>"
             question += "<p>Which of these does not border " + pretty_print(question_info.territory) + "?</p>"
             question += "<form>"
