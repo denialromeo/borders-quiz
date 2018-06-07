@@ -55,7 +55,7 @@ You can search public fusion table data [here](https://research.google.com/table
 
 Open a pull request and contribute a quiz (adding to [borders.json](/borders-quiz/json/borders.json) is enough), and I'll credit you on my website!
 
-Fusion table data for quizzes whose borders I still need to transcribe --
+Fusion table data for planned quizzes whose borders I still need to transcribe --
 
 * [Argentina](https://fusiontables.google.com/DataSource?docid=1DOlRprRmk2DJTK33QDgFvMWvIoF2mazBVqJ-pBnS)
 * [Chile](https://fusiontables.google.com/DataSource?docid=1kB9KHBRSVPmL6Kh0IDubwQWIQWOxK7Me3ctkecCC)
