@@ -160,7 +160,7 @@ function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
 
     // But some territories only border that one territory, so we need to keep those paths in the loop,
     // or the game will break.
-    unless_started_from = ["Alaska", "Denmark", "Portugal", "San Marino", "Vatican City"]
+    unless_started_from = ["Alaska", "Azerbaijan", "Denmark", "Portugal", "San Marino", "Vatican City"]
 
     return (remove_paths_through.contains(neighbor) && !unless_started_from.contains(territory))
 }

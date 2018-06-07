@@ -184,7 +184,8 @@
         "United Kingdom": ["Belgium", "France", "Netherlands"],
 
         "Canada": ["Greenland"],
-        "Mongolia": ["Kazakhstan"]
+        "Mongolia": ["Kazakhstan"],
+        "Portugal": ["Andorra", "France"]
     },
 
     "dont_sort_neighbors": [
@@ -205,6 +206,7 @@
         "Mediterranean Sea",
         "Mexico_",
         "Mississippi River",
+        "Nei Mongol (Inner Mongolia)",
         "Pacific Ocean",
         "Persian Gulf",
         "Portugal_",
@@ -214,6 +216,7 @@
         "Tasman Sea",
         "Timor Sea",
         "United States (Continental)_",
+        "Xinjiang",
         "Yellow Sea"
     ],
 
@@ -438,7 +441,7 @@
         "Yellow Sea": 4,
         "Yemen": 4,
         "Zambia": 3,
-        "Zimbabwe": 3,
+        "Zimbabwe": 4,
 
         "Afghanistan__": 3,
         "Andaman Sea": 4,
@@ -486,7 +489,7 @@
         "Tajikistan_": 4,
         "Vatican City_": 11,
         "Vietnam_": 4,
-        "Xinjiang": 4,
+        "Xinjiang": 3,
         "Xizang (Tibet)": 4
     }
     
