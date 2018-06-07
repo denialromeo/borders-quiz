@@ -59,6 +59,8 @@ Fusion table data for planned quizzes whose borders I still need to transcribe -
 
 * [Argentina](https://fusiontables.google.com/DataSource?docid=1DOlRprRmk2DJTK33QDgFvMWvIoF2mazBVqJ-pBnS)
 * [Chile](https://fusiontables.google.com/DataSource?docid=1kB9KHBRSVPmL6Kh0IDubwQWIQWOxK7Me3ctkecCC)
+* [Norway](https://fusiontables.google.com/DataSource?docid=1Bf9DyHnPk0XLGeGNJi9wXKY93wlA_M8qhRhAlsa1)
+* [Nigeria](https://fusiontables.google.com/DataSource?docid=17IWDPjtStnNVSnuTzKB1wZksNUZ5mu6x-4k5AU-J)
 * [The Philippines](https://fusiontables.google.com/DataSource?docid=1LhmiNLH6VC5nN3aOUL7XzJoZ_UrNssJBid1eKIu6)
 * [Vietnam](https://fusiontables.google.com/DataSource?docid=16_Do-EclU96IclsIqWnQ7jft7Pvueqvs9dxYTC69)
 
