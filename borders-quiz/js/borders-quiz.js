@@ -156,11 +156,11 @@ function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
     // Brazil borders all but two countries in South America, so to give tighter answer choices,
     // we exclude its neighbors from graph searches. Similar rationale for other members.
     remove_paths_through = [ "Brazil", "Canada_", "China", "China_", "Egypt", "Germany", "Iran", "Italy",
-                             "Morocco", "Russia", "Spain", "Turkey", "United States (Continental)"]
+                             "Morocco", "Russia", "Spain", "Turkey", "United States", "United States (Continental)"]
 
     // But some territories only border that one territory, so we need to keep those paths in the loop,
     // or the game will break.
-    unless_started_from = ["Alaska", "Azerbaijan", "Denmark", "Portugal", "San Marino", "Vatican City"]
+    unless_started_from = ["Alaska", "Denmark", "Portugal", "San Marino", "Vatican City"]
 
     return (remove_paths_through.contains(neighbor) && !unless_started_from.contains(territory))
 }
@@ -236,7 +236,7 @@ function pretty_print(territory, capitalize_the) {
 
 // Only for testing.
 function test_map(t) {
-    embed_map(build_question(t), {correct:0,wrong:0}, Date.now())
+    embed_map(build_question(t), {correct:0,wrong:-1}, Date.now())
 }
 function test_question(t) {
     test_map(t)
@@ -296,33 +296,33 @@ function bottom_message(territory) {
 
     var dont_sort_neighbors = settings().dont_sort_neighbors
 
-    var a = neighbors(territory)
+    var neighbors_ = neighbors(territory)
     if (!dont_sort_neighbors.contains(territory)) {
-        a.sort()
+        neighbors_.sort()
     }
 
-    for (i = 0; i < a.length; i++) {
-        a[i] = pretty_print(a[i])
+    for (i = 0; i < neighbors_.length; i++) {
+        neighbors_[i] = pretty_print(neighbors_[i])
     }
 
-    var s = ""
-    if (a.length == 0) {
-        s = "nothing!"
+    var sentence = ""
+    if (neighbors_.length == 0) {
+        sentence = "nothing!"
     }
-    else if (a.length == 1) {
-        s = "only " + a[0] + "."
+    else if (neighbors_.length == 1) {
+        sentence = "only " + neighbors_[0] + "."
     }
-    else if (a.length == 2) {
-        s = a[0] + " and " + a[1] + "."
+    else if (neighbors_.length == 2) {
+        sentence = neighbors_[0] + " and " + neighbors_[1] + "."
     }
     else {
-        for (i = 0; i < a.length - 1; i++) {
-            s += (a[i] + ", ")
+        for (i = 0; i < neighbors_.length - 1; i++) {
+            sentence += (neighbors_[i] + ", ")
         }
-        s += "and " + a[a.length - 1] + "."
+        sentence += "and " + neighbors_[neighbors_.length - 1] + "."
     }
 
-    return (pretty_print(territory, true) + " borders " + s)
+    return (pretty_print(territory, true) + " borders " + sentence)
 }
 
 function bottom_right_message_map(territory) {

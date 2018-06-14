@@ -1,0 +1,23 @@
+Quiz modes that have been removed for arbitrary reasons.
+
+Just pop any you want back into quiz_modes.json.
+
+"taiwan_counties": {
+    "anthem": "\"Sanmin Zhuyi\"",
+    "click_message": "(Click the counties!)",
+    "default_zoom_level": 7,
+    "description": "(Taiwan's counties.)",
+    "geocode_append": "",
+    "map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+12zcluwsLcKnPYh42DRReW60ZjZIXNRS8sWkOpv5w&viz=MAP&h=false&t=1&l=col2",
+    "title": "Taiwan Counties"
+},
+    
+"spain_provinces": {
+    "anthem": "\"Marcha Real\"",
+    "click_message": "(Click the provinces!)",
+    "default_zoom_level": 6,
+    "description": "(Spain's provinces.)",
+    "geocode_append": " Spain",
+    "map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col1+from+1vvax3u5XC0ipY71DsLsn8yWVxZk_C54bPAnJdorl&viz=MAP&h=false&t=1&l=col1",
+    "title": "Spain Provinces"
+},
