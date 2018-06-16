@@ -2,36 +2,36 @@ var game_iframe = document.getElementById("game-container")
 var game_css_path = "/borders-quiz/css/borders-quiz.css"
 var google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 var borders_json_path = "/borders-quiz/json/borders.json"
-var quiz_modes_settings_json_path = "/borders-quiz/json/quiz_modes.json"
+var quiz_modes_json_path = "/borders-quiz/json/quiz_modes.json"
 var settings_json_path = "/borders-quiz/json/settings.json"
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
-quiz_modes_settings_json = null
-function quiz_modes_settings() {
-    if (quiz_modes_settings_json == null) {
-        $.ajax({ url: quiz_modes_settings_json_path, async: false, success: function (r) { quiz_modes_settings_json = r } })
+quiz_modes_json = null
+function quiz_modes() {
+    if (quiz_modes_json == null) {
+        $.ajax({ url: quiz_modes_json_path, async: false, success: function (r) { quiz_modes_json = r } })
     }
-    return quiz_modes_settings_json
+    return quiz_modes_json
 }
 
 function current_quiz_modes() {
     var parameters =  URI(window.location.href).fragment(true)
     var current_quiz_modes_ = []
-    for (var quiz_mode in quiz_modes_settings()) {
+    for (var quiz_mode in quiz_modes()) {
         if (parameters[quiz_mode]) {
             current_quiz_modes_.push(quiz_mode)
         }
     }
-    if (current_quiz_modes_.length == 0) { // Default behavior when app visited.
-        all_quiz_modes = Object.keys(quiz_modes_settings())
+    if (current_quiz_modes_.length == 0) {
+        all_quiz_modes = Object.keys(quiz_modes())
         return [all_quiz_modes[all_quiz_modes.length - 1]]
     }
     return current_quiz_modes_
 }
 
 function game_page_bottom_message() {
-    var modes_json = quiz_modes_settings()
+    var modes_json = quiz_modes()
     var current_quiz_modes_ = current_quiz_modes()
 
     message  = "<p>You can also try these quiz modes!</p>"
@@ -70,19 +70,17 @@ function territories() {
 }
 
 function neighbors(territory) {
-    var all_borders = borders()
-    for (var country in all_borders) {
-        if (all_borders[country][territory]) {
-            return all_borders[country][territory].slice() // slice() makes a copy of the array so we don't mess with the original.
+    for (var quiz_mode in borders()) {
+        if (borders()[quiz_mode][territory]) {
+            return borders()[quiz_mode][territory].slice() // slice() makes a copy of the array so we don't mess up the original.
         }
     }
     return []
 }
 
 function quiz_mode_of(territory) {
-    var all_borders = borders()
-    for (var quiz_mode in all_borders) {
-        if (all_borders[quiz_mode][territory]) {
+    for (var quiz_mode in borders()) {
+        if (borders()[quiz_mode][territory]) {
             return quiz_mode
         }
     }
@@ -102,7 +100,7 @@ function google_maps_zoom_level(territory) {
     if (custom_zoom_levels[territory] != null) {
         return custom_zoom_levels[territory]
     }
-    return quiz_modes_settings()[quiz_mode_of(territory)].default_zoom_level
+    return quiz_modes()[quiz_mode_of(territory)].default_zoom_level
 }
 
 function geocode(address) {
@@ -113,13 +111,11 @@ function geocode(address) {
 }
 
 function coordinates(address) {
-    var tweaked_addresses = settings().tweaked_addresses
-
-    if (tweaked_addresses[address] != null) {
-        address = tweaked_addresses[address]
+    if (settings().tweaked_addresses[address] != null) {
+        address = settings().tweaked_addresses[address]
     }
     else {
-        address += quiz_modes_settings()[quiz_mode_of(address)].geocode_append
+        address += quiz_modes()[quiz_mode_of(address)].geocode_append
     }
 
     return geocode(address).results[0].geometry.location
@@ -199,17 +195,14 @@ function build_question(territory) {
         }
     }
 
-    var add_possible_answers = settings().add_possible_answers
-    var replace_possible_answers = settings().replace_possible_answers
-    
-    if (add_possible_answers[territory]) {
-        possible_answers = possible_answers.concat(add_possible_answers[territory])
+    if (settings().replace_possible_answers[territory]) {
+        possible_answers = settings().replace_possible_answers[territory]
     }
-    else if (replace_possible_answers[territory]) {
-        possible_answers = replace_possible_answers[territory]
+    else if (settings().add_possible_answers[territory]) {
+        possible_answers = possible_answers.concat(settings().add_possible_answers[territory])
     }
-
     var answer = choice(possible_answers)
+
     return { territory: territory, answer: answer, wrong_answers: wrong_answers, chosen: "" }
 }
 
@@ -294,10 +287,8 @@ function embed(src) {
 
 function bottom_message(territory) {
 
-    var dont_sort_neighbors = settings().dont_sort_neighbors
-
     var neighbors_ = neighbors(territory)
-    if (!dont_sort_neighbors.contains(territory)) {
+    if (!settings().dont_sort_neighbors.contains(territory)) {
         neighbors_.sort()
     }
 
@@ -326,7 +317,7 @@ function bottom_message(territory) {
 }
 
 function bottom_right_message_map(territory) {
-    return "<p id='click-the-states-message'>" + quiz_modes_settings()[quiz_mode_of(territory)].click_message + "</p>"
+    return "<p id='click-the-states-message'>" + quiz_modes()[quiz_mode_of(territory)].click_message + "</p>"
 }
 
 function top_message(question_info) {
@@ -340,7 +331,7 @@ function top_message(question_info) {
 
 function embed_map(question_info, score, start_time) {
     var territory = (question_info.chosen == question_info.answer ? question_info.chosen : question_info.territory)
-    var url = quiz_modes_settings()[quiz_mode_of(territory)].map_embed_base_url
+    var url = quiz_modes()[quiz_mode_of(territory)].map_embed_base_url
     var coordinates_ = coordinates(territory)
     var zoom_level = google_maps_zoom_level(territory)
     url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom_level }).toString()
@@ -399,7 +390,7 @@ function embed_question(question_info, score, start_time) {
     var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
     var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
     question  = "<div id='" + question_container_id + "'>"
-        question += "<div id='quiz_title'>" + truncate_for_mobile(quiz_modes_settings()[quiz_mode_of(question_info.territory)].title) + "</div>"
+        question += "<div id='quiz_title'>" + truncate_for_mobile(quiz_modes()[quiz_mode_of(question_info.territory)].title) + "</div>"
         question += "<div id='" + (on_mobile_device() ? "question-text-mobile" : "question-text") + "'>"
             question += "<p>Which of these does not border " + pretty_print(question_info.territory) + "?</p>"
             question += "<form>"
