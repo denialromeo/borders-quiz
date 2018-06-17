@@ -185,8 +185,8 @@ function breadth_first_search(territory, depth) {
 
 function build_question(territory) {
     var num_wrong_answers = 3
-    var wrong_answers = sample(neighbors(territory), num_wrong_answers)
     var answer_distance = 2
+
     var territory_distance_dict = breadth_first_search(territory, answer_distance)
     var possible_answers = []
     for (var t in territory_distance_dict) {
@@ -201,7 +201,9 @@ function build_question(territory) {
     else if (settings().add_possible_answers[territory]) {
         possible_answers = possible_answers.concat(settings().add_possible_answers[territory])
     }
+    
     var answer = choice(possible_answers)
+    var wrong_answers = sample(neighbors(territory), num_wrong_answers)
 
     return { territory: territory, answer: answer, wrong_answers: wrong_answers, chosen: "" }
 }
@@ -317,7 +319,7 @@ function bottom_message(territory) {
 }
 
 function bottom_right_message_map(territory) {
-    return "<p id='click-the-states-message'>" + quiz_modes()[quiz_mode_of(territory)].click_message + "</p>"
+    return "<p id='click-message'>" + quiz_modes()[quiz_mode_of(territory)].click_message + "</p>"
 }
 
 function top_message(question_info) {
@@ -378,8 +380,7 @@ function bottom_right_message(score, start_time) {
     question = "" 
     question += "<p id='score_and_timer'>"
         question += "<i id='score'>"
-            question += "Correct: " + score.correct + "&nbsp;&nbsp;"
-            question += "Wrong: " + score.wrong
+            question += "Correct: " + score.correct + "&nbsp;&nbsp;" + "Wrong: " + score.wrong
         question += "</i><br>"
         question += "<span id='timer'>" + format_time(Date.now() - start_time) + "</span>"
     question += "</p>"
