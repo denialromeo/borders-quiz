@@ -1,5 +1,15 @@
 {
 	
+	"countries": {
+		"anthem": "\"Pale Blue Dot\"",
+		"click_message": "(Click the countries!)",
+		"default_zoom_level": 5,
+		"description": "(The world's countries.)",
+		"geocode_append": "",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+1rkqDW9ccbr840fEN9Ao5sq2fVrYXPkirKjnN4oyD&viz=MAP&h=false&t=1&l=col3",
+		"title": "World Countries"
+	},
+
 	"usa_states": {
 		"anthem": "\"The Star-Spangled Banner\"",
 		"click_message": "(Click the states!)",
@@ -218,16 +228,6 @@
 	    "geocode_append": " County Ireland",
 	    "map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+13PyOxVhuAzhyIUFaHaswDcKssO7xtPqDkhqBV2Sm&viz=MAP&h=false&t=1&l=col2",
 	    "title": "Ireland Counties"
-	},
-	
-	"countries": {
-		"anthem": "\"Pale Blue Dot\"",
-		"click_message": "(Click the countries!)",
-		"default_zoom_level": 5,
-		"description": "(The world's countries.)",
-		"geocode_append": "",
-		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+1rkqDW9ccbr840fEN9Ao5sq2fVrYXPkirKjnN4oyD&viz=MAP&h=false&t=1&l=col3",
-		"title": "World Countries"
 	}
-
+	
 }

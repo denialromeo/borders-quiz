@@ -24,8 +24,7 @@ function current_quiz_modes() {
         }
     }
     if (current_quiz_modes_.length == 0) {
-        all_quiz_modes = Object.keys(quiz_modes())
-        return [all_quiz_modes[all_quiz_modes.length - 1]]
+        current_quiz_modes_.push(Object.keys(quiz_modes())[0])
     }
     return current_quiz_modes_
 }
@@ -148,17 +147,7 @@ function choice(a) {
 // This is an optional method for pruning the breadth-first search.
 // Performance improvement is minimal, but it really does a good job of removing obvious answers.
 function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
-
-    // Brazil borders all but two countries in South America, so to give tighter answer choices,
-    // we exclude its neighbors from graph searches. Similar rationale for other members.
-    remove_paths_through = [ "Brazil", "Canada_", "China", "China_", "Egypt", "Germany", "Iran", "Italy",
-                             "Morocco", "Russia", "Spain", "Turkey", "United States", "United States (Continental)"]
-
-    // But some territories only border that one territory, so we need to keep those paths in the loop,
-    // or the game will break.
-    unless_started_from = ["Alaska", "Denmark", "Portugal", "San Marino", "Vatican City"]
-
-    return (remove_paths_through.contains(neighbor) && !unless_started_from.contains(territory))
+    return (settings().remove_paths_through.contains(neighbor) && !settings().unless_started_from.contains(territory))
 }
 
 function breadth_first_search(territory, depth) {
@@ -295,7 +284,7 @@ function bottom_message(territory) {
     }
 
     for (i = 0; i < neighbors_.length; i++) {
-        neighbors_[i] = pretty_print(neighbors_[i])
+        neighbors_[i] = pretty_print(neighbors_[i], false)
     }
 
     var sentence = ""
@@ -393,7 +382,7 @@ function embed_question(question_info, score, start_time) {
     question  = "<div id='" + question_container_id + "'>"
         question += "<div id='quiz_title'>" + truncate_for_mobile(quiz_modes()[quiz_mode_of(question_info.territory)].title) + "</div>"
         question += "<div id='" + (on_mobile_device() ? "question-text-mobile" : "question-text") + "'>"
-            question += "<p>Which of these does not border " + pretty_print(question_info.territory) + "?</p>"
+            question += "<p>Which of these does not border " + pretty_print(question_info.territory, false) + "?</p>"
             question += "<form>"
                 for (i = 0; i < choices.length; i++) {
                     var choice = choices[i]

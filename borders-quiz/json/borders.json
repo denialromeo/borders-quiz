@@ -711,11 +711,11 @@
         "Gyeonggi-do": ["Chungcheongbuk-do", "Chungcheongnam-do", "Gangwon-do", "North Korea_", "Incheon", "Seoul"],
         "Gyeongsangbuk-do": ["Chungcheongbuk-do", "Daegu", "Gangwon-do", "Gyeongsangnam-do", "Jeollabuk-do", "Ulsan"],
         "Gyeongsangnam-do": ["Busan", "Daegu", "Gyeongsangbuk-do", "Jeollanam-do", "Jeollabuk-do", "Ulsan"],
-        "Incheon": ["Gyeonggi-do"],
+        "Incheon": ["Gyeonggi-do", "Seoul"],
         "Jeollanam-do": ["Gwangju", "Gyeongsangnam-do", "Jeollabuk-do"],
         "Jeollabuk-do": ["Chungcheongbuk-do", "Chungcheongnam-do", "Gyeongsangbuk-do", "Gyeongsangnam-do", "Jeollanam-do"],
         "North Korea_": ["Gangwon-do", "Gyeonggi-do"],
-        "Seoul": ["Gyeonggi-do"],
+        "Seoul": ["Gyeonggi-do", "Incheon"],
         "Ulsan": ["Busan", "Gyeongsangbuk-do", "Gyeongsangnam-do"]
     },
 
@@ -1173,7 +1173,7 @@
         "Solomon Islands": [],
         "Somalia": ["Djibouti", "Ethiopia", "Kenya"],
         "South Africa": ["Botswana", "Lesotho", "Mozambique", "Namibia", "Swaziland", "Zimbabwe"],
-        "South China Sea": ["Indonesia", "Singapore", "Malaysia", "Vietnam", "China", "Taiwan", "Philippines", "Malaysia", "Brunei"],
+        "South China Sea": ["Indonesia", "Singapore", "Malaysia", "Vietnam", "China", "Taiwan", "Philippines", "Brunei"],
         "South Korea": ["North Korea"],
         "South Sudan": ["Central African Republic", "Democratic Republic of the Congo", "Ethiopia", "Kenya", "Sudan", "Uganda"],
         "Spain": ["Andorra", "France", "Morocco", "Portugal"],
