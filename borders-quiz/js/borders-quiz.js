@@ -1,9 +1,9 @@
-var game_iframe = document.getElementById("game-container")
-var game_css_path = "/borders-quiz/css/borders-quiz.css"
-var google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
-var borders_json_path = "/borders-quiz/json/borders.json"
-var quiz_modes_json_path = "/borders-quiz/json/quiz_modes.json"
-var settings_json_path = "/borders-quiz/json/settings.json"
+const game_iframe = document.getElementById("game-container")
+const game_css_path = "/borders-quiz/css/borders-quiz.css"
+const google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
+const borders_json_path = "/borders-quiz/json/borders.json"
+const quiz_modes_json_path = "/borders-quiz/json/quiz_modes.json"
+const settings_json_path = "/borders-quiz/json/settings.json"
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
@@ -24,7 +24,8 @@ function current_quiz_modes() {
         }
     }
     if (current_quiz_modes_.length == 0) {
-        current_quiz_modes_.push(Object.keys(quiz_modes())[0])
+        var all_quiz_modes = Object.keys(quiz_modes())
+        current_quiz_modes_.push(all_quiz_modes[all_quiz_modes.length - 1])
     }
     return current_quiz_modes_
 }
@@ -173,8 +174,8 @@ function breadth_first_search(territory, depth) {
 }
 
 function build_question(territory) {
-    var num_wrong_answers = 3
-    var answer_distance = 2
+    const num_wrong_answers = 3
+    const answer_distance = 2
 
     var territory_distance_dict = breadth_first_search(territory, answer_distance)
     var possible_answers = []
@@ -197,16 +198,16 @@ function build_question(territory) {
     return { territory: territory, answer: answer, wrong_answers: wrong_answers, chosen: "" }
 }
 
-function prepend_the(territory, capitalize_the=false) {
+function prepend_the(territory, capitalize_the) {
     var the = (capitalize_the ? "The " : "the ")
-    var should_prepend_the = settings().should_prepend_the
-    return (should_prepend_the.contains(territory) ? the : "")
+    return (settings().should_prepend_the.contains(territory) ? the : "")
 }
 
 function truncate_for_mobile(territory) {
     if (on_mobile_device()) {
-        var abbreviations = settings().abbreviations_for_mobile
-        return (abbreviations[territory] != null ? abbreviations[territory] : territory)
+        if (settings().truncations_for_mobile[territory] != null) {
+            return settings().truncations_for_mobile[territory]
+        }
     }
     return territory
 }

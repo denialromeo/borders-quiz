@@ -53,6 +53,7 @@
                               "Iran",
                               "Italy",
                               "Morocco",
+                              "Nevada_",
                               "Russia",
                               "Spain",
                               "Turkey",
@@ -65,7 +66,7 @@
                             "San Marino",
                             "Vatican City"],
 
-    "abbreviations_for_mobile": {
+    "truncations_for_mobile": {
         "Australian Capital Territory": "ACT",
         "Azad Jammu and Kashmir": "AJK",
         "Bosnia and Herzegovina": "Bosnia",
@@ -83,10 +84,16 @@
         "Republic of the Congo": "ROC",
         "São Tomé and Principe": "São Tomé",
         "United Arab Emirates": "UAE",
+        "United Kingdom (Anguilla)": "Anguilla",
+        "United Kingdom (Cayman Islands)": "Cayman Islands",
+        "United Kingdom (Montserrat)": "Montserrat",
+        "United Kingdom (Virgin Islands)": "UK Virgin Islands",
         "United Kingdom": "UK",
+        "United Kingdom_": "UK",
         "United States (Alaska)_": "USA (Alaska)",
         "United States (Continental)_": "Continental USA",
-        "Western Sahara": "W. Sahara"
+        "United States (Puerto Rico)": "Puerto Rico",
+        "United States (Virgin Islands)": "USA Virgin Islands"
     },
 
     "should_prepend_the": [
@@ -94,6 +101,7 @@
         "Arabian Sea",
         "Australian Capital Territory",
         "Baltic Sea",
+        "Basque Country",
         "Bay of Bengal",
         "Black Sea",
         "Caribbean Sea",
@@ -147,7 +155,6 @@
         "United States (Continental)_",
         "United States (Puerto Rico)",
         "United States (Virgin Islands)",
-        "United States",
         "United States",
         "Yellow Sea",
         "Yukon Territory" 
