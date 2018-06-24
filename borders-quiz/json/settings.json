@@ -189,7 +189,6 @@
         "Saudi Arabia": ["Bahrain"],
         "Senegal": ["Cape Verde"],
         "South Australia": ["Tasmania"],
-        "South Korea": ["Japan"],
         "Sweden": ["Denmark"],
         "Syria": ["Cyprus"],
         "Tanzania": ["Comoros", "Madagascar", "Mauritius", "Seychelles"],
@@ -204,7 +203,7 @@
     },
 
     "replace_possible_answers": {
-        "Azerbaijan": ["Turkmenistan"],
+        "Azerbaijan": ["Turkmenistan", "Iraq", "Syria", "Afghanistan"],
         "Canada": ["Greenland"],
         "Dominican Republic": ["Cuba", "Jamaica"],
         "Ehime": ["Hokkaido", "Okinawa"],

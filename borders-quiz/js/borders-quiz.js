@@ -106,7 +106,7 @@ function google_maps_zoom_level(territory) {
 function geocode(address) {
     var url = "https://maps.googleapis.com/maps/api/geocode/json"
     var json = {}
-    $.ajax({ url: url, data: {"key": google_maps_api_key, "address": address}, async: false, success: function (r) { json = r }})
+    $.ajax({ url: url, data: { "key": google_maps_api_key, "address": address}, async: false, success: function (r) { json = r } })
     return json
 }
 
@@ -239,7 +239,7 @@ function test_remove_neighbors_of_neighbor_from_bfs() {
     console.log(remove_neighbors_of_neighbor_from_bfs("Guyana", "Brazil") == true)
     console.log(remove_neighbors_of_neighbor_from_bfs("Germany", "Italy") == true)
 }
-// Above code can be freely removed.
+////
 
 // Timer code.
 var timer_process_id = null
