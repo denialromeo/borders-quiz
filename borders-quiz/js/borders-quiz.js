@@ -7,9 +7,9 @@ const settings_json_path = "/borders-quiz/json/settings.json"
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
-quiz_modes_json = null
+var quiz_modes_json
 function quiz_modes() {
-    if (quiz_modes_json == null) {
+    if (quiz_modes_json == undefined) {
         $.ajax({ url: quiz_modes_json_path, async: false, success: function (r) { quiz_modes_json = r } })
     }
     return quiz_modes_json
@@ -19,7 +19,7 @@ function current_quiz_modes() {
     var parameters =  URI(window.location.href).fragment(true)
     var current_quiz_modes_ = []
     for (var quiz_mode in quiz_modes()) {
-        if (parameters[quiz_mode]) {
+        if (parameters[quiz_mode] != undefined) {
             current_quiz_modes_.push(quiz_mode)
         }
     }
@@ -52,9 +52,9 @@ function game_page_bottom_message() {
     return message
 }
 
-var borders_json = null
+var borders_json
 function borders() {
-    if (borders_json == null) {
+    if (borders_json == undefined) {
         $.ajax({ url: borders_json_path, async: false, success: function (r) { borders_json = r } })
     }
     return borders_json
@@ -71,7 +71,7 @@ function territories() {
 
 function neighbors(territory) {
     for (var quiz_mode in borders()) {
-        if (borders()[quiz_mode][territory]) {
+        if (borders()[quiz_mode][territory] != undefined) {
             return borders()[quiz_mode][territory].slice() // slice() makes a copy of the array so we don't mess up the original.
         }
     }
@@ -80,16 +80,16 @@ function neighbors(territory) {
 
 function quiz_mode_of(territory) {
     for (var quiz_mode in borders()) {
-        if (borders()[quiz_mode][territory]) {
+        if (borders()[quiz_mode][territory] != undefined) {
             return quiz_mode
         }
     }
     return "countries"
 }
 
-var settings_json = null
+var settings_json
 function settings() {
-    if (settings_json == null) {
+    if (settings_json == undefined) {
         $.ajax({ url: settings_json_path, async: false, success: function (r) { settings_json = r } })
     }
     return settings_json
@@ -97,7 +97,7 @@ function settings() {
 
 function google_maps_zoom_level(territory) {
     var custom_zoom_levels = settings().custom_zoom_levels
-    if (custom_zoom_levels[territory] != null) {
+    if (custom_zoom_levels[territory] != undefined) {
         return custom_zoom_levels[territory]
     }
     return quiz_modes()[quiz_mode_of(territory)].default_zoom_level
@@ -111,7 +111,7 @@ function geocode(address) {
 }
 
 function coordinates(address) {
-    if (settings().tweaked_addresses[address] != null) {
+    if (settings().tweaked_addresses[address] != undefined) {
         address = settings().tweaked_addresses[address]
     }
     else {
@@ -159,7 +159,7 @@ function breadth_first_search(territory, depth) {
         var neighbors_ = neighbors(v)
         for (var i = 0; i < neighbors_.length; i++) {
             var neighbor = neighbors_[i]
-            if (territory_distance_dict[neighbor] == null) {
+            if (territory_distance_dict[neighbor] == undefined) {
                 territory_distance_dict[neighbor] = territory_distance_dict[v] + 1
                 if (territory_distance_dict[neighbor] > depth) {
                     return territory_distance_dict // Terminate BFS at given depth.
@@ -185,10 +185,10 @@ function build_question(territory) {
         }
     }
 
-    if (settings().replace_possible_answers[territory]) {
+    if (settings().replace_possible_answers[territory] != undefined) {
         possible_answers = settings().replace_possible_answers[territory]
     }
-    else if (settings().add_possible_answers[territory]) {
+    else if (settings().add_possible_answers[territory] != undefined) {
         possible_answers = possible_answers.concat(settings().add_possible_answers[territory])
     }
     
@@ -205,7 +205,7 @@ function prepend_the(territory, capitalize_the) {
 
 function truncate_for_mobile(territory) {
     if (on_mobile_device()) {
-        if (settings().truncations_for_mobile[territory] != null) {
+        if (settings().truncations_for_mobile[territory] != undefined) {
             return settings().truncations_for_mobile[territory]
         }
     }
@@ -242,7 +242,7 @@ function test_remove_neighbors_of_neighbor_from_bfs() {
 ////
 
 // Timer code.
-var timer_process_id = null
+var timer_process_id
 function format_time(raw_date) {
     function prepend_zero(time) {
         return (time < 10 ? "0" + time : time)
@@ -256,12 +256,12 @@ function format_time(raw_date) {
 }
 function update_dom_time(start_time, timer_dom_node) {
     var time_elapsed = format_time(Date.now() - start_time)
-    if (timer_dom_node != null) {
+    if (timer_dom_node != undefined) {
         timer_dom_node.innerHTML = time_elapsed
     }
 }
 function start_timer(start_time, timer_dom_node) {
-    if (timer_process_id != null) {
+    if (timer_process_id != undefined) {
         clearInterval(timer_process_id)
     }
     timer_process_id = setInterval(function() { update_dom_time(start_time, timer_dom_node) }, 1000)
@@ -288,24 +288,24 @@ function bottom_message(territory) {
         neighbors_[i] = pretty_print(neighbors_[i], false)
     }
 
-    var sentence = ""
+    var sentence = pretty_print(territory, true) + " borders "
     if (neighbors_.length == 0) {
-        sentence = "nothing!"
+        sentence += "nothing!"
     }
     else if (neighbors_.length == 1) {
-        sentence = "only " + neighbors_[0] + "."
+        sentence += "only " + neighbors_[0] + "."
     }
     else if (neighbors_.length == 2) {
-        sentence = neighbors_[0] + " and " + neighbors_[1] + "."
+        sentence += neighbors_[0] + " and " + neighbors_[1] + "."
     }
     else {
         for (i = 0; i < neighbors_.length - 1; i++) {
-            sentence += (neighbors_[i] + ", ")
+            sentence += neighbors_[i] + ", "
         }
         sentence += "and " + neighbors_[neighbors_.length - 1] + "."
     }
 
-    return (pretty_print(territory, true) + " borders " + sentence)
+    return sentence
 }
 
 function bottom_right_message_map(territory) {
@@ -347,7 +347,7 @@ function embed_map(question_info, score, start_time) {
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function next_question_button() {
         var next_button = game_iframe.contentWindow.document.getElementById("next")
-        if (next_button == null) {
+        if (next_button == undefined) {
             window.requestAnimationFrame(next_question_button);
         }
         else {
@@ -402,7 +402,7 @@ function embed_question(question_info, score, start_time) {
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function begin_timing() {
         var timer_dom_node = game_iframe.contentWindow.document.getElementById("timer")
-        if (timer_dom_node == null) {
+        if (timer_dom_node == undefined) {
             window.requestAnimationFrame(begin_timing);
         }
         else {
@@ -414,7 +414,7 @@ function embed_question(question_info, score, start_time) {
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function detect_player_choice() {
         var choices = game_iframe.contentWindow.document.getElementsByName("choice")
-        if (choices[0] == null) {
+        if (choices[0] == undefined) {
             window.requestAnimationFrame(detect_player_choice);
         }
         else {

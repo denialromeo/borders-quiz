@@ -16,8 +16,8 @@ def is_complete_graph(vertex_neighbors_dict):
                 print('{} is not in {}\'s neighbors!'.format(v, n))
     print(complete)
 
-def get_matrix(key, json_path=borders_json_path):
-    with open(json_path) as data_file:
+def get_matrix(key):
+    with open(borders_json_path) as data_file:
         data = json.load(data_file)
         return data[key]
 
