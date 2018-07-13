@@ -45,7 +45,7 @@
     },
 
     "spain_autonomous_communities": {
-        "Andalusia": ["Murcia_", "Gibraltar_", "Castilla–La Mancha", "Extremadura", "Portugal__"],
+        "Andalusia": ["Murcia_", "United Kingdom (Gibraltar)_", "Castilla–La Mancha", "Extremadura", "Portugal__"],
         "Andorra___": ["Catalonia", "France____"],
         "Aragon": ["Navarra_", "La Rioja_", "Castile and León", "Castilla–La Mancha", "Valencia_", "Catalonia", "France____"],
         "Asturias_": ["Galicia", "Castile and León", "Cantabria_"],
@@ -60,7 +60,7 @@
         "Extremadura": ["Castile and León", "Castilla–La Mancha", "Andalusia", "Portugal__"],
         "France____": ["Basque Country", "Navarra_", "Aragon", "Catalonia", "Andorra___"],
         "Galicia": ["Asturias_", "Castile and León", "Portugal__"],
-        "Gibraltar_": ["Andalusia"],
+        "United Kingdom (Gibraltar)_": ["Andalusia"],
         "La Rioja_": ["Basque Country", "Navarra_", "Aragon", "Castile and León"],
         "Madrid_": ["Castile and León", "Castilla–La Mancha"],
         "Melilla_": ["Morocco__"],

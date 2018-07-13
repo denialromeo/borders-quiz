@@ -15,11 +15,19 @@ function quiz_modes() {
     return quiz_modes_json
 }
 
+function url_parameters() {
+    var parameters_array = Array.from(new URL(window.location.href).searchParams.entries())
+    var parameters = {}
+    for (i = 0; i < parameters_array.length; i++) {
+        parameters[parameters_array[i][0]] = parameters_array[i][1]
+    }
+    return parameters
+}
+
 function current_quiz_modes() {
-    var parameters =  URI(window.location.href).fragment(true)
     var current_quiz_modes_ = []
     for (var quiz_mode in quiz_modes()) {
-        if (parameters[quiz_mode] != undefined) {
+        if (url_parameters()[quiz_mode] != undefined) {
             current_quiz_modes_.push(quiz_mode)
         }
     }
@@ -28,6 +36,57 @@ function current_quiz_modes() {
         current_quiz_modes_.push(all_quiz_modes[all_quiz_modes.length - 1])
     }
     return current_quiz_modes_
+}
+
+var borders_json
+function borders() {
+    if (borders_json == undefined) {
+        $.ajax({ url: borders_json_path, async: false, success: function (r) { borders_json = r } })
+    }
+    return borders_json
+}
+
+function neighbors(territory) {
+    for (var quiz_mode in borders()) {
+        if (borders()[quiz_mode][territory] != undefined) {
+            return borders()[quiz_mode][territory].slice() // slice() makes a copy of the array so we don't mess up the original.
+        }
+    }
+    return []
+}
+
+// Custom quiz example URL - http://danielmoore.us/borders-quiz?custom=India|Pakistan|China
+function custom_territories() {
+    var separator = "|"
+    if (url_parameters()["custom"] != undefined) {
+        var custom_territories_ = url_parameters()["custom"].split(separator)
+        // To prevent an infinite loop if all custom territories are invalid.
+        if (custom_territories_.some(function(t) { return neighbors(t).length > 0 })) {
+            return custom_territories_
+        }
+    }
+    return null
+}
+
+function territories() {
+    var territories_ = []
+    if (custom_territories() != null) {
+        return custom_territories()
+    }
+    var current_quiz_modes_ = current_quiz_modes()
+    for (i = 0; i < current_quiz_modes_.length; i++) {
+        territories_ = territories_.concat(Object.keys(borders()[current_quiz_modes_[i]]))
+    }
+    return territories_
+}
+
+function quiz_mode_of(territory) {
+    for (var quiz_mode in borders()) {
+        if (borders()[quiz_mode][territory] != undefined) {
+            return quiz_mode
+        }
+    }
+    return "countries"
 }
 
 function game_page_bottom_message() {
@@ -41,7 +100,7 @@ function game_page_bottom_message() {
             continue 
         }
         message += "<li>"
-            message += "<a onclick='window.location.replace(this.href);window.location.reload()' href='#?" + quiz_mode + "=true'>"
+            message += "<a onclick='window.location.replace(this.href);window.location.reload()' target='_self' href='?" + quiz_mode + "=true'>"
                 message += modes_json[quiz_mode].anthem
             message += "</a>&nbsp;"
             message += modes_json[quiz_mode].description
@@ -50,41 +109,6 @@ function game_page_bottom_message() {
     message += "</ul>"
     
     return message
-}
-
-var borders_json
-function borders() {
-    if (borders_json == undefined) {
-        $.ajax({ url: borders_json_path, async: false, success: function (r) { borders_json = r } })
-    }
-    return borders_json
-}
-
-function territories() {
-    var territories_ = []
-    var current_quiz_modes_ = current_quiz_modes()
-    for (i = 0; i < current_quiz_modes_.length; i++) {
-        territories_ = territories_.concat(Object.keys(borders()[current_quiz_modes_[i]]))
-    }
-    return territories_
-}
-
-function neighbors(territory) {
-    for (var quiz_mode in borders()) {
-        if (borders()[quiz_mode][territory] != undefined) {
-            return borders()[quiz_mode][territory].slice() // slice() makes a copy of the array so we don't mess up the original.
-        }
-    }
-    return []
-}
-
-function quiz_mode_of(territory) {
-    for (var quiz_mode in borders()) {
-        if (borders()[quiz_mode][territory] != undefined) {
-            return quiz_mode
-        }
-    }
-    return "countries"
 }
 
 var settings_json
@@ -219,25 +243,9 @@ function pretty_print(territory, capitalize_the) {
     return (the + territory)
 }
 
-// Only for testing.
-function test_map(t) {
-    embed_map(build_question(t), {correct:0,wrong:-1}, Date.now())
-}
-function test_question(t) {
-    test_map(t)
-    function next_question_button() {
-        var next_button = game_iframe.contentWindow.document.getElementById("next")
-        if (!next_button) {
-            window.requestAnimationFrame(next_question_button);
-        }
-        next_button.click()
-    }
-    next_question_button()
-}
-function test_remove_neighbors_of_neighbor_from_bfs() {
-    console.log(remove_neighbors_of_neighbor_from_bfs("Alaska", "Canada_") == false)
-    console.log(remove_neighbors_of_neighbor_from_bfs("Guyana", "Brazil") == true)
-    console.log(remove_neighbors_of_neighbor_from_bfs("Germany", "Italy") == true)
+// Just for fun. Shows map for arbitrary address. Meant to be run from browser console. Can be ignored.
+function custom_map(address) {
+    embed_map(build_question(address), {correct:0,wrong:-1}, Date.now())
 }
 ////
 
@@ -274,7 +282,7 @@ function on_mobile_device() {
 }
 
 function embed(src) {     
-    game_iframe.srcdoc ="<head><link rel='stylesheet' href='" + game_css_path + "'/></head><body>" + src + "</body>"
+    game_iframe.srcdoc ="<html><head><link rel='stylesheet' href='" + game_css_path + "'/></head><body>" + src + "</body></html>"
 }
 
 function bottom_message(territory) {
@@ -323,12 +331,12 @@ function top_message(question_info) {
 
 function embed_map(question_info, score, start_time) {
     var territory = (question_info.chosen == question_info.answer ? question_info.chosen : question_info.territory)
-    var url = quiz_modes()[quiz_mode_of(territory)].map_embed_base_url
-    var coordinates_ = coordinates(territory)
-    var zoom_level = google_maps_zoom_level(territory)
-    url = URI(url).addSearch({ "lat": coordinates_.lat, "lng": coordinates_.lng, "z": zoom_level }).toString()
+    var url = new URL(quiz_modes()[quiz_mode_of(territory)].map_embed_base_url)
+    url.searchParams.append("lat", coordinates(territory).lat)
+    url.searchParams.append("lng", coordinates(territory).lng)
+    url.searchParams.append("z", google_maps_zoom_level(territory))
 
-    var map = "<iframe id='" + (on_mobile_device() ? "map-mobile" : "map") + "' scrolling='no' frameborder=0 src='" + url + "'></iframe>"
+    var map = "<iframe id='" + (on_mobile_device() ? "map-mobile" : "map") + "' scrolling='no' frameborder=0 src='" + url.href + "'></iframe>"
 
     content = "<div id='" + (on_mobile_device() ? "map-container-mobile" : "map-container") + "'>"
         content += "<center>"
