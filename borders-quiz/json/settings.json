@@ -1,8 +1,9 @@
 {
 
-    "tweaked_addresses": {
+    "recenter_map": {
         "Afghanistan_": "FATA Pakistan",
         "Arizona_": "Arizona USA",
+        "Baltic Sea": "Stockholm Sweden",
         "Brunei_": "Brunei",
         "California_": "California State",
         "China_": "Nepal",
@@ -13,10 +14,12 @@
         "France____": "Gazost France",
         "France (New Caledonia)": "New Caledonia",
         "Georgia": "Georgia Country",
+        "Georgia_": "Georgia State USA",
         "Georgia__": "Georgia Country",
         "Germany__": "Zlotnik Poland",
         "Gibraltar": "Gibraltar UK",
         "United Kingdom (Gibraltar)_": "Gibraltar UK",
+        "Hunan": "Hunan Province China",
         "Hudson Bay": "Coats Island Canada",
         "India": "Taranga Nepal",
         "India_": "Dharakh India",
@@ -43,8 +46,9 @@
         "Scotland": "Dumfries Scotland",
         "South China Sea": "Spratly Islands",
         "Sudan": "Al Dabbah Sudan",
-        "Texas_": "Texas State",
+        "Texas_": "Austin Texas",
         "Ukraine__": "Lviv Ukraine",
+        "United States (Continental)": "Wasagaming Manitoba",
         "Washington": "Washington State"
     },
 
@@ -217,6 +221,7 @@
         "Finland": ["Denmark", "Greenland", "Iceland"],
         "Haiti": ["Cuba", "Jamaica"],
         "Ireland": ["Belgium", "France", "Netherlands"],
+        "Kalimantan Timur": ["Sulawesi Tengah"],
         "Mongolia": ["Kazakhstan"],
         "Morocco_": ["Cádiz", "Gibraltar"],
         "Morocco__": ["Andalusia", "United Kingdom (Gibraltar)_"],

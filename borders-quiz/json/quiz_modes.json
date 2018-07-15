@@ -1,6 +1,6 @@
 {
 	
-	"usa_states": {
+	"usa-states": {
 		"anthem": "\"The Star-Spangled Banner\"",
 		"click_message": "(Click the states!)",
 		"default_zoom_level": 5,
@@ -10,7 +10,7 @@
 		"title": "USA States"
 	},
 
-	"california_counties": {
+	"california-counties": {
 		"anthem": "\"I Love You, California\"",
 		"click_message": "(Click the counties!)",
 		"default_zoom_level": 7,
@@ -20,8 +20,8 @@
 		"title": "California Counties"
 	},
 	
-	"mexico_states": {
-		"anthem": "\"Mexicanos, al Grito de Guerra!\"",
+	"mexico-states": {
+		"anthem": "\"Mexicanos, al Grito de Guerra\"",
 		"click_message": "(Click the states!)",
 		"default_zoom_level": 5,
 		"description": "(Mexico's states.)",
@@ -30,7 +30,7 @@
 		"title": "Mexico States"
 	},
 	
-	"canada_provinces": {
+	"canada-provinces": {
 		"anthem": "\"O Canada\"",
 		"click_message": "(Click the provinces!)",
 		"default_zoom_level": 3,
@@ -40,8 +40,8 @@
 		"title": "Canada Provinces"
 	},
 	
-	"brazil_states": {
-		"anthem": "\"Hino Nacional Brasileiro\"",
+	"brazil-states": {
+		"anthem": "\"Ó Pátria Amada\"",
 		"click_message": "(Click the states!)",
 		"default_zoom_level": 4,
 		"description": "(Brazil's states.)",
@@ -50,7 +50,7 @@
 		"title": "Brazil States"
 	},
 	
-	"india_states": {
+	"india-states": {
 		"anthem": "\"Jana Gana Mana\"",
 		"click_message": "(Click the states!)",
 		"default_zoom_level": 5,
@@ -60,7 +60,7 @@
 		"title": "India States"
 	},
 	
-	"pakistan_provinces": {
+	"pakistan-provinces": {
 		"anthem": "\"Qaumi Taranah\"",
 		"click_message": "(Click the provinces!)",
 		"default_zoom_level": 5,
@@ -70,7 +70,7 @@
 		"title": "Pakistan Provinces"
 	},
 	
-	"china_provinces": {
+	"china-provinces": {
 		"anthem": "\"Yiyongjun Jinxingqu\"",
 		"click_message": "(Click the provinces!)",
 		"default_zoom_level": 5,
@@ -80,7 +80,7 @@
 		"title": "China Provinces"
 	},
 	
-	"south_korea_provinces": {
+	"south-korea-provinces": {
 		"anthem": "\"Aegukga\"",
 		"click_message": "(Click the provinces!)",
 		"default_zoom_level": 7,
@@ -90,7 +90,7 @@
 		"title": "South Korea Provinces"
 	},
 	
-	"japan_prefectures": {
+	"japan-prefectures": {
 		"anthem": "\"Kimigayo\"",
 		"click_message": "(Click the prefectures!)",
 		"default_zoom_level": 7,
@@ -100,7 +100,7 @@
 		"title": "Japan Prefectures"
 	},
 	
-	"malaysia_states": {
+	"malaysia-states": {
 		"anthem": "\"Negaraku\"",
 		"click_message": "(Click the states!)",
 		"default_zoom_level": 6,
@@ -110,7 +110,7 @@
 		"title": "Malaysia States"
 	},
 	
-	"indonesia_provinces": {
+	"indonesia-provinces": {
 		"anthem": "\"Indonesia Raya\"",
 		"click_message": "(Click the provinces!)",
 		"default_zoom_level": 5,
@@ -120,7 +120,7 @@
 		"title": "Indonesia Provinces"
 	},
 	
-	"australia_states": {
+	"australia-states": {
 		"anthem": "\"Advance Australia Fair\"",
 		"click_message": "(Click the states!)",
 		"default_zoom_level": 4,
@@ -130,7 +130,7 @@
 		"title": "Australia States"
 	},
 
-	"russia_federal_subjects": {
+	"russia-federal-subjects": {
 		"anthem": "\"Patrioticheskaya Pesnya\"",
 		"click_message": "(Click the federal subjects!)",
 		"default_zoom_level": 4,
@@ -140,7 +140,7 @@
 		"title": "Russia Federal Subjects"
 	},
 	
-	"ukraine_provinces": {
+	"ukraine-provinces": {
 		"anthem": "\"Shche ne vmerla Ukraina\"",
 		"click_message": "(Click the provinces!)",
 		"default_zoom_level": 5,
@@ -150,7 +150,7 @@
 		"title": "Ukraine Provinces"
 	},
 	
-	"poland_provinces": {
+	"poland-provinces": {
 		"anthem": "\"Mazurek Dąbrowskiego\"",
 		"click_message": "(Click the provinces!)",
 		"default_zoom_level": 5,
@@ -160,7 +160,7 @@
 		"title": "Poland Provinces"
 	},
 	
-	"germany_states": {
+	"germany-states": {
 		"anthem": "\"Deutschlandlied\"",
 		"click_message": "(Click the states!)",
 		"default_zoom_level": 5,
@@ -170,7 +170,7 @@
 		"title": "Germany States"
 	},
 	
-	"italy_regions": {
+	"italy-regions": {
 		"anthem": "\"Fratelli d'Italia\"",
 		"click_message": "(Click the regions!)",
 		"default_zoom_level": 6,
@@ -180,7 +180,7 @@
 		"title": "Italy Regions"
 	},
 	
-	"france_regions": {
+	"france-regions": {
 		"anthem": "\"La Marseillaise\"",
 		"click_message": "(Click the regions!)",
 		"default_zoom_level": 5,
@@ -190,7 +190,7 @@
 		"title": "France Regions"
 	},
 	
-	"spain_autonomous_communities": {
+	"spain-autonomous-communities": {
 		"anthem": "\"Marcha Real\"",
 		"click_message": "(Click the autonomous communities!)",
 		"default_zoom_level": 6,
@@ -200,7 +200,7 @@
 		"title": "Spain Autonomous Communities"
 	},
 	
-	"england_ceremonial_counties": {
+	"england-ceremonial-counties": {
 		"anthem": "\"God Save the Queen\"",
 		"click_message": "(Click the counties!)",
 		"default_zoom_level": 7,
@@ -210,7 +210,7 @@
 		"title": "England Ceremonial Counties"
 	},
 
-	"ireland_counties": {
+	"ireland-counties": {
 	    "anthem": "\"Amhrán na bhFiann\"",
 	    "click_message": "(Click the counties!)",
 	    "default_zoom_level": 7,

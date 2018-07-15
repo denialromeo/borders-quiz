@@ -1,6 +1,6 @@
 {
 
-    "nigeria_states": {
+    "nigeria-states": {
         "Abia": [],
         "Adamawa": [],
         "Akwa Ibom": [],
@@ -44,7 +44,7 @@
         "Zamfara": []
     },
 
-    "spain_autonomous_communities": {
+    "spain-autonomous-communities": {
         "Andalusia": ["Murcia_", "United Kingdom (Gibraltar)_", "Castilla–La Mancha", "Extremadura", "Portugal__"],
         "Andorra___": ["Catalonia", "France____"],
         "Aragon": ["Navarra_", "La Rioja_", "Castile and León", "Castilla–La Mancha", "Valencia_", "Catalonia", "France____"],
@@ -71,7 +71,7 @@
         "Valencia_": ["Catalonia", "Aragon", "Castilla–La Mancha", "Murcia_"]
     },
 
-    "poland_provinces": {
+    "poland-provinces": {
         "Belarus___": ["Lithuania__", "Ukraine__", "Podlachian", "Lublin"],
         "Czechia__": ["Lower Silesian", "Opole", "Silesian", "Germany__", "Slovakia__"],
         "Germany__": ["West Pomeranian", "Lubusz", "Lower Silesian", "Czechia__"],
@@ -97,7 +97,7 @@
         "West Pomeranian": ["Pomeranian", "Greater Poland", "Lubusz", "Germany__"]
     },
 
-    "indonesia_provinces": {
+    "indonesia-provinces": {
         "Aceh": ["Sumatera Utara"],
         "Bali": [],
         "Bangka Belitung": [],
@@ -136,7 +136,7 @@
         "Yogyakarta": ["Jawa Tengah"]
     },
 
-    "ireland_counties": {
+    "ireland-counties": {
         "Carlow": ["Wicklow", "Wexford", "Kilkenny", "Laois", "Kildare"],
         "Cavan": ["United Kingdom_", "Monaghan", "Meath", "Westmeath", "Longford", "Leitrim"],
         "Clare": ["Galway", "Tipperary", "Limerick", "Kerry"],
@@ -166,7 +166,7 @@
         "Wicklow": ["Dublin", "Kildare", "Carlow", "Wexford"]
     },
 
-    "brazil_states": {
+    "brazil-states": {
         "Acre": ["Amazonas", "Rondonia", "Bolivia_", "Peru_"],
         "Alagoas": ["Pernambuco", "Sergipe", "Bahia"],
         "Amapá": ["Pará", "French Guiana_", "Suriname_"],
@@ -206,7 +206,7 @@
         "Venezuela_": ["Roraima", "Amazonas", "Colombia_", "Guyana_"]
     },
 
-    "italy_regions": {
+    "italy-regions": {
         "Abruzzo": ["Molise", "Lazio", "Marche"],
         "Apulia": ["Molise", "Campania", "Basilicata"],
         "Austria__": ["Switzerland___", "Slovenia_", "Trentino-Alto Adige", "Veneto", "Friuli-Venezia Giulia"],
@@ -235,7 +235,7 @@
         "Veneto": ["Friuli-Venezia Giulia", "Austria__", "Trentino-Alto Adige", "Lombardia", "Emilia-Romagna"]
     },
 
-    "malaysia_states": {
+    "malaysia-states": {
         "Brunei_": ["Sarawak"],
         "Indonesia_": ["Sabah", "Sarawak"],
         "Johor": ["Malacca", "Negeri Sembilan", "Pahang"],
@@ -258,7 +258,7 @@
         "Thailand_": ["Perlis", "Kedah", "Perak", "Kelantan"]
     },
 
-    "spain_provinces": {
+    "spain-provinces": {
         "A Coruña": ["Lugo", "Pontevedra"],
         "Alava": ["Navarra", "Vizcaya", "Guipúzcoa", "Burgos", "La Rioja"],
         "Albacete": ["Cuenca", "Valencia", "Alicante", "Murcia", "Granada", "Jaén", "Ciudad Real"],
@@ -318,7 +318,7 @@
         "Zaragoza": ["Navarra", "Huesca", "Lleida", "Tarragona", "Teruel", "Guadalajara", "Soria", "La Rioja"]
     },
 
-    "ukraine_provinces": {
+    "ukraine-provinces": {
         "Belarus__": ["Volyn", "Rivne", "Zhytomyr", "Kiev Oblast", "Chernihiv", "Russia__", "Poland___"],
         "Cherkasy": ["Kiev Oblast", "Poltava", "Kirovohrad", "Vinnytsya"],
         "Chernihiv": ["Sumy", "Poltava", "Kiev Oblast", "Belarus__", "Russia__"],
@@ -355,7 +355,7 @@
         "Zhytomyr": ["Kiev Oblast", "Vinnytsya", "Khmelnytskyy", "Rivne", "Belarus__"]
     },
 
-    "taiwan_counties": {
+    "taiwan-counties": {
         "Changhua County": ["Taichung City", "Nantou County", "Yunlin County"],
         "Chiayi City": ["Chiayi County"],
         "Chiayi County": ["Chiayi City", "Yunlin County", "Nantou County", "Kaohsiung City", "Tainan City"],
@@ -380,7 +380,7 @@
         "Yunlin County": ["Changhua County", "Nantou County", "Chiayi County"]
     },
 
-    "france_regions": {
+    "france-regions": {
         "Alsace": ["Germany_", "Switzerland__", "Lorraine", "Franche-Comté"],
         "Andorra_": ["Midi-Pyrénées", "Languedoc-Roussillon", "Spain_"],
         "Aquitaine": ["Poitou-Charentes", "Limousin", "Midi-Pyrénées", "Spain_"],
@@ -413,7 +413,7 @@
         "Île-de-France": ["Picardie", "Champagne-Ardenne", "Bourgogne", "Haute-Normandie", "Centre-Val de Loire"]
     },
 
-    "england_ceremonial_counties": {
+    "england-ceremonial-counties": {
         "Bedfordshire": ["Cambridgeshire", "Northamptonshire", "Buckinghamshire", "Hertfordshire"],
         "Berkshire": ["Wiltshire", "Oxfordshire", "Buckinghamshire", "Greater London", "Surrey", "Hampshire"],
         "Bristol": ["Gloucestershire", "Somerset"],
@@ -466,7 +466,7 @@
         "Worcestershire": ["Shropshire", "Staffordshire", "West Midlands", "Warwickshire", "Gloucestershire", "Herefordshire"]
     },
 
-    "germany_states": {
+    "germany-states": {
         "Austria_": ["Baden-Württemberg", "Czechia_", "Switzerland_", "Bavaria"],
         "Baden-Württemberg": ["Austria_", "Switzerland_", "France_", "Rhineland-Palatinate", "Hesse", "Bavaria"],
         "Bavaria": ["Austria_", "Czechia_", "Switzerland_", "Baden-Württemberg", "Hesse", "Thuringia", "Saxony"],
@@ -494,7 +494,7 @@
         "Thuringia": ["Bavaria", "Hesse", "Lower Saxony", "Saxony-Anhalt", "Saxony"]
     },
 
-    "russia_federal_subjects": {
+    "russia-federal-subjects": {
         "Adygea": ["Krasnodar Krai"],
         "Altai Krai": ["Altai Republic", "Kazakhstan__", "Kemerovo Oblast", "Novosibirsk Oblast"],
         "Altai Republic": ["Altai Krai", "China___", "Kazakhstan__", "Kemerovo Oblast", "Khakas Autonomous Oblast", "Mongolia__", "Tuva"],
@@ -593,7 +593,7 @@
         "Zabaykalsky Krai": ["Amur Oblast", "Buryatia", "China___", "Irkutsk Oblast", "Mongolia__", "Sakha Republic"]
     },
 
-    "pakistan_provinces": {
+    "pakistan-provinces": {
         "Afghanistan_": ["China__", "Gilgit-Baltistan", "Khyber Pakhtunkhwa", "Federally Administered Tribal Areas", "Balochistan", "Iran_"],
         "Azad Jammu and Kashmir": ["Gilgit-Baltistan", "India_", "Khyber Pakhtunkhwa", "Punjab_"],
         "Balochistan": ["Afghanistan_", "Federally Administered Tribal Areas", "Iran_", "Punjab_", "Sindh"],
@@ -608,7 +608,7 @@
         "Sindh": ["Balochistan", "India_", "Punjab_"]
     },
 
-    "california_counties": {
+    "california-counties": {
         "Alameda": ["Contra Costa", "San Francisco", "San Joaquin", "San Mateo", "Santa Clara", "Stanislaus"],
         "Alpine": ["Amador", "Calaveras", "El Dorado", "Mono", "Nevada_", "Tuolumne"],
         "Amador": ["Alpine", "Calaveras", "El Dorado", "Sacramento", "San Joaquin"],
@@ -675,7 +675,7 @@
         "Yuba": ["Butte", "Nevada County", "Placer", "Plumas", "Sierra", "Sutter"]
     },
 
-    "south_korea_provinces": {
+    "south-korea-provinces": {
         "Busan": ["Gyeongsangnam-do", "Ulsan"],
         "Chungcheongbuk-do": ["Chungcheongnam-do", "Daejeon", "Gangwon-do", "Gyeonggi-do", "Gyeongsangbuk-do", "Jeollabuk-do"],
         "Chungcheongnam-do": ["Chungcheongbuk-do", "Daejeon", "Gyeonggi-do", "Jeollabuk-do"],
@@ -694,7 +694,7 @@
         "Ulsan": ["Busan", "Gyeongsangbuk-do", "Gyeongsangnam-do"]
     },
 
-    "australia_states": {
+    "australia-states": {
         "Australian Capital Territory": ["New South Wales"],
         "Bass Strait": ["Tasmania", "Victoria"],
         "Great Australian Bight": ["Western Australia", "South Australia"],
@@ -707,7 +707,7 @@
         "Western Australia": ["Northern Territory", "South Australia"]
     },
 
-    "japan_prefectures": {
+    "japan-prefectures": {
         "Aichi": ["Gifu", "Mie", "Nagano", "Shizuoka"],
         "Akita": ["Aomori", "Iwate", "Miyagi", "Yamagata"],
         "Aomori": ["Akita", "Iwate"],
@@ -757,7 +757,7 @@
         "Yamanashi": ["Gunma", "Kanagawa", "Nagano", "Saitama", "Shizuoka", "Tokyo"]
     },
 
-    "china_provinces": {
+    "china-provinces": {
         "Afghanistan__": ["Pakistan__", "Tajikistan_", "Xinjiang"],
         "Anhui": ["Henan", "Hubei", "Jiangsu", "Jiangxi", "Shandong", "Zhejiang"],
         "Beijing": ["Hebei", "Tianjin"],
@@ -805,7 +805,7 @@
         "Zhejiang": ["Anhui", "Fujian", "Jiangsu", "Jiangxi", "Shanghai"]
     },
 
-    "mexico_states": {
+    "mexico-states": {
         "Aguascalientes": ["Jalisco", "Zacatecas"],
         "Arizona_": ["Baja California", "California_", "New Mexico_", "Sonora"],
         "Baja California Sur": ["Baja California"],
@@ -847,26 +847,26 @@
         "Zacatecas": ["Aguascalientes", "Coahuila", "Durango", "Guanajuato", "Jalisco", "Nayarit", "Nuevo León", "San Luis Potosí"]
     },
 
-    "canada_provinces": {
-        "Alberta": ["British Columbia", "Saskatchewan", "Northwest Territories", "United States (Continental)_"],
-        "British Columbia": ["United States (Alaska)_", "Alberta", "United States (Continental)_", "Northwest Territories", "Yukon Territory"],
+    "canada-provinces": {
+        "Alberta": ["British Columbia", "Saskatchewan", "Northwest Territories", "United States (Continental)"],
+        "British Columbia": ["United States (Alaska)_", "Alberta", "United States (Continental)", "Northwest Territories", "Yukon Territory"],
         "Hudson Bay": ["Nunavut", "Manitoba", "Ontario", "Quebec"],
-        "Manitoba": ["Northwest Territories", "Nunavut", "Ontario", "Saskatchewan", "United States (Continental)_"],
-        "New Brunswick": ["Nova Scotia", "Quebec", "United States (Continental)_"],
+        "Manitoba": ["Northwest Territories", "Nunavut", "Ontario", "Saskatchewan", "United States (Continental)"],
+        "New Brunswick": ["Nova Scotia", "Quebec", "United States (Continental)"],
         "Newfoundland and Labrador": ["Quebec"],
         "Northwest Territories": ["Alberta", "British Columbia", "Manitoba", "Nunavut", "Saskatchewan", "Yukon Territory"],
         "Nova Scotia": ["New Brunswick"],
         "Nunavut": ["Manitoba", "Northwest Territories", "Saskatchewan"],
-        "Ontario": ["Manitoba", "Quebec", "United States (Continental)_"],
+        "Ontario": ["Manitoba", "Quebec", "United States (Continental)"],
         "Prince Edward Island": [],
-        "Quebec": ["Ontario", "New Brunswick", "Newfoundland and Labrador", "United States (Continental)_"],
-        "Saskatchewan": ["Alberta", "Manitoba", "Northwest Territories", "Nunavut", "United States (Continental)_"],
+        "Quebec": ["Ontario", "New Brunswick", "Newfoundland and Labrador", "United States (Continental)"],
+        "Saskatchewan": ["Alberta", "Manitoba", "Northwest Territories", "Nunavut", "United States (Continental)"],
         "United States (Alaska)_": ["British Columbia", "Yukon Territory"],
-        "United States (Continental)_": ["British Columbia", "Alberta", "Saskatchewan", "Manitoba", "Ontario", "Quebec", "New Brunswick"],
+        "United States (Continental)": ["British Columbia", "Alberta", "Saskatchewan", "Manitoba", "Ontario", "Quebec", "New Brunswick"],
         "Yukon Territory": ["United States (Alaska)_", "British Columbia", "Northwest Territories"]
     },
 
-    "india_states": {
+    "india-states": {
         "Andhra Pradesh": ["Karnataka", "Odisha", "Tamil Nadu", "Telangana"],
         "Arunachal Pradesh": ["Assam", "Bhutan_", "China_", "Myanmar_", "Nagaland"],
         "Assam": ["Arunachal Pradesh", "Bangladesh_", "Bhutan_", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Tripura", "West Bengal"],
@@ -906,7 +906,7 @@
         "West Bengal": ["Assam", "Bangladesh_", "Bhutan_", "Bihar", "Jharkhand", "Nepal_", "Odisha", "Sikkim"]
     },
     
-    "usa_states": {
+    "usa-states": {
         "Alabama": ["Florida", "Georgia_", "Mississippi", "Tennessee"],
         "Alaska": ["Canada_"],
         "Arizona": ["California", "Colorado", "Mexico_", "Nevada", "New Mexico", "Utah"],

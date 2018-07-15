@@ -55,9 +55,9 @@ function neighbors(territory) {
     return []
 }
 
-// Custom quiz example URL - http://danielmoore.us/borders-quiz?custom=India|Pakistan|China
+// Custom quiz example URL - http://danielmoore.us/borders-quiz?custom=India,Pakistan,China
 function custom_territories() {
-    var separator = "|"
+    var separator = ","
     if (url_parameters()["custom"] != undefined) {
         var custom_territories_ = url_parameters()["custom"].split(separator)
         // To prevent an infinite loop if all custom territories are invalid.
@@ -68,14 +68,18 @@ function custom_territories() {
     return null
 }
 
+var territories_ = []
 function territories() {
-    var territories_ = []
-    if (custom_territories() != null) {
-        return custom_territories()
-    }
-    var current_quiz_modes_ = current_quiz_modes()
-    for (i = 0; i < current_quiz_modes_.length; i++) {
-        territories_ = territories_.concat(Object.keys(borders()[current_quiz_modes_[i]]))
+    if (territories_.length == 0) {
+        if (custom_territories() != null) {
+            territories_ = custom_territories()
+        }
+        else {
+            var current_quiz_modes_ = current_quiz_modes()
+            for (i = 0; i < current_quiz_modes_.length; i++) {
+                territories_ = territories_.concat(Object.keys(borders()[current_quiz_modes_[i]]))
+            }
+        }
     }
     return territories_
 }
@@ -100,7 +104,7 @@ function game_page_bottom_message() {
             continue 
         }
         message += "<li>"
-            message += "<a onclick='window.location.replace(this.href);window.location.reload()' target='_self' href='?" + quiz_mode + "=true'>"
+            message += "<a onclick='window.location.replace(this.href);window.location.reload()' target='_self' href='?" + quiz_mode + "'>"
                 message += modes_json[quiz_mode].anthem
             message += "</a>&nbsp;"
             message += modes_json[quiz_mode].description
@@ -135,8 +139,8 @@ function geocode(address) {
 }
 
 function coordinates(address) {
-    if (settings().tweaked_addresses[address] != undefined) {
-        address = settings().tweaked_addresses[address]
+    if (settings().recenter_map[address] != undefined) {
+        address = settings().recenter_map[address]
     }
     else {
         address += quiz_modes()[quiz_mode_of(address)].geocode_append
