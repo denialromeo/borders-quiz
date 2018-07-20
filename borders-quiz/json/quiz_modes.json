@@ -80,6 +80,16 @@
 		"title": "China Provinces"
 	},
 	
+	"taiwan-counties": {
+	    "anthem": "\"Sanmin Zhuyi\"",
+	    "click_message": "(Click the counties!)",
+	    "default_zoom_level": 8,
+	    "description": "(Taiwan's counties.)",
+	    "geocode_append": "",
+	    "map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+12zcluwsLcKnPYh42DRReW60ZjZIXNRS8sWkOpv5w&viz=MAP&h=false&t=1&l=col2",
+	    "title": "Taiwan Counties"
+	},
+    
 	"south-korea-provinces": {
 		"anthem": "\"Aegukga\"",
 		"click_message": "(Click the provinces!)",

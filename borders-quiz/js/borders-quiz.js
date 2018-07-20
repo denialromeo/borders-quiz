@@ -55,9 +55,9 @@ function neighbors(territory) {
     return []
 }
 
-// Custom quiz example URL - http://danielmoore.us/borders-quiz?custom=India,Pakistan,China
+// Custom quiz example URL - http://danielmoore.us/borders-quiz?custom=India;Pakistan;China
 function custom_territories() {
-    var separator = ","
+    var separator = ";"
     if (url_parameters()["custom"] != undefined) {
         var custom_territories_ = url_parameters()["custom"].split(separator)
         // To prevent an infinite loop if all custom territories are invalid.
@@ -104,7 +104,7 @@ function game_page_bottom_message() {
             continue 
         }
         message += "<li>"
-            message += "<a onclick='window.location.replace(this.href);window.location.reload()' target='_self' href='?" + quiz_mode + "'>"
+            message += "<a target='_self' href='?" + quiz_mode + "'>"
                 message += modes_json[quiz_mode].anthem
             message += "</a>&nbsp;"
             message += modes_json[quiz_mode].description

@@ -2,7 +2,7 @@
 #
 # Borders are always undirected graphs, so this is a simple way of checking if we missed something.
 #
-# Example Usage: python test_complete_graph.py india_states
+# Example Usage: python test_complete_graph.py india-states
 import json, sys
 
 borders_json_path = 'borders.json'
