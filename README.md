@@ -19,7 +19,7 @@ All you have to do is start a local server in the project directory.
 A quick way of doing this is to install [Node.js](https://nodejs.org/en/), open your command prompt, and run -
 
 ```
-git clone https://github.com/danielm00re/borders-quiz.git
+git clone https://github.com/danielm00re/borders-quiz
 cd borders-quiz
 npm install http-server -g
 http-server
