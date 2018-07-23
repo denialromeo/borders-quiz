@@ -14,32 +14,20 @@ For example -
 
 ## Installation
 
-To play with this, all you have to do is start `index.html` on a local server!
+All you have to do is start a local server in the project directory.
 
-Here's how to do this using Jekyll.
+A quick way of doing this is to install [Node.js](https://nodejs.org/en/), open your command prompt, and run -
 
 ```
 git clone https://github.com/danielm00re/borders-quiz.git
 cd borders-quiz
-jekyll serve --port 4000
+npm install http-server -g
+http-server
 ```
 
-Now you can play the game at `http://localhost:4000`!
+Now you can play the game at `http://localhost:8081`!
 
-To install Jekyll using [Scoop](http://scoop.sh) (I assume you're using Windows.) -
-
-```
-powershell Set-ExecutionPolicy RemoteSigned -scope CurrentUser
-powershell iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
-scoop install ruby
-exit
-```
-
-```
-gem install jekyll
-```
-
-The game can also be played on my website [here](http://danielmoore.us/borders-quiz). The version of the game on my website will always be the most updated, though I'll try to update this repo as well if I make any major changes.
+You can also play the game on my website [here](http://danielmoore.us/borders-quiz).
 
 ## Development Guide
 
