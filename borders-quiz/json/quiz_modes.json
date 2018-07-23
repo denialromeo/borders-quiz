@@ -203,7 +203,7 @@
 	"spain-autonomous-communities": {
 		"anthem": "\"Marcha Real\"",
 		"click_message": "(Click the autonomous communities!)",
-		"default_zoom_level": 6,
+		"default_zoom_level": 5,
 		"description": "(Spain's autonomous communities.)",
 		"geocode_append": " Spain",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col1+from+1NHEGhx3wWq8PeqmFtY_IEz7ADv4yE3scsQzd9OH-&viz=MAP&h=false&t=1&l=col1",

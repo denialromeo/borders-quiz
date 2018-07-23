@@ -4,6 +4,9 @@ const google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 const borders_json_path = "/borders-quiz/json/borders.json"
 const quiz_modes_json_path = "/borders-quiz/json/quiz_modes.json"
 const settings_json_path = "/borders-quiz/json/settings.json"
+const start_time = Date.now()
+
+var score = {correct:0, wrong:0}
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
@@ -55,14 +58,25 @@ function neighbors(territory) {
     return []
 }
 
-// Custom quiz example URL - http://danielmoore.us/borders-quiz?custom=India;Pakistan;China
+// India, Pakistan, Bangladesh - http://danielmoore.us/borders-quiz?custom=India|Pakistan|Bangladesh
+// All U.S. states starting with N - http://danielmoore.us/borders-quiz?usa-states&custom=^N
 function custom_territories() {
-    var separator = ";"
     if (url_parameters()["custom"] != undefined) {
-        var custom_territories_ = url_parameters()["custom"].split(separator)
-        // To prevent an infinite loop if all custom territories are invalid.
-        if (custom_territories_.some(function(t) { return neighbors(t).length > 0 })) {
-            return custom_territories_
+        var current_quiz_modes_ = current_quiz_modes()
+        var custom_regex = new RegExp(url_parameters()["custom"])
+        var territories = []
+        for (i = 0; i < current_quiz_modes_.length; i++) {
+            quiz_mode = current_quiz_modes_[i]
+            for (var territory in borders()[quiz_mode]) {
+                if (custom_regex.exec(territory) != null) {
+                    if (neighbors(territory).length > 0) {
+                        territories.push(territory)
+                    }
+                }
+            }
+        }
+        if (territories.length > 0) {
+            return territories
         }
     }
     return null
@@ -249,16 +263,16 @@ function pretty_print(territory, capitalize_the) {
 
 // Just for fun. Shows map for arbitrary address. Meant to be run from browser console. Can be ignored.
 function custom_map(address) {
-    embed_map(build_question(address), {correct:0,wrong:-1}, Date.now())
+    embed_map(build_question(address))
 }
 ////
 
 // Timer code.
 var timer_process_id
+function prepend_zero(time) {
+    return (time < 10 ? "0" + time : time)
+}
 function format_time(raw_date) {
-    function prepend_zero(time) {
-        return (time < 10 ? "0" + time : time)
-    }
     var total_seconds = Math.round(raw_date/1000)
     var hours = prepend_zero(Math.floor(total_seconds/60/60))
     var minutes = prepend_zero(Math.floor((total_seconds/60) % 60))
@@ -277,7 +291,6 @@ function start_timer(start_time, timer_dom_node) {
         clearInterval(timer_process_id)
     }
     timer_process_id = setInterval(function() { update_dom_time(start_time, timer_dom_node) }, 1000)
-    return start_time
 }
 ////
 
@@ -289,7 +302,7 @@ function embed(src) {
     game_iframe.srcdoc ="<html><head><link rel='stylesheet' href='" + game_css_path + "'/></head><body>" + src + "</body></html>"
 }
 
-function bottom_message(territory) {
+function borders_sentence(territory) {
 
     var neighbors_ = neighbors(territory)
     if (!settings().dont_sort_neighbors.contains(territory)) {
@@ -320,11 +333,7 @@ function bottom_message(territory) {
     return sentence
 }
 
-function bottom_right_message_map(territory) {
-    return "<p id='click-message'>" + quiz_modes()[quiz_mode_of(territory)].click_message + "</p>"
-}
-
-function top_message(question_info) {
+function right_or_wrong_message(question_info) {
     if (question_info.chosen == question_info.answer) {
         return ("Correct! " + pretty_print(question_info.chosen, true) + " does not border " + pretty_print(question_info.territory) + "!")
     }
@@ -333,7 +342,7 @@ function top_message(question_info) {
     }
 }
 
-function embed_map(question_info, score, start_time) {
+function embed_map(question_info) {
     var territory = (question_info.chosen == question_info.answer ? question_info.chosen : question_info.territory)
     var url = new URL(quiz_modes()[quiz_mode_of(territory)].map_embed_base_url)
     url.searchParams.append("lat", coordinates(territory).lat)
@@ -344,12 +353,12 @@ function embed_map(question_info, score, start_time) {
 
     content = "<div id='" + (on_mobile_device() ? "map-container-mobile" : "map-container") + "'>"
         content += "<center>"
-            content += "<p>" + top_message(question_info) + "</p>"
+            content += "<p>" + right_or_wrong_message(question_info) + "</p>"
             content += map
-            content += "<p>" + bottom_message(territory) + "</p>"
+            content += "<p>" + borders_sentence(territory) + "</p>"
             content += "<button id='next'></button>"
             if (!on_mobile_device()) {
-                content += bottom_right_message_map(territory)
+                content += "<p id='click-message'>" + quiz_modes()[quiz_mode_of(territory)].click_message + "</p>"
             }
         content += "</center>"
     content += "</div>"
@@ -366,30 +375,19 @@ function embed_map(question_info, score, start_time) {
             if (question_info.chosen == question_info.answer) {
                 score.correct += 1
                 next_button.innerHTML = "Next"
-                next_button.onclick = function() { next_question(null, score, start_time) }
+                next_button.onclick = function() { next_question() }
             }
             else {
                 score.wrong += 1
                 next_button.innerHTML = "Try Again"
-                next_button.onclick = function() { next_question(question_info, score, start_time) }
+                next_button.onclick = function() { next_question(question_info) }
             }
         }
     }
     next_question_button()
 }
 
-function bottom_right_message(score, start_time) {
-    question = "" 
-    question += "<p id='score_and_timer'>"
-        question += "<i id='score'>"
-            question += "Correct: " + score.correct + "&nbsp;&nbsp;" + "Wrong: " + score.wrong
-        question += "</i><br>"
-        question += "<span id='timer'>" + format_time(Date.now() - start_time) + "</span>"
-    question += "</p>"
-    return question 
-}
-
-function embed_question(question_info, score, start_time) {
+function embed_question(question_info) {
     var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
     var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
     question  = "<div id='" + question_container_id + "'>"
@@ -406,7 +404,12 @@ function embed_question(question_info, score, start_time) {
                 }
             question += "</form>"
         question += "</div>"
-        question += bottom_right_message(score, start_time)
+        question += "<p id='score_and_timer'>"
+            question += "<i id='score'>"
+                question += "Correct: " + score.correct + "&nbsp;&nbsp;" + "Wrong: " + score.wrong
+            question += "</i><br>"
+            question += "<span id='timer'>" + format_time(Date.now() - start_time) + "</span>"
+        question += "</p>"
     question += "</div>"
 
     embed(question)
@@ -433,7 +436,7 @@ function embed_question(question_info, score, start_time) {
             for (i = 0; i < choices.length; i++) {
                 choices[i].onclick = function() {
                     question_info.chosen = this.id
-                    embed_map(question_info, score, start_time)
+                    embed_map(question_info)
                 }
             }
         }
@@ -452,9 +455,9 @@ function random_territory() {
 
 // A sample question_info object is
 // { territory: "United States", answer: "Guatemala", wrong_answers: ["Mexico", "Canada"], chosen:""}
-function next_question(question_info=null, score={correct:0,wrong:0}, start_time=Date.now()) {
+function next_question(question_info=null) {
     if (question_info == null) {
         question_info = build_question(random_territory())
     }
-    embed_question(question_info, score, start_time)
+    embed_question(question_info)
 }

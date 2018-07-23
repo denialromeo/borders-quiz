@@ -53,14 +53,14 @@ However, you must observe these rules or the game will break -
 
 You can search public fusion table data [here](https://research.google.com/tables?source=ft2573812&corpus=fusion), find U.S. data [here](https://support.google.com/fusiontables/answer/1182141?hl=en), and find world state/province level data [here](https://fusiontables.google.com/DataSource?docid=1uK6JhwbCLeJWmTmoWTIKFOmdZuTxhfeT_Gy05QXy).
 
+Note that you can also create custom quizzes by playing with the URL. Examples -
+
+* [India, Pakistan, and Bangladesh]()http://danielmoore.us/borders-quiz?custom=India|Pakistan|Bangladesh)
+* [All countries ending with "stan"](http://danielmoore.us/borders-quiz?custom=stan$)
+
 Fusion table data for planned quizzes whose borders I still need to transcribe --
 
-* [Argentina](https://fusiontables.google.com/DataSource?docid=1DOlRprRmk2DJTK33QDgFvMWvIoF2mazBVqJ-pBnS)
-* [Chile](https://fusiontables.google.com/DataSource?docid=1kB9KHBRSVPmL6Kh0IDubwQWIQWOxK7Me3ctkecCC)
-* [Norway](https://fusiontables.google.com/DataSource?docid=1Bf9DyHnPk0XLGeGNJi9wXKY93wlA_M8qhRhAlsa1)
 * [Nigeria](https://fusiontables.google.com/DataSource?docid=17IWDPjtStnNVSnuTzKB1wZksNUZ5mu6x-4k5AU-J)
-* [The Philippines](https://fusiontables.google.com/DataSource?docid=1LhmiNLH6VC5nN3aOUL7XzJoZ_UrNssJBid1eKIu6)
-* [Vietnam](https://fusiontables.google.com/DataSource?docid=16_Do-EclU96IclsIqWnQ7jft7Pvueqvs9dxYTC69)
 
 ## Known Bugs
 
