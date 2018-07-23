@@ -257,7 +257,7 @@ function build_question(territory) {
     var answer = choice(possible_answers)
     var wrong_answers = sample(neighbors(territory), num_wrong_answers)
 
-    return { territory: territory, answer: answer, wrong_answers: wrong_answers, chosen: "" }
+    return { territory: territory, answer: answer, wrong_answers: wrong_answers }
 }
 
 function prepend_the(territory, capitalize_the) {
@@ -320,6 +320,63 @@ function on_mobile_device() {
 
 function embed(src) {     
     game_iframe.srcdoc ="<html><head><link rel='stylesheet' href='" + game_css_path + "'/></head><body>" + src + "</body></html>"
+}
+
+function embed_question(question_info, score) {
+    var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
+    var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
+    question  = "<div id='" + question_container_id + "'>"
+        question += "<div id='quiz_title'>" + truncate_for_mobile(quiz_modes()[quiz_mode_of(question_info.territory)].title) + "</div>"
+        question += "<div id='" + (on_mobile_device() ? "question-text-mobile" : "question-text") + "'>"
+            question += "<p>Which of these does not border " + pretty_print(question_info.territory, false) + "?</p>"
+            question += "<form>"
+                for (i = 0; i < choices.length; i++) {
+                    var choice = choices[i]
+                    var letter = "&emsp;" + String.fromCharCode(i + 65) + ". "
+                    // Do not remove the escaped double-quotes or game will break on territories like "Cote d'Ivoire".
+                    question += "<input type='radio' id=\"" + choice + "\" value=\"" + choice + "\" name='choice'>"
+                    question += "<label for=\"" + choice + "\">" + letter + pretty_print(choice, true) + "</label><br>"
+                }
+            question += "</form>"
+        question += "</div>"
+        question += "<p id='score_and_timer'>"
+            question += "<i id='score'>"
+                question += "Correct: " + score.correct + "&nbsp;&nbsp;" + "Wrong: " + score.wrong
+            question += "</i><br>"
+            question += "<span id='timer'>" + format_time(Date.now() - start_time) + "</span>"
+        question += "</p>"
+    question += "</div>"
+
+    embed(question)
+
+    // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
+    function begin_timing() {
+        var timer_dom_node = game_iframe.contentWindow.document.getElementById("timer")
+        if (timer_dom_node == undefined) {
+            window.requestAnimationFrame(begin_timing);
+        }
+        else {
+            start_timer(start_time, timer_dom_node)
+        }
+    }
+    begin_timing()
+
+    // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
+    function detect_player_choice() {
+        var choices = game_iframe.contentWindow.document.getElementsByName("choice")
+        if (choices[0] == undefined) {
+            window.requestAnimationFrame(detect_player_choice);
+        }
+        else {
+            for (i = 0; i < choices.length; i++) {
+                choices[i].onclick = function() {
+                    question_info["chosen"] = this.id
+                    embed_map(question_info, score)
+                }
+            }
+        }
+    }
+    detect_player_choice()
 }
 
 function borders_sentence(territory) {
@@ -407,63 +464,6 @@ function embed_map(question_info, score) {
     next_question_button()
 }
 
-function embed_question(question_info, score) {
-    var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
-    var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
-    question  = "<div id='" + question_container_id + "'>"
-        question += "<div id='quiz_title'>" + truncate_for_mobile(quiz_modes()[quiz_mode_of(question_info.territory)].title) + "</div>"
-        question += "<div id='" + (on_mobile_device() ? "question-text-mobile" : "question-text") + "'>"
-            question += "<p>Which of these does not border " + pretty_print(question_info.territory, false) + "?</p>"
-            question += "<form>"
-                for (i = 0; i < choices.length; i++) {
-                    var choice = choices[i]
-                    var letter = "&emsp;" + String.fromCharCode(i + 65) + ". "
-                    // Do not remove the escaped double-quotes or game will break on territories like "Cote d'Ivoire".
-                    question += "<input type='radio' id=\"" + choice + "\" value=\"" + choice + "\" name='choice'>"
-                    question += "<label for=\"" + choice + "\">" + letter + pretty_print(choice, true) + "</label><br>"
-                }
-            question += "</form>"
-        question += "</div>"
-        question += "<p id='score_and_timer'>"
-            question += "<i id='score'>"
-                question += "Correct: " + score.correct + "&nbsp;&nbsp;" + "Wrong: " + score.wrong
-            question += "</i><br>"
-            question += "<span id='timer'>" + format_time(Date.now() - start_time) + "</span>"
-        question += "</p>"
-    question += "</div>"
-
-    embed(question)
-
-    // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
-    function begin_timing() {
-        var timer_dom_node = game_iframe.contentWindow.document.getElementById("timer")
-        if (timer_dom_node == undefined) {
-            window.requestAnimationFrame(begin_timing);
-        }
-        else {
-            start_timer(start_time, timer_dom_node)
-        }
-    }
-    begin_timing()
-
-    // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
-    function detect_player_choice() {
-        var choices = game_iframe.contentWindow.document.getElementsByName("choice")
-        if (choices[0] == undefined) {
-            window.requestAnimationFrame(detect_player_choice);
-        }
-        else {
-            for (i = 0; i < choices.length; i++) {
-                choices[i].onclick = function() {
-                    question_info.chosen = this.id
-                    embed_map(question_info, score)
-                }
-            }
-        }
-    }
-    detect_player_choice()
-}
-
 function random_territory() {
     var territories_ = territories()
     var territory = choice(territories_)
@@ -474,7 +474,7 @@ function random_territory() {
 }
 
 // A sample question_info object is
-// { territory: "United States", answer: "Guatemala", wrong_answers: ["Mexico", "Canada"], chosen:""}
+// { territory: "United States", answer: "Guatemala", wrong_answers: ["Mexico", "Canada"] }
 function next_question(question_info=null, score={correct:0, wrong:0}) {
     if (question_info == null) {
         question_info = build_question(random_territory())
