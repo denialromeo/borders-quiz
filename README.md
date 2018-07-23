@@ -27,8 +27,6 @@ http-server
 
 Now you can play the game at `http://localhost:8080`!
 
-You can also play the game on my website [here](http://danielmoore.us/borders-quiz).
-
 ## Development Guide
 
 Adding a quiz is simple. Just add relevant entries to [borders.json](/borders-quiz/json/borders.json) and [quiz_modes.json](/borders-quiz/json/quiz_modes.json). You can also play with some (optional) settings in [settings.json](/borders-quiz/json/settings.json) that enhance the player's experience (e.g. more precise maps, prepending "the", manually giving tougher answer choices than the default algorithm).
