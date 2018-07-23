@@ -16,7 +16,7 @@ For example -
 
 All you have to do is start a local server in the project directory.
 
-A quick way of doing this is to install [Node.js](https://nodejs.org/en/), open your command prompt, and run -
+A quick way of doing this is to install [Git](https://git-scm.com/) and [Node.js](https://nodejs.org/en/), then open your command prompt and run -
 
 ```
 git clone https://github.com/danielm00re/borders-quiz
