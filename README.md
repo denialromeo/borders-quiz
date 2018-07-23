@@ -59,10 +59,6 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 * [All countries ending with "stan"](http://danielmoore.us/borders-quiz?custom=stan$)
 * [Country quiz excluding bodies of water](http://danielmoore.us/borders-quiz?custom=^(?!.*Sea|Gulf|Bay))
 
-Fusion table data for planned quizzes whose borders I still need to transcribe --
-
-* [Nigeria](https://fusiontables.google.com/DataSource?docid=17IWDPjtStnNVSnuTzKB1wZksNUZ5mu6x-4k5AU-J)
-
 ## Known Bugs
 
 * Long territory names in more recent quiz modes aren't appropriately abbreviated on mobile, resulting in text overlap.

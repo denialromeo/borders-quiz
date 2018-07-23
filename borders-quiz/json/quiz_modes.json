@@ -50,6 +50,16 @@
 		"title": "Brazil States"
 	},
 	
+	"nigeria-states": {
+		"anthem": "\"Arise, O Compatriots\"",
+		"click_message": "(Click the states!)",
+		"default_zoom_level": 7,
+		"description": "(Nigeria's states.)",
+		"geocode_append": " Nigeria",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+17IWDPjtStnNVSnuTzKB1wZksNUZ5mu6x-4k5AU-J&viz=MAP&h=false&t=1&l=col0",
+		"title": "Nigeria States"
+	},
+	
 	"india-states": {
 		"anthem": "\"Jana Gana Mana\"",
 		"click_message": "(Click the states!)",
