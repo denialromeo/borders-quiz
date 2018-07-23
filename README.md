@@ -27,7 +27,7 @@ npm install http-server -g
 http-server
 ```
 
-Now you can play the game at `http://localhost:8080`!
+Now you can play the game at [http://localhost:8080](http://localhost:8080)!
 
 ## Development Guide
 
