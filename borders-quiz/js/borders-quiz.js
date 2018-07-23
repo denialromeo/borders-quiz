@@ -1,9 +1,10 @@
-const game_iframe = document.getElementById("game-container")
 const game_css_path = "/borders-quiz/css/borders-quiz.css"
 const google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 const borders_json_path = "/borders-quiz/json/borders.json"
 const quiz_modes_json_path = "/borders-quiz/json/quiz_modes.json"
 const settings_json_path = "/borders-quiz/json/settings.json"
+
+const game_iframe = document.getElementById("game-container")
 const start_time = Date.now()
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
@@ -81,14 +82,12 @@ function custom_territories() {
 }
 
 // Iran and its bordering countries - http://danielmoore.us/borders-quiz?start=Iran&depth=1
-var limited_quiz_ = false
 function limited_quiz() {
     if (url_parameters()["start"] != undefined) {
         var territory = url_parameters()["start"]
         if (neighbors(territory).length > 0) {
             var depth = url_parameters()["depth"] == undefined ? 1 : url_parameters()["depth"]
-            limited_quiz_ = true
-            return Object.keys(breadth_first_search(territory, depth))
+            return Object.keys(breadth_first_search(territory, depth, false))
         }
     }
     return null
@@ -208,12 +207,12 @@ function choice(a) {
 // This is an optional method for pruning the breadth-first search.
 // Performance improvement is minimal, but it really does a good job of removing obvious answers.
 function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
-    return (!limited_quiz_ && settings().remove_paths_through.contains(neighbor) && !settings().unless_started_from.contains(territory))
+    return (settings().remove_paths_through.contains(neighbor) && !settings().unless_started_from.contains(territory))
 }
 
 
 // Google "breadth-first search" if unfamiliar.
-function breadth_first_search(territory, depth) {
+function breadth_first_search(territory, depth, filter_search=true) {
     var territory_distance_dict = { [territory]: 0 }
     var bfs_queue = [territory]
     while (bfs_queue.length > 0) {
@@ -227,7 +226,7 @@ function breadth_first_search(territory, depth) {
                     delete territory_distance_dict[neighbor]
                     return territory_distance_dict // Terminate BFS at given depth.
                 }
-                if (!remove_neighbors_of_neighbor_from_bfs(territory, neighbor)) {
+                if (!filter_search || !remove_neighbors_of_neighbor_from_bfs(territory, neighbor)) {
                     bfs_queue.push(neighbor)
                 }
             }
