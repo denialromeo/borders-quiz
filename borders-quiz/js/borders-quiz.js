@@ -6,8 +6,6 @@ const quiz_modes_json_path = "/borders-quiz/json/quiz_modes.json"
 const settings_json_path = "/borders-quiz/json/settings.json"
 const start_time = Date.now()
 
-var score = {correct:0, wrong:0}
-
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
 var quiz_modes_json
@@ -82,11 +80,31 @@ function custom_territories() {
     return null
 }
 
+// Iran and its bordering countries - http://danielmoore.us/borders-quiz?start=Iran&depth=1
+var limited_quiz_ = false
+function limited_quiz() {
+    if (url_parameters()["start"] != undefined) {
+        var territory = url_parameters()["start"]
+        if (neighbors(territory).length > 0) {
+            var depth = url_parameters()["depth"] == undefined ? 1 : url_parameters()["depth"]
+            limited_quiz_ = true
+            return Object.keys(breadth_first_search(territory, depth))
+        }
+    }
+    return null
+}
+
 var territories_ = []
 function territories() {
     if (territories_.length == 0) {
-        if (custom_territories() != null) {
-            territories_ = custom_territories()
+        var custom_territories_ = custom_territories()
+        var limited_territories = limited_quiz()
+
+        if (custom_territories_ != null) {
+            territories_ = custom_territories_
+        }
+        else if (limited_territories != null) {
+            territories_ = limited_territories
         }
         else {
             var current_quiz_modes_ = current_quiz_modes()
@@ -190,9 +208,11 @@ function choice(a) {
 // This is an optional method for pruning the breadth-first search.
 // Performance improvement is minimal, but it really does a good job of removing obvious answers.
 function remove_neighbors_of_neighbor_from_bfs(territory, neighbor) {
-    return (settings().remove_paths_through.contains(neighbor) && !settings().unless_started_from.contains(territory))
+    return (!limited_quiz_ && settings().remove_paths_through.contains(neighbor) && !settings().unless_started_from.contains(territory))
 }
 
+
+// Google "breadth-first search" if unfamiliar.
 function breadth_first_search(territory, depth) {
     var territory_distance_dict = { [territory]: 0 }
     var bfs_queue = [territory]
@@ -204,6 +224,7 @@ function breadth_first_search(territory, depth) {
             if (territory_distance_dict[neighbor] == undefined) {
                 territory_distance_dict[neighbor] = territory_distance_dict[v] + 1
                 if (territory_distance_dict[neighbor] > depth) {
+                    delete territory_distance_dict[neighbor]
                     return territory_distance_dict // Terminate BFS at given depth.
                 }
                 if (!remove_neighbors_of_neighbor_from_bfs(territory, neighbor)) {
@@ -342,7 +363,7 @@ function right_or_wrong_message(question_info) {
     }
 }
 
-function embed_map(question_info) {
+function embed_map(question_info, score) {
     var territory = (question_info.chosen == question_info.answer ? question_info.chosen : question_info.territory)
     var url = new URL(quiz_modes()[quiz_mode_of(territory)].map_embed_base_url)
     url.searchParams.append("lat", coordinates(territory).lat)
@@ -375,19 +396,19 @@ function embed_map(question_info) {
             if (question_info.chosen == question_info.answer) {
                 score.correct += 1
                 next_button.innerHTML = "Next"
-                next_button.onclick = function() { next_question() }
+                next_button.onclick = function() { next_question(null, score) }
             }
             else {
                 score.wrong += 1
                 next_button.innerHTML = "Try Again"
-                next_button.onclick = function() { next_question(question_info) }
+                next_button.onclick = function() { next_question(question_info, score) }
             }
         }
     }
     next_question_button()
 }
 
-function embed_question(question_info) {
+function embed_question(question_info, score) {
     var choices = shuffle(question_info.wrong_answers.concat(question_info.answer))
     var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
     question  = "<div id='" + question_container_id + "'>"
@@ -436,7 +457,7 @@ function embed_question(question_info) {
             for (i = 0; i < choices.length; i++) {
                 choices[i].onclick = function() {
                     question_info.chosen = this.id
-                    embed_map(question_info)
+                    embed_map(question_info, score)
                 }
             }
         }
@@ -455,9 +476,9 @@ function random_territory() {
 
 // A sample question_info object is
 // { territory: "United States", answer: "Guatemala", wrong_answers: ["Mexico", "Canada"], chosen:""}
-function next_question(question_info=null) {
+function next_question(question_info=null, score={correct:0, wrong:0}) {
     if (question_info == null) {
         question_info = build_question(random_territory())
     }
-    embed_question(question_info)
+    embed_question(question_info, score)
 }

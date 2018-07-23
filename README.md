@@ -58,6 +58,7 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 * [India, Pakistan, and Bangladesh](http://danielmoore.us/borders-quiz?custom=India|Pakistan|Bangladesh)
 * [All countries ending with "stan"](http://danielmoore.us/borders-quiz?custom=stan$)
 * [Country quiz excluding bodies of water](http://danielmoore.us/borders-quiz?custom=^(?!.*Sea|Gulf|Bay))
+* [Turkey, its neighboring countries, and the neighbors of its neighbors](http://danielmoore.us/borders-quiz?start=Turkey&depth=2)
 
 ## Known Bugs
 
