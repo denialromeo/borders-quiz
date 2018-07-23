@@ -55,7 +55,7 @@ You can search public fusion table data [here](https://research.google.com/table
 
 Note that you can also create custom quizzes by playing with the URL. Examples -
 
-* [India, Pakistan, and Bangladesh]()http://danielmoore.us/borders-quiz?custom=India|Pakistan|Bangladesh)
+* [India, Pakistan, and Bangladesh](http://danielmoore.us/borders-quiz?custom=India|Pakistan|Bangladesh)
 * [All countries ending with "stan"](http://danielmoore.us/borders-quiz?custom=stan$)
 
 Fusion table data for planned quizzes whose borders I still need to transcribe --
