@@ -25,7 +25,7 @@ npm install http-server -g
 http-server
 ```
 
-Now you can play the game at `http://localhost:8081`!
+Now you can play the game at `http://localhost:8080`!
 
 You can also play the game on my website [here](http://danielmoore.us/borders-quiz).
 
