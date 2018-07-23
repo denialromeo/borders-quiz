@@ -49,7 +49,3 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 * [U.S. states that don't contain the letters 'a' or 'e'](http://danielmoore.us/borders-quiz?usa-states&custom=%5E(?!.*[ae]))
 * [Turkey, its neighboring countries, and the neighbors of its neighbors](http://danielmoore.us/borders-quiz?start=Turkey&depth=2)
 * [Canada and neighboring U.S. states](http://danielmoore.us/borders-quiz?start=Canada_)
-
-## Known Bugs
-
-* Long territory names in more recent quiz modes aren't appropriately abbreviated on mobile, resulting in text overlap.
