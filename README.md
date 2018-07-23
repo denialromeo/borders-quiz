@@ -12,6 +12,8 @@ For example -
 
 (The answer is Honduras.)
 
+Try it [here](http://danielmoore.us/borders-quiz)!
+
 ## Installation
 
 All you have to do is start a local server in the project directory.
