@@ -57,7 +57,7 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 
 * [India, Pakistan, and Bangladesh](http://danielmoore.us/borders-quiz?custom=India|Pakistan|Bangladesh)
 * [All countries ending with "stan"](http://danielmoore.us/borders-quiz?custom=stan$)
-* [Country quiz excluding bodies of water](http://danielmoore.us/borders-quiz?custom=^(?!.*Sea|Gulf))
+* [Country quiz excluding bodies of water](http://danielmoore.us/borders-quiz?custom=^(?!.*Sea|Gulf|Bay))
 
 Fusion table data for planned quizzes whose borders I still need to transcribe --
 
