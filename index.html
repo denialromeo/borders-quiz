@@ -1,20 +1,21 @@
 <html>
-	<body>
+    <body>
 
-		<iframe id="game-container" width="40%" height="510px" scrolling="yes"></iframe>
+        <iframe id="game-container" width="40%" height="510px" scrolling="yes"></iframe>
 
-		<link rel="stylesheet" href="borders-quiz/css/game-page.css"/>
+        <link rel="stylesheet" href="borders-quiz/css/game-page.css"/>
 
-		<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-		<script src="borders-quiz/js/borders-quiz.js"></script>
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="borders-quiz/js/borders-quiz.js"></script>
 
-		<script>
-		$(document).ready(function() { 
-		    window.onbeforeunload = function() { window.scrollTo(0, 0) }
-		    next_question()
-		})
-		document.write(game_page_bottom_message())
-		</script>
+        <script>
+        $(document).ready(function() {
+            // Scroll to top on page refresh.
+            window.onbeforeunload = function() { window.scrollTo(0, 0) }
+            next_question()
+        })
+        document.write(game_page_bottom_message())
+        </script>
 
-	</body>
+    </body>
 </html>
