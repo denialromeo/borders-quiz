@@ -49,3 +49,4 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 * [U.S. states that don't contain the letters 'a' or 'e'](http://danielmoore.us/borders-quiz?usa-states&custom=%5E(?!.*[ae]))
 * [Turkey, its neighboring countries, and the neighbors of its neighbors](http://danielmoore.us/borders-quiz?start=Turkey&depth=2)
 * [Canada and neighboring U.S. states](http://danielmoore.us/borders-quiz?start=Canada_)
+* [The Persian Gulf and neighboring countries](http://danielmoore.us/borders-quiz?start=Persian+Gulf)
