@@ -1,21 +1,21 @@
 {
   "name": "danielmoore.us",
   "version": "1.0.0",
-  "description": "Website!",
+  "description": "Hone your geography knowledge!",
   "main": "index.js",
   "scripts": {
     "start": "webpack -p && http-server"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/denialromeo/danielmoore.us.git"
+    "url": "git+https://github.com/denialromeo/borders-quiz.git"
   },
   "author": "Daniel Moore",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/denialromeo/danielmoore.us/issues"
+    "url": "https://github.com/denialromeo/borders-quiz/issues"
   },
-  "homepage": "https://github.com/denialromeo/danielmoore.us#readme",
+  "homepage": "https://github.com/denialromeo/borders-quiz#readme",
   "dependencies": {
     "babel-core": "^6.8.0",
     "babel-loader": "^7.1.4",
