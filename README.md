@@ -49,3 +49,4 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 * [Canada and neighboring U.S. states](http://danielmoore.us/borders-quiz?start=Canada_)
 * [The Persian Gulf and neighboring countries](http://danielmoore.us/borders-quiz?start=Persian+Gulf)
 * [Countries in Africa](http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco)
+* [San Francisco Bay Area counties](http://danielmoore.us/borders-quiz?start=San+Francisco+Bay)
