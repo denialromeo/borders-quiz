@@ -250,17 +250,20 @@ function first_question() {
 }
 
 function game_page_bottom_message() {
-    var message  = "<p>You can also try these quiz modes!</p>"
-    message += "<ul>"
-    unused_quiz_modes(url_parameters).forEach(function(mode) {
-        message += "<li>"
-            message += "<a target='_self' href='?" + mode + "'>"
-                message += quiz_modes()[mode].anthem
-            message += "</a>&nbsp;"
-            message += quiz_modes()[mode].description
-        message += "</li>"
-    })
-    message += "</ul>"
+    var message  = ""
+    if (unused_quiz_modes(url_parameters).length > 0) {
+        message += "<p>You can also try these quiz modes!</p>"
+        message += "<ul class='unused-quiz-modes'>"
+        unused_quiz_modes(url_parameters).forEach(function(mode) {
+            message += "<li>"
+                message += "<a target='_self' href='?" + mode + "'>"
+                    message += quiz_modes()[mode].anthem
+                message += "</a>&nbsp;"
+                message += quiz_modes()[mode].description
+            message += "</li>"
+        })
+        message += "</ul>"
+    }
     return message
 }
 
