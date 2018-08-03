@@ -60,8 +60,8 @@ function google_maps_zoom_level(territory) {
 
 function map_embed_url(territory) {
     var url = new URI(quiz_modes()[quiz_mode_of(territory)].map_embed_base_url)
-    var lat_lng = coordinates(territory)
-    return url.addSearch({ "lat": lat_lng.lat, "lng": lat_lng.lng, "z": google_maps_zoom_level(territory) }).toString()
+    const { lat, lng } = coordinates(territory)
+    return url.addSearch({ "lat": lat, "lng": lng, "z": google_maps_zoom_level(territory) }).toString()
 }
 
 function prepend_the(territory, capitalize_the) {
@@ -93,28 +93,25 @@ function embed(src) {
 
 function embed_question(question_info) {
     var choices = random.shuffle(question_info.wrong_answers.concat(question_info.answer))
-    var question_container_id = on_mobile_device() ? "question-container-mobile" : "question-container"
-    var question  = "<div id='" + question_container_id + "'>"
-        question += "<div id='quiz_title'>" + truncate_for_mobile(quiz_modes()[quiz_mode_of(question_info.territory)].title) + "</div>"
-        question += "<div id='" + (on_mobile_device() ? "question-text-mobile" : "question-text") + "'>"
-            question += "<p>Which of these does not border " + pretty_print(question_info.territory, false) + "?</p>"
-            question += "<form>"
-                for (let i = 0; i < choices.length; i++) {
-                    var choice = choices[i]
-                    var letter = "&emsp;" + String.fromCharCode(i + 65) + ". "
-                    // Do not remove the escaped double-quotes or game will break on territories like "Cote d'Ivoire".
-                    question += "<input type='radio' id=\"" + choice + "\" value=\"" + choice + "\" name='choice'>"
-                    question += "<label for=\"" + choice + "\">" + letter + pretty_print(choice, true) + "</label><br>"
-                }
-            question += "</form>"
-        question += "</div>"
-        question += "<p id='score_and_timer'>"
-            question += "<i id='score'>"
-                question += "Correct: " + score.correct + "&nbsp;&nbsp;" + "Wrong: " + score.wrong
-            question += "</i><br>"
-            question += "<span id='timer'>" + timer.time_elapsed(start_time) + "</span>"
-        question += "</p>"
-    question += "</div>"
+    var question  = `<div id='${on_mobile_device() ? "question-container-mobile" : "question-container"}'>
+                        <div id='quiz_title'>${quiz_modes()[quiz_mode_of(question_info.territory)].title}</div>
+                        <div id='${(on_mobile_device() ? "question-text-mobile" : "question-text")}'>
+                            <p>Which of these does not border ${pretty_print(question_info.territory, false)}?</p>
+                            <form>`
+                                for (let i = 0; i < choices.length; i++) {
+                                    var choice = choices[i]
+                                    var letter = `&emsp;${String.fromCharCode(i + 65)}. `
+                                    // Do not replace the double-quotes or game will break on territories like "Cote d'Ivoire".
+                                    question += `<input type='radio' id="${choice}" value="${choice}" name='choice'>
+                                                 <label for="${choice}">${letter}${pretty_print(choice, true)}</label><br>`
+                                }
+               question += `</form>
+                        </div>
+                        <p id='score_and_timer'>
+                            <i id='score'>Correct: ${score.correct}&nbsp;&nbspWrong: ${score.wrong}</i><br>
+                            <span id='timer'>${timer.time_elapsed(start_time)}</span>
+                        </p>
+                    </div>`
 
     embed(question)
 
@@ -157,20 +154,20 @@ function borders_sentence(territory) {
 
     neighbors_ = neighbors_.map(n => pretty_print(n, false))
 
-    var sentence = pretty_print(territory, true) + " borders "
+    var sentence = `${pretty_print(territory, true)} borders `
     if (neighbors_.length == 0) {
-        sentence += "nothing!"
+        sentence += `nothing!`
     }
     else if (neighbors_.length == 1) {
-        sentence += "only " + neighbors_[0] + "."
+        sentence += `only ${neighbors_[0]}.`
     }
     else if (neighbors_.length == 2) {
-        sentence += neighbors_[0] + " and " + neighbors_[1] + "."
+        sentence += `${neighbors_[0]} and ${neighbors_[1]}.`
     }
     else {
-    	var last = neighbors_.pop()
-    	neighbors_.forEach(n => sentence += n + ", ")
-        sentence += "and " + last + "."
+        var last = neighbors_.pop()
+        neighbors_.forEach(n => sentence += `${n}, `)
+        sentence += `and ${last}.`
     }
 
     return sentence
@@ -178,29 +175,25 @@ function borders_sentence(territory) {
 
 function right_or_wrong_message(question_info) {
     if (question_info.chosen == question_info.answer) {
-        return ("Correct! " + pretty_print(question_info.chosen, true) + " does not border " + pretty_print(question_info.territory, false) + "!")
+        return `Correct! ${pretty_print(question_info.chosen, true)} does not border ${pretty_print(question_info.territory, false)}!`
     }
     else {
-        return ("Sorry! " + pretty_print(question_info.territory, true) + " does border " + pretty_print(question_info.chosen, false) + "!")
+        return `Sorry! ${pretty_print(question_info.territory, true)} does border ${pretty_print(question_info.chosen, false)}!`
     }
 }
 
 function embed_map(question_info) {
     var territory = (question_info.chosen == question_info.answer ? question_info.chosen : question_info.territory)
 
-    var map = "<iframe id='" + (on_mobile_device() ? "map-mobile" : "map") + "' scrolling='no' frameborder=0 src='" + map_embed_url(territory) + "'></iframe>"
-
-    var content = "<div id='" + (on_mobile_device() ? "map-container-mobile" : "map-container") + "'>"
-        content += "<center>"
-            content += "<p>" + right_or_wrong_message(question_info) + "</p>"
-            content += map
-            content += "<p>" + borders_sentence(territory) + "</p>"
-            content += "<button id='next'></button>"
-            if (!on_mobile_device()) {
-                content += "<p id='click-message'>" + quiz_modes()[quiz_mode_of(territory)].click_message + "</p>"
-            }
-        content += "</center>"
-    content += "</div>"
+    var content = `<div id='${on_mobile_device() ? "map-container-mobile" : "map-container"}'>
+                    <center>
+                        <p>${right_or_wrong_message(question_info)}</p>
+                        <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(territory)}'></iframe>
+                        <p>${borders_sentence(territory)}</p>
+                        <button id='next'></button>
+                        ${!on_mobile_device() ? `<p id='click-message'>${quiz_modes()[quiz_mode_of(territory)].click_message}</p>` : ``}
+                    </center>
+                   </div>`
 
     embed(content)
 
@@ -249,20 +242,18 @@ function first_question() {
     custom_map()
 }
 
-function game_page_bottom_message() {
+function other_quiz_modes_message() {
     var message  = ""
     if (unused_quiz_modes(url_parameters).length > 0) {
-        message += "<p>You can also try these quiz modes!</p>"
-        message += "<ul class='unused-quiz-modes'>"
+        message += `<p>You can also try these quiz modes!</p>
+                    <ul class='unused-quiz-modes'>`
         unused_quiz_modes(url_parameters).forEach(function(mode) {
-            message += "<li>"
-                message += "<a target='_self' href='?" + mode + "'>"
-                    message += quiz_modes()[mode].anthem
-                message += "</a>&nbsp;"
-                message += quiz_modes()[mode].description
-            message += "</li>"
+            message += `<li>
+                            <a target='_self' href='?${mode}'>${quiz_modes()[mode].anthem}</a>&nbsp;
+                            ${quiz_modes()[mode].description}
+                        </li>`
         })
-        message += "</ul>"
+        message += `</ul>`
     }
     return message
 }
@@ -270,5 +261,5 @@ function game_page_bottom_message() {
 // Exports
 Object.assign(exports, {
     first_question: first_question,
-    game_page_bottom_message: game_page_bottom_message
+    other_quiz_modes_message: other_quiz_modes_message
 })

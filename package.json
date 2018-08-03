@@ -17,10 +17,7 @@
   },
   "homepage": "https://github.com/denialromeo/borders-quiz#readme",
   "dependencies": {
-    "babel-core": "^6.8.0",
-    "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.5.0",
+    "http-server": "^0.11.1",
     "jquery": "^3.3.1",
     "urijs": "^1.19.1",
     "webpack": "^4.15"

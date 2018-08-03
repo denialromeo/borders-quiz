@@ -1,15 +1,15 @@
 var timer_process_id
 
-function prepend_zero(time) {
-    return (time < 10 ? "0" + time : time)
+function pad_zero(num) {
+    return (num < 10 ? "0" + num : num)
 }
 
 function format_time(raw_date) {
     var total_seconds = Math.round(raw_date/1000)
-    var hours = prepend_zero(Math.floor(total_seconds/60/60))
-    var minutes = prepend_zero(Math.floor((total_seconds/60) % 60))
-    var seconds = prepend_zero(Math.floor(total_seconds % 60))
-    var time = minutes + ":" + seconds
+    var hours = Math.floor(total_seconds/60/60)
+    var minutes = Math.floor((total_seconds/60) % 60)
+    var seconds = Math.floor(total_seconds % 60)
+    var time = pad_zero(minutes) + ":" + pad_zero(seconds)
     return (hours > 0 ? hours + ":" + time : time)
 }
 
@@ -25,9 +25,7 @@ function update_dom_time(start_time, timer_dom_node) {
 
 // Given a node in the DOM tree and the start time as a Date, periodically updates it.
 function start_timer(start_time, timer_dom_node) {
-    if (timer_process_id != undefined) {
-        clearInterval(timer_process_id)
-    }
+    clearInterval(timer_process_id)
     timer_process_id = setInterval(function() { update_dom_time(start_time, timer_dom_node) }, 1000)
 }
 

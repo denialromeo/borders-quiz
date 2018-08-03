@@ -45,7 +45,6 @@ function custom_territories(url_parameters) {
     if (url_parameters["custom"] != undefined) {
         var custom_regex = new RegExp(url_parameters["custom"])
         var matched_territories = current_quiz_modes_territories(url_parameters).filter(t => custom_regex.exec(t) != null)
-        console.log(matched_territories)
         if (matched_territories.length > 0) {
             return matched_territories
         }
