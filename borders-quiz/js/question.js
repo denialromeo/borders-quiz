@@ -94,7 +94,7 @@ function ignore_paths_through(start, through, exclude_paths_through=[]) {
     if (exclude_paths_through.length > 0) {
         return exclude_paths_through.contains(through)
     }
-    return (question_settings.remove_paths_through.contains(through) && !question_settings.unless_started_from.contains(start))
+    return (question_settings.exclude_paths_through.contains(through) && !question_settings.unless_started_from.contains(start))
 }
 
 // Google "breadth-first search" if unfamiliar.

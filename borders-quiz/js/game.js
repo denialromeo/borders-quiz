@@ -92,11 +92,12 @@ function embed(src) {
 }
 
 function embed_question(question_info) {
-    var choices = random.shuffle(question_info.wrong_answers.concat(question_info.answer))
+    const { wrong_answers, answer, territory } = question_info
+    var choices = random.shuffle(wrong_answers.concat(answer))
     var question  = `<div id='${on_mobile_device() ? "question-container-mobile" : "question-container"}'>
-                        <div id='quiz_title'>${quiz_modes()[quiz_mode_of(question_info.territory)].title}</div>
+                        <div id='quiz_title'>${quiz_modes()[quiz_mode_of(territory)].title}</div>
                         <div id='${(on_mobile_device() ? "question-text-mobile" : "question-text")}'>
-                            <p>Which of these does not border ${pretty_print(question_info.territory, false)}?</p>
+                            <p>Which of these does not border ${pretty_print(territory, false)}?</p>
                             <form>`
                                 for (let i = 0; i < choices.length; i++) {
                                     var choice = choices[i]
@@ -173,25 +174,23 @@ function borders_sentence(territory) {
     return sentence
 }
 
-function right_or_wrong_message(question_info) {
-    if (question_info.chosen == question_info.answer) {
-        return `Correct! ${pretty_print(question_info.chosen, true)} does not border ${pretty_print(question_info.territory, false)}!`
-    }
-    else {
-        return `Sorry! ${pretty_print(question_info.territory, true)} does border ${pretty_print(question_info.chosen, false)}!`
-    }
+function right_or_wrong_message(chosen, answer, territory) {
+    return chosen == answer ?
+           `Correct! ${pretty_print(chosen, true)} does not border ${pretty_print(territory, false)}!`
+         : `Sorry! ${pretty_print(territory, true)} does border ${pretty_print(chosen, false)}!`
 }
 
 function embed_map(question_info) {
-    var territory = (question_info.chosen == question_info.answer ? question_info.chosen : question_info.territory)
+    const { chosen,  answer, territory } = question_info
+    const subject = chosen == answer ? chosen : territory
 
     var content = `<div id='${on_mobile_device() ? "map-container-mobile" : "map-container"}'>
                     <center>
-                        <p>${right_or_wrong_message(question_info)}</p>
-                        <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(territory)}'></iframe>
-                        <p>${borders_sentence(territory)}</p>
+                        <p>${right_or_wrong_message(chosen, answer, territory)}</p>
+                        <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(subject)}'></iframe>
+                        <p>${borders_sentence(subject)}</p>
                         <button id='next'></button>
-                        ${!on_mobile_device() ? `<p id='click-message'>${quiz_modes()[quiz_mode_of(territory)].click_message}</p>` : ``}
+                        ${on_mobile_device() ? `` : `<p id='click-message'>${quiz_modes()[quiz_mode_of(subject)].click_message}</p>`}
                     </center>
                    </div>`
 
@@ -204,14 +203,14 @@ function embed_map(question_info) {
             window.requestAnimationFrame(next_question_button);
         }
         else {
-            if (question_info.chosen == question_info.answer) {
+            if (chosen == answer) {
                 score.correct += 1
-                next_button.innerHTML = "Next"
+                $(next_button).html("Next")
                 next_button.onclick = function() { next_question() }
             }
             else {
                 score.wrong += 1
-                next_button.innerHTML = "Try Again"
+                $(next_button).html("Try Again")
                 next_button.onclick = function() { next_question(question_info) }
             }
         }
