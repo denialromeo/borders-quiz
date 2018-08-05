@@ -336,6 +336,18 @@
         "Sindh": ["Balochistan", "India_", "Punjab_"]
     },
 
+    "bangladesh-divisions": {
+        "Barisal": ["Khulna", "Dhaka", "Chittagong"],
+        "Chittagong": ["India___", "Myanmar___", "Sylhet", "Dhaka", "Barisal"],
+        "Dhaka": ["Rangpur", "India___", "Barisal", "Khulna", "Rajshahi", "Sylhet", "Chittagong"],
+        "India___": ["Chittagong", "Dhaka", "Khulna", "Myanmar___", "Rajshahi", "Rangpur", "Sylhet"],
+        "Khulna": ["India___", "Barisal", "Dhaka", "Rajshahi"],
+        "Myanmar___": ["Chittagong", "India___"],
+        "Rajshahi": ["India___", "Rangpur", "Dhaka", "Khulna"],
+        "Rangpur": ["Dhaka", "India___", "Rajshahi"],
+        "Sylhet": ["India___", "Chittagong", "Dhaka"]
+    },
+
     "china-provinces": {
         "Afghanistan__": ["Pakistan__", "Tajikistan_", "Xinjiang"],
         "Anhui": ["Henan", "Hubei", "Jiangsu", "Jiangxi", "Shandong", "Zhejiang"],
@@ -1120,6 +1132,7 @@
         "Tanzania": ["Burundi", "Democratic Republic of the Congo", "Kenya", "Malawi", "Mozambique", "Rwanda", "Uganda", "Zambia"],
         "Tasman Sea": ["Australia", "New Zealand"],
         "Thailand": ["Cambodia", "Laos", "Malaysia", "Myanmar"],
+        "The Bahamas": [],
         "The Gambia": ["Senegal"],
         "Timor-Leste": ["Indonesia"],
         "Timor Sea": ["Australia", "Indonesia", "Timor-Leste"],

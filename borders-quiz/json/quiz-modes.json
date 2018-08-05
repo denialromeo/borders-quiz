@@ -80,6 +80,16 @@
 		"title": "Pakistan Provinces"
 	},
 	
+	"bangladesh-divisions": {
+		"anthem": "\"Amar Sonar Bangla\"",
+		"click_message": "(Click the divisions!)",
+		"default_zoom_level": 6,
+		"description": "(Bangladesh's pre-2015 divisions.)",
+		"geocode_append": "",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1TOnSjo523Rq0q1QwPssF-fFc9xTVCzH7e_SuJrpn&viz=MAP&h=false&t=1&l=col0",
+		"title": "Bangladesh Divisions"
+	},
+	
 	"china-provinces": {
 		"anthem": "\"Yiyongjun Jinxingqu\"",
 		"click_message": "(Click the provinces!)",

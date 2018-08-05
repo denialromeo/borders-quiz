@@ -22,4 +22,7 @@ def get_matrix(key):
         return data[key]
 
 if __name__ == '__main__':
-    is_complete_graph(get_matrix(sys.argv[1]))
+    try:
+        is_complete_graph(get_matrix(sys.argv[1]))
+    except IndexError:
+        print("Example Usage: python test_complete_graph.py india-states")
