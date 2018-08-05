@@ -14,7 +14,11 @@
                                "Spain",
                                "Turkey",
                                "United States",
-                               "United States_"],
+                               "United States_",
+                               "Chhattisgarh",
+                               "Odisha",
+                               "Uttar Pradesh"
+                             ],
 
     "unless_started_from": ["Alaska",
                             "Denmark",
