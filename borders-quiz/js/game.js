@@ -52,10 +52,14 @@ function coordinates(address) {
 }
 
 function google_maps_zoom_level(territory) {
-    if (game_settings.custom_zoom_levels[territory] != undefined) {
-        return game_settings.custom_zoom_levels[territory]
+    var zoom_level = 0
+    zoom_level = game_settings.custom_zoom_levels[territory] != undefined ?
+                 game_settings.custom_zoom_levels[territory]
+               : quiz_modes()[quiz_mode_of(territory)].default_zoom_level
+    if (on_mobile_device() && zoom_level > 2) {
+        zoom_level -= 1
     }
-    return quiz_modes()[quiz_mode_of(territory)].default_zoom_level
+    return zoom_level
 }
 
 function map_embed_url(territory) {
