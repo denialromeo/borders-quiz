@@ -1,16 +1,16 @@
 const $ = require("jquery")
 const URI = require("urijs")
 
-const { borders, build_question, neighbors, unused_quiz_modes } = require("./question.js")
+const { borders, build_question, neighbors, unused_quiz_modes } = require("../build-question/build-question.js")
 
-const random = require("./random.js")
+const random = require("../build-question/random.js")
 const timer = require("./timer.js")
 
 const google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
-const game_css_path = "/borders-quiz/css/borders-quiz.css"
+const game_css_path = "/borders-quiz/game/borders-quiz.css"
 
-const quiz_modes_json = require("../json/quiz-modes.json")
-const game_settings = require("../json/game-settings.json")
+const quiz_modes_json = require("./quiz-modes.json")
+const game_settings = require("./game-settings.json")
 
 const game_iframe = document.getElementById("game-container")
 const start_time = Date.now()

@@ -1,6 +1,6 @@
 Quiz modes that have been removed for arbitrary reasons.
 
-Just pop any you want back into quiz_modes.json and borders.json.
+Just pop any you want back into game/quiz_modes.json and build-question/borders.json.
 
 "spain-provinces": {
     "anthem": "\"Marcha Real\"",

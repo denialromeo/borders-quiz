@@ -1,7 +1,7 @@
 const random = require("./random.js")
 
-const borders_json = require("../json/borders.json")
-const question_settings = require("../json/question-settings.json")
+const borders_json = require("./borders.json")
+const question_settings = require("./question-settings.json")
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
