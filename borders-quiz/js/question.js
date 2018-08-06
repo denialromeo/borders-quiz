@@ -32,6 +32,10 @@ function current_quiz_modes(url_parameters) {
     return url_modes.length == 0 ? ["countries"] : url_modes
 }
 
+function unused_quiz_modes(url_parameters) {
+    return all_quiz_modes().filter(mode => !current_quiz_modes(url_parameters).contains(mode))
+}
+
 function current_quiz_modes_territories(url_parameters) {
     return current_quiz_modes(url_parameters)
           .map(mode => Object.keys(borders()[mode]))
@@ -52,10 +56,6 @@ function custom_territories(url_parameters) {
     return []
 }
 
-function unused_quiz_modes(url_parameters) {
-    return all_quiz_modes().filter(mode => !current_quiz_modes(url_parameters).contains(mode))
-}
-
 // Iran and its bordering countries - http://danielmoore.us/borders-quiz?start=Iran&depth=1
 // Countries in Africa - http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco
 function limited_territories(url_parameters) {
@@ -69,24 +69,24 @@ function limited_territories(url_parameters) {
     return []
 }
 
+var territories_ = []
+function territories(url_parameters) {
+    var territories_methods = [custom_territories, limited_territories, current_quiz_modes_territories]
+    if (territories_.length == 0) {
+        for (let i = 0; i < territories_methods.length; i++) {
+            territories_ = territories_methods[i](url_parameters)
+            if (territories_.length > 0) {
+                break
+            }
+        }
+    }
+    return territories_
+}
+
 // Countries quiz with only 2 choices - http://danielmoore.us/borders-quiz?num-choices=2
 function num_choices(url_parameters) {
     var num_choices = url_parameters["num-choices"]
     return (isNaN(num_choices) || num_choices < 2) ? 4 : num_choices
-}
-
-var territories_ = []
-function territories(url_parameters) {
-    if (territories_.length == 0) {
-        territories_ = custom_territories(url_parameters)
-        if (territories_.length == 0) {
-            territories_ = limited_territories(url_parameters)
-        }
-        if (territories_.length == 0) {
-            territories_ = current_quiz_modes_territories(url_parameters)
-        }
-    }
-    return territories_
 }
 
 // This prunes the breadth-first search. It really does a good job of removing obvious answers.

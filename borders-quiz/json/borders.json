@@ -305,7 +305,7 @@
         "Manipur": ["Assam", "Mizoram", "Myanmar_", "Nagaland"],
         "Meghalaya": ["Assam", "Bangladesh_"],
         "Mizoram": ["Assam", "Bangladesh_", "Manipur", "Myanmar_", "Tripura"],
-        "Myanmar_": ["Arunachal Pradesh", "Bangladesh_", "China_", "Manipur", "Mizoram", "Nagaland"],
+        "Myanmar_": ["China_", "Arunachal Pradesh", "Nagaland", "Manipur", "Mizoram", "Bangladesh_"],
         "Nagaland": ["Arunachal Pradesh", "Assam", "Manipur", "Myanmar_"],
         "Nepal_": ["Bihar", "China_", "Sikkim", "Uttar Pradesh", "Uttarakhand", "West Bengal"],
         "Odisha": ["Andhra Pradesh", "Chhattisgarh", "Jharkhand", "Telangana", "West Bengal"],
