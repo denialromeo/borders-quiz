@@ -59,4 +59,4 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 
 * The game always has a scrollbar on Firefox, but looks fine on Chrome. Likely a CSS sizing issue.
 
-* The game doesn't work on Microsoft Edge. This is because Edge doesn't yet support the HTML5 iframe `srcdoc` attribute. (Bug report [here](https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/12375527/).) For the 5% of users on Edge, please consider switching to Chrome.
+* The game doesn't work on Microsoft Edge. This is because Edge doesn't yet support the HTML5 iframe `srcdoc` attribute. (Bug report [here](https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/12375527/).) Microsoft will fix it sooner or later.
