@@ -39,6 +39,8 @@ However, you must observe these rules or the game will break -
 
 You can search public fusion table data [here](https://research.google.com/tables?source=ft2573812&corpus=fusion), find U.S. data [here](https://support.google.com/fusiontables/answer/1182141?hl=en), and find world state/province level data [here](https://fusiontables.google.com/DataSource?docid=1uK6JhwbCLeJWmTmoWTIKFOmdZuTxhfeT_Gy05QXy).
 
+(Pull requests contributing quizzes are very much welcome. Add to [borders.json](/borders-quiz/build-question/borders.json) and I'll credit you on this README!)
+
 Note that you can also create custom quizzes by playing with the URL. Examples -
 
 * [India, Pakistan, and Bangladesh](http://danielmoore.us/borders-quiz?custom=India|Pakistan|Bangladesh)
@@ -50,3 +52,11 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 * [The Persian Gulf and neighboring countries](http://danielmoore.us/borders-quiz?start=Persian+Gulf)
 * [Countries in Africa](http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco)
 * [San Francisco Bay Area counties](http://danielmoore.us/borders-quiz?start=San+Francisco+Bay)
+
+## Known Bugs
+
+* Territory names in more recent quiz modes aren't properly abbreviated on mobile.
+
+* The game always has a scrollbar on Mozilla Firefox. That it doesn't on Chrome is perplexing.
+
+* The game doesn't work on Microsoft Edge. This is because Edge doesn't yet support the HTML5 iframe `srcdoc` attribute. (Bug report [here](https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/12375527/).) For the 5% of users on Edge, please consider switching to Chrome.
