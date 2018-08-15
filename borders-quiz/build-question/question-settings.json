@@ -22,11 +22,13 @@
 
     "unless_started_from": ["Alaska",
                             "Denmark",
+                            "Gulf of Suez",
                             "Portugal",
                             "San Marino",
                             "Vatican City"],
 
     "add_possible_answers": {
+        "Calabria": ["Sicily"],
         "California": ["Hawaii"],
         "Cameroon": ["São Tomé and Principe"],
         "China": ["Taiwan"],
@@ -41,6 +43,7 @@
         "Israel": ["Cyprus"],
         "Italy": ["Malta"],
         "Johor": ["Singapore_"],
+        "Lazio": ["Sardinia"],
         "Lebanon": ["Cyprus"],
         "Libya": ["Malta"],
         "Malaysia": ["Philippines", "Singapore"],

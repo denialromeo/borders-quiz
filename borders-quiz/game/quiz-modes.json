@@ -60,16 +60,6 @@
 		"title": "Nigeria States"
 	},
 	
-	"india-states": {
-		"anthem": "\"Jana Gana Mana\"",
-		"click_message": "(Click the states!)",
-		"default_zoom_level": 5,
-		"description": "(India's states.)",
-		"geocode_append": "",
-		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+1ic8zKmb8ROuFbiQMLXvdA6u9EPJaJjWq6pyZDC83&viz=MAP&h=false&t=1&l=col3",
-		"title": "India States"
-	},
-	
 	"pakistan-provinces": {
 		"anthem": "\"Qaumi Taranah\"",
 		"click_message": "(Click the provinces!)",
@@ -78,6 +68,16 @@
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1CFcoHdOuF_S98-v5E8RuFOobTOFYzq6Gz4FfVoK5&viz=MAP&h=false&t=1&l=col0",
 		"title": "Pakistan Provinces"
+	},
+	
+	"india-states": {
+		"anthem": "\"Jana Gana Mana\"",
+		"click_message": "(Click the states!)",
+		"default_zoom_level": 5,
+		"description": "(India's states.)",
+		"geocode_append": "",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+1ic8zKmb8ROuFbiQMLXvdA6u9EPJaJjWq6pyZDC83&viz=MAP&h=false&t=1&l=col3",
+		"title": "India States"
 	},
 	
 	"bangladesh-divisions": {
@@ -93,7 +93,7 @@
 	"china-provinces": {
 		"anthem": "\"Yiyongjun Jinxingqu\"",
 		"click_message": "(Click the provinces!)",
-		"default_zoom_level": 5,
+		"default_zoom_level": 4,
 		"description": "(China's provinces.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col12+from+1ZpUS_-CvOh40_HaHXJ4TGjfOO0n9VPglLpTtlFg9&viz=MAP&h=false&t=1&l=col12",

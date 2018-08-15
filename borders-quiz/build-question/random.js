@@ -2,33 +2,31 @@
 
 // Swap two indices in an array.
 Array.prototype.swap = function(j, k) {
-  var t = this[j] ; this[j] = this[k] ; this[k] = t
+    var t = this[j] ; this[j] = this[k] ; this[k] = t
 }
 
-// A random number from 0 to x, inclusive.
+// A random number from [0, x)
 function random(x) {
-  return Math.floor(x*(Math.random()%1))
+    return Math.floor(x * Math.random())
 }
 
-// Shuffles an array and returns it.
-function shuffle(a) {
-    for (let i=a.length-1; i>0; i--) {
-        a.swap(i, random(i+1))
-    }
-    return a
-}
-
-// Selects a random item from an array.
+// Returns a random item from an array.
 function choice(a) {
     return a[random(a.length)]
 }
 
-// Selects k random items from an array.
-function sample(a, k) {
-    for (let i=0; i < a.length; i++) {
-        a.swap(i, random(a.length))
+// Shuffles an array and returns it.
+function shuffle(a) {
+    for (let i = 0; i < a.length; i += 1) {
+        a.swap(i, random(i + 1))
     }
-    return a.slice(0,k)
+    return a
+}
+
+// Returns k random items from an array.
+// If k > a.length, returns shuffled a.
+function sample(a, k) {
+    return shuffle(a).slice(0, k)
 }
 
 // Exports

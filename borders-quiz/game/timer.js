@@ -1,16 +1,16 @@
 var timer_process_id
 
 function pad_zero(num) {
-    return (num < 10 ? "0" + num : num)
+    return num < 10 ? `0${num}` : num.toString()
 }
 
-function format_time(raw_date) {
-    var total_seconds = Math.round(raw_date/1000)
-    var hours = Math.floor(total_seconds/60/60)
-    var minutes = Math.floor((total_seconds/60) % 60)
-    var seconds = Math.floor(total_seconds % 60)
-    var time = pad_zero(minutes) + ":" + pad_zero(seconds)
-    return (hours > 0 ? hours + ":" + time : time)
+function format_time(milliseconds_elapsed) {
+    var seconds_elapsed = Math.round(milliseconds_elapsed/1000)
+    var hours = Math.floor(seconds_elapsed/60/60)
+    var minutes = Math.floor((seconds_elapsed/60) % 60)
+    var seconds = Math.floor(seconds_elapsed % 60)
+    var time = `${pad_zero(minutes)}:${pad_zero(seconds)}`
+    return hours > 0 ? `${hours}:${time}` : time
 }
 
 function time_elapsed(start_time) {

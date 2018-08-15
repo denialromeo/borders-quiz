@@ -36,7 +36,7 @@ function quiz_mode_of(territory) {
 function geocode(address) {
     var url = "https://maps.googleapis.com/maps/api/geocode/json"
     var json = {}
-    $.ajax({ url: url, data: { "key": google_maps_api_key, "address": address}, async: false, success: function (r) { json = r } })
+    $.ajax({ url: url, data: { key: google_maps_api_key, address: address }, async: false, success: r => json = r })
     return json
 }
 
@@ -103,7 +103,7 @@ function embed_question(question_info) {
                         <div id='${(on_mobile_device() ? "question-text-mobile" : "question-text")}'>
                             <p>Which of these does not border ${pretty_print(territory, false)}?</p>
                             <form>`
-                                for (let i = 0; i < choices.length; i++) {
+                                for (let i = 0; i < choices.length; i += 1) {
                                     var choice = choices[i]
                                     var letter = `&emsp;${String.fromCharCode(i + 65)}. `
                                     // Do not replace the double-quotes or game will break on territories like "Cote d'Ivoire".
@@ -139,7 +139,7 @@ function embed_question(question_info) {
             window.requestAnimationFrame(detect_player_choice);
         }
         else {
-            for (let i = 0; i < choices.length; i++) {
+            for (let i = 0; i < choices.length; i += 1) {
                 choices[i].onclick = function() {
                     question_info.chosen = this.id
                     embed_map(question_info)
@@ -209,12 +209,12 @@ function embed_map(question_info) {
         else {
             if (chosen == answer) {
                 score.correct += 1
-                $(next_button).html("Next")
+                next_button.innerHTML = "Next"
                 next_button.onclick = function() { next_question() }
             }
             else {
                 score.wrong += 1
-                $(next_button).html("Try Again")
+                next_button.innerHTML = "Try Again"
                 next_button.onclick = function() { next_question(question_info) }
             }
         }

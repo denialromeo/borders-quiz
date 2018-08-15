@@ -73,7 +73,7 @@ var territories_ = []
 function territories(url_parameters) {
     var territories_methods = [custom_territories, limited_territories, current_quiz_modes_territories]
     if (territories_.length == 0) {
-        for (let i = 0; i < territories_methods.length; i++) {
+        for (let i = 0; i < territories_methods.length; i += 1) {
             territories_ = territories_methods[i](url_parameters)
             if (territories_.length > 0) {
                 break
