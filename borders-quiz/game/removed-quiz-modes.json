@@ -71,3 +71,11 @@ Just pop any you want back into game/quiz_modes.json and build-question/borders.
     "Zamora": ["Ourense", "León", "Valladolid", "Salamanca", "Portugal_"],
     "Zaragoza": ["Navarra", "Huesca", "Lleida", "Tarragona", "Teruel", "Guadalajara", "Soria", "La Rioja"]
 },
+
+"countries": {
+    "Lake Albert": ["Democratic Republic of the Congo", "Uganda"],
+    "Lake Chad": ["Chad", "Cameroon"],
+    "Lake Kariba": ["Zambia", "Zimbabwe"],
+    "Lake Kivu": ["Democratic Republic of the Congo", "Rwanda"],
+    "Lake Mweru": ["Democratic Republic of the Congo", "Tanzania"]
+}

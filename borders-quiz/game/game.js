@@ -9,7 +9,7 @@ const timer = require("./timer.js")
 const google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 const game_css_path = "/borders-quiz/game/borders-quiz.css"
 
-const quiz_modes_json = require("./quiz-modes.json")
+const quiz_modes = require("./quiz-modes.json")
 const game_settings = require("./game-settings.json")
 
 const game_iframe = document.getElementById("game-container")
@@ -20,13 +20,9 @@ Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
 const url_parameters = Object.freeze(new URI(window.location.href).search(true))
 
-function quiz_modes() {
-    return quiz_modes_json
-}
-
 function quiz_mode_of(territory) {
-    for (var quiz_mode in borders()) {
-        if (borders()[quiz_mode][territory] != undefined) {
+    for (var quiz_mode in borders) {
+        if (borders[quiz_mode][territory] != undefined) {
             return quiz_mode
         }
     }
@@ -45,17 +41,16 @@ function coordinates(address) {
         address = game_settings.recenter_map[address]
     }
     else {
-        address += quiz_modes()[quiz_mode_of(address)].geocode_append
+        address += quiz_modes[quiz_mode_of(address)].geocode_append
     }
 
     return geocode(address).results[0].geometry.location
 }
 
 function google_maps_zoom_level(territory) {
-    var zoom_level = 0
-    zoom_level = game_settings.custom_zoom_levels[territory] != undefined ?
-                 game_settings.custom_zoom_levels[territory]
-               : quiz_modes()[quiz_mode_of(territory)].default_zoom_level
+    var zoom_level = game_settings.custom_zoom_levels[territory] != undefined ?
+                     game_settings.custom_zoom_levels[territory]
+                   : quiz_modes[quiz_mode_of(territory)].default_zoom_level
     if (on_mobile_device() && zoom_level > 2) {
         zoom_level -= 1
     }
@@ -63,7 +58,7 @@ function google_maps_zoom_level(territory) {
 }
 
 function map_embed_url(territory) {
-    var url = new URI(quiz_modes()[quiz_mode_of(territory)].map_embed_base_url)
+    var url = new URI(quiz_modes[quiz_mode_of(territory)].map_embed_base_url)
     const { lat, lng } = coordinates(territory)
     return url.addSearch({ "lat": lat, "lng": lng, "z": google_maps_zoom_level(territory) }).toString()
 }
@@ -99,7 +94,7 @@ function embed_question(question_info) {
     const { wrong_answers, answer, territory } = question_info
     var choices = random.shuffle(wrong_answers.concat(answer))
     var question  = `<div id='${on_mobile_device() ? "question-container-mobile" : "question-container"}'>
-                        <div id='quiz_title'>${quiz_modes()[quiz_mode_of(territory)].title}</div>
+                        <div id='quiz_title'>${quiz_modes[quiz_mode_of(territory)].title}</div>
                         <div id='${(on_mobile_device() ? "question-text-mobile" : "question-text")}'>
                             <p>Which of these does not border ${pretty_print(territory, false)}?</p>
                             <form>`
@@ -194,7 +189,7 @@ function embed_map(question_info) {
                         <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(subject)}'></iframe>
                         <p>${borders_sentence(subject)}</p>
                         <button id='next'></button>
-                        ${on_mobile_device() ? `` : `<p id='click-message'>${quiz_modes()[quiz_mode_of(subject)].click_message}</p>`}
+                        ${on_mobile_device() ? `` : `<p id='click-message'>${quiz_modes[quiz_mode_of(subject)].click_message}</p>`}
                     </center>
                    </div>`
 
@@ -252,8 +247,8 @@ function other_quiz_modes_message() {
                     <ul class='unused-quiz-modes'>`
         unused_quiz_modes(url_parameters).forEach(function(mode) {
             message += `<li>
-                            <a target='_self' href='?${mode}'>${quiz_modes()[mode].anthem}</a>&nbsp;
-                            ${quiz_modes()[mode].description}
+                            <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;
+                            ${quiz_modes[mode].description}
                         </li>`
         })
         message += `</ul>`

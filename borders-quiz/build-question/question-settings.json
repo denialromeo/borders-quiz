@@ -21,10 +21,12 @@
                              ],
 
     "unless_started_from": ["Alaska",
+                            "Alboran Sea",
                             "Denmark",
                             "Gulf of Suez",
                             "Portugal",
                             "San Marino",
+                            "United Kingdom (Gibraltar)__",
                             "Vatican City"],
 
     "add_possible_answers": {
@@ -55,6 +57,7 @@
         "Nigeria": ["São Tomé and Principe"],
         "Nova Scotia": ["Prince Edward Island"],
         "Papua New Guinea": ["Fiji"],
+        "Philippine Sea": ["Fiji"],
         "Provence-Alpes-Côte d'Azur": ["Corsica"],
         "Qatar": ["Bahrain"],
         "Saudi Arabia": ["Bahrain"],

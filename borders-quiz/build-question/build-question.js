@@ -1,18 +1,16 @@
 const random = require("./random.js")
 
-const borders_json = require("./borders.json")
+const borders = require("./borders.json")
 const question_settings = require("./question-settings.json")
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
-function borders() {
-    return borders_json
-}
+const default_quiz_mode = Object.keys(borders).pop()
 
 function neighbors(territory) {
-    for (var quiz_mode in borders()) {
-        if (borders()[quiz_mode][territory] != undefined) {
-            return borders()[quiz_mode][territory].slice() // slice() makes a copy of the array so we don't mess up the original.
+    for (var quiz_mode in borders) {
+        if (borders[quiz_mode][territory] != undefined) {
+            return borders[quiz_mode][territory].slice() // slice() makes a copy of the array so we don't mess up the original.
         }
     }
     return []
@@ -24,12 +22,12 @@ function valid(territory) {
 }
 
 function all_quiz_modes() {
-    return Object.keys(borders())
+    return Object.keys(borders)
 }
 
 function current_quiz_modes(url_parameters) {
     var url_modes = all_quiz_modes().filter(mode => url_parameters[mode] !== undefined)
-    return url_modes.length == 0 ? ["countries"] : url_modes
+    return url_modes.length == 0 ? [default_quiz_mode] : url_modes
 }
 
 function unused_quiz_modes(url_parameters) {
@@ -38,7 +36,7 @@ function unused_quiz_modes(url_parameters) {
 
 function current_quiz_modes_territories(url_parameters) {
     return current_quiz_modes(url_parameters)
-          .map(mode => Object.keys(borders()[mode]))
+          .map(mode => Object.keys(borders[mode]))
           .reduce((arr, next_arr) => arr.concat(next_arr))
           .filter(valid)
 }
