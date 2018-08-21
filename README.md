@@ -57,3 +57,9 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 * Territory names in more recent quiz modes aren't properly abbreviated on mobile.
 
 * The game doesn't work on Microsoft Edge. This is because Edge doesn't yet support the HTML5 iframe `srcdoc` attribute. (Bug report [here](https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/12375527/).) Microsoft will fix it sooner or later.
+
+## Inspiration
+
+The idea for this project was taken from this beautiful diagram in [*Algorithms*](https://www.amazon.com/Algorithms-Sanjoy-Dasgupta-ebook/dp/B006Z0QR3I/ref=sr_1_1_twi_kin_1?ie=UTF8&qid=1534812555&sr=8-1) by Sanjoy Dasgupta.
+
+![](dasgupta.png)
