@@ -4,7 +4,8 @@
   "description": "Website!",
   "main": "index.js",
   "scripts": {
-    "start": "webpack -p && http-server"
+    "start": "webpack -p && http-server",
+    "test": "node ./borders-quiz/build-question/test-complete-graph.js"
   },
   "repository": {
     "type": "git",
