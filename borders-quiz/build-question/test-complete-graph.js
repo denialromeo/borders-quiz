@@ -12,9 +12,15 @@ function is_complete_graph(quiz_mode) {
 	var complete = true
 	for (var v in vertex_neighbors_dict) {
 		vertex_neighbors_dict[v].forEach(function(n) {
-			if (!vertex_neighbors_dict[n].contains(v)) {
-				complete = false
-				console.log(`${v} is not in ${n}'s neighbors!`)
+			try {
+				if (!vertex_neighbors_dict[n].contains(v)) {
+					complete = false
+					console.log(`${v} is not in ${n}'s neighbors!`)
+				}
+			}
+			catch (TypeError) {
+				console.log(`${n} has no key!`)
+				process.exit()
 			}
 		})
 	}
