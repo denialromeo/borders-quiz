@@ -10,6 +10,16 @@
 		"title": "USA States"
 	},
 
+	"new-york-counties": {
+		"anthem": "\"I Love New York\"",
+		"click_message": "(Click the counties!)",
+		"default_zoom_level": 7,
+		"description": "(New York's counties.)",
+		"geocode_append": " County New York",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col4+from+10MgyT_d49QqPH-KVsTT9o2U3s3nYYN3Xvpf4yLSi&viz=MAP&h=false&t=1&l=col4",
+		"title": "New York Counties"
+	},
+	
 	"california-counties": {
 		"anthem": "\"I Love You, California\"",
 		"click_message": "(Click the counties!)",

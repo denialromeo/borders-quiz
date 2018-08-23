@@ -1,6 +1,10 @@
 {
 
     "recenter_map": {
+        "Staten Island": "Mariners Harbor Staten Island",
+        "Lake Ontario_": "Lake Ontario",
+        "Canada__": "Maple Lawn Canada",
+        "Lake Erie_": "Armor New York",
         "Adriatic Sea": "Bisevo Croatia",
         "Afghanistan_": "FATA Pakistan",
         "Alaska": "Anchorage Alaska",
@@ -11,7 +15,6 @@
         "Balearic Sea": "Balearic Sea",
         "Baltic Sea": "Stockholm Sweden",
         "Bay of Bengal": "Denai Odisha India",
-        "Bay of Biscay": "Bilbao Spain",
         "Belgium": "Parette Belgium",
         "Benin_": "Benin",
         "Bulgaria": "Popovo Bulgaria",
@@ -67,6 +70,7 @@
         "Missouri River": "Omaha Nebraska",
         "Morocco_": "Tangier Morocco",
         "Morocco__": "Tangier Morocco",
+        "Mozambique": "Sabe Mozambique",
         "Myanmar_": "Thabeikkyin Myanmar",
         "Nei Mongol": "Ulaanbadrakh Mongolia",
         "Nevada_": "Tonopah Nevada",
@@ -142,6 +146,7 @@
     },
 
     "should_prepend_the": [
+        "Bronx",
         "Adriatic Sea",
         "Aegean Sea",
         "Alboran Sea",
@@ -254,6 +259,14 @@
     ],
 
     "dont_sort_neighbors": [
+        "Lake Erie_",
+        "Lake Ontario_",
+        "Canada__",
+        "Vermont_",
+        "Pennsylvania_",
+        "New Jersey_",
+        "Connecticut_",
+        "Massachusetts_",
         "Adriatic Sea",
         "Alboran Sea",
         "Andaman Sea",
@@ -381,6 +394,7 @@
         "Balearic Sea": 6,
         "Bangladesh": 4,
         "Barents Sea": 3,
+        "Bay of Biscay": 4,
         "Belarus": 4,
         "Belgium": 4,
         "Bering Sea": 3,
@@ -448,6 +462,7 @@
         "Kenya": 4,
         "Kyrgyzstan": 4,
         "Labrador Sea": 3,
+        "Lake Malawi": 4,
         "Lake Tanganyika": 4,
         "Laos": 4,
         "Laos_": 4,
@@ -550,6 +565,17 @@
         "Zambia": 3,
         "Zimbabwe": 3,
 
+        "Bronx": 9,
+        "Manhattan": 9,
+        "Queens": 9,
+        "Brooklyn": 9,
+        "Staten Island": 10,
+        "Canada__": 6,
+        "Vermont_": 6,
+        "Pennsylvania_": 6,
+        "New Jersey_": 6,
+        "Connecticut_": 6,
+        "Massachusetts_": 6,
         "Afghanistan__": 3,
         "Andaman Sea": 4,
         "Arabian Sea": 3,

@@ -1,15 +1,21 @@
 {
-
-    "exclude_paths_through": [ "Brazil",
+    
+    "exclude_paths_through": [ 
+                               "Arizona__",
+                               "Brazil",
                                "Canada_",
+                               "Canada__",
                                "China",
                                "China_",
                                "Egypt",
                                "Germany",
                                "Iran",
                                "Italy",
+                               "Mexico__",
                                "Morocco",
                                "Nevada_",
+                               "Oregon_",
+                               "Pennsylvania_",
                                "Russia",
                                "Spain",
                                "Turkey",
@@ -20,16 +26,20 @@
                                "Uttar Pradesh"
                              ],
 
-    "unless_started_from": ["Alaska",
+    "unless_started_from": [
+                            "Alaska",
                             "Alboran Sea",
                             "Denmark",
                             "Gulf of Suez",
                             "Portugal",
                             "San Marino",
                             "United Kingdom (Gibraltar)__",
-                            "Vatican City"],
+                            "Vatican City"
+                           ],
 
     "add_possible_answers": {
+        "Manhattan": ["Staten Island"],
+        "Brooklyn": ["Staten Island"],
         "Calabria": ["Sicily"],
         "California": ["Hawaii"],
         "Cameroon": ["São Tomé and Principe"],

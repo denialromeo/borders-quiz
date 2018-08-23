@@ -31,7 +31,7 @@ function sample(a, k) {
 
 // Exports
 Object.assign(exports, {
-    shuffle: shuffle,
     choice: choice,
+    shuffle: shuffle,
     sample: sample
 })
