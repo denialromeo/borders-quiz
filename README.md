@@ -49,6 +49,7 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 * [Countries in Africa](http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco)
 * [San Francisco Bay Area counties](http://danielmoore.us/borders-quiz?start=San+Francisco+Bay)
 * [Southern California counties](http://danielmoore.us/borders-quiz?california-counties&custom=Imperial|Los+Angeles|Kern|Orange|Riverside|San+Bernardino|San+Diego|San+Luis+Obispo|Santa+Barbara|Ventura)
+* [New York City's boroughs](http://danielmoore.us/borders-quiz?new-york-counties&custom=Bronx|Manhattan|Queens|Brooklyn)
 * [India's Punjab and Pakistan's Punjab](http://danielmoore.us/borders-quiz?india-states&pakistan-provinces&custom=Punjab)
 
 ## Known Bugs
