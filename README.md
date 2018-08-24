@@ -44,12 +44,12 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 * [Countries that end with "stan"](http://danielmoore.us/borders-quiz?custom=stan$)
 * [Country quiz excluding bodies of water](http://danielmoore.us/borders-quiz?custom=^(?!.*(Sea|Gulf|Bay|Strait|Lake|Channel)))
 * [Country quiz with two answer choices](http://danielmoore.us/borders-quiz?num-choices=2)
+* [Countries in Africa](http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco)
 * [U.S. states that don't contain the letters 'a' or 'e'](http://danielmoore.us/borders-quiz?usa-states&custom=%5E(?!.*[ae]))
 * [Canada and neighboring U.S. states](http://danielmoore.us/borders-quiz?start=Canada_)
-* [Countries in Africa](http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco)
-* [New York City boroughs](http://danielmoore.us/borders-quiz?new-york-counties&custom=Bronx|Manhattan|Queens|Brooklyn)
 * [San Francisco Bay Area counties](http://danielmoore.us/borders-quiz?start=San+Francisco+Bay)
 * [Southern California counties](http://danielmoore.us/borders-quiz?california-counties&custom=Imperial|Los+Angeles|Kern|Orange|Riverside|San+Bernardino|San+Diego|San+Luis+Obispo|Santa+Barbara|Ventura)
+* [New York City boroughs](http://danielmoore.us/borders-quiz?new-york-counties&custom=Bronx|Manhattan|Queens|Brooklyn)
 * [India's Punjab and Pakistan's Punjab](http://danielmoore.us/borders-quiz?india-states&pakistan-provinces&custom=Punjab)
 
 ## Known Bugs
