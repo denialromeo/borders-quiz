@@ -4,8 +4,8 @@ class Timer {
     }
     get formatted_time() {
         var hours   = Math.floor(this.seconds_elapsed/60/60)
-        var minutes = Math.floor((this.seconds_elapsed/60) % 60)
-        var seconds = Math.floor(this.seconds_elapsed % 60)
+        var minutes = Math.floor(this.seconds_elapsed/60) % 60
+        var seconds = this.seconds_elapsed % 60
         function pad_zero(num) {
             return num < 10 ? `0${num}` : num.toString()
         }
