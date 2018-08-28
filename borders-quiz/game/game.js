@@ -1,7 +1,7 @@
 const $ = require("jquery")
 const URI = require("urijs")
 
-const { borders, build_question, current_quiz_modes, neighbors } = require("../build-question/build-question.js")
+const { build_question, current_quiz_modes, neighbors } = require("../build-question/build-question.js")
 
 const random = require("../build-question/random.js")
 const timer = require("./timer.js")
@@ -20,15 +20,6 @@ Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
 const url_parameters = Object.freeze(new URI(window.location.href).search(true))
 
-function quiz_mode_of(territory) {
-    for (var quiz_mode in borders) {
-        if (borders[quiz_mode][territory] != undefined) {
-            return quiz_mode
-        }
-    }
-    return "countries"
-}
-
 function geocode(address) {
     var url = "https://maps.googleapis.com/maps/api/geocode/json"
     var json = {}
@@ -36,31 +27,30 @@ function geocode(address) {
     return json
 }
 
-function coordinates(address) {
+function coordinates(quiz_mode, address) {
     if (game_settings.recenter_map[address] != undefined) {
         address = game_settings.recenter_map[address]
     }
-    else {
-        address += quiz_modes[quiz_mode_of(address)].geocode_append
+    else if (neighbors(address).length > 0) {
+        address += quiz_modes[quiz_mode].geocode_append
     }
-
     return geocode(address).results[0].geometry.location
 }
 
-function google_maps_zoom_level(territory) {
+function google_maps_zoom_level(quiz_mode, territory) {
     var zoom_level = game_settings.custom_zoom_levels[territory] != undefined ?
                      game_settings.custom_zoom_levels[territory]
-                   : quiz_modes[quiz_mode_of(territory)].default_zoom_level
+                   : quiz_modes[quiz_mode].default_zoom_level
     if (on_mobile_device() && zoom_level > 2) {
         zoom_level -= 1
     }
     return zoom_level
 }
 
-function map_embed_url(territory) {
-    var url = new URI(quiz_modes[quiz_mode_of(territory)].map_embed_base_url)
-    const { lat, lng } = coordinates(territory)
-    return url.addSearch({ "lat": lat, "lng": lng, "z": google_maps_zoom_level(territory) }).toString()
+function map_embed_url(quiz_mode, territory) {
+    var url = new URI(quiz_modes[quiz_mode].map_embed_base_url)
+    const { lat, lng } = coordinates(quiz_mode, territory)
+    return url.addSearch({ "lat": lat, "lng": lng, "z": google_maps_zoom_level(quiz_mode, territory) }).toString()
 }
 
 function prepend_the(territory, capitalize_the) {
@@ -91,10 +81,10 @@ function embed(src) {
 }
 
 function embed_question(question_info) {
-    const { wrong_answers, answer, territory } = question_info
+    const { quiz_mode, wrong_answers, answer, territory } = question_info
     var choices = random.shuffle(wrong_answers.concat(answer))
     var question  = `<div id='${on_mobile_device() ? "question-container-mobile" : "question-container"}'>
-                        <div id='quiz_title'>${quiz_modes[quiz_mode_of(territory)].title}</div>
+                        <div id='quiz_title'>${quiz_modes[quiz_mode].title}</div>
                         <div id='${(on_mobile_device() ? "question-text-mobile" : "question-text")}'>
                             <p>Which of these does not border ${pretty_print(territory, false)}?</p>
                             <form>`
@@ -179,17 +169,17 @@ function right_or_wrong_message(chosen, answer, territory) {
          : `Sorry! ${pretty_print(territory, true)} does border ${pretty_print(chosen, false)}!`
 }
 
-function embed_map(question_info) {
-    const { chosen,  answer, territory } = question_info
-    const subject = chosen == answer ? chosen : territory
+function embed_map(question_info, called_from_question=true) {
+    const { quiz_mode, chosen, answer, territory } = question_info
+    const subject = (chosen == answer ? chosen : territory)
 
     var content = `<div id='${on_mobile_device() ? "map-container-mobile" : "map-container"}'>
                     <center>
-                        <p>${right_or_wrong_message(chosen, answer, territory)}</p>
-                        <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(subject)}'></iframe>
-                        <p>${borders_sentence(subject)}</p>
+                        <p>${called_from_question ? right_or_wrong_message(chosen, answer, subject) : subject}</p>
+                        <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(quiz_mode, subject)}'></iframe>
+                        <p>${called_from_question ? borders_sentence(subject) : "Get a feel for what's where!"}</p>
                         <button id='next'></button>
-                        ${on_mobile_device() ? `` : `<p id='click-message'>${quiz_modes[quiz_mode_of(subject)].click_message}</p>`}
+                        ${on_mobile_device() ? `` : `<p id='click-message'>${quiz_modes[quiz_mode].click_message}</p>`}
                     </center>
                    </div>`
 
@@ -223,21 +213,25 @@ function next_question(question_info=build_question(url_parameters)) {
     embed_question(question_info)
 }
 
-// For fun and testing. Shows map for arbitrary address.
-// http://danielmoore.us/borders-quiz?custom-map=Taco+Bell+Fremont+CA
-function custom_map() {
-    const custom_address = url_parameters["custom-map"]
+// To give the player a chance to browse the map before they begin.
+// http://danielmoore.us/borders-quiz?california-counties&start-map=Taco+Bell+Fremont+CA
+function start_map() {
+    const custom_address = url_parameters["start-map"]
     if (custom_address != undefined) {
         score.correct -= 1
-        const q = { territory: custom_address, answer: custom_address, wrong_answers: [], chosen: custom_address }
-        embed_map(q)
+        embed_map({ quiz_mode: current_quiz_modes(url_parameters)[0],
+                    territory: custom_address,
+                    answer: custom_address,
+                    wrong_answers: [],
+                    chosen: custom_address },
+                  false)
     }
 }
 ////
 
 function first_question() {
     next_question()
-    custom_map()
+    start_map()
 }
 
 function unused_quiz_modes(url_parameters) {

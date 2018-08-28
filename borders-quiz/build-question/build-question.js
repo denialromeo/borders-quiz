@@ -7,13 +7,14 @@ Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
 const default_quiz_mode = Object.keys(borders).pop()
 
+function quiz_mode_of(territory) {
+    const quiz_mode = Object.keys(borders).find(function(e) { return borders[e][territory] != undefined })
+    return (quiz_mode != undefined ? quiz_mode : default_quiz_mode)
+}
+
 function neighbors(territory) {
-    for (var quiz_mode in borders) {
-        if (borders[quiz_mode][territory] != undefined) {
-            return borders[quiz_mode][territory].slice() // slice() makes a copy of the array so we don't mess up the original.
-        }
-    }
-    return []
+    var neighbors = borders[quiz_mode_of(territory)][territory]
+    return (neighbors != undefined ? neighbors.slice() : []) // slice() makes a copy of the array so we don't mess up the original.
 }
 
 // If a territory has no neighbors, we can't make a question from it!
@@ -130,13 +131,12 @@ function build_question(url_parameters) {
     var answer = random.choice(possible_answers)
     var wrong_answers = random.sample(neighbors(territory), num_wrong_answers)
 
-    return { territory: territory, answer: answer, wrong_answers: wrong_answers }
+    return { quiz_mode: quiz_mode_of(territory), territory: territory, answer: answer, wrong_answers: wrong_answers }
 }
 
 // Exports
 Object.assign(exports, {
     build_question: build_question,
-    borders: borders,
     current_quiz_modes: current_quiz_modes,
     neighbors: neighbors
 })
