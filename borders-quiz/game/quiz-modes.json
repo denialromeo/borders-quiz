@@ -1,5 +1,15 @@
 {
 	
+	"canada-provinces": {
+		"anthem": "\"O Canada\"",
+		"click_message": "(Click the provinces!)",
+		"default_zoom_level": 3,
+		"description": "(Canada's provinces.)",
+		"geocode_append": "",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col4+from+1WLNv__CToy_grFi67jOIKJPmy5KlA0Ihh6j0sW0H&viz=MAP&h=false&t=1&l=col4",
+		"title": "Canada Provinces"
+	},
+	
 	"usa-states": {
 		"anthem": "\"The Star-Spangled Banner\"",
 		"click_message": "(Click the states!)",
@@ -38,16 +48,6 @@
 		"geocode_append": " Mexico",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col5+from+19KyBvfdcDLNkVwn466Aa9asNfTMsPhwsasNdimAP&viz=MAP&h=false&t=1&l=col5",
 		"title": "Mexico States"
-	},
-	
-	"canada-provinces": {
-		"anthem": "\"O Canada\"",
-		"click_message": "(Click the provinces!)",
-		"default_zoom_level": 3,
-		"description": "(Canada's provinces.)",
-		"geocode_append": "",
-		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col4+from+1WLNv__CToy_grFi67jOIKJPmy5KlA0Ihh6j0sW0H&viz=MAP&h=false&t=1&l=col4",
-		"title": "Canada Provinces"
 	},
 	
 	"brazil-states": {
@@ -112,34 +112,14 @@
 	
 	"taiwan-counties": {
 	    "anthem": "\"Sanmin Zhuyi\"",
-	    "click_message": "(Click the counties!)",
+	    "click_message": "(Click the cities and counties!)",
 	    "default_zoom_level": 8,
-	    "description": "(Taiwan's counties.)",
+	    "description": "(Taiwan's cities and counties.)",
 	    "geocode_append": "",
 	    "map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+12zcluwsLcKnPYh42DRReW60ZjZIXNRS8sWkOpv5w&viz=MAP&h=false&t=1&l=col2",
-	    "title": "Taiwan Counties"
+	    "title": "Taiwan Cities and Counties"
 	},
     
-	"south-korea-provinces": {
-		"anthem": "\"Aegukga\"",
-		"click_message": "(Click the provinces!)",
-		"default_zoom_level": 7,
-		"description": "(South Korea's provinces.)",
-		"geocode_append": " South Korea",
-		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1mXgLcmURA7HTJvsWHchCErieTTykv5xqS9WDWjDA&viz=MAP&h=false&t=1&l=col2",
-		"title": "South Korea Provinces"
-	},
-	
-	"japan-prefectures": {
-		"anthem": "\"Kimigayo\"",
-		"click_message": "(Click the prefectures!)",
-		"default_zoom_level": 7,
-		"description": "(Japan's prefectures.)",
-		"geocode_append": " Japan",
-		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1e1KEhbC1opeDS1IhQCVCyyR4X9U1D1eVB_gfmIdy&viz=MAP&h=false&t=1&l=col2",
-		"title": "Japan Prefectures"
-	},
-	
 	"malaysia-states": {
 		"anthem": "\"Negaraku\"",
 		"click_message": "(Click the states!)",
@@ -170,6 +150,26 @@
 		"title": "Australia States"
 	},
 
+	"japan-prefectures": {
+		"anthem": "\"Kimigayo\"",
+		"click_message": "(Click the prefectures!)",
+		"default_zoom_level": 7,
+		"description": "(Japan's prefectures.)",
+		"geocode_append": " Japan",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1e1KEhbC1opeDS1IhQCVCyyR4X9U1D1eVB_gfmIdy&viz=MAP&h=false&t=1&l=col2",
+		"title": "Japan Prefectures"
+	},
+	
+	"south-korea-provinces": {
+		"anthem": "\"Aegukga\"",
+		"click_message": "(Click the provinces!)",
+		"default_zoom_level": 7,
+		"description": "(South Korea's provinces.)",
+		"geocode_append": " South Korea",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1mXgLcmURA7HTJvsWHchCErieTTykv5xqS9WDWjDA&viz=MAP&h=false&t=1&l=col2",
+		"title": "South Korea Provinces"
+	},
+	
 	"russia-federal-subjects": {
 		"anthem": "\"Patrioticheskaya Pesnya\"",
 		"click_message": "(Click the federal subjects!)",
@@ -230,16 +230,6 @@
 		"title": "France Regions"
 	},
 	
-	"spain-autonomous-communities": {
-		"anthem": "\"Marcha Real\"",
-		"click_message": "(Click the autonomous communities!)",
-		"default_zoom_level": 5,
-		"description": "(Spain's autonomous communities.)",
-		"geocode_append": " Spain",
-		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col1+from+1NHEGhx3wWq8PeqmFtY_IEz7ADv4yE3scsQzd9OH-&viz=MAP&h=false&t=1&l=col1",
-		"title": "Spain Autonomous Communities"
-	},
-	
 	"england-ceremonial-counties": {
 		"anthem": "\"God Save the Queen\"",
 		"click_message": "(Click the counties!)",
@@ -258,6 +248,16 @@
 	    "geocode_append": " County Ireland",
 	    "map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+13PyOxVhuAzhyIUFaHaswDcKssO7xtPqDkhqBV2Sm&viz=MAP&h=false&t=1&l=col2",
 	    "title": "Ireland Counties"
+	},
+	
+	"spain-autonomous-communities": {
+		"anthem": "\"Marcha Real\"",
+		"click_message": "(Click the autonomous communities!)",
+		"default_zoom_level": 5,
+		"description": "(Spain's autonomous communities.)",
+		"geocode_append": " Spain",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col1+from+1NHEGhx3wWq8PeqmFtY_IEz7ADv4yE3scsQzd9OH-&viz=MAP&h=false&t=1&l=col1",
+		"title": "Spain Autonomous Communities"
 	},
 	
 	"countries": {

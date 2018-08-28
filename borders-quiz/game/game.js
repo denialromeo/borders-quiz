@@ -1,7 +1,7 @@
 const $ = require("jquery")
 const URI = require("urijs")
 
-const { borders, build_question, neighbors, unused_quiz_modes } = require("../build-question/build-question.js")
+const { borders, build_question, current_quiz_modes, neighbors } = require("../build-question/build-question.js")
 
 const random = require("../build-question/random.js")
 const timer = require("./timer.js")
@@ -238,6 +238,10 @@ function custom_map() {
 function first_question() {
     next_question()
     custom_map()
+}
+
+function unused_quiz_modes(url_parameters) {
+    return Object.keys(quiz_modes).filter(mode => !current_quiz_modes(url_parameters).contains(mode))
 }
 
 function other_quiz_modes_message() {

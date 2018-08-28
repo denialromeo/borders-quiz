@@ -30,10 +30,6 @@ function current_quiz_modes(url_parameters) {
     return url_modes.length == 0 ? [default_quiz_mode] : url_modes
 }
 
-function unused_quiz_modes(url_parameters) {
-    return all_quiz_modes().filter(mode => !current_quiz_modes(url_parameters).contains(mode))
-}
-
 function current_quiz_modes_territories(url_parameters) {
     return current_quiz_modes(url_parameters)
           .map(mode => Object.keys(borders[mode]))
@@ -139,8 +135,8 @@ function build_question(url_parameters) {
 
 // Exports
 Object.assign(exports, {
-    unused_quiz_modes: unused_quiz_modes,
     build_question: build_question,
     borders: borders,
+    current_quiz_modes: current_quiz_modes,
     neighbors: neighbors
 })
