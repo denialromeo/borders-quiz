@@ -4,7 +4,7 @@ const URI = require("urijs")
 const { build_question, current_quiz_modes, neighbors } = require("../build-question/build-question.js")
 
 const random = require("../build-question/random.js")
-const timer = require("./timer.js")
+const { Timer } = require("./timer.js")
 
 const google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 const game_css_path = "/borders-quiz/game/borders-quiz.css"
@@ -13,8 +13,9 @@ const quiz_modes = require("./quiz-modes.json")
 const game_settings = require("./game-settings.json")
 
 const game_iframe = document.getElementById("game-container")
-const start_time = Date.now()
+
 var score = { correct: 0, wrong: 0 }
+var timer = new Timer()
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
@@ -38,9 +39,13 @@ function coordinates(quiz_mode, address) {
 }
 
 function google_maps_zoom_level(quiz_mode, territory) {
-    var zoom_level = game_settings.custom_zoom_levels[territory] != undefined ?
-                     game_settings.custom_zoom_levels[territory]
-                   : quiz_modes[quiz_mode].default_zoom_level
+    var zoom_level = url_parameters["z"]
+    if (zoom_level == undefined) {
+        zoom_level = game_settings.custom_zoom_levels[territory]
+    }
+    if (zoom_level == undefined) {
+        zoom_level = quiz_modes[quiz_mode].default_zoom_level
+    }
     if (on_mobile_device() && zoom_level > 2) {
         zoom_level -= 1
     }
@@ -99,7 +104,7 @@ function embed_question(question_info) {
                         </div>
                         <p id='score_and_timer'>
                             <i id='score'>Correct: ${score.correct}&nbsp;&nbspWrong: ${score.wrong}</i><br>
-                            <span id='timer'>${timer.time_elapsed(start_time)}</span>
+                            <span id='timer'>${timer.formatted_time}</span>
                         </p>
                     </div>`
 
@@ -112,7 +117,7 @@ function embed_question(question_info) {
             window.requestAnimationFrame(begin_timing);
         }
         else {
-            timer.start_timer(start_time, timer_dom_node)
+            timer.start_timer(function(time) { timer_dom_node.innerHTML = time })
         }
     }
     begin_timing()
@@ -175,9 +180,9 @@ function embed_map(question_info, called_from_question=true) {
 
     var content = `<div id='${on_mobile_device() ? "map-container-mobile" : "map-container"}'>
                     <center>
-                        <p>${called_from_question ? right_or_wrong_message(chosen, answer, subject) : subject}</p>
+                        <p>${called_from_question ? right_or_wrong_message(chosen, answer, territory) : pretty_print(subject)}</p>
                         <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(quiz_mode, subject)}'></iframe>
-                        <p>${called_from_question ? borders_sentence(subject) : "Get a feel for what's where!"}</p>
+                        <p>${neighbors(subject).length > 0 ? borders_sentence(subject) : "Get a feel for what's where!"}</p>
                         <button id='next'></button>
                         ${on_mobile_device() ? `` : `<p id='click-message'>${quiz_modes[quiz_mode].click_message}</p>`}
                     </center>
@@ -216,6 +221,7 @@ function next_question(question_info=build_question(url_parameters)) {
 // To give the player a chance to browse the map before they begin.
 // http://danielmoore.us/borders-quiz?california-counties&start-map=Taco+Bell+Fremont+CA
 function start_map() {
+    timer.pause_timer()
     const custom_address = url_parameters["start-map"]
     if (custom_address != undefined) {
         score.correct -= 1
