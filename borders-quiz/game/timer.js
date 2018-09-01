@@ -15,7 +15,12 @@ class Timer {
     start_timer(timer_callback) {
         clearInterval(this.timer_process_id)
         // Code taken from https://stackoverflow.com/questions/2749244/javascript-setinterval-and-this-solution
-        this.timer_process_id = setInterval((function(self) { return function() { self.seconds_elapsed += 1; timer_callback(self.formatted_time) } })(this), 1000)
+        this.timer_process_id = setInterval(
+                                    (self => function() {
+                                        self.seconds_elapsed += 1
+                                        timer_callback(self.formatted_time)
+                                    })(this),
+                                1000)
     }
     pause_timer() {
         clearInterval(this.timer_process_id)

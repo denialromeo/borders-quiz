@@ -125,16 +125,16 @@ function embed_question(question_info) {
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function detect_player_choice() {
         var choices = game_iframe.contentWindow.document.getElementsByName("choice")
-        if (choices[0] == undefined) {
-            window.requestAnimationFrame(detect_player_choice);
+        if (choices.length == 0) {
+            window.requestAnimationFrame(detect_player_choice)
         }
         else {
-            for (let i = 0; i < choices.length; i += 1) {
-                choices[i].onclick = function() {
+            choices.forEach(choice =>
+                choice.onclick = function() {
                     question_info.chosen = this.id
                     embed_map(question_info)
                 }
-            }
+            )
         }
     }
     detect_player_choice()
@@ -194,7 +194,7 @@ function embed_map(question_info, called_from_question=true) {
     function next_question_button() {
         var next_button = game_iframe.contentWindow.document.getElementById("next")
         if (next_button == undefined) {
-            window.requestAnimationFrame(next_question_button);
+            window.requestAnimationFrame(next_question_button)
         }
         else {
             if (chosen == answer) {
@@ -249,12 +249,12 @@ function other_quiz_modes_message() {
     if (unused_quiz_modes(url_parameters).length > 0) {
         message += `<p>You can also try these quiz modes!</p>
                     <ul class='unused-quiz-modes'>`
-        unused_quiz_modes(url_parameters).forEach(function(mode) {
+        unused_quiz_modes(url_parameters).forEach(mode =>
             message += `<li>
                             <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;
                             ${quiz_modes[mode].description}
                         </li>`
-        })
+        )
         message += `</ul>`
     }
     return message

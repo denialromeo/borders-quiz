@@ -70,6 +70,16 @@
 		"title": "Nigeria States"
 	},
 	
+	"syria-governorates": {
+		"anthem": "\"Ḥumāt ad-Diyār\"",
+		"click_message": "(Click the governorates!)",
+		"default_zoom_level": 6,
+		"description": "(Syria's governorates.)",
+		"geocode_append": "",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1sH9umChO1iiwHeHcwVWl6-E_TfzGGOENqTuNaDXF&viz=MAP&h=false&t=1&l=col0",
+		"title": "Syria Governorates"
+	},
+	
 	"pakistan-provinces": {
 		"anthem": "\"Qaumi Taranah\"",
 		"click_message": "(Click the provinces!)",

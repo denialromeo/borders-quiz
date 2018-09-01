@@ -357,6 +357,30 @@
         "Zamfara": ["Katsina", "Kaduna", "Kebbi", "Sokoto", "Niger State", "Niger_"]
     },
 
+    "syria-governorates": {
+        "Al-Hasakah": ["Turkey_", "Iraq_", "Raqqa", "Deir ez-Zor"],
+        "Aleppo": ["Idlib", "Hama", "Raqqa", "Turkey_"],
+        "As-Suwayda": ["Rif Dimashq", "Jordan_", "Daraa"],
+        "Damascus": ["Rif Dimashq"],
+        "Daraa": ["Rif Dimashq", "As-Suwayda", "Jordan_", "UNDOF Zone", "Quneitra"],
+        "Deir ez-Zor": ["Al-Hasakah", "Raqqa", "Homs", "Iraq_"],
+        "Hama": ["Aleppo", "Raqqa", "Homs", "Tartus", "Latakia", "Idlib"],
+        "Homs": ["Hama", "Raqqa", "Deir ez-Zor", "Iraq_", "Jordan_", "Rif Dimashq", "Lebanon_", "Tartus"],
+        "Idlib": ["Aleppo", "Hama", "Latakia", "Turkey_"],
+        "Iraq_": ["Turkey_", "Al-Hasakah", "Deir ez-Zor", "Homs", "Jordan_"],
+        "Israel_": ["Lebanon_", "UNDOF Zone", "Jordan_"],
+        "Jordan_": ["Israel_", "UNDOF Zone", "Daraa", "As-Suwayda", "Rif Dimashq", "Homs", "Iraq_"],
+        "Latakia": ["Turkey_", "Idlib", "Hama", "Tartus"],
+        "Lebanon_": ["Tartus", "Homs", "Rif Dimashq", "UNDOF Zone", "Israel_"],
+        "Mediterranean Sea_": ["Turkey_", "Latakia", "Tartus", "Lebanon_"],
+        "Quneitra": ["Rif Dimashq", "Daraa", "UNDOF Zone"],
+        "Raqqa": ["Turkey_", "Al-Hasakah", "Deir ez-Zor", "Homs", "Hama", "Aleppo"],
+        "Rif Dimashq": ["Homs", "Jordan_", "Damascus", "As-Suwayda", "Daraa", "Quneitra", "UNDOF Zone", "Lebanon_"],
+        "Tartus": ["Latakia", "Hama", "Homs", "Lebanon_"],
+        "Turkey_": ["Latakia", "Idlib", "Aleppo", "Raqqa", "Al-Hasakah", "Iraq_"],
+        "UNDOF Zone": ["Lebanon_", "Israel_", "Jordan_", "Daraa", "Quneitra", "Rif Dimashq"]
+    },
+
     "pakistan-provinces": {
         "Afghanistan_": ["China__", "Gilgit-Baltistan", "Khyber Pakhtunkhwa", "Federally Administered Tribal Areas", "Balochistan", "Iran_"],
         "Azad Jammu and Kashmir": ["Gilgit-Baltistan", "India_", "Khyber Pakhtunkhwa", "Punjab_"],
