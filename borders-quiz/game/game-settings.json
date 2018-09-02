@@ -1,7 +1,14 @@
 {
 
     "recenter_map": {
+        "Greece": "Skantzoura Greece",
+        "Colombia": "Colombia Country",
+        "Iran": "Benvid Alia Iran",
+        "United States": "Redfield Iowa",
+        "Hama": "Hama Syria",
+        "UNDOF Zone": "Jubata Al Khashab Syria",
         "Israel_": "Or Yehuda Israel",
+        "Jordan_": "Imtan Jordan",
         "Iraq_": "Anah Iraq",
         "Turkey_": "Elmacik Turkey",
         "Mediterranean Sea_": "Tartus",
@@ -79,7 +86,7 @@
         "Kazakhstan_": "Shalginskiy Kazakhstan",
         "Kazakhstan__": "Shalginskiy Kazakhstan",
         "Maldives": "Addu City",
-        "Mali": "M'Bouna Mali",
+        "Mali": "Arouane Mali",
         "Mason-Dixon Line": "Pen Mar Pennsylvania",
         "Mexico__": "Baja California",
         "Mississippi River": "St Louis Missouri",
@@ -130,7 +137,6 @@
         "United Kingdom": "Clarencefield UK",
         "United Kingdom (Gibraltar)_": "Gibraltar UK",
         "United Kingdom (Gibraltar)__": "Gibraltar UK",
-        "United States": "Ballard Missouri",
         "United States_": "Egg Island Manitoba",
         "United States__": "Rincon New Mexico USA",
         "Washington": "Washington State"
@@ -377,6 +383,7 @@
 
         "Iraq_": 5,
         "Damascus": 8,
+        "Daraa": 7,
         "Quneitra": 7,
         "UNDOF Zone": 7,
         "Bronx": 9,
@@ -604,7 +611,6 @@
         "Laos": 4,
         "Laos_": 4,
         "Latvia": 4,
-        "Lebanon": 4,
         "Lesotho": 4,
         "Liberia": 4,
         "Libya": 3,

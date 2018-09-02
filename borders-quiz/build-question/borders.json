@@ -191,7 +191,7 @@
         "San Bernardino": ["Arizona__", "Inyo", "Kern", "Los Angeles", "Nevada_", "Orange", "Riverside"],
         "San Diego": ["Imperial", "Mexico__", "Orange", "Riverside"],
         "San Francisco": ["San Mateo"],
-        "San Francisco Bay": ["San Francisco", "Marin", "Sonoma", "Napa", "Solano", "Contra Costa", "Alameda", "Santa Clara", "San Mateo"],
+        "San Francisco Bay": ["San Francisco", "San Mateo", "Santa Clara", "Alameda", "Contra Costa", "Solano", "Napa", "Sonoma", "Marin"],
         "San Joaquin": ["Alameda", "Amador", "Calaveras", "Contra Costa", "Sacramento", "Stanislaus"],
         "San Luis Obispo": ["Kern", "Kings", "Monterey", "Santa Barbara"],
         "San Mateo": ["San Francisco", "Santa Clara", "Santa Cruz"],
