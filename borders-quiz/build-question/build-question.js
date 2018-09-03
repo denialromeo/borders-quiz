@@ -8,7 +8,7 @@ Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 const default_quiz_mode = Object.keys(borders).pop()
 
 function quiz_mode_of(territory) {
-    const quiz_mode = Object.keys(borders).find(function(e) { return borders[e][territory] != undefined })
+    const quiz_mode = Object.keys(borders).find(e => borders[e][territory] != undefined )
     return (quiz_mode != undefined ? quiz_mode : default_quiz_mode)
 }
 
@@ -67,7 +67,7 @@ function limited_territories(url_parameters) {
 var territories_ = []
 function territories(url_parameters) {
     var territories_methods = [custom_territories, limited_territories, current_quiz_modes_territories]
-    if (territories_.length == 0) {
+    if (territories_.length == 0 || url_parameters["no-cache"] != undefined) {
         for (let i = 0; i < territories_methods.length; i += 1) {
             territories_ = territories_methods[i](url_parameters)
             if (territories_.length > 0) {
@@ -138,5 +138,6 @@ function build_question(url_parameters) {
 Object.assign(exports, {
     build_question: build_question,
     current_quiz_modes: current_quiz_modes,
-    neighbors: neighbors
+    neighbors: neighbors,
+    valid: valid
 })

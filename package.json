@@ -1,8 +1,8 @@
 {
-  "name": "danielmoore.us",
+  "name": "borders-quiz",
   "version": "1.0.0",
-  "description": "Website!",
-  "main": "index.js",
+  "description": "Hone your geography!",
+  "main": "./borders-quiz/build-question/build-question.js",
   "scripts": {
     "start": "webpack -p && http-server",
     "test": "node ./borders-quiz/build-question/test-complete-graph.js"

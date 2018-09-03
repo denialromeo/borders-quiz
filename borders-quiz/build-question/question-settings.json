@@ -38,7 +38,6 @@
                            ],
 
     "add_possible_answers": {
-        "Manhattan": ["Staten Island"],
         "Brooklyn": ["Staten Island"],
         "Calabria": ["Sicily"],
         "California": ["Hawaii"],
@@ -59,6 +58,7 @@
         "Lebanon": ["Cyprus"],
         "Libya": ["Malta"],
         "Malaysia": ["Philippines", "Singapore"],
+        "Manhattan": ["Staten Island"],
         "Mauritania": ["Cape Verde"],
         "Monaco_": ["Corsica"],
         "Mozambique": ["Comoros", "Madagascar", "Mauritius", "Seychelles"],
@@ -105,7 +105,7 @@
         "Portugal": ["Andorra", "France", "United Kingdom (Gibraltar)__"],
         "Sarawak": ["Singapore_"],
         "Sea of Okhotsk": ["North Korea", "South Korea"],
-        "Tasman Sea": ["Papua New Guinea"],
+        "Tasman Sea": ["Fiji", "Papua New Guinea"],
         "Timor-Leste_": ["Maluku"],
         "Tokushima": ["Hokkaido", "Okinawa"],
         "United Kingdom": ["Belgium", "France", "Netherlands"]

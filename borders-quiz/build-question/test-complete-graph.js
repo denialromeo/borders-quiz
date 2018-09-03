@@ -1,4 +1,5 @@
 const borders = require('./borders.json')
+const { build_question, valid } = require('./build-question.js')
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
@@ -60,4 +61,19 @@ var duplicates = duplicate_keys(all_keys())
 
 if (duplicates.length > 0) {
 	console.log(`Duplicates: ${duplicates}. Please fix!`)
+}
+
+/* This tests if any territories are impossible to create questions for.
+ *
+ * If this raises an error, please add a relevant entry to replace_possible_answers in question-settings.json.
+ */
+var impossible_questions = all_keys()
+                          .filter(valid)
+                          .map(key => build_question({"start": key, "depth": 0, "no-cache": true}))
+                          .filter(q => q.answer == undefined)
+                          .map(q => q.territory)
+
+
+if (impossible_questions.length > 0) {
+	console.log(`Error when building questions for: ${impossible_questions}. Please fix!`)
 }
