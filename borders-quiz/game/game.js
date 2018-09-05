@@ -39,13 +39,8 @@ function coordinates(quiz_mode, address) {
 }
 
 function google_maps_zoom_level(quiz_mode, territory) {
-    var zoom_level = url_parameters["z"]
-    if (zoom_level == undefined) {
-        zoom_level = game_settings.custom_zoom_levels[territory]
-    }
-    if (zoom_level == undefined) {
-        zoom_level = quiz_modes[quiz_mode].default_zoom_level
-    }
+    var possible_zoom_levels = [url_parameters["z"], game_settings.custom_zoom_levels[territory], quiz_modes[quiz_mode].default_zoom_level]
+    var zoom_level = possible_zoom_levels.find(zl => zl != undefined)
     if (on_mobile_device() && zoom_level > 2) {
         zoom_level -= 1
     }

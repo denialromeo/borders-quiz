@@ -13,6 +13,9 @@ function is_complete_graph(quiz_mode) {
 	var vertex_neighbors_dict = borders[quiz_mode]
 	var complete = true
 	for (var v in vertex_neighbors_dict) {
+		if (/Sea|Gulf|Bay|Strait|Lake|Channel|Bight|Ocean|River|Rio|Line/.exec(v) != undefined) {
+			continue
+		}
 		vertex_neighbors_dict[v].forEach(function(n) {
 			try {
 				if (!vertex_neighbors_dict[n].contains(v)) {

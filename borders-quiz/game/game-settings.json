@@ -21,6 +21,7 @@
         "Cameroon_": "Cameroon",
         "Campania": "Campania Italy",
         "Canada__": "Maple Lawn Canada",
+        "Central African Republic": "Ouanda Djalle CAR",
         "Chad_": "Chad",
         "China": "Zhidoi Qinghai China",
         "China_": "Puluge Tibet China",
@@ -30,6 +31,7 @@
         "Colorado River": "Parker Dam Arizona",
         "Delaware River": "Philadephia Pennsylvania",
         "Democratic Republic of the Congo": "Iteli DRC",
+        "Denmark": "Skagen Denmark",
         "Dominican Republic": "Monte Cristi Dominican Republic",
         "Florida": "Jon Bethea State Forest Florida",
         "France (New Caledonia)": "New Caledonia",
@@ -125,6 +127,7 @@
         "Spain": "Castroserna de Abajo Spain",
         "Staten Island": "Mariners Harbor Staten Island",
         "Sudan": "Al Dabbah Sudan",
+        "Taiwan": "Shimendong Taiwan",
         "Tanzania": "Loya Tanzania",
         "Thailand_": "Yala Thailand",
         "The Bahamas": "Congo Town The Bahamas",
@@ -285,6 +288,7 @@
     ],
 
     "dont_sort_neighbors": [
+        "India__",
         "Adriatic Sea",
         "Alboran Sea",
         "Andaman Sea",
@@ -528,6 +532,7 @@
         "Wyoming": 4,
 
         "Bulgaria": 4,
+        "Lebanon": 6,
         "Afghanistan": 3,
         "Algeria": 3,
         "Angola": 3,

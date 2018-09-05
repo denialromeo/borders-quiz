@@ -8,7 +8,7 @@ Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 const default_quiz_mode = Object.keys(borders).pop()
 
 function quiz_mode_of(territory) {
-    const quiz_mode = Object.keys(borders).find(e => borders[e][territory] != undefined )
+    const quiz_mode = Object.keys(borders).find(e => borders[e][territory] != undefined)
     return (quiz_mode != undefined ? quiz_mode : default_quiz_mode)
 }
 
@@ -53,7 +53,7 @@ function custom_territories(url_parameters) {
 
 // Iran and its bordering countries - http://danielmoore.us/borders-quiz?start=Iran&depth=1
 // Countries in Africa - http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco
-function limited_territories(url_parameters) {
+function neighboring_territories(url_parameters) {
     if (valid(url_parameters["start"])) {
         var depth = isNaN(url_parameters["depth"]) ? 1 : url_parameters["depth"]
         var exclude_paths_through = url_parameters["exclude-paths-through"] != undefined ?
@@ -66,7 +66,7 @@ function limited_territories(url_parameters) {
 
 var territories_ = []
 function territories(url_parameters) {
-    var territories_methods = [custom_territories, limited_territories, current_quiz_modes_territories]
+    var territories_methods = [custom_territories, neighboring_territories, current_quiz_modes_territories]
     if (territories_.length == 0 || url_parameters["no-cache"] != undefined) {
         for (let i = 0; i < territories_methods.length; i += 1) {
             territories_ = territories_methods[i](url_parameters)

@@ -250,6 +250,16 @@
 		"title": "England Ceremonial Counties"
 	},
 
+	"london-boroughs": {
+		"anthem": "\"London Pride\"",
+		"click_message": "(Click the boroughs!)",
+		"default_zoom_level": 10,
+		"description": "(London's boroughs.)",
+		"geocode_append": " Borough London",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1ikUcw7gDt8B-J0XqJOHEF2SiYRHJxBPCz7D3D4kn&viz=MAP&h=false&t=1&l=col0",
+		"title": "London Boroughs"
+	},
+
 	"ireland-counties": {
 	    "anthem": "\"Amhrán na bhFiann\"",
 	    "click_message": "(Click the counties!)",
