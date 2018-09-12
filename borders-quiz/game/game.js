@@ -32,6 +32,10 @@ function coordinates(quiz_mode, address) {
     if (game_settings.recenter_map[address] != undefined) {
         address = game_settings.recenter_map[address]
     }
+    else if (game_settings.custom_coordinates[address] != undefined) {
+        var custom_coordinates = game_settings.custom_coordinates[address]
+        return { lat: custom_coordinates.lat, lng: custom_coordinates.lng }
+    }
     else if (neighbors(address).length > 0) {
         address += quiz_modes[quiz_mode].geocode_append
     }
@@ -50,7 +54,7 @@ function google_maps_zoom_level(quiz_mode, territory) {
 function map_embed_url(quiz_mode, territory) {
     var url = new URI(quiz_modes[quiz_mode].map_embed_base_url)
     const { lat, lng } = coordinates(quiz_mode, territory)
-    return url.addSearch({ "lat": lat, "lng": lng, "z": google_maps_zoom_level(quiz_mode, territory) }).toString()
+    return url.addSearch({ lat: lat, lng: lng, z: google_maps_zoom_level(quiz_mode, territory) }).toString()
 }
 
 function prepend_the(territory, capitalize_the) {

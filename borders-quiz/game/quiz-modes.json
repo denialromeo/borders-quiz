@@ -80,6 +80,16 @@
 		"title": "Syria Governorates"
 	},
 	
+	"afghanistan-provinces": {
+		"anthem": "\"Milli Surood\"",
+		"click_message": "(Click the provinces!)",
+		"default_zoom_level": 6,
+		"description": "(Afghanistan's provinces.)",
+		"geocode_append": "",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+103avDrD4bFCW2UGPnCWy6AFc0XFZhoLASS4IFg4t&viz=MAP&h=false&t=1&l=col0",
+		"title": "Afghanistan Provinces"
+	},
+	
 	"pakistan-provinces": {
 		"anthem": "\"Qaumi Taranah\"",
 		"click_message": "(Click the provinces!)",
@@ -138,6 +148,16 @@
 		"geocode_append": " Malaysia",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1oY7JvyX3rW_yaOwSW-cLkCn7FYOjCnZbJ8OzMB2L&viz=MAP&h=false&t=1&l=col2",
 		"title": "Malaysia States"
+	},
+	
+	"singapore-planning-areas": {
+		"anthem": "\"Majulah Singapura\"",
+		"click_message": "(Click the planning areas!)",
+		"default_zoom_level": 11,
+		"description": "(Singapore's planning areas.)",
+		"geocode_append": " Singapore",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1yZ0_F6_kXGEVJYKmCdpLKWjlOxuKYc88bU5o-6dB&viz=MAP&h=false&t=1&l=col0",
+		"title": "Singapore Planning Areas"
 	},
 	
 	"indonesia-provinces": {
