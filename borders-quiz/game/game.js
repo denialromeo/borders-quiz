@@ -244,7 +244,7 @@ function unused_quiz_modes(url_parameters) {
 }
 
 function other_quiz_modes_message() {
-    var message  = ""
+    var message  = `<div style="font-family:Helvetica">`
     if (unused_quiz_modes(url_parameters).length > 0) {
         message += `<p>You can also try these quiz modes!</p>
                     <ul class='unused-quiz-modes'>`
@@ -256,6 +256,7 @@ function other_quiz_modes_message() {
         )
         message += `</ul>`
     }
+    message += `</div>`
     return message
 }
 

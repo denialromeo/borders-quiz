@@ -51,7 +51,7 @@
 	},
 	
 	"brazil-states": {
-		"anthem": "\"Ó Pátria Amada\"",
+		"anthem": "\"Hino da Independência\"",
 		"click_message": "(Click the states!)",
 		"default_zoom_level": 4,
 		"description": "(Brazil's states.)",
@@ -155,7 +155,7 @@
 		"click_message": "(Click the planning areas!)",
 		"default_zoom_level": 11,
 		"description": "(Singapore's planning areas.)",
-		"geocode_append": " Singapore",
+		"geocode_append": " Planning Area Singapore",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1yZ0_F6_kXGEVJYKmCdpLKWjlOxuKYc88bU5o-6dB&viz=MAP&h=false&t=1&l=col0",
 		"title": "Singapore Planning Areas"
 	},
