@@ -1167,11 +1167,12 @@
     },
 
     "countries": {
+        "United Kingdom (Bermuda)": [],
         "Adriatic Sea": ["Italy", "Slovenia", "Croatia", "Bosnia and Herzegovina", "Montenegro", "Albania"],
         "Aegean Sea": ["Greece", "Turkey"],
         "Afghanistan": ["China", "Iran", "Pakistan", "Tajikistan", "Turkmenistan", "Uzbekistan"],
         "Albania": ["Greece", "Kosovo", "Macedonia", "Montenegro"],
-        "Alboran Sea": ["Morocco", "United Kingdom (Gibraltar)__", "Spain"],
+        "Alboran Sea": ["Morocco", "United Kingdom (Gibraltar)__", "Spain", "Algeria"],
         "Algeria": ["Libya", "Mali", "Mauritania", "Morocco", "Niger", "Tunisia", "Western Sahara"],
         "Andaman Sea": ["Myanmar", "Thailand", "Malaysia", "Indonesia", "India"],
         "Andorra": ["France", "Spain"],

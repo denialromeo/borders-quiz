@@ -27,6 +27,9 @@ function all_quiz_modes() {
 }
 
 function current_quiz_modes(url_parameters) {
+    if (url_parameters["all"] !== undefined) {
+        return all_quiz_modes()
+    }
     var url_modes = all_quiz_modes().filter(mode => url_parameters[mode] !== undefined)
     return url_modes.length == 0 ? [default_quiz_mode] : url_modes
 }

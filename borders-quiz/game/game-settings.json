@@ -34,6 +34,7 @@
         "City of London_": "City of London",
         "Colombia": "Colombia South America",
         "Colorado River": "Parker Dam Arizona",
+        "Côte d'Ivoire": "Daleu Côte d'Ivoire",
         "Delaware River": "Philadephia Pennsylvania",
         "Democratic Republic of the Congo": "Iteli DRC",
         "Denmark": "Skagen Denmark",
@@ -43,7 +44,6 @@
         "France_": "Burgen Germany",
         "France___": "Solda Italy",
         "France____": "Gazost France",
-        "Georgia": "Georgia Country",
         "Georgia_": "Georgia State USA",
         "Georgia__": "Georgia Country",
         "Germany__": "Zlotnik Poland",
@@ -64,7 +64,6 @@
         "Indonesia_": "Kalimantan Indonesia",
         "Iran": "Benvid Alia Iran",
         "Iran_": "Sefidabeh",
-        "Iraq": "Razazza Lake Iraq",
         "Iraq_": "Anah Iraq",
         "Israel": "Israel Country",
         "Israel_": "Or Yehuda Israel",
@@ -87,6 +86,7 @@
         "Mexico__": "Baja California",
         "Mississippi River": "St Louis Missouri",
         "Missouri River": "Omaha Nebraska",
+        "Mongolia": "Uyanga Mongolia",
         "Morocco_": "Tangier Morocco",
         "Morocco__": "Tangier Morocco",
         "Mozambique": "Sabe Mozambique",
@@ -149,17 +149,25 @@
         "United States__": "Rincon New Mexico USA",
         "Uzbekistan_": "Sherabad Uzbekistan",
         "Washington": "Liberty Washington State",
-        "Washington": "Washington State",
         "Xizang": "Dawa Co Tibet"
     },
 
     "custom_coordinates": {
         "Black Sea": { "lat": 43.413029, "lng": 32.01416 },
         "Bay of Biscay": { "lat": 46.229912, "lng": -2.635872 },
+        "Chad": { "lat": 14.77537, "lng": 16.35916 },
         "China": { "lat": 34.144215, "lng": 95.788861 },
+        "Coral Sea": { "lat": -20.71292, "lng": 158.492783 },
+        "Croatia": { "lat": 44.944691, "lng": 16.957813 },
         "English Channel": { "lat": 50.261254, "lng": -0.357056 },
+        "Georgia": { "lat": 42.315407, "lng": 45.554158 },
         "Germany": { "lat": 49.831979, "lng": 10.899924 },
+        "Iraq": { "lat": 32.840932, "lng": 43.931478 },
+        "Irish Sea": { "lat": 53.827692, "lng": -3.323258 },
+        "Macedonia": { "lat": 41.83823, "lng": 21.261877 },
         "Malaysia": { "lat": 5.34907, "lng": 109.094907 },
+        "Mediterranean Sea": { "lat": 38.464195, "lng": 17.228331 },
+        "Nevada County": { "lat": 39.377209, "lng": -120.695913 },
         "Oman": { "lat": 24.023967, "lng": 57.120838 },
         "Philippines": { "lat": 12.794027, "lng": 123.61972 },
         "Red Sea": { "lat": 19.702071, "lng": 36.66687 },
@@ -167,7 +175,17 @@
         "Saudi Arabia": { "lat": 26.439606, "lng": 46.9009 },
         "Sea of Azov": { "lat": 45.942993, "lng": 35.575872 },
         "South China Sea": { "lat": 14.411331, "lng": 115.826466 },
-        "Tasman Sea": { "lat": -38.007642, "lng": 153.751602 }
+        "Strait of Malacca": { "lat": 4.377834, "lng": 99.545097 },
+        "Tasman Sea": { "lat": -38.007642, "lng": 153.751602 },
+        "Uruguay": { "lat": -34.428707, "lng": -55.765835 },
+        "Washington": { "lat": 47.335775, "lng": -121.179592 },
+        "Yemen": { "lat": 19.739364, "lng": 48.164826 }
+    },
+
+    "user_hint": {
+        "Fiji": "(Zoom out!)",
+        "Liechtenstein": "(Zoom out!)",
+        "Philippine Sea": "(Zoom in!)"
     },
 
     "truncations_for_mobile": {
@@ -196,7 +214,9 @@
     },
 
     "should_prepend_the": [
+        "Comoros",
         "Irish Sea",
+        "United Kingdom (Bermuda)",
         "United Kingdom (Isle of Man)",
         "United Kingdom (Guernsey)",
         "United Kingdom (Jersey)",
@@ -426,6 +446,8 @@
     ],
 
     "custom_zoom_levels": {
+        "Herat": 5,
+        "Amur Oblast": 3,
         "Singapore River": 12,
         "Marina East": 12,
         "River Valley": 12,
@@ -622,7 +644,7 @@
         "Celebes Sea": 4,
         "Central African Republic": 4,
         "Coral Sea": 3,
-        "Chad": 3,
+        "Chad": 4,
         "Chile": 3,
         "China": 3,
         "China___": 3,
@@ -769,6 +791,8 @@
         "Yellow Sea": 4,
         "Yemen": 4,
         "Zambia": 3,
+        "Strait of Malacca": 6,
+        "Sea of Azov": 4,
         "Zimbabwe": 3
 
     }

@@ -177,13 +177,15 @@ function embed_map(question_info, called_from_question=true) {
     const { quiz_mode, chosen, answer, territory } = question_info
     const subject = (chosen == answer ? chosen : territory)
 
+    var user_hint = game_settings.user_hint[subject] != undefined ? game_settings.user_hint[subject] : `${quiz_modes[quiz_mode].click_message}`
+
     var content = `<div id='${on_mobile_device() ? "map-container-mobile" : "map-container"}'>
                     <center>
                         <p>${called_from_question ? right_or_wrong_message(chosen, answer, territory) : pretty_print(subject, true)}</p>
                         <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(quiz_mode, subject)}'></iframe>
                         <p>${(neighbors(subject).length == 0 && !called_from_question) ? "Get a feel for what's where!" : borders_sentence(subject) }</p>
                         <button id='next'></button>
-                        ${on_mobile_device() ? `` : `<p id='click-message'>${quiz_modes[quiz_mode].click_message}</p>`}
+                        ${on_mobile_device() ? `` : `<p id='click-message'>${user_hint}</p>`}
                     </center>
                    </div>`
 
