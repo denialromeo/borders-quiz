@@ -7,6 +7,7 @@
 		"description": "(Canada's provinces.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col4+from+1WLNv__CToy_grFi67jOIKJPmy5KlA0Ihh6j0sW0H&viz=MAP&h=false&t=1&l=col4",
+		"starting_map": "Canada",
 		"title": "Canada Provinces"
 	},
 	
@@ -17,6 +18,7 @@
 		"description": "(U.S. states.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+1wm55ugZ3RffprAFPRklG254KDInGYwtYy_-5oQQX&viz=MAP&h=false&t=1&l=col3",
+		"starting_map": "United States",
 		"title": "USA States"
 	},
 
@@ -27,6 +29,7 @@
 		"description": "(New York's counties.)",
 		"geocode_append": " County New York",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col4+from+10MgyT_d49QqPH-KVsTT9o2U3s3nYYN3Xvpf4yLSi&viz=MAP&h=false&t=1&l=col4",
+		"starting_map": "_New York",
 		"title": "New York Counties"
 	},
 	
@@ -37,6 +40,7 @@
 		"description": "(California's counties.)",
 		"geocode_append": " County California",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col4+from+1QxmdyxJWnq5IgFpS5zGv9M1v25l84InpK8y-yY_m&viz=MAP&h=false&t=1&l=col4",
+		"starting_map": "_California",
 		"title": "California Counties"
 	},
 	
@@ -47,6 +51,7 @@
 		"description": "(Mexico's states.)",
 		"geocode_append": " Mexico",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col5+from+19KyBvfdcDLNkVwn466Aa9asNfTMsPhwsasNdimAP&viz=MAP&h=false&t=1&l=col5",
+		"starting_map": "_Mexico",
 		"title": "Mexico States"
 	},
 	
@@ -57,6 +62,7 @@
 		"description": "(Brazil's states.)",
 		"geocode_append": " State Brazil",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+1RUviWSunc98hNoDXYbsNFfZrexdnriZyNnEctaox&viz=MAP&h=false&t=1&l=col3",
+		"starting_map": "Brazil",
 		"title": "Brazil States"
 	},
 	
@@ -67,6 +73,7 @@
 		"description": "(Nigeria's states.)",
 		"geocode_append": " Nigeria",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+17IWDPjtStnNVSnuTzKB1wZksNUZ5mu6x-4k5AU-J&viz=MAP&h=false&t=1&l=col0",
+		"starting_map": "_Nigeria",
 		"title": "Nigeria States"
 	},
 	
@@ -77,6 +84,7 @@
 		"description": "(Syria's governorates.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1sH9umChO1iiwHeHcwVWl6-E_TfzGGOENqTuNaDXF&viz=MAP&h=false&t=1&l=col0",
+		"starting_map": "_Syria",
 		"title": "Syria Governorates"
 	},
 	
@@ -87,6 +95,7 @@
 		"description": "(Afghanistan's provinces.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+103avDrD4bFCW2UGPnCWy6AFc0XFZhoLASS4IFg4t&viz=MAP&h=false&t=1&l=col0",
+		"starting_map": "_Afghanistan",
 		"title": "Afghanistan Provinces"
 	},
 	
@@ -97,6 +106,7 @@
 		"description": "(Pakistan's provinces.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1CFcoHdOuF_S98-v5E8RuFOobTOFYzq6Gz4FfVoK5&viz=MAP&h=false&t=1&l=col0",
+		"starting_map": "_Pakistan",
 		"title": "Pakistan Provinces"
 	},
 	
@@ -107,6 +117,7 @@
 		"description": "(India's states.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+1ic8zKmb8ROuFbiQMLXvdA6u9EPJaJjWq6pyZDC83&viz=MAP&h=false&t=1&l=col3",
+		"starting_map": "India",
 		"title": "India States"
 	},
 	
@@ -117,6 +128,7 @@
 		"description": "(Bangladesh's pre-2015 divisions.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1TOnSjo523Rq0q1QwPssF-fFc9xTVCzH7e_SuJrpn&viz=MAP&h=false&t=1&l=col0",
+		"starting_map": "_Bangladesh",
 		"title": "Bangladesh Divisions"
 	},
 	
@@ -127,6 +139,7 @@
 		"description": "(China's provinces.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col12+from+1ZpUS_-CvOh40_HaHXJ4TGjfOO0n9VPglLpTtlFg9&viz=MAP&h=false&t=1&l=col12",
+		"starting_map": "China",
 		"title": "China Provinces"
 	},
 	
@@ -137,6 +150,7 @@
 	    "description": "(Taiwan's cities and counties.)",
 	    "geocode_append": "",
 	    "map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+12zcluwsLcKnPYh42DRReW60ZjZIXNRS8sWkOpv5w&viz=MAP&h=false&t=1&l=col2",
+		"starting_map": "_Taiwan",
 	    "title": "Taiwan Cities and Counties"
 	},
     
@@ -147,6 +161,7 @@
 		"description": "(Malaysia's states.)",
 		"geocode_append": " Malaysia",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1oY7JvyX3rW_yaOwSW-cLkCn7FYOjCnZbJ8OzMB2L&viz=MAP&h=false&t=1&l=col2",
+		"starting_map": "_Malaysia",
 		"title": "Malaysia States"
 	},
 	
@@ -157,6 +172,7 @@
 		"description": "(Singapore's planning areas.)",
 		"geocode_append": " Planning Area Singapore",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1yZ0_F6_kXGEVJYKmCdpLKWjlOxuKYc88bU5o-6dB&viz=MAP&h=false&t=1&l=col0",
+		"starting_map": "_Singapore",
 		"title": "Singapore Planning Areas"
 	},
 	
@@ -167,6 +183,7 @@
 		"description": "(Indonesia's provinces.)",
 		"geocode_append": " Indonesia",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+194aFJNWEGO3l47407GuckyOjzgLdL3qCtVGvlTVT&viz=MAP&h=false&t=1&l=col3",
+		"starting_map": "Indonesia",
 		"title": "Indonesia Provinces"
 	},
 	
@@ -177,6 +194,7 @@
 		"description": "(Australia's states.)",
 		"geocode_append": " Australia",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1AyYgmyEMeKnAqdAGoeQCfkOROAGAQYnzlzvV92Bo&viz=MAP&h=false&t=1&l=col2",
+		"starting_map": "Australia",
 		"title": "Australia States"
 	},
 
@@ -187,6 +205,7 @@
 		"description": "(Japan's prefectures.)",
 		"geocode_append": " Japan",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1e1KEhbC1opeDS1IhQCVCyyR4X9U1D1eVB_gfmIdy&viz=MAP&h=false&t=1&l=col2",
+		"starting_map": "Japan",
 		"title": "Japan Prefectures"
 	},
 	
@@ -197,6 +216,7 @@
 		"description": "(South Korea's provinces.)",
 		"geocode_append": " South Korea",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1mXgLcmURA7HTJvsWHchCErieTTykv5xqS9WDWjDA&viz=MAP&h=false&t=1&l=col2",
+		"starting_map": "_South Korea",
 		"title": "South Korea Provinces"
 	},
 	
@@ -207,6 +227,7 @@
 		"description": "(Russia's federal subjects.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1HPB9NFQFQECAii23-N-ZhjptEt2AJMOV7Onwl_Kz&viz=MAP&h=false&t=1&l=col2",
+		"starting_map": "Russia",
 		"title": "Russia Federal Subjects"
 	},
 	
@@ -217,6 +238,7 @@
 		"description": "(Ukraine's provinces.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col16+from+1ps0MS1fqxkcmnrGklSD5HEVNCoVTSL8MkhrT4vyl&viz=MAP&h=false&t=1&l=col16",
+		"starting_map": "Ukraine",
 		"title": "Ukraine Provinces"
 	},
 	
@@ -227,6 +249,7 @@
 		"description": "(Poland's provinces.)",
 		"geocode_append": " Poland",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col15+from+1kpY7Sdr0ifJxi_uN9SGcmxg9g36au73ilorUZCCO&viz=MAP&h=false&t=1&l=col15",
+		"starting_map": "Poland",
 		"title": "Poland Provinces"
 	},
 	
@@ -237,6 +260,7 @@
 		"description": "(Germany's states.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1LJBiyxxI5VmRg5ELJ6wMXIUuxbDf-YsYgkmldZ3V&viz=MAP&h=false&t=1&l=col0",
+		"starting_map": "Germany",
 		"title": "Germany States"
 	},
 	
@@ -247,6 +271,7 @@
 		"description": "(Italy's regions.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1smAC5HzCv5KAQ0MOb-80aTGavsZK_rIV-D8yGqdh&viz=MAP&h=false&t=1&l=col2",
+		"starting_map": "Italy",
 		"title": "Italy Regions"
 	},
 	
@@ -257,6 +282,7 @@
 		"description": "(France's pre-2016 regions.)",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1muJSWzcqq9Xja9GEsNRGt5oljHJ0WwaKy-Ud7OMg&viz=MAP&h=false&t=1&l=col0",
+		"starting_map": "France",
 		"title": "France Regions"
 	},
 	
@@ -267,6 +293,7 @@
 		"description": "(England's ceremonial counties.)",
 		"geocode_append": " County England",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1JXIDp4FOMTOES9t1EuZlSurdA_LgLhhHQK1MhVFa&viz=MAP&h=false&t=1&l=col2",
+		"starting_map": "_England",
 		"title": "England Ceremonial Counties"
 	},
 
@@ -277,6 +304,7 @@
 		"description": "(London's boroughs.)",
 		"geocode_append": " Borough London",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1ikUcw7gDt8B-J0XqJOHEF2SiYRHJxBPCz7D3D4kn&viz=MAP&h=false&t=1&l=col0",
+		"starting_map": "_London",
 		"title": "London Boroughs"
 	},
 
@@ -287,6 +315,7 @@
 	    "description": "(Ireland's counties.)",
 	    "geocode_append": " County Ireland",
 	    "map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+13PyOxVhuAzhyIUFaHaswDcKssO7xtPqDkhqBV2Sm&viz=MAP&h=false&t=1&l=col2",
+		"starting_map": "_Ireland",
 	    "title": "Ireland Counties"
 	},
 	
@@ -297,6 +326,7 @@
 		"description": "(Spain's autonomous communities.)",
 		"geocode_append": " Spain",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col1+from+1NHEGhx3wWq8PeqmFtY_IEz7ADv4yE3scsQzd9OH-&viz=MAP&h=false&t=1&l=col1",
+		"starting_map": "_Spain",
 		"title": "Spain Autonomous Communities"
 	},
 	

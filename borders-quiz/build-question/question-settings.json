@@ -84,7 +84,8 @@
         "United Arab Emirates": ["Bahrain"],
         "Venezuela": ["Trinidad and Tobago"],
         "Victoria": ["Tasmania"],
-        "West Sussex": ["Isle of Wight"]
+        "West Sussex": ["Isle of Wight"],
+        "Yellow Sea": ["Taiwan", "Japan"]
     },
 
     "replace_possible_answers": {

@@ -13,6 +13,7 @@ function quiz_mode_of(territory) {
 }
 
 function neighbors(territory) {
+    if (territory != undefined && territory.startsWith("_")) { territory = territory.slice(1) } // For overview map at start of quiz.
     var neighbors = borders[quiz_mode_of(territory)][territory]
     return (neighbors != undefined ? neighbors.slice() : []) // slice() makes a copy of the array so we don't mess up the original.
 }

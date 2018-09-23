@@ -200,7 +200,7 @@ function embed_map(question_info, called_from_question=true) {
         else {
             if (chosen == answer) {
                 score.correct += 1
-                next_button.innerHTML = "Next"
+                next_button.innerHTML = (called_from_question ? "Next" : "Start")
                 next_button.onclick = function() { next_question() }
             }
             else {
@@ -245,6 +245,15 @@ function unused_quiz_modes(url_parameters) {
     return Object.keys(quiz_modes).filter(mode => !current_quiz_modes(url_parameters).contains(mode))
 }
 
+function quiz_mode_url(mode, start_with_map=true) {
+    var uri = new URI(`?${mode}`)
+    var starting_map = quiz_modes[mode].starting_map
+    if (starting_map != undefined && start_with_map) {
+        uri.addSearch("start-map", starting_map)
+    }
+    return uri.toString()
+}
+
 function other_quiz_modes_message() {
     var message  = `<div style="font-family:Helvetica">`
     if (unused_quiz_modes(url_parameters).length > 0) {
@@ -252,7 +261,7 @@ function other_quiz_modes_message() {
                     <ul class='unused-quiz-modes'>`
         unused_quiz_modes(url_parameters).forEach(mode =>
             message += `<li>
-                            <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;
+                            <a target='_self' href='${quiz_mode_url(mode)}'>${quiz_modes[mode].anthem}</a>&nbsp;
                             ${quiz_modes[mode].description}
                         </li>`
         )

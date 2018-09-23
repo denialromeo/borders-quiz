@@ -43,14 +43,8 @@ Object.keys(borders).forEach(function(quiz_mode) {
  * (If Suffolk in England and Suffolk County in New York are both labeled Suffolk, we'll run into an error
  *  where the England quiz randomly jumps to New York for a question!)
  */
-function all_keys() {
-	return Object.keys(borders)
-	      .map(mode => Object.keys(borders[mode]))
-	      .reduce((arr, next_arr) => arr.concat(next_arr))
-	      .sort()
-}
-
 function duplicate_keys(keys) {
+	keys.sort()
 	var duplicates = []
 	for (let i = 0; i < keys.length - 1; i++) {
 		if (keys[i] == keys[i + 1]) {
@@ -58,6 +52,12 @@ function duplicate_keys(keys) {
 		}
 	}
 	return duplicates
+}
+
+function all_keys() {
+	return Object.keys(borders)
+	      .map(mode => Object.keys(borders[mode]))
+	      .reduce((arr, next_arr) => arr.concat(next_arr))
 }
 
 var duplicates = duplicate_keys(all_keys())

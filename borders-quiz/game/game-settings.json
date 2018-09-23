@@ -4,6 +4,7 @@
         "Connecticut_": "Kent Connecticut",
         "Rochor": "Rochor Singapore",
         "Adriatic Sea": "Bisevo Croatia",
+        "Aegean Sea": "Skantzoura Greece",
         "Afghanistan_": "FATA Pakistan",
         "Alaska": "Anchorage Alaska",
         "Argentina": "Charlone Argentina",
@@ -16,6 +17,7 @@
         "Belarus": "Pliescanicy Belarus",
         "Belgium": "Parette Belgium",
         "Benin_": "Benin",
+        "Brazil": "Brazil Country",
         "Brunei_": "Brunei",
         "Bulgaria": "Popovo Bulgaria",
         "Burkina Faso": "Sahel Reserve Burkina Faso",
@@ -56,7 +58,6 @@
         "Hama": "Hama Syria",
         "Hudson Bay": "Coats Island Canada",
         "Hunan": "Hunan Province China",
-        "India": "Materia Uttar Pradesh India",
         "India_": "Dharakh India",
         "India__": "Gomo Co Tibet",
         "India___": "Shreepur Bangladesh",
@@ -67,7 +68,7 @@
         "Iraq_": "Anah Iraq",
         "Israel": "Israel Country",
         "Israel_": "Or Yehuda Israel",
-        "Italy": "San Marino",
+        "Italy": "Cesseli Italy",
         "Italy_": "Dosimo Italy",
         "Japan": "Sado Japan",
         "Jilin": "Leshan Jilin Province China",
@@ -149,10 +150,14 @@
         "United States__": "Rincon New Mexico USA",
         "Uzbekistan_": "Sherabad Uzbekistan",
         "Washington": "Liberty Washington State",
-        "Xizang": "Dawa Co Tibet"
+        "Xizang": "Dawa Co Tibet",
+
+        "_Nigeria": "Zakari Nigeria",
+        "_Spain": "Atanzon Spain"
     },
 
     "custom_coordinates": {
+        "Australia": { "lat": -25.274398, "lng": 136.060292 },
         "Black Sea": { "lat": 43.413029, "lng": 32.01416 },
         "Bay of Biscay": { "lat": 46.229912, "lng": -2.635872 },
         "Chad": { "lat": 14.77537, "lng": 16.35916 },
@@ -162,6 +167,7 @@
         "English Channel": { "lat": 50.261254, "lng": -0.357056 },
         "Georgia": { "lat": 42.315407, "lng": 45.554158 },
         "Germany": { "lat": 49.831979, "lng": 10.899924 },
+        "India": { "lat": 22.505216, "lng": 83.124562 },
         "Iraq": { "lat": 32.840932, "lng": 43.931478 },
         "Irish Sea": { "lat": 53.827692, "lng": -3.323258 },
         "Macedonia": { "lat": 41.83823, "lng": 21.261877 },
@@ -179,7 +185,16 @@
         "Tasman Sea": { "lat": -38.007642, "lng": 153.751602 },
         "Uruguay": { "lat": -34.428707, "lng": -55.765835 },
         "Washington": { "lat": 47.335775, "lng": -121.179592 },
-        "Yemen": { "lat": 19.739364, "lng": 48.164826 }
+        "Yemen": { "lat": 19.739364, "lng": 48.164826 },
+
+        "_California": { "lat": 38.253241, "lng": -121.358295 },
+        "_England": { "lat": 53.833123, "lng": -1.17432 },
+        "_Ireland": { "lat": 53.330203, "lng": -7.299335 },
+        "_Malaysia": { "lat": 2.763012, "lng": 107.512876 },
+        "_New York": { "lat": 43.172723, "lng": -75.67491 },
+        "_Pakistan": { "lat": 31.20583, "lng": 69.96035 },
+        "_South Korea": { "lat": 36.204544, "lng": 127.303003 },
+        "_Taiwan": { "lat": 24.078005, "lng": 121.56843 }
     },
 
     "user_hint": {
@@ -338,6 +353,7 @@
     ],
 
     "dont_sort_neighbors": [
+        "India_",
         "China____",
         "Pakistan___",
         "Turkmenistan_",
@@ -558,6 +574,7 @@
         "Sarawak": 5,
         "Sevastopol": 6,
         "Shasta": 6,
+        "Hilmand": 5,
         "Siskiyou": 6,
         "Slovenia_": 5,
         "St. Lawrence": 6,
@@ -575,6 +592,22 @@
         "Vietnam_": 4,
         "Xinjiang": 3,
         "Xizang": 4,
+
+        "_Afghanistan": 4,
+        "_Bangladesh": 5,
+        "_California": 5,
+        "_England": 5,
+        "_Ireland": 6,
+        "_London": 9,
+        "_Malaysia": 5,
+        "_New York": 6,
+        "_Nigeria": 5,
+        "_Pakistan": 4,
+        "_Singapore": 10,
+        "_South Korea": 6,
+        "_Spain": 5,
+        "_Syria": 5,
+        "_Taiwan": 6,
         
         "Alaska": 2,
         "Arizona": 4,
@@ -710,6 +743,7 @@
         "Mauritania": 4,
         "Mediterranean Sea": 3,
         "Mexico": 3,
+        "_Mexico": 4,
         "Moldova": 4,
         "Mongolia": 3,
         "Mongolia_": 3,
@@ -793,6 +827,7 @@
         "Zambia": 3,
         "Strait of Malacca": 6,
         "Sea of Azov": 4,
+        "Italy": 5,
         "Zimbabwe": 3
 
     }
