@@ -129,7 +129,7 @@ function embed_question(question_info) {
             window.requestAnimationFrame(detect_player_choice)
         }
         else {
-            choices.forEach(choice =>
+            Array.from(choices).forEach(choice =>
                 choice.onclick = function() {
                     question_info.chosen = this.id
                     embed_map(question_info)
