@@ -183,7 +183,7 @@
 		"description": "(Indonesia's provinces.)",
 		"geocode_append": " Indonesia",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+194aFJNWEGO3l47407GuckyOjzgLdL3qCtVGvlTVT&viz=MAP&h=false&t=1&l=col3",
-		"starting_map": "Indonesia",
+		"starting_map": "_Indonesia",
 		"title": "Indonesia Provinces"
 	},
 	

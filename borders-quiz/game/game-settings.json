@@ -1,6 +1,7 @@
 {
 
     "recenter_map": {
+        "North Korea__": "Chongju North Korea",
         "Connecticut_": "Kent Connecticut",
         "Rochor": "Rochor Singapore",
         "Adriatic Sea": "Bisevo Croatia",
@@ -70,7 +71,6 @@
         "Israel_": "Or Yehuda Israel",
         "Italy": "Cesseli Italy",
         "Italy_": "Dosimo Italy",
-        "Japan": "Sado Japan",
         "Jilin": "Leshan Jilin Province China",
         "Jordan": "Jordan Country",
         "Jordan_": "Imtan Jordan",
@@ -87,6 +87,7 @@
         "Mexico__": "Baja California",
         "Mississippi River": "St Louis Missouri",
         "Missouri River": "Omaha Nebraska",
+        "Moldova": "Brosteni Moldova",
         "Mongolia": "Uyanga Mongolia",
         "Morocco_": "Tangier Morocco",
         "Morocco__": "Tangier Morocco",
@@ -170,6 +171,7 @@
         "India": { "lat": 22.505216, "lng": 83.124562 },
         "Iraq": { "lat": 32.840932, "lng": 43.931478 },
         "Irish Sea": { "lat": 53.827692, "lng": -3.323258 },
+        "Japan": { "lat": 36.479284, "lng": 136.522379 },
         "Macedonia": { "lat": 41.83823, "lng": 21.261877 },
         "Malaysia": { "lat": 5.34907, "lng": 109.094907 },
         "Mediterranean Sea": { "lat": 38.464195, "lng": 17.228331 },
@@ -180,6 +182,7 @@
         "Russia": { "lat": 62.097589, "lng": 91.774479 },
         "Saudi Arabia": { "lat": 26.439606, "lng": 46.9009 },
         "Sea of Azov": { "lat": 45.942993, "lng": 35.575872 },
+        "Somalia": { "lat": 6.987425, "lng": 47.166413 },
         "South China Sea": { "lat": 14.411331, "lng": 115.826466 },
         "Strait of Malacca": { "lat": 4.377834, "lng": 99.545097 },
         "Tasman Sea": { "lat": -38.007642, "lng": 153.751602 },
@@ -187,8 +190,10 @@
         "Washington": { "lat": 47.335775, "lng": -121.179592 },
         "Yemen": { "lat": 19.739364, "lng": 48.164826 },
 
+        "_Afghanistan": { "lat": 33.93911, "lng": 66.391594 },
         "_California": { "lat": 38.253241, "lng": -121.358295 },
         "_England": { "lat": 53.833123, "lng": -1.17432 },
+        "_Indonesia": { "lat": -1.946303, "lng": 119.856558 },
         "_Ireland": { "lat": 53.330203, "lng": -7.299335 },
         "_Malaysia": { "lat": 2.763012, "lng": 107.512876 },
         "_New York": { "lat": 43.172723, "lng": -75.67491 },
@@ -229,6 +234,7 @@
     },
 
     "should_prepend_the": [
+        "Canary Islands",
         "Comoros",
         "Irish Sea",
         "United Kingdom (Bermuda)",
@@ -350,6 +356,11 @@
         "West Midlands",
         "Yellow Sea",
         "Yukon Territory" 
+    ],
+
+    "plural": [
+        "Balearic Islands",
+        "Canary Islands"
     ],
 
     "dont_sort_neighbors": [
@@ -597,6 +608,7 @@
         "_Bangladesh": 5,
         "_California": 5,
         "_England": 5,
+        "_Indonesia": 4,
         "_Ireland": 6,
         "_London": 9,
         "_Malaysia": 5,
@@ -705,7 +717,7 @@
         "Georgia": 4,
         "Germany": 4,
         "Ghana": 4,
-        "Greenland": 2,
+        "Denmark (Greenland)": 2,
         "Guinea": 4,
         "Guinea-Bissau": 4,
         "Gulf of Guinea": 4,

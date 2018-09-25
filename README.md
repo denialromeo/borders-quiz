@@ -47,13 +47,15 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 * [Country quiz excluding bodies of water](http://danielmoore.us/borders-quiz?custom=^(?!.*(Sea|Gulf|Bay|Strait|Lake|Channel|Ocean|Rio|Bight)\b))
 * [Country quiz with two answer choices](http://danielmoore.us/borders-quiz?num-choices=2)
 * [Countries in Africa](http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco)
-* [U.S. states that don't contain the letters 'a' or 'e'](http://danielmoore.us/borders-quiz?usa-states&custom=%5E(?!.*[ae]))
+* [U.S. states that don't contain the letters 'a' or 'e'](http://danielmoore.us/borders-quiz?usa-states&custom=^(?!.*[ae]))
 * [Canada and neighboring U.S. states](http://danielmoore.us/borders-quiz?start=Canada_)
 * [New York City boroughs](http://danielmoore.us/borders-quiz?new-york-counties&custom=Bronx|Manhattan|Queens|Brooklyn)
 * [San Francisco Bay Area counties](http://danielmoore.us/borders-quiz?start=San+Francisco+Bay)
 * [San Francisco Bay Area counties starting with map](http://danielmoore.us/borders-quiz?california-counties&start=San+Francisco+Bay&start-map=San+Francisco+Bay)
 * [Southern California counties](http://danielmoore.us/borders-quiz?california-counties&custom=Imperial|Los+Angeles|Kern|Orange|Riverside|San+Bernardino|San+Diego|San+Luis+Obispo|Santa+Barbara|Ventura)
 * [India's Punjab and Pakistan's Punjab](http://danielmoore.us/borders-quiz?india-states&pakistan-provinces&custom=Punjab)
+
+(Github has encoded the above URL's for security. To see them in a more readable form, check the [raw version](https://raw.githubusercontent.com/denialromeo/borders-quiz/master/README.md) of this README.)
 
 ## Known Bugs
 

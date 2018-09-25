@@ -58,6 +58,7 @@ function map_embed_url(quiz_mode, territory) {
 }
 
 function prepend_the(territory, capitalize_the) {
+    if (territory != undefined && territory.startsWith("_")) { territory = territory.slice(1) } // For overview map at start of quiz.
     var the = (capitalize_the ? "The " : "the ")
     return (game_settings.should_prepend_the.contains(territory) ? the : "")
 }
@@ -139,6 +140,10 @@ function embed_question(question_info) {
     detect_player_choice()
 }
 
+function plural(territory) {
+    return game_settings.plural.contains(territory)
+}
+
 function borders_sentence(territory) {
 
     var neighbors_ = neighbors(territory)
@@ -148,7 +153,10 @@ function borders_sentence(territory) {
 
     neighbors_ = neighbors_.map(n => pretty_print(n, false))
 
-    var sentence = `${pretty_print(territory, true)} borders `
+    var sentence = `${pretty_print(territory, true)} `
+
+    sentence += (plural(territory) ? `border ` : `borders `)
+
     if (neighbors_.length == 0) {
         sentence += `nothing!`
     }
@@ -168,9 +176,11 @@ function borders_sentence(territory) {
 }
 
 function right_or_wrong_message(chosen, answer, territory) {
+    var subject = chosen == answer ? chosen : answer
+    var does_or_do = !plural(subject) ? "does" : "do"
     return chosen == answer ?
-           `Correct! ${pretty_print(chosen, true)} does not border ${pretty_print(territory, false)}!`
-         : `Sorry! ${pretty_print(territory, true)} does border ${pretty_print(chosen, false)}!`
+           `Correct! ${pretty_print(chosen, true)} ${does_or_do} not border ${pretty_print(territory, false)}!`
+         : `Sorry! ${pretty_print(territory, true)} ${does_or_do} border ${pretty_print(chosen, false)}!`
 }
 
 function embed_map(question_info, called_from_question=true) {
