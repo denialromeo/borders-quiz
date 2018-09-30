@@ -1,4 +1,4 @@
-const borders = require('./borders.json')
+const borders = Object.freeze(require('./borders.json'))
 const { build_question, valid } = require('./build-question.js')
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }

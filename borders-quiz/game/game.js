@@ -1,7 +1,7 @@
 const $ = require("jquery")
 const URI = require("urijs")
 
-const { borders, build_question, current_quiz_modes, neighbors } = require("../build-question/build-question.js")
+const { build_question, current_quiz_modes, neighbors } = require("../build-question/build-question.js")
 
 const random = require("../build-question/random.js")
 const { Timer } = require("./timer.js")
@@ -9,8 +9,8 @@ const { Timer } = require("./timer.js")
 const google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 const game_css_path = "/borders-quiz/game/borders-quiz.css"
 
-const quiz_modes = require("./quiz-modes.json")
-const game_settings = require("./game-settings.json")
+const quiz_modes = Object.freeze(require("./quiz-modes.json"))
+const game_settings = Object.freeze(require("./game-settings.json"))
 
 const game_iframe = document.getElementById("game-container")
 
@@ -35,14 +35,14 @@ function coordinates(quiz_mode, address) {
     else if (address in game_settings.recenter_map_coordinates) {
         return game_settings.recenter_map_coordinates[address]
     }
-    else if (address in borders[quiz_mode]) {
+    else {
         address += quiz_modes[quiz_mode].geocode_append
     }
     return geocode(address).results[0].geometry.location
 }
 
-function google_maps_zoom_level(quiz_mode, territory, called_from_question=true) {
-    if (!called_from_question && !isNaN(url_parameters["start-zoom"])) {
+function google_maps_zoom_level(quiz_mode, territory, start_with_map=false) {
+    if (start_with_map && !isNaN(url_parameters["start-zoom"])) {
         return url_parameters["start-zoom"]
     }
     var possible_zoom_levels = [url_parameters["zoom"], game_settings.custom_zoom_levels[territory], quiz_modes[quiz_mode].default_zoom_level]
@@ -53,10 +53,10 @@ function google_maps_zoom_level(quiz_mode, territory, called_from_question=true)
     return zoom_level
 }
 
-function map_embed_url(quiz_mode, territory, called_from_question=true) {
+function map_embed_url(quiz_mode, territory, start_with_map=false) {
     var url = new URI(quiz_modes[quiz_mode].map_embed_base_url)
     const { lat, lng } = coordinates(quiz_mode, territory)
-    return url.addSearch({ lat: lat, lng: lng, z: google_maps_zoom_level(quiz_mode, territory, called_from_question) }).toString()
+    return url.addSearch({ lat: lat, lng: lng, z: google_maps_zoom_level(quiz_mode, territory, start_with_map) }).toString()
 }
 
 function prepend_the(territory, capitalize_the) {
@@ -185,7 +185,7 @@ function right_or_wrong_message(chosen, answer, territory) {
          : `Sorry! ${pretty_print(territory, true)} ${does_or_do} border ${pretty_print(chosen, false)}!`
 }
 
-function embed_map(question_info, called_from_question=true) {
+function embed_map(question_info, start_with_map=false) {
     const { quiz_mode, chosen, answer, territory } = question_info
     const subject = (chosen == answer ? chosen : territory)
 
@@ -193,9 +193,9 @@ function embed_map(question_info, called_from_question=true) {
 
     var content = `<div id='${on_mobile_device() ? "map-container-mobile" : "map-container"}'>
                     <center>
-                        <p>${called_from_question ? right_or_wrong_message(chosen, answer, territory) : pretty_print(subject, true)}</p>
-                        <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(quiz_mode, subject, called_from_question)}'></iframe>
-                        <p>${(neighbors(subject).length == 0 && !called_from_question) ? "Get a feel for what's where!" : borders_sentence(subject) }</p>
+                        <p>${!start_with_map ? right_or_wrong_message(chosen, answer, territory) : pretty_print(subject, true)}</p>
+                        <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(quiz_mode, subject, start_with_map)}'></iframe>
+                        <p>${((neighbors(subject) === undefined || neighbors(subject).length === 0) && start_with_map) ? "Get a feel for what's where!" : borders_sentence(subject) }</p>
                         <button id='next'></button>
                         ${on_mobile_device() ? `` : `<p id='click-message'>${user_hint}</p>`}
                     </center>
@@ -212,7 +212,7 @@ function embed_map(question_info, called_from_question=true) {
         else {
             if (chosen == answer) {
                 score.correct += 1
-                next_button.innerHTML = (called_from_question ? "Next" : "Start")
+                next_button.innerHTML = (start_with_map ? "Start" : "Next")
                 next_button.onclick = function() { next_question() }
             }
             else {
@@ -243,7 +243,7 @@ function start_map() {
                     answer: starting_address,
                     wrong_answers: [],
                     chosen: starting_address },
-                  false)
+                  true)
     }
 }
 ////

@@ -1,6 +1,7 @@
 {
 
     "recenter_map_address": {
+        "Ethiopia": "Mersu Ethiopia",
         "Sri Lanka": "Padaviya Sri Lanka",
         "North Korea__": "Chongju North Korea",
         "Connecticut_": "Kent Connecticut",
@@ -159,6 +160,7 @@
     },
 
     "recenter_map_coordinates": {
+        "The Gambia": { "lat": 13.443182, "lng": -13.815998 },
         "Australia": { "lat": -25.274398, "lng": 136.060292 },
         "Black Sea": { "lat": 43.413029, "lng": 32.01416 },
         "Bay of Biscay": { "lat": 46.229912, "lng": -2.635872 },
