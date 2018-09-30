@@ -8,14 +8,14 @@ Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 const default_quiz_mode = Object.keys(borders).pop()
 
 function quiz_mode_of(territory) {
-    const quiz_mode = Object.keys(borders).find(e => borders[e][territory] != undefined)
+    const quiz_mode = Object.keys(borders).find(e => territory in borders[e])
     return (quiz_mode != undefined ? quiz_mode : default_quiz_mode)
 }
 
 function neighbors(territory) {
     if (territory != undefined && territory.startsWith("_")) { territory = territory.slice(1) } // For overview map at start of quiz.
-    var neighbors = borders[quiz_mode_of(territory)][territory]
-    return (neighbors != undefined ? neighbors.slice() : []) // slice() makes a copy of the array so we don't mess up the original.
+    // slice() makes a copy of the array so we don't mess up the original.
+    return (territory in borders[quiz_mode_of(territory)] ? borders[quiz_mode_of(territory)][territory].slice() : [])
 }
 
 // If a territory has no neighbors, we can't make a question from it!
@@ -28,10 +28,10 @@ function all_quiz_modes() {
 }
 
 function current_quiz_modes(url_parameters) {
-    if (url_parameters["all"] !== undefined) {
+    if ("all" in url_parameters) {
         return all_quiz_modes()
     }
-    var url_modes = all_quiz_modes().filter(mode => url_parameters[mode] !== undefined)
+    var url_modes = all_quiz_modes().filter(mode => mode in url_parameters)
     return url_modes.length == 0 ? [default_quiz_mode] : url_modes
 }
 
@@ -45,7 +45,7 @@ function current_quiz_modes_territories(url_parameters) {
 // India, Pakistan, Bangladesh - http://danielmoore.us/borders-quiz?custom=India|Pakistan|Bangladesh
 // All U.S. states starting with N - http://danielmoore.us/borders-quiz?usa-states&custom=^N
 function custom_territories(url_parameters) {
-    if (url_parameters["custom"] != undefined) {
+    if ("custom" in url_parameters) {
         var custom_regex = new RegExp(url_parameters["custom"])
         var matched_territories = current_quiz_modes_territories(url_parameters).filter(t => custom_regex.exec(t) != null)
         if (matched_territories.length > 0) {
@@ -60,10 +60,17 @@ function custom_territories(url_parameters) {
 function neighboring_territories(url_parameters) {
     if (valid(url_parameters["start"])) {
         var depth = isNaN(url_parameters["depth"]) ? 1 : url_parameters["depth"]
-        var exclude_paths_through = url_parameters["exclude-paths-through"] != undefined ?
+        var exclude_paths_through = "exclude-paths-through" in url_parameters ?
                                     url_parameters["exclude-paths-through"].split(";") : []
         var filter_search = exclude_paths_through.length > 0
-        return Object.keys(breadth_first_search(url_parameters["start"], depth, filter_search, exclude_paths_through))
+        var territory_distance_dict = breadth_first_search(url_parameters["start"], depth, filter_search, exclude_paths_through)
+        if ("exclude" in url_parameters) {
+            url_parameters["exclude"].split(";").forEach(terr => delete territory_distance_dict[terr])
+        }
+        if ("include" in url_parameters) {
+            url_parameters["include"].split(";").filter(valid).forEach(terr => territory_distance_dict[terr] = null)
+        }
+        return Object.keys(territory_distance_dict).filter(valid)
     }
     return []
 }
@@ -71,9 +78,10 @@ function neighboring_territories(url_parameters) {
 var territories_ = []
 function territories(url_parameters) {
     var territories_methods = [custom_territories, neighboring_territories, current_quiz_modes_territories]
-    if (territories_.length == 0 || url_parameters["no-cache"] != undefined) {
+    if (territories_.length == 0 || "no-cache" in url_parameters) {
         for (let i = 0; i < territories_methods.length; i += 1) {
-            territories_ = territories_methods[i](url_parameters)
+            var method = territories_methods[i]
+            territories_ = method(url_parameters)
             if (territories_.length > 0) {
                 break
             }
@@ -106,7 +114,7 @@ function breadth_first_search(territory, depth, filter_search=true, exclude_path
             return territory_distance_dict // Terminates BFS at given depth.
         }
         neighbors(v).forEach(function(neighbor) {
-            if (territory_distance_dict[neighbor] == undefined) {
+            if (!(neighbor in territory_distance_dict)) {
                 territory_distance_dict[neighbor] = territory_distance_dict[v] + 1
                 if (!filter_search || !ignore_paths_through(territory, neighbor, exclude_paths_through)) {
                     bfs_queue.push(neighbor)
@@ -125,10 +133,10 @@ function build_question(url_parameters) {
     var territory_distance_dict = breadth_first_search(territory, answer_distance)
     var possible_answers = Object.keys(territory_distance_dict).filter(t => territory_distance_dict[t] == answer_distance)
 
-    if (question_settings.replace_possible_answers[territory] != undefined) {
+    if (territory in question_settings.replace_possible_answers) {
         possible_answers = question_settings.replace_possible_answers[territory]
     }
-    else if (question_settings.add_possible_answers[territory] != undefined) {
+    else if (territory in question_settings.add_possible_answers) {
         possible_answers = possible_answers.concat(question_settings.add_possible_answers[territory])
     }
 
@@ -140,6 +148,7 @@ function build_question(url_parameters) {
 
 // Exports
 Object.assign(exports, {
+    borders: borders,
     build_question: build_question,
     current_quiz_modes: current_quiz_modes,
     neighbors: neighbors,

@@ -1,7 +1,7 @@
 const $ = require("jquery")
 const URI = require("urijs")
 
-const { build_question, current_quiz_modes, neighbors } = require("../build-question/build-question.js")
+const { borders, build_question, current_quiz_modes, neighbors } = require("../build-question/build-question.js")
 
 const random = require("../build-question/random.js")
 const { Timer } = require("./timer.js")
@@ -29,42 +29,44 @@ function geocode(address) {
 }
 
 function coordinates(quiz_mode, address) {
-    if (game_settings.recenter_map[address] != undefined) {
-        address = game_settings.recenter_map[address]
+    if (address in game_settings.recenter_map_address) {
+        address = game_settings.recenter_map_address[address]
     }
-    else if (game_settings.custom_coordinates[address] != undefined) {
-        var custom_coordinates = game_settings.custom_coordinates[address]
-        return { lat: custom_coordinates.lat, lng: custom_coordinates.lng }
+    else if (address in game_settings.recenter_map_coordinates) {
+        return game_settings.recenter_map_coordinates[address]
     }
-    else if (neighbors(address).length > 0) {
+    else if (address in borders[quiz_mode]) {
         address += quiz_modes[quiz_mode].geocode_append
     }
     return geocode(address).results[0].geometry.location
 }
 
-function google_maps_zoom_level(quiz_mode, territory) {
-    var possible_zoom_levels = [url_parameters["z"], game_settings.custom_zoom_levels[territory], quiz_modes[quiz_mode].default_zoom_level]
-    var zoom_level = possible_zoom_levels.find(zl => zl != undefined)
+function google_maps_zoom_level(quiz_mode, territory, called_from_question=true) {
+    if (!called_from_question && !isNaN(url_parameters["start-zoom"])) {
+        return url_parameters["start-zoom"]
+    }
+    var possible_zoom_levels = [url_parameters["zoom"], game_settings.custom_zoom_levels[territory], quiz_modes[quiz_mode].default_zoom_level]
+    var zoom_level = possible_zoom_levels.find(level => !isNaN(level))
     if (on_mobile_device() && zoom_level > 2) {
         zoom_level -= 1
     }
     return zoom_level
 }
 
-function map_embed_url(quiz_mode, territory) {
+function map_embed_url(quiz_mode, territory, called_from_question=true) {
     var url = new URI(quiz_modes[quiz_mode].map_embed_base_url)
     const { lat, lng } = coordinates(quiz_mode, territory)
-    return url.addSearch({ lat: lat, lng: lng, z: google_maps_zoom_level(quiz_mode, territory) }).toString()
+    return url.addSearch({ lat: lat, lng: lng, z: google_maps_zoom_level(quiz_mode, territory, called_from_question) }).toString()
 }
 
 function prepend_the(territory, capitalize_the) {
     if (territory != undefined && territory.startsWith("_")) { territory = territory.slice(1) } // For overview map at start of quiz.
     var the = (capitalize_the ? "The " : "the ")
-    return (game_settings.should_prepend_the.contains(territory) ? the : "")
+    return game_settings.should_prepend_the.some(regex => new RegExp(regex).exec(territory) != null) ? the : ""
 }
 
 function truncate_for_mobile(territory) {
-    if (on_mobile_device() && game_settings.truncations_for_mobile[territory] != undefined) {
+    if (on_mobile_device() && territory in game_settings.truncations_for_mobile) {
         return game_settings.truncations_for_mobile[territory]
     }
     return territory
@@ -187,12 +189,12 @@ function embed_map(question_info, called_from_question=true) {
     const { quiz_mode, chosen, answer, territory } = question_info
     const subject = (chosen == answer ? chosen : territory)
 
-    var user_hint = game_settings.user_hint[subject] != undefined ? game_settings.user_hint[subject] : `${quiz_modes[quiz_mode].click_message}`
+    var user_hint = subject in game_settings.user_hint ? game_settings.user_hint[subject] : `${quiz_modes[quiz_mode].click_message}`
 
     var content = `<div id='${on_mobile_device() ? "map-container-mobile" : "map-container"}'>
                     <center>
                         <p>${called_from_question ? right_or_wrong_message(chosen, answer, territory) : pretty_print(subject, true)}</p>
-                        <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(quiz_mode, subject)}'></iframe>
+                        <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(quiz_mode, subject, called_from_question)}'></iframe>
                         <p>${(neighbors(subject).length == 0 && !called_from_question) ? "Get a feel for what's where!" : borders_sentence(subject) }</p>
                         <button id='next'></button>
                         ${on_mobile_device() ? `` : `<p id='click-message'>${user_hint}</p>`}
@@ -233,14 +235,14 @@ function next_question(question_info=build_question(url_parameters)) {
 // http://danielmoore.us/borders-quiz?california-counties&start-map=Taco+Bell+Fremont+CA
 function start_map() {
     timer.pause_timer()
-    const custom_address = url_parameters["start-map"]
-    if (custom_address != undefined) {
+    if ("start-map" in url_parameters) {
         score.correct -= 1
+        const starting_address = url_parameters["start-map"]
         embed_map({ quiz_mode: current_quiz_modes(url_parameters)[0],
-                    territory: custom_address,
-                    answer: custom_address,
+                    territory: starting_address,
+                    answer: starting_address,
                     wrong_answers: [],
-                    chosen: custom_address },
+                    chosen: starting_address },
                   false)
     }
 }
@@ -251,25 +253,24 @@ function first_question() {
     start_map()
 }
 
-function unused_quiz_modes(url_parameters) {
+function unused_quiz_modes() {
     return Object.keys(quiz_modes).filter(mode => !current_quiz_modes(url_parameters).contains(mode))
 }
 
 function quiz_mode_url(mode, start_with_map=true) {
     var uri = new URI(`?${mode}`)
-    var starting_map = quiz_modes[mode].starting_map
-    if (starting_map != undefined && start_with_map) {
-        uri.addSearch("start-map", starting_map)
+    if ("starting_map" in quiz_modes[mode] && start_with_map) {
+        uri.addSearch("start-map", quiz_modes[mode].starting_map)
     }
     return uri.toString()
 }
 
 function other_quiz_modes_message() {
     var message  = `<div style="font-family:Helvetica">`
-    if (unused_quiz_modes(url_parameters).length > 0) {
+    if (unused_quiz_modes().length > 0) {
         message += `<p>You can also try these quiz modes!</p>
                     <ul class='unused-quiz-modes'>`
-        unused_quiz_modes(url_parameters).forEach(mode =>
+        unused_quiz_modes().forEach(mode =>
             message += `<li>
                             <a target='_self' href='${quiz_mode_url(mode)}'>${quiz_modes[mode].anthem}</a>&nbsp;
                             ${quiz_modes[mode].description}
