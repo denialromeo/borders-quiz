@@ -1,3 +1,7 @@
+/*!
+ * Copyright 2018 Daniel Moore
+ * Released under the MIT license
+ */
 const random = require("./random.js")
 
 const borders = require("./borders.json")
