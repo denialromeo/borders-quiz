@@ -1,7 +1,3 @@
-/*!
- * Copyright 2018 Daniel Moore
- * Released under the MIT license
- */
 const $ = require("jquery")
 const URI = require("urijs")
 

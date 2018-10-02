@@ -1,7 +1,3 @@
-/*!
- * Copyright 2018 Daniel Moore
- * Released under the MIT license
- */
 const random = require("./random.js")
 
 const borders = require("./borders.json")
@@ -51,7 +47,7 @@ function current_quiz_modes_territories(url_parameters) {
 // Countries in Africa - http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco
 function neighboring_territories(url_parameters) {
     if (valid(url_parameters["start"])) {
-        var depth = isNaN(url_parameters["depth"]) ? 1 : url_parameters["depth"]
+        var depth = isNaN(url_parameters["depth"]) ? 1 : Number(url_parameters["depth"])
         var exclude_paths_through = "exclude-paths-through" in url_parameters ?
                                     url_parameters["exclude-paths-through"].split(";") : []
         var filter_search = exclude_paths_through.length > 0
@@ -60,7 +56,7 @@ function neighboring_territories(url_parameters) {
             url_parameters["exclude"].split(";").forEach(terr => delete territory_distance_dict[terr])
         }
         if ("include" in url_parameters) {
-            url_parameters["include"].split(";").filter(valid).forEach(terr => territory_distance_dict[terr] = null)
+            url_parameters["include"].split(";").filter(valid).forEach(terr => territory_distance_dict[terr] = undefined)
         }
         return Object.keys(territory_distance_dict).filter(valid)
     }
@@ -93,7 +89,7 @@ function territories(url_parameters) {
 // Countries quiz with only 2 choices - http://danielmoore.us/borders-quiz?num-choices=2
 function num_choices(url_parameters) {
     var num_choices = url_parameters["num-choices"]
-    return (isNaN(num_choices) || num_choices < 2) ? 4 : num_choices
+    return (isNaN(num_choices) || num_choices < 2) ? 4 : Number(num_choices)
 }
 
 // This prunes the breadth-first search. It really does a good job of removing obvious answers.
