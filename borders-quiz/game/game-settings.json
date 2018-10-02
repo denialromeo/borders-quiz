@@ -241,12 +241,10 @@
     },
 
     "should_prepend_the": [
-        "Gulf\\b",
+        "(Gulf|Sea|Ocean)(\\b|_)+",
         "^(?!.*Cross|Singapore).*River$",
         "Republic\\b",
-        "Sea\\b",
         "Territor(y|ies)\\b",
-        "Ocean$",
         "Netherlands",
         "United Kingdom",
         "United States",

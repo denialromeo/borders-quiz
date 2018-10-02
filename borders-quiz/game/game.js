@@ -45,7 +45,7 @@ function google_maps_zoom_level(quiz_mode, territory, start_with_map=false) {
     if (start_with_map && !isNaN(url_parameters["start-zoom"])) {
         return url_parameters["start-zoom"]
     }
-    var possible_zoom_levels = [url_parameters["zoom"], game_settings.custom_zoom_levels[territory], quiz_modes[quiz_mode].default_zoom_level]
+    var possible_zoom_levels = [game_settings.custom_zoom_levels[territory], quiz_modes[quiz_mode].default_zoom_level]
     var zoom_level = possible_zoom_levels.find(level => !isNaN(level))
     if (on_mobile_device() && zoom_level > 2) {
         zoom_level -= 1
