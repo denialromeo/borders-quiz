@@ -1170,6 +1170,8 @@
     },
 
     "countries": {
+        "Gulf of Finland": ["Finland", "Estonia"],
+        "Gulf of Bothnia": ["Finland", "Sweden"],
         "United Kingdom (Bermuda)": [],
         "Adriatic Sea": ["Italy", "Slovenia", "Croatia", "Bosnia and Herzegovina", "Montenegro", "Albania"],
         "Aegean Sea": ["Greece", "Turkey"],
