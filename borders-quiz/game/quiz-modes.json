@@ -77,6 +77,17 @@
 		"title": "Nigeria States"
 	},
 	
+	"israel-districts": {
+		"anthem": "\"Hatikvah\"",
+		"click_message": "(Click the districts!)",
+		"default_zoom_level": 7,
+		"description": "(Israel's districts.)",
+		"geocode_append": "",
+		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1dbOltNkuYWspcY9B9OiCommIjbf_KgJpn70NIWFO&viz=MAP&h=false&t=1&l=col0",
+		"starting_map": "_Israel",
+		"title": "Israel Districts"
+	},
+	
 	"syria-governorates": {
 		"anthem": "\"Ḥumāt ad-Diyār\"",
 		"click_message": "(Click the governorates!)",

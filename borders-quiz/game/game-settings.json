@@ -1,6 +1,7 @@
 {
 
     "recenter_map_address": {
+        "United Arab Emirates": "Al Hamra Airport UAE",
         "Ethiopia": "Mersu Ethiopia",
         "Sri Lanka": "Padaviya Sri Lanka",
         "North Korea__": "Chongju North Korea",
@@ -155,11 +156,13 @@
         "Washington": "Liberty Washington State",
         "Xizang": "Dawa Co Tibet",
 
+        "_Israel": "Hatsrot Tserifin Israel",
         "_Nigeria": "Zakari Nigeria",
         "_Spain": "Atanzon Spain"
     },
 
     "recenter_map_coordinates": {
+        "Egypt_": { "lat": 30.69903, "lng": 34.089408 },
         "The Gambia": { "lat": 13.443182, "lng": -13.815998 },
         "Australia": { "lat": -25.274398, "lng": 136.060292 },
         "Black Sea": { "lat": 43.413029, "lng": 32.01416 },
@@ -253,6 +256,7 @@
         "Comoros",
         "English Channel",
         "Federally Administered Tribal Areas",
+        "Gaza Strip",
         "Great Australian Bight",
         "Isle of Wight",
         "Jewish Autonomous Oblast",
@@ -261,16 +265,17 @@
         "Mozambique Channel",
         "Netherlands",
         "Philippines",
-        "Republic\\b",
+        "Republic(\\b|_)+",
         "Rio Grande",
         "Singapore Strait",
         "State of Mexico",
         "Strait of Malacca",
-        "Territor(y|ies)\\b",
+        "Territor(y|ies)(\\b|_)+",
         "UNDOF Zone",
         "United Arab Emirates",
         "United Kingdom",
         "United States",
+        "West Bank",
         "West Midlands"
     ],
 
@@ -389,6 +394,9 @@
     ],
 
     "custom_zoom_levels": {
+        "West Bank_": 7,
+        "Gaza Strip_": 7,
+        "Buryatia": 3,
         "Gulf of Finland": 4,
         "Gulf of Bothnia": 4,
         "Herat": 5,
@@ -528,6 +536,7 @@
         "_England": 5,
         "_Indonesia": 4,
         "_Ireland": 6,
+        "_Israel": 6,
         "_London": 9,
         "_Malaysia": 5,
         "_New York": 6,
