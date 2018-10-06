@@ -1,5 +1,5 @@
 module.exports = {
-	entry: "./borders-quiz/main.js",
+	entry: "./index.js",
 	output: {
 		path: __dirname + "/js",
 		filename: "borders-quiz.js"
