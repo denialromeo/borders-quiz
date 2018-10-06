@@ -7,7 +7,7 @@ const random = require("../build-question/random.js")
 const { Timer } = require("./timer.js")
 
 const google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
-const game_css_path = "/borders-quiz/game/borders-quiz.css"
+const game_css_path = "/css/borders-quiz.css"
 
 const quiz_modes = Object.freeze(require("./quiz-modes.json"))
 const game_settings = Object.freeze(require("./game-settings.json"))

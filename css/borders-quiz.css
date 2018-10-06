@@ -1,0 +1,74 @@
+#map-container {
+	position:relative;
+	font-family:Helvetica;
+	min-height: 480px;
+}
+
+#map-container-mobile {
+	position:relative;
+	font-family:Helvetica;
+}
+
+#quiz_title {
+	position:absolute;
+	left:5%;
+	top:20px;
+	font-size:18px;
+	font-family:Helvetica;
+	float:left;
+}
+
+#score_and_timer {
+	position:absolute;
+	right:5%;
+	bottom:0;
+	font-size:15px;
+	font-family:Helvetica;
+	float:right;
+}
+
+#click-message {
+	float:right;
+	position:absolute;
+	right:5%;
+	bottom:0;
+	font-size:15px;
+}
+
+#timer {
+	float:right;
+}
+
+#question-container {
+	position:relative;
+	min-height:490px;
+}
+
+#question-container-mobile {
+	position:relative;
+	min-height:300px;
+}
+
+#question-text {
+	padding-left:15%;
+	padding-top:17%;
+	font-size:20px;
+	font-family:Helvetica;
+}
+
+#question-text-mobile {
+	padding-left:8%;
+	padding-top:14%;
+	font-size:20px;
+	font-family:Helvetica;
+}
+
+#map {
+	height: 350px;
+	width: 80%;
+}
+
+#map-mobile {
+	height: 250px;
+	width: 80%;
+}
