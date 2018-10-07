@@ -7,7 +7,7 @@ const random = require("../build-question/random.js")
 const { Timer } = require("./timer.js")
 
 const google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
-const game_css_path = "/css/borders-quiz.css"
+const game_css = require("./game.css").toString()
 
 const quiz_modes = Object.freeze(require("./quiz-modes.json"))
 const game_settings = Object.freeze(require("./game-settings.json"))
@@ -84,7 +84,7 @@ function on_mobile_device() {
 }
 
 function embed(src) {     
-    game_iframe.srcdoc ="<html><head><link rel='stylesheet' href='" + game_css_path + "'/></head><body>" + src + "</body></html>"
+    game_iframe.srcdoc = "<html><head><style>" + game_css + "</style><body>" + src + "</body></html>"
 }
 
 function embed_question(question_info) {
