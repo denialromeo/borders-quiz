@@ -89,7 +89,7 @@
     },
 
     "replace_possible_answers": {
-        "Azerbaijan": ["Turkmenistan", "Iraq", "Syria", "Afghanistan"],
+        "Azerbaijan": ["Iraq", "Syria"],
         "Bering Sea": ["Canada"],
         "Canada": ["Denmark (Greenland)"],
         "Dominican Republic": ["Cuba", "Jamaica", "The Bahamas"],

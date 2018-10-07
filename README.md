@@ -29,7 +29,7 @@ Now you can play the game at [http://localhost:8080](http://localhost:8080)!
 
 ## Development Guide
 
-Adding a quiz is simple. Just add relevant entries to [borders.json](/borders-quiz/build-question/borders.json) and [quiz-modes.json](/borders-quiz/game/quiz-modes.json). You can also play with some settings in [game-settings.json](/borders-quiz/game/game-settings.json) (e.g. more precise maps, prepending "the", giving tougher answer choices than the default algorithm).
+Adding a quiz is simple. Just add relevant entries to [borders.json](/build-question/borders.json) and [quiz-modes.json](/game/quiz-modes.json). You can also play with some settings in [game-settings.json](/game/game-settings.json) (e.g. more precise maps, prepending "the", giving tougher answer choices than the default algorithm).
 
 However, you must observe these rules or the game will break -
 

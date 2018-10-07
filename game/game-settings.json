@@ -161,6 +161,7 @@
     },
 
     "recenter_map_coordinates": {
+        "Mediterranean Sea__": { "lat": 32.660367, "lng": 34.405384 },
         "Barents Sea": { "lat": 72.482492, "lng": 37.106368 },
         "Ethiopia": { "lat": 8.105102, "lng": 41.802879 },
         "Egypt_": { "lat": 30.69903, "lng": 34.089408 },
@@ -286,6 +287,7 @@
     ],
 
     "dont_sort_neighbors": [
+        "Mediterranean Sea__",
         "India_",
         "China____",
         "Pakistan___",
