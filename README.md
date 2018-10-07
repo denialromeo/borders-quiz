@@ -33,9 +33,9 @@ Adding a quiz is simple. Just add relevant entries to [borders.json](/build-ques
 
 However, you must observe these rules or the game will break -
 
-* The top-level labels of [borders.json](/borders-quiz/build-question/borders.json) and [quiz-modes.json](/borders-quiz/game/quiz-modes.json) *must* match.
-* All entries in [borders.json](/borders-quiz/build-question/borders.json) *must* be unique. Add trailing underscores to avoid conflicts with entries in existing quiz modes.
-* If a territory is on an island and borders every other territory on that island (e.g. Haiti and the Dominican Republic), you *must* manually provide alternative answer choices in [question-settings.json](/borders-quiz/build-question/question-settings.json).
+* The top-level labels of [borders.json](/build-question/borders.json) and [quiz-modes.json](/game/quiz-modes.json) *must* match.
+* All entries in [borders.json](/build-question/borders.json) *must* be unique. Add trailing underscores to avoid conflicts with entries in existing quiz modes.
+* If a territory is on an island and borders every other territory on that island (e.g. Haiti and the Dominican Republic), you *must* manually provide alternative answer choices in [question-settings.json](/build-question/question-settings.json).
 
 (Running `npm test` will alert you to game-breaking data.)
 
