@@ -22,7 +22,7 @@ Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 const url_parameters = Object.freeze(new URI(window.location.href).search(true))
 
 function geocode(address) {
-    var url = "https://maps.googleapis.com/maps/api/geocode/json"
+    const url = "https://maps.googleapis.com/maps/api/geocode/json"
     var json = {}
     $.ajax({ url: url, data: { key: google_maps_api_key, address: address }, async: false, success: r => json = r })
     return json
@@ -46,7 +46,7 @@ function google_maps_zoom_level(quiz_mode, territory, start_map_screen=false) {
         return url_parameters["start-zoom"]
     }
     var possible_zoom_levels = [game_settings.custom_zoom_levels[territory], quiz_modes[quiz_mode].default_zoom_level]
-    var zoom_level = possible_zoom_levels.find(level => !isNaN(level))
+    var zoom_level = possible_zoom_levels.find(zl => !isNaN(zl))
     if (on_mobile_device() && zoom_level > 2) {
         zoom_level -= 1
     }
@@ -74,8 +74,7 @@ function truncate_for_mobile(territory) {
 
 function pretty_print(territory, capitalize_the) {
     var the = prepend_the(territory, capitalize_the)
-    territory = truncate_for_mobile(territory)
-    territory = territory.replace(/_/g,'').replace(/\s/g,'&nbsp;').replace(/-/g, '&#8209;')
+    territory = truncate_for_mobile(territory).replace(/_/g,'').replace(/\s/g,'&nbsp;').replace(/-/g, '&#8209;')
     return (the + territory)
 }
 
@@ -84,7 +83,7 @@ function on_mobile_device() {
 }
 
 function embed(src) {     
-    game_iframe.srcdoc = "<html><head><style>" + game_css + "</style><body>" + src + "</body></html>"
+    game_iframe.srcdoc = `<html><head><style>${game_css}</style><body>${src}</body></html>`
 }
 
 function embed_question(question_info) {

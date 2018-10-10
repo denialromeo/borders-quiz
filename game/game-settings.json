@@ -161,6 +161,7 @@
     },
 
     "recenter_map_coordinates": {
+        "Syria_": { "lat": 33.858555, "lng": 37.722401 },
         "Mediterranean Sea__": { "lat": 32.660367, "lng": 34.405384 },
         "Barents Sea": { "lat": 72.482492, "lng": 37.106368 },
         "Ethiopia": { "lat": 8.105102, "lng": 41.802879 },
@@ -397,6 +398,7 @@
     ],
 
     "custom_zoom_levels": {
+        "Syria_": 5,
         "West Bank_": 7,
         "Gaza Strip_": 7,
         "Buryatia": 3,
