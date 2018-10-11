@@ -82,9 +82,9 @@ function territories(url_parameters) {
         if (pool.length === 0) {
             var possible_pool = method(url_parameters)
             if (possible_pool.length > 0) { pool = possible_pool }
+            if (pool.length > 0) { console.log("This quiz is asking questions about ", pool.sort()) }
         }
     })
-    console.log("This quiz is asking questions about ", pool.sort())
     return pool
 }
 
