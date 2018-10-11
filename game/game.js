@@ -241,24 +241,6 @@ function next_question(question_info=build_question(url_parameters)) {
     embed_question(question_info)
 }
 
-// To give the player a chance to browse the map before they begin.
-// http://danielmoore.us/borders-quiz?california-counties&start-map=Taco+Bell+Fremont+CA
-function start_game() {
-    if ("start-map" in url_parameters) {
-        const starting_address = url_parameters["start-map"]
-        embed_map({ quiz_mode: current_quiz_modes(url_parameters)[0],
-                    territory: starting_address,
-                    answer: starting_address,
-                    wrong_answers: [],
-                    chosen: starting_address },
-                  true)
-    }
-    else {
-        next_question()
-    }
-}
-////
-
 function unused_quiz_modes() {
     return Object.keys(quiz_modes).filter(mode => !current_quiz_modes(url_parameters).contains(mode))
 }
@@ -272,24 +254,42 @@ function quiz_mode_url(mode, start_map_screen=true) {
 }
 
 function other_quiz_modes_message() {
-    var message  = `<div style="font-family:Helvetica">`
+    var message  = `<span style="display:block;margin-bottom:15px;"/>`
     if (unused_quiz_modes().length > 0) {
-        message += `<p>You can also try these quiz modes!</p>
-                    <ul class='unused-quiz-modes'>`
-        unused_quiz_modes().forEach(mode =>
-            message += `<li>
-                            <a target='_self' href='${quiz_mode_url(mode)}'>${quiz_modes[mode].anthem}</a>&nbsp;
-                            ${quiz_modes[mode].description}
-                        </li>`
-        )
-        message += `</ul>`
+    	message += `<div style="font-family:Helvetica">
+    	            <p>You can also try these quiz modes!</p>
+	                    <ul class='unused-quiz-modes'>`
+	        unused_quiz_modes().forEach(mode =>
+	            message += `<li>
+	                            <a target='_self' href='${quiz_mode_url(mode)}'>${quiz_modes[mode].anthem}</a>&nbsp;
+	                            ${quiz_modes[mode].description}
+	                        </li>`
+	        )
+	        message += `</ul>`
+    	message += `</div>`
     }
-    message += `</div>`
     return message
 }
 
+// Let's go!!!!!!!
+function start_game() {
+    if ("start-map" in url_parameters) {
+        const starting_address = url_parameters["start-map"]
+        embed_map({ quiz_mode: current_quiz_modes(url_parameters)[0],
+                    territory: starting_address,
+                    answer: starting_address,
+                    wrong_answers: [],
+                    chosen: starting_address },
+                  true)
+    }
+    else {
+        next_question()
+    }
+    $(game_iframe).after(other_quiz_modes_message())
+}
+////
+
 // Exports
 Object.assign(exports, {
-    start_game: start_game,
-    other_quiz_modes_message: other_quiz_modes_message
+    start_game: start_game
 })
