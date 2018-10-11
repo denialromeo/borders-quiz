@@ -13,7 +13,6 @@ function quiz_mode_of(territory) {
 }
 
 function neighbors(territory) {
-    if (territory !== undefined && territory.startsWith("_")) { territory = territory.slice(1) } // For overview map at start of quiz.
     var quiz_mode = quiz_mode_of(territory)
     // slice() makes a copy of the array so we don't mess up the original.
     return (territory in borders[quiz_mode] ? borders[quiz_mode][territory].slice() : undefined)
@@ -46,12 +45,14 @@ function current_quiz_modes_territories(url_parameters) {
 // Iran and its bordering countries - http://danielmoore.us/borders-quiz?start=Iran
 // Countries in Africa - http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco
 function neighboring_territories(url_parameters) {
-    if (valid(url_parameters["start"])) {
+    if (url_parameters["start"] !== undefined && url_parameters["start"].split(";").some(valid)) {
         var depth = isNaN(url_parameters["depth"]) ? 1 : Number(url_parameters["depth"])
         var exclude_paths_through = "exclude-paths-through" in url_parameters ?
                                     url_parameters["exclude-paths-through"].split(";") : []
         var filter_search = exclude_paths_through.length > 0
-        var territory_distance_dict = breadth_first_search(url_parameters["start"], depth, filter_search, exclude_paths_through)
+        var territory_distance_dict = url_parameters["start"].split(";").filter(valid)
+                                     .map(s => breadth_first_search(s, depth, filter_search, exclude_paths_through))
+                                     .reduce((dict, next_dict) => Object.assign(dict, next_dict))
         if ("exclude" in url_parameters) {
             url_parameters["exclude"].split(";").forEach(terr => delete territory_distance_dict[terr])
         }
@@ -83,6 +84,7 @@ function territories(url_parameters) {
             if (possible_pool.length > 0) { pool = possible_pool }
         }
     })
+    console.log("This quiz is asking questions about ", pool.sort())
     return pool
 }
 

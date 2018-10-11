@@ -21,6 +21,13 @@ Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
 const url_parameters = Object.freeze(new URI(window.location.href).search(true))
 
+function neighbors_augmented(territory) {
+    if (territory !== undefined && territory.startsWith("_")) { // For overview map at start of quiz.
+        territory = territory.slice(1)
+    }
+    return neighbors(territory)
+}
+
 function geocode(address) {
     const url = "https://maps.googleapis.com/maps/api/geocode/json"
     var json = {}
@@ -147,7 +154,7 @@ function plural(territory) {
 
 function borders_sentence(territory) {
 
-    var neighbors_ = neighbors(territory)
+    var neighbors_ = neighbors_augmented(territory)
     if (!game_settings.dont_sort_neighbors.contains(territory)) {
         neighbors_.sort()
     }
@@ -194,7 +201,7 @@ function embed_map(question_info, start_map_screen=false) {
                     <center>
                         <p>${!start_map_screen ? right_or_wrong_message(chosen, answer, territory) : pretty_print(subject, true)}</p>
                         <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(quiz_mode, subject, start_map_screen)}'></iframe>
-                        <p>${((neighbors(subject) === undefined || neighbors(subject).length === 0) && start_map_screen) ? "Get a feel for what's where!" : borders_sentence(subject) }</p>
+                        <p>${((neighbors_augmented(subject) === undefined || neighbors_augmented(subject).length === 0) && start_map_screen) ? "Get a feel for what's where!" : borders_sentence(subject) }</p>
                         <button id='next'></button>
                         ${on_mobile_device() ? `` : `<p id='click-message'>${user_hint}</p>`}
                     </center>

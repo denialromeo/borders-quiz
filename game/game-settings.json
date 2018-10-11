@@ -54,7 +54,6 @@
         "Germany__": "Zlotnik Poland",
         "Gibraltar": "Gibraltar UK",
         "Greater London": "Greater London",
-        "Greece": "Skantzoura Greece",
         "Guinea": "Norassoba Guinea",
         "Gulf of Mexico__": "Gulf of Mexico",
         "Haiti": "Bord-De-Mer de Jean-Rabel Haiti",
@@ -161,6 +160,7 @@
     },
 
     "recenter_map_coordinates": {
+        "Greece": { "lat": 40.563334, "lng": 24.111235 },
         "Syria_": { "lat": 33.858555, "lng": 37.722401 },
         "Mediterranean Sea__": { "lat": 32.660367, "lng": 34.405384 },
         "Barents Sea": { "lat": 72.482492, "lng": 37.106368 },
