@@ -39,7 +39,7 @@
 
     "add_possible_answers": {
         "Brooklyn": ["Staten Island"],
-        "Calabria": ["Sicily"],
+        "Calabria": ["Sicilia"],
         "California": ["Hawaii"],
         "Cameroon": ["São Tomé and Principe"],
         "Caribbean Sea": ["Barbados", "United Kingdom (Bermuda)"],
@@ -55,7 +55,7 @@
         "Israel": ["Cyprus"],
         "Italy": ["Malta"],
         "Johor": ["Singapore_"],
-        "Lazio": ["Sardinia"],
+        "Lazio": ["Sardegna"],
         "Lebanon": ["Cyprus"],
         "Libya": ["Malta"],
         "Malaysia": ["Philippines", "Singapore"],
