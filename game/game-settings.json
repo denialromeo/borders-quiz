@@ -269,7 +269,7 @@
         "Netherlands",
         "Philippines",
         "Republic(\\b|_)+",
-        "Rio Grande",
+        "^Rio Grande$",
         "Singapore Strait",
         "State of Mexico",
         "Strait of Malacca",
