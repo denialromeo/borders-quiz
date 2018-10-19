@@ -5,7 +5,7 @@
   "main": "./borders-quiz/build-question/build-question.js",
   "scripts": {
     "start": "webpack -p && http-server",
-    "test": "node ./borders-quiz/build-question/test-complete-graph.js"
+    "test": "node ./build-question/test.js"
   },
   "repository": {
     "type": "git",
