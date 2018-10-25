@@ -25,7 +25,7 @@ npm install
 npm start
 ```
 
-Now you can play the game at [http://localhost:8080](http://localhost:8080)!
+Now you can play the game at [http://localhost:8000](http://localhost:8000)!
 
 ## Development Guide
 
