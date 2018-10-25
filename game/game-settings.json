@@ -155,6 +155,7 @@
         "Xizang": "Dawa Co Tibet",
 
         "_Israel": "Hatsrot Tserifin Israel",
+        "_London": "London",
         "_Nigeria": "Zakari Nigeria",
         "_Spain": "Tarancon Spain"
     },
@@ -398,6 +399,7 @@
     ],
 
     "custom_zoom_levels": {
+        "Jordan__": 6,
         "Murmansk Oblast": 3,
         "Syria_": 5,
         "West Bank_": 7,
@@ -717,7 +719,7 @@
         "Philippines": 4,
         "Philippine Sea": 3,
         "Poland": 4,
-        "Portugal": 3,
+        "Portugal": 4,
         "Red Sea": 4,
         "Romania": 4,
         "Russia": 2,

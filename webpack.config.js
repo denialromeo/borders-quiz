@@ -1,7 +1,7 @@
 module.exports = {
 	entry: "./index.js",
 	output: {
-		path: __dirname + "/js",
+		path: __dirname + "/dist",
 		filename: "borders-quiz.js"
 	},
 	module: {
@@ -22,5 +22,8 @@ module.exports = {
 				}
 			}
 		]
-	}
+	},
+	devServer: {
+		port:8000
+	},
 };
