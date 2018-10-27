@@ -197,6 +197,7 @@
         "South China Sea": { "lat": 14.411331, "lng": 115.826466 },
         "Strait of Malacca": { "lat": 4.377834, "lng": 99.545097 },
         "Tasman Sea": { "lat": -38.007642, "lng": 153.751602 },
+        "Tasman Sea_": { "lat": -39.054908, "lng": 153.810623 },
         "Turkey": { "lat": 39.304614, "lng": 34.452306 },
         "Uruguay": { "lat": -34.428707, "lng": -55.765835 },
         "Venezuela": { "lat": 5.024548, "lng": -64.480355 },
