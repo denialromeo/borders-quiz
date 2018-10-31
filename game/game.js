@@ -1,7 +1,7 @@
 const $ = require("jquery")
 const URI = require("urijs")
 
-const { build_question, current_quiz_modes, neighbors } = require("../build-question/build-question.js")
+const { build_question, current_quiz_modes, neighbors, quiz_mode_of } = require("../build-question/build-question.js")
 
 const random = require("../build-question/random.js")
 const { Timer } = require("./timer.js")
@@ -42,10 +42,14 @@ function coordinates(quiz_mode, address) {
     else if (address in game_settings.recenter_map_coordinates) {
         return game_settings.recenter_map_coordinates[address]
     }
-    else {
+    else if (quiz_mode_of(address) === quiz_mode) {
         address += quiz_modes[quiz_mode].geocode_append
     }
-    return geocode(address).results[0].geometry.location
+    const geocode_api_response = geocode(address)
+    if (geocode_api_response.results.length === 0) {
+        throw "Invalid location!"
+    }
+    return geocode_api_response.results[0].geometry.location
 }
 
 function google_maps_zoom_level(quiz_mode, territory, start_map_screen=false) {
@@ -275,12 +279,17 @@ function other_quiz_modes_message() {
 function start_game() {
     if ("start-map" in url_parameters) {
         const starting_address = url_parameters["start-map"]
-        embed_map({ quiz_mode: current_quiz_modes(url_parameters)[0],
-                    territory: starting_address,
-                    answer: starting_address,
-                    wrong_answers: [],
-                    chosen: starting_address },
-                  true)
+        try {
+            embed_map({ quiz_mode: current_quiz_modes(url_parameters)[0],
+                        territory: starting_address,
+                        answer: starting_address,
+                        wrong_answers: [],
+                        chosen: starting_address },
+                      true)
+        }
+        catch(e) {
+            next_question()
+        }
     }
     else {
         next_question()

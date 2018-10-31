@@ -149,5 +149,6 @@ Object.assign(exports, {
     build_question: build_question,
     current_quiz_modes: current_quiz_modes,
     neighbors: neighbors,
+    quiz_mode_of: quiz_mode_of,
     valid: valid
 })
