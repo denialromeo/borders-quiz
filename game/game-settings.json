@@ -400,6 +400,7 @@
     ],
 
     "custom_zoom_levels": {
+        "Turkey_": 5,
         "Jordan__": 6,
         "Murmansk Oblast": 3,
         "Syria_": 5,

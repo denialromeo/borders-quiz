@@ -251,9 +251,6 @@ function unused_quiz_modes() {
 
 function quiz_mode_url(mode, start_map_screen=true) {
     var uri = new URI(`?${mode}`)
-    if ("starting_map" in quiz_modes[mode] && start_map_screen) {
-        uri.addSearch("start-map", quiz_modes[mode].starting_map)
-    }
     return uri.toString()
 }
 
@@ -277,22 +274,28 @@ function other_quiz_modes_message() {
 
 // Let's go!!!!!!!
 function start_game() {
-    if ("start-map" in url_parameters) {
-        const starting_address = url_parameters["start-map"]
-        try {
-            embed_map({ quiz_mode: current_quiz_modes(url_parameters)[0],
-                        territory: starting_address,
-                        answer: starting_address,
-                        wrong_answers: [],
-                        chosen: starting_address },
-                      true)
-        }
-        catch(e) {
-            next_question()
-        }
+    if ("no-start-map" in url_parameters) {
+        next_question()
     }
     else {
-        next_question()
+        var possible_starting_addresses = [url_parameters["start-map"], quiz_modes[current_quiz_modes(url_parameters)[0]].starting_map]
+        const starting_address = possible_starting_addresses.find(address => address !== undefined)
+        if (starting_address === undefined || current_quiz_modes(url_parameters).length > 1) {
+            next_question()
+        }
+        else {
+            try {
+                embed_map({ quiz_mode: current_quiz_modes(url_parameters)[0],
+                            territory: starting_address,
+                            answer: starting_address,
+                            wrong_answers: [],
+                            chosen: starting_address },
+                          true)
+            }
+            catch(e) {
+                next_question()
+            }
+        }
     }
     $(game_iframe).after(other_quiz_modes_message())
 }
