@@ -199,13 +199,24 @@ function embed_map(question_info, start_map_screen=false) {
     const { quiz_mode, chosen, answer, territory } = question_info
     const subject = (chosen == answer ? chosen : territory)
 
+    let start_message
+    if ("starting_message" in quiz_modes[quiz_mode]) {
+        start_message = quiz_modes[quiz_mode].starting_message
+    }
+    else if ((neighbors_augmented(subject) === undefined || neighbors_augmented(subject).length === 0) && start_map_screen) {
+        start_message = "Get a feel for what's where!"
+    }
+    else {
+        start_message = borders_sentence(subject)
+    }
+
     var user_hint = subject in game_settings.user_hint ? game_settings.user_hint[subject] : `${quiz_modes[quiz_mode].click_message}`
 
     var content = `<div id='${on_mobile_device() ? "map-container-mobile" : "map-container"}'>
                     <center>
                         <p>${!start_map_screen ? right_or_wrong_message(chosen, answer, territory) : pretty_print(subject, true)}</p>
                         <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(quiz_mode, subject, start_map_screen)}'></iframe>
-                        <p>${((neighbors_augmented(subject) === undefined || neighbors_augmented(subject).length === 0) && start_map_screen) ? "Get a feel for what's where!" : borders_sentence(subject) }</p>
+                        <p>${start_message}</p>
                         <button id='next'></button>
                         ${on_mobile_device() ? `` : `<p id='click-message'>${user_hint}</p>`}
                     </center>
@@ -224,12 +235,12 @@ function embed_map(question_info, start_map_screen=false) {
                 next_button.innerHTML = "Start"
                 next_button.onclick = function() { next_question() }
             }
-            else if (chosen == answer) {
+            else if (chosen === answer) {
                 score.correct += 1
                 next_button.innerHTML = "Next"
                 next_button.onclick = function() { next_question() }
             }
-            else {
+            else if (chosen !== answer) {
                 score.wrong += 1
                 next_button.innerHTML = "Try Again"
                 next_button.onclick = function() { next_question(question_info) }

@@ -26,4 +26,6 @@ module.exports = {
 	devServer: {
 		port:8000
 	},
+	performance: { hints: false },
+	mode: "production",
 };

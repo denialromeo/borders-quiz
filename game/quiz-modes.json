@@ -305,6 +305,7 @@
 		"geocode_append": " County England",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1JXIDp4FOMTOES9t1EuZlSurdA_LgLhhHQK1MhVFa&viz=MAP&h=false&t=1&l=col2",
 		"starting_map": "_England",
+		"starting_message": "England borders Scotland and Wales.",
 		"title": "England Ceremonial Counties"
 	},
 

@@ -19,30 +19,6 @@ Just pop any you want back into game/quiz_modes.json and build-question/borders.
     "Yangon Region": [],
 }
 
-"maine-counties-in-progress": {
-    "Androscoggin": [],
-    "Aroostook": ["Somerset_", "Piscataquis", "Penobscot", "Washington__", "Canada___"],
-    "Atlantic Ocean_": ["New Hampshire_", "York", "Cumberland", "Sagadahoc", "Lincoln", "Knox", "Waldo", "Hancock", "Washington__", "Canada___"],
-    "Canada___": ["New Hampshire_", "Oxford", "Franklin", "Somerset_", "Aroostook", "Washington__"],
-    "Cumberland": [],
-    "Franklin": [],
-    "Hancock": [],
-    "Kennebec": [],
-    "Knox": [],
-    "Lincoln": [],
-    "New Hampshire_": ["Canada___", "Oxford", "York"],
-    "Oxford": [],
-    "Penobscot": ["Aroostook", "Washington__", "Hancock", "Waldo", "Somerset_", "Piscataquis"],
-    "Piscataquis": ["Aroostook", "Penobscot", "Somerset_"],
-    "Sagadahoc": [],
-    "Somerset_": [],
-    "Waldo": ["Penobscot", "Hancock", "Knox", "Lincoln", "Kennebec", "Somerset"],
-    "Washington__": [],
-    "York": [],
-    "https://fusiontables.google.com/embedviz?q=select+col4+from+1hK4pUWN2EDFgzb7tBPnjxUgbbfNCdWy8D5PNQjmK&viz=MAP&h=false&t=1&l=col4"
-    "Canada": "Saint-Zacharie Canada"
-},
-
 "spain-provinces": {
     "anthem": "\"Marcha Real\"",
     "click_message": "(Click the provinces!)",
