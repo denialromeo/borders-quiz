@@ -199,15 +199,15 @@ function embed_map(question_info, start_map_screen=false) {
     const { quiz_mode, chosen, answer, territory } = question_info
     const subject = (chosen == answer ? chosen : territory)
 
-    let start_message
-    if ("starting_message" in quiz_modes[quiz_mode]) {
-        start_message = quiz_modes[quiz_mode].starting_message
+    let neighbors_message
+    if ("starting_message" in quiz_modes[quiz_mode] && start_map_screen) {
+        neighbors_message = quiz_modes[quiz_mode].starting_message
     }
     else if ((neighbors_augmented(subject) === undefined || neighbors_augmented(subject).length === 0) && start_map_screen) {
-        start_message = "Get a feel for what's where!"
+        neighbors_message = "Get a feel for what's where!"
     }
     else {
-        start_message = borders_sentence(subject)
+        neighbors_message = borders_sentence(subject)
     }
 
     var user_hint = subject in game_settings.user_hint ? game_settings.user_hint[subject] : `${quiz_modes[quiz_mode].click_message}`
@@ -216,7 +216,7 @@ function embed_map(question_info, start_map_screen=false) {
                     <center>
                         <p>${!start_map_screen ? right_or_wrong_message(chosen, answer, territory) : pretty_print(subject, true)}</p>
                         <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(quiz_mode, subject, start_map_screen)}'></iframe>
-                        <p>${start_message}</p>
+                        <p>${neighbors_message}</p>
                         <button id='next'></button>
                         ${on_mobile_device() ? `` : `<p id='click-message'>${user_hint}</p>`}
                     </center>
@@ -291,7 +291,8 @@ function start_game() {
     else {
         var possible_starting_addresses = [url_parameters["start-map"], quiz_modes[current_quiz_modes(url_parameters)[0]].starting_map]
         const starting_address = possible_starting_addresses.find(address => address !== undefined)
-        if (starting_address === undefined || current_quiz_modes(url_parameters).length > 1) {
+        if (starting_address === undefined || current_quiz_modes(url_parameters).length > 1 ||
+            (("custom" in url_parameters || "start" in url_parameters) && !("start-map" in url_parameters))) {
             next_question()
         }
         else {
