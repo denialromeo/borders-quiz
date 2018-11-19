@@ -1,6 +1,7 @@
 {
 
     "recenter_map_address": {
+        "Denmark (Greenland)": "Greenland",
         "United Arab Emirates": "Al Hamra Airport UAE",
         "Sri Lanka": "Padaviya Sri Lanka",
         "North Korea__": "Chongju North Korea",
@@ -72,7 +73,6 @@
         "Israel_": "Or Yehuda Israel",
         "Italy": "Cesseli Italy",
         "Italy_": "Dosimo Italy",
-        "Jilin": "Leshan Jilin Province China",
         "Jordan": "Jordan Country",
         "Jordan_": "Imtan Jordan",
         "Kazakhstan": "Shalginskiy Kazakhstan",
@@ -107,7 +107,6 @@
         "Ohio River": "Louisville Kentucky",
         "Oregon_": "Scott Bar California",
         "Pacific Ocean": "Cooperstown California",
-        "Pacific Ocean_": "Valley Falls Oregon",
         "Pacific Ocean__": "Potrerillo del Norote Mexico",
         "Pahang": "Kuala Krau",
         "Pakistan___": "Shawal Pakistan",
@@ -159,6 +158,7 @@
     },
 
     "recenter_map_coordinates": {
+        "Pacific Ocean_": { "lat": 42.484046, "lng": -125.906905 },
         "Sudan": { "lat": 13.657278, "lng": 30.94981 },
         "Greece": { "lat": 40.563334, "lng": 24.111235 },
         "Syria_": { "lat": 33.858555, "lng": 37.722401 },

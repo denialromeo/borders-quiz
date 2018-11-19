@@ -71,7 +71,7 @@ function map_embed_url(quiz_mode, territory, start_map_screen=false) {
 }
 
 function prepend_the(territory, capitalize_the) {
-    if (territory != undefined && territory.startsWith("_")) { territory = territory.slice(1) } // For overview map at start of quiz.
+    if (territory !== undefined && territory.startsWith("_")) { territory = territory.slice(1) } // For overview map at start of quiz.
     var the = (capitalize_the ? "The " : "the ")
     return game_settings.should_prepend_the.some(regex => new RegExp(regex).exec(territory) != null) ? the : ""
 }
@@ -125,7 +125,7 @@ function embed_question(question_info) {
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function begin_timing() {
         var timer_dom_node = game_iframe.contentWindow.document.getElementById("timer")
-        if (timer_dom_node == undefined) {
+        if (timer_dom_node === null) {
             window.requestAnimationFrame(begin_timing);
         }
         else {
@@ -137,7 +137,7 @@ function embed_question(question_info) {
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function detect_player_choice() {
         var choices = game_iframe.contentWindow.document.getElementsByName("choice")
-        if (choices.length == 0) {
+        if (choices.length === 0) {
             window.requestAnimationFrame(detect_player_choice)
         }
         else {
@@ -250,8 +250,6 @@ function embed_map(question_info, start_map_screen=false) {
     next_question_button()
 }
 
-// A sample question_info object is
-// { territory: "United States", answer: "Guatemala", wrong_answers: ["Mexico", "Canada"] }
 function next_question(question_info=build_question(url_parameters)) {
     embed_question(question_info)
 }
