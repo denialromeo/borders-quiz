@@ -73,7 +73,7 @@ function map_embed_url(quiz_mode, territory, start_map_screen=false) {
 function prepend_the(territory, capitalize_the) {
     if (territory !== undefined && territory.startsWith("_")) { territory = territory.slice(1) } // For overview map at start of quiz.
     var the = (capitalize_the ? "The " : "the ")
-    return game_settings.should_prepend_the.some(regex => new RegExp(regex).exec(territory) != null) ? the : ""
+    return game_settings.should_prepend_the.some(regex => new RegExp(regex).exec(territory) !== null) ? the : ""
 }
 
 function truncate_for_mobile(territory) {
@@ -152,10 +152,6 @@ function embed_question(question_info) {
     detect_player_choice()
 }
 
-function plural(territory) {
-    return game_settings.plural.contains(territory)
-}
-
 function borders_sentence(territory) {
 
     var neighbors_ = neighbors_augmented(territory)
@@ -167,7 +163,7 @@ function borders_sentence(territory) {
 
     var sentence = `${pretty_print(territory, true)} `
 
-    sentence += (plural(territory) ? `border ` : `borders `)
+    sentence += (game_settings.plural.contains(territory) ? `border ` : `borders `)
 
     if (neighbors_.length == 0) {
         sentence += `nothing!`
@@ -189,7 +185,7 @@ function borders_sentence(territory) {
 
 function right_or_wrong_message(chosen, answer, territory) {
     var subject = chosen == answer ? chosen : answer
-    var does_or_do = !plural(subject) ? "does" : "do"
+    var does_or_do = !game_settings.plural.contains(subject) ? "does" : "do"
     return chosen == answer ?
            `Correct! ${pretty_print(chosen, true)} ${does_or_do} not border ${pretty_print(territory, false)}!`
          : `Sorry! ${pretty_print(territory, true)} ${does_or_do} border ${pretty_print(chosen, false)}!`
@@ -227,7 +223,7 @@ function embed_map(question_info, start_map_screen=false) {
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function next_question_button() {
         var next_button = game_iframe.contentWindow.document.getElementById("next")
-        if (next_button == undefined) {
+        if (next_button === null) {
             window.requestAnimationFrame(next_question_button)
         }
         else {
@@ -258,11 +254,6 @@ function unused_quiz_modes() {
     return Object.keys(quiz_modes).filter(mode => !current_quiz_modes(url_parameters).contains(mode))
 }
 
-function quiz_mode_url(mode, start_map_screen=true) {
-    var uri = new URI(`?${mode}`)
-    return uri.toString()
-}
-
 function other_quiz_modes_message() {
     var message  = `<span style="display:block;margin-bottom:15px;"/>`
     if (unused_quiz_modes().length > 0) {
@@ -271,7 +262,7 @@ function other_quiz_modes_message() {
 	                    <ul class='unused-quiz-modes'>`
 	        unused_quiz_modes().forEach(mode =>
 	            message += `<li>
-	                            <a target='_self' href='${quiz_mode_url(mode)}'>${quiz_modes[mode].anthem}</a>&nbsp;
+	                            <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;
 	                            ${quiz_modes[mode].description}
 	                        </li>`
 	        )

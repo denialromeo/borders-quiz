@@ -71,7 +71,6 @@
         "Iraq_": "Anah Iraq",
         "Israel": "Israel Country",
         "Israel_": "Or Yehuda Israel",
-        "Italy": "Cesseli Italy",
         "Italy_": "Dosimo Italy",
         "Jordan": "Jordan Country",
         "Jordan_": "Imtan Jordan",
@@ -158,6 +157,8 @@
     },
 
     "recenter_map_coordinates": {
+        "Sweden": { "lat": 59.776094, "lng": 18.643501 },
+        "Italy": { "lat": 43.167335, "lng": 13.213455 },
         "Pacific Ocean_": { "lat": 42.484046, "lng": -125.906905 },
         "Sudan": { "lat": 13.657278, "lng": 30.94981 },
         "Greece": { "lat": 40.563334, "lng": 24.111235 },
@@ -284,8 +285,7 @@
     ],
 
     "plural": [
-        "Balearic Islands",
-        "Canary Islands"
+        "Balearic Islands"
     ],
 
     "dont_sort_neighbors": [
