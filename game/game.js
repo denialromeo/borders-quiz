@@ -1,73 +1,35 @@
 const $ = require("jquery")
 const URI = require("urijs")
 
-const { build_question, current_quiz_modes, neighbors, quiz_mode_of } = require("../build-question/build-question.js")
+const { build_question, current_quiz_modes, neighbors } = require("../build-question/build-question.js")
 
 const random = require("../build-question/random.js")
 const { Timer } = require("./timer.js")
+const { map_embed_url } = require("./map-embed-url.js")
 
-const google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 const game_css = require("./game.css").toString()
 
-const quiz_modes = Object.freeze(require("./quiz-modes.json"))
 const game_settings = Object.freeze(require("./game-settings.json"))
+const quiz_modes = Object.freeze(require("./quiz-modes.json"))
 
 const game_iframe = document.getElementById("game-container")
 
 var score = { correct: 0, wrong: 0 }
-var timer = new Timer()
+const timer = new Timer()
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
 
 const url_parameters = Object.freeze(new URI(window.location.href).search(true))
+
+function on_mobile_device() {
+    return $(document).width() <= 760
+}
 
 function neighbors_augmented(territory) {
     if (territory !== undefined && territory.startsWith("_")) { // For overview map at start of quiz.
         territory = territory.slice(1)
     }
     return neighbors(territory)
-}
-
-function geocode(address) {
-    const url = "https://maps.googleapis.com/maps/api/geocode/json"
-    var json = {}
-    $.ajax({ url: url, data: { key: google_maps_api_key, address: address }, async: false, success: r => json = r })
-    return json
-}
-
-function coordinates(quiz_mode, address) {
-    if (address in game_settings.recenter_map_address) {
-        address = game_settings.recenter_map_address[address]
-    }
-    else if (address in game_settings.recenter_map_coordinates) {
-        return game_settings.recenter_map_coordinates[address]
-    }
-    else if (quiz_mode_of(address) === quiz_mode) {
-        address += quiz_modes[quiz_mode].geocode_append
-    }
-    const geocode_api_response = geocode(address)
-    if (geocode_api_response.results.length === 0) {
-        throw "Invalid location!"
-    }
-    return geocode_api_response.results[0].geometry.location
-}
-
-function google_maps_zoom_level(quiz_mode, territory, start_map_screen=false) {
-    if (start_map_screen && !isNaN(url_parameters["start-zoom"])) {
-        return url_parameters["start-zoom"]
-    }
-    var possible_zoom_levels = [game_settings.custom_zoom_levels[territory], quiz_modes[quiz_mode].default_zoom_level]
-    var zoom_level = possible_zoom_levels.find(zl => !isNaN(zl))
-    if (on_mobile_device() && zoom_level > 2) {
-        zoom_level -= 1
-    }
-    return zoom_level
-}
-
-function map_embed_url(quiz_mode, territory, start_map_screen=false) {
-    var url = new URI(quiz_modes[quiz_mode].map_embed_base_url)
-    const { lat, lng } = coordinates(quiz_mode, territory)
-    return url.addSearch({ lat: lat, lng: lng, z: google_maps_zoom_level(quiz_mode, territory, start_map_screen) }).toString()
 }
 
 function prepend_the(territory, capitalize_the) {
@@ -87,10 +49,6 @@ function pretty_print(territory, capitalize_the) {
     var the = prepend_the(territory, capitalize_the)
     territory = truncate_for_mobile(territory).replace(/_/g,'').replace(/\s/g,'&nbsp;').replace(/-/g, '&#8209;')
     return (the + territory)
-}
-
-function on_mobile_device() {
-    return $(document).width() <= 760
 }
 
 function embed(src) {     
@@ -211,7 +169,8 @@ function embed_map(question_info, start_map_screen=false) {
     var content = `<div id='${on_mobile_device() ? "map-container-mobile" : "map-container"}'>
                     <center>
                         <p>${!start_map_screen ? right_or_wrong_message(chosen, answer, territory) : pretty_print(subject, true)}</p>
-                        <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 src='${map_embed_url(quiz_mode, subject, start_map_screen)}'></iframe>
+                        <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 
+                                src='${map_embed_url(quiz_mode, subject, url_parameters, start_map_screen, on_mobile_device())}'></iframe>
                         <p>${neighbors_message}</p>
                         <button id='next'></button>
                         ${on_mobile_device() ? `` : `<p id='click-message'>${user_hint}</p>`}
