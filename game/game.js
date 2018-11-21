@@ -93,8 +93,7 @@ function embed_question(question_info) {
         else {
             Array.from(choices).forEach(choice =>
                 choice.onclick = function() {
-                    question_info.chosen = this.id
-                    embed_map(question_info)
+                    embed_map(question_info, this.id)
                 }
             )
         }
@@ -137,8 +136,8 @@ function right_or_wrong_message(chosen, answer, territory) {
          : `Sorry! ${format_for_display(territory, true)} ${does_or_do} border ${format_for_display(chosen, false)}!`
 }
 
-function embed_map(question_info, start_map_screen=false) {
-    const { quiz_mode, chosen, answer, territory } = question_info
+function embed_map(question_info, chosen, start_map_screen=false) {
+    const { quiz_mode, answer, territory } = question_info
     const subject = (chosen === answer ? chosen : territory)
 
     let neighbors_message
@@ -233,11 +232,11 @@ function start_game() {
         }
         else {
             try {
-                embed_map({ quiz_mode: current_quiz_modes(url_parameters)[0],
-                            territory: starting_address,
-                            answer: starting_address,
-                            wrong_answers: [],
-                            chosen: starting_address },
+                embed_map(Object.freeze({ quiz_mode: current_quiz_modes(url_parameters)[0],
+                                          territory: starting_address,
+                                          answer: starting_address,
+                                          wrong_answers: [] }),
+                          starting_address,
                           true)
             }
             catch(e) {

@@ -141,7 +141,7 @@ function build_question(url_parameters) {
     var answer = random.choice(possible_answers)
     var wrong_answers = random.sample(neighbors(territory), num_wrong_answers)
 
-    return { quiz_mode: quiz_mode_of(territory), territory: territory, answer: answer, wrong_answers: wrong_answers }
+    return Object.freeze({ quiz_mode: quiz_mode_of(territory), territory: territory, answer: answer, wrong_answers: wrong_answers })
 }
 
 // Exports
