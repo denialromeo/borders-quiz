@@ -14,7 +14,7 @@ const quiz_modes = Object.freeze(require("./quiz-modes.json"))
 
 const game_iframe = document.getElementById("game-container")
 
-var score = { correct: 0, wrong: 0 }
+const score = { correct: 0, wrong: 0 }
 const timer = new Timer()
 
 Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
@@ -45,30 +45,29 @@ function format_for_display(territory, capitalize_the) {
 }
 
 function embed(src) {     
-    game_iframe.srcdoc = `<html><head><style>${game_css}</style><body>${src}</body></html>`
+    game_iframe.srcdoc = `<html><head><style>${game_css}</style></head><body>${src}</body></html>`
 }
 
 function embed_question(question_info) {
     const { quiz_mode, wrong_answers, answer, territory } = question_info
     var choices = random.shuffle(wrong_answers.concat(answer))
-    var question  = `<div id='${on_mobile_device() ? "question-container-mobile" : "question-container"}'>
-                        <div id='quiz_title'>${quiz_modes[quiz_mode].title}</div>
-                        <div id='${(on_mobile_device() ? "question-text-mobile" : "question-text")}'>
-                            <p>Which of these does not border ${format_for_display(territory, false)}?</p>
-                            <form>`
-                                for (let i = 0; i < choices.length; i += 1) {
-                                    var choice = choices[i]
-                                    var letter = `&emsp;${String.fromCharCode(i + 65)}. `
-                                    // Do not replace the double-quotes or game will break on territories like "Cote d'Ivoire".
-                                    question += `<input type='radio' id="${choice}" value="${choice}" name='choice'>
-                                                 <label for="${choice}">${letter}${format_for_display(choice, true)}</label><br>`
-                                }
-               question += `</form>
-                        </div>
-                        <p id='score_and_timer'>
-                            <i id='score'>Correct: ${score.correct}&nbsp;&nbspWrong: ${score.wrong}</i><br>
-                            <span id='timer'>${timer.formatted_time}</span>
-                        </p>
+    var question = `<div id='${on_mobile_device() ? "question-container-mobile" : "question-container"}'>
+                       <div id='quiz_title'>${quiz_modes[quiz_mode].title}</div>
+                       <div id='${(on_mobile_device() ? "question-text-mobile" : "question-text")}'>
+                           <p>Which of these does not border ${format_for_display(territory, false)}?</p>
+                           <form>`
+                               for (let i = 0; i < choices.length; i += 1) {
+                                   var choice = choices[i]
+                                   var letter = `&emsp;${String.fromCharCode(i + 65)}. `
+                                   question += `<input type='radio' id="${choice}" value="${choice}" name='choice'>
+                                                <label for="${choice}">${letter}${format_for_display(choice, true)}</label><br>`
+                               }
+              question += `</form>
+                       </div>
+                       <p id='score_and_timer'>
+                           <em id='score'>Correct: ${score.correct}&nbsp;&nbspWrong: ${score.wrong}</em><br>
+                           <span id='timer'>${timer.formatted_time}</span>
+                       </p>
                     </div>`
 
     embed(question)
@@ -143,17 +142,17 @@ function embed_map(question_info, start_map_screen=false) {
     const subject = (chosen === answer ? chosen : territory)
 
     let neighbors_message
-    if ("starting_message" in quiz_modes[quiz_mode] && start_map_screen) {
+    if (start_map_screen && "starting_message" in quiz_modes[quiz_mode]) {
         neighbors_message = quiz_modes[quiz_mode].starting_message
     }
-    else if ((neighbors_augmented(subject) === undefined || neighbors_augmented(subject).length === 0) && start_map_screen) {
+    else if (start_map_screen && (neighbors_augmented(subject) === undefined || neighbors_augmented(subject).length === 0)) {
         neighbors_message = "Get a feel for what's where!"
     }
     else {
         neighbors_message = borders_sentence(subject)
     }
 
-    var user_hint = subject in game_settings.user_hint ? game_settings.user_hint[subject] : `${quiz_modes[quiz_mode].click_message}`
+    var user_hint = subject in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].click_message
 
     var content = `<div id='${on_mobile_device() ? "map-container-mobile" : "map-container"}'>
                     <center>
@@ -206,7 +205,7 @@ function other_quiz_modes_message() {
     var message  = `<span style="display:block;margin-bottom:15px;"/>`
     if (unused_quiz_modes().length > 0) {
         message += `<div style="font-family:Helvetica">
-                    <p>You can also try these quiz modes!</p>
+                        <p>You can also try these quiz modes!</p>
                         <ul class='unused-quiz-modes'>`
             unused_quiz_modes().forEach(mode =>
                 message += `<li>

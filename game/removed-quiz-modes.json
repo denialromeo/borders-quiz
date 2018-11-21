@@ -2,23 +2,6 @@ Quiz modes that have been removed for arbitrary reasons.
 
 Just pop any you want back into game/quiz_modes.json and build-question/borders.json.
 
-"myanmar-regions-in-progress": {
-    "Ayeyarwady Region": [],
-    "Bago Region": [],
-    "Chin State": [],
-    "Kachin State": [],
-    "Kayah State": [],
-    "Kayin State": [],
-    "Magway Region": [],
-    "Mon State": [],
-    "Mandalay Region": [],
-    "Rakhine State": [],
-    "Sagaing Region": [],
-    "Shan State": [],
-    "Tanintharyi Region": [],
-    "Yangon Region": [],
-}
-
 "spain-provinces": {
     "anthem": "\"Marcha Real\"",
     "click_message": "(Click the provinces!)",
@@ -87,12 +70,4 @@ Just pop any you want back into game/quiz_modes.json and build-question/borders.
     "Vizcaya": ["Guipúzcoa", "Burgos", "Alava", "Cantabria"],
     "Zamora": ["Ourense", "León", "Valladolid", "Salamanca", "Portugal_"],
     "Zaragoza": ["Navarra", "Huesca", "Lleida", "Tarragona", "Teruel", "Guadalajara", "Soria", "La Rioja"]
-},
-
-"countries": {
-    "Lake Albert": ["Democratic Republic of the Congo", "Uganda"],
-    "Lake Chad": ["Chad", "Cameroon"],
-    "Lake Kariba": ["Zambia", "Zimbabwe"],
-    "Lake Kivu": ["Democratic Republic of the Congo", "Rwanda"],
-    "Lake Mweru": ["Democratic Republic of the Congo", "Tanzania"]
 },
