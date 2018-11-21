@@ -1303,7 +1303,7 @@
         "Iran": ["Afghanistan", "Armenia", "Azerbaijan", "Iraq", "Pakistan", "Turkey", "Turkmenistan"],
         "Iraq": ["Iran", "Jordan", "Kuwait", "Saudi Arabia", "Syria", "Turkey"],
         "Ireland": ["United Kingdom"],
-        "Irish Sea": ["Ireland", "United Kingdom (Isle of Man)", "United Kingdom"],
+        "Irish Sea": ["Ireland", "United Kingdom", "United Kingdom (Isle of Man)"],
         "Israel": ["Egypt", "Jordan", "Lebanon", "West Bank_", "Gaza Strip_", "Syria"],
         "Italy": ["Austria", "France", "San Marino", "Slovenia", "Switzerland", "Vatican City"],
         "Jamaica": [],

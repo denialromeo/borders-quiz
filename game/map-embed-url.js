@@ -31,7 +31,7 @@ function coordinates(quiz_mode, address) {
     return geocode_api_response.results[0].geometry.location
 }
 
-function google_maps_zoom_level(quiz_mode, territory, url_parameters, start_map_screen=false, on_mobile_device=false) {
+function google_maps_zoom_level(quiz_mode, territory, url_parameters, start_map_screen, on_mobile_device) {
     if (start_map_screen && !isNaN(url_parameters["start-zoom"])) {
         return url_parameters["start-zoom"]
     }
@@ -43,7 +43,7 @@ function google_maps_zoom_level(quiz_mode, territory, url_parameters, start_map_
     return zoom_level
 }
 
-function map_embed_url(quiz_mode, territory, url_parameters, start_map_screen=false, on_mobile_device=false) {
+function map_embed_url(quiz_mode, territory, url_parameters, start_map_screen, on_mobile_device) {
     var url = new URI(quiz_modes[quiz_mode].map_embed_base_url)
     const { lat, lng } = coordinates(quiz_mode, territory)
     return url.addSearch({ lat: lat, lng: lng, z: google_maps_zoom_level(quiz_mode, territory, start_map_screen, on_mobile_device) }).toString()

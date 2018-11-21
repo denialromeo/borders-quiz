@@ -4,8 +4,8 @@ const URI = require("urijs")
 const { build_question, current_quiz_modes, neighbors } = require("../build-question/build-question.js")
 
 const random = require("../build-question/random.js")
-const { Timer } = require("./timer.js")
 const { map_embed_url } = require("./map-embed-url.js")
+const { Timer } = require("./timer.js")
 
 const game_css = require("./game.css").toString()
 
@@ -32,22 +32,15 @@ function neighbors_augmented(territory) {
     return neighbors(territory)
 }
 
-function prepend_the(territory, capitalize_the) {
-    if (territory !== undefined && territory.startsWith("_")) { territory = territory.slice(1) } // For overview map at start of quiz.
-    var the = (capitalize_the ? "The " : "the ")
-    return game_settings.should_prepend_the.some(regex => new RegExp(regex).exec(territory) !== null) ? the : ""
-}
-
-function truncate_for_mobile(territory) {
-    if (on_mobile_device() && territory in game_settings.truncations_for_mobile) {
-        return game_settings.truncations_for_mobile[territory]
+function format_for_display(territory, capitalize_the) {
+    var the = ""
+    if (game_settings.should_prepend_the.some(regex => new RegExp(regex).exec(territory) !== null)) {
+        the = capitalize_the ? "The " : "the "
     }
-    return territory
-}
-
-function pretty_print(territory, capitalize_the) {
-    var the = prepend_the(territory, capitalize_the)
-    territory = truncate_for_mobile(territory).replace(/_/g,'').replace(/\s/g,'&nbsp;').replace(/-/g, '&#8209;')
+    if (on_mobile_device() && territory in game_settings.truncations_for_mobile) {
+        territory = game_settings.truncations_for_mobile[territory]
+    }
+    territory = territory.replace(/_/g,'').replace(/\s/g,'&nbsp;').replace(/-/g, '&#8209;')
     return (the + territory)
 }
 
@@ -61,14 +54,14 @@ function embed_question(question_info) {
     var question  = `<div id='${on_mobile_device() ? "question-container-mobile" : "question-container"}'>
                         <div id='quiz_title'>${quiz_modes[quiz_mode].title}</div>
                         <div id='${(on_mobile_device() ? "question-text-mobile" : "question-text")}'>
-                            <p>Which of these does not border ${pretty_print(territory, false)}?</p>
+                            <p>Which of these does not border ${format_for_display(territory, false)}?</p>
                             <form>`
                                 for (let i = 0; i < choices.length; i += 1) {
                                     var choice = choices[i]
                                     var letter = `&emsp;${String.fromCharCode(i + 65)}. `
                                     // Do not replace the double-quotes or game will break on territories like "Cote d'Ivoire".
                                     question += `<input type='radio' id="${choice}" value="${choice}" name='choice'>
-                                                 <label for="${choice}">${letter}${pretty_print(choice, true)}</label><br>`
+                                                 <label for="${choice}">${letter}${format_for_display(choice, true)}</label><br>`
                                 }
                question += `</form>
                         </div>
@@ -112,46 +105,42 @@ function embed_question(question_info) {
 
 function borders_sentence(territory) {
 
-    var neighbors_ = neighbors_augmented(territory)
+    var neighboring_territories = neighbors_augmented(territory)
     if (!game_settings.dont_sort_neighbors.contains(territory)) {
-        neighbors_.sort()
+        neighboring_territories.sort()
     }
+    neighboring_territories = neighboring_territories.map(n => format_for_display(n, false))
 
-    neighbors_ = neighbors_.map(n => pretty_print(n, false))
+    var sentence = format_for_display(territory, true) + (game_settings.plural.contains(territory) ? ` border ` : ` borders `)
 
-    var sentence = `${pretty_print(territory, true)} `
-
-    sentence += (game_settings.plural.contains(territory) ? `border ` : `borders `)
-
-    if (neighbors_.length == 0) {
+    if (neighboring_territories.length === 0) {
         sentence += `nothing!`
     }
-    else if (neighbors_.length == 1) {
-        sentence += `only ${neighbors_[0]}.`
+    else if (neighboring_territories.length === 1) {
+        sentence += `only ${neighboring_territories[0]}.`
     }
-    else if (neighbors_.length == 2) {
-        sentence += `${neighbors_[0]} and ${neighbors_[1]}.`
+    else if (neighboring_territories.length === 2) {
+        sentence += `${neighboring_territories[0]} and ${neighboring_territories[1]}.`
     }
     else {
-        var last = neighbors_.pop()
-        neighbors_.forEach(n => sentence += `${n}, `)
-        sentence += `and ${last}.`
+        var last = neighboring_territories.pop()
+        sentence += `${neighboring_territories.join(", ")}, and ${last}.`
     }
 
     return sentence
 }
 
 function right_or_wrong_message(chosen, answer, territory) {
-    var subject = chosen == answer ? chosen : answer
+    var subject = chosen === answer ? chosen : answer
     var does_or_do = !game_settings.plural.contains(subject) ? "does" : "do"
-    return chosen == answer ?
-           `Correct! ${pretty_print(chosen, true)} ${does_or_do} not border ${pretty_print(territory, false)}!`
-         : `Sorry! ${pretty_print(territory, true)} ${does_or_do} border ${pretty_print(chosen, false)}!`
+    return chosen === answer ?
+           `Correct! ${format_for_display(chosen, true)} ${does_or_do} not border ${format_for_display(territory, false)}!`
+         : `Sorry! ${format_for_display(territory, true)} ${does_or_do} border ${format_for_display(chosen, false)}!`
 }
 
 function embed_map(question_info, start_map_screen=false) {
     const { quiz_mode, chosen, answer, territory } = question_info
-    const subject = (chosen == answer ? chosen : territory)
+    const subject = (chosen === answer ? chosen : territory)
 
     let neighbors_message
     if ("starting_message" in quiz_modes[quiz_mode] && start_map_screen) {
@@ -168,7 +157,7 @@ function embed_map(question_info, start_map_screen=false) {
 
     var content = `<div id='${on_mobile_device() ? "map-container-mobile" : "map-container"}'>
                     <center>
-                        <p>${!start_map_screen ? right_or_wrong_message(chosen, answer, territory) : pretty_print(subject, true)}</p>
+                        <p>${!start_map_screen ? right_or_wrong_message(chosen, answer, territory) : format_for_display(subject, true)}</p>
                         <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 
                                 src='${map_embed_url(quiz_mode, subject, url_parameters, start_map_screen, on_mobile_device())}'></iframe>
                         <p>${neighbors_message}</p>
@@ -216,17 +205,17 @@ function unused_quiz_modes() {
 function other_quiz_modes_message() {
     var message  = `<span style="display:block;margin-bottom:15px;"/>`
     if (unused_quiz_modes().length > 0) {
-    	message += `<div style="font-family:Helvetica">
-    	            <p>You can also try these quiz modes!</p>
-	                    <ul class='unused-quiz-modes'>`
-	        unused_quiz_modes().forEach(mode =>
-	            message += `<li>
-	                            <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;
-	                            ${quiz_modes[mode].description}
-	                        </li>`
-	        )
-	        message += `</ul>`
-    	message += `</div>`
+        message += `<div style="font-family:Helvetica">
+                    <p>You can also try these quiz modes!</p>
+                        <ul class='unused-quiz-modes'>`
+            unused_quiz_modes().forEach(mode =>
+                message += `<li>
+                                <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;
+                                ${quiz_modes[mode].description}
+                            </li>`
+            )
+            message += `</ul>`
+        message += `</div>`
     }
     return message
 }
