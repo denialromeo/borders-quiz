@@ -17,7 +17,7 @@ const game_iframe = document.getElementById("game-container")
 const score = { correct: 0, wrong: 0 }
 const timer = new Timer()
 
-Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
+Array.prototype.contains = function(item) { return this.indexOf(item) >= 0 }
 
 const url_parameters = Object.freeze(new URI(window.location.href).search(true))
 
@@ -48,7 +48,7 @@ function embed(src) {
     game_iframe.srcdoc = `<html><head><style>${game_css}</style></head><body>${src}</body></html>`
 }
 
-function embed_question(question_info) {
+function embed_question(question_info=build_question(url_parameters)) {
     const { quiz_mode, wrong_answers, answer, territory } = question_info
     var choices = random.shuffle(wrong_answers.concat(answer))
     var question = `<div id='${on_mobile_device() ? "question-container-mobile" : "question-container"}'>
@@ -91,11 +91,7 @@ function embed_question(question_info) {
             window.requestAnimationFrame(detect_player_choice)
         }
         else {
-            Array.from(choices).forEach(choice =>
-                choice.onclick = function() {
-                    embed_map(question_info, this.id)
-                }
-            )
+            Array.from(choices).forEach(choice => choice.onclick = function() { embed_map(question_info, this.id) })
         }
     }
     detect_player_choice()
@@ -175,25 +171,21 @@ function embed_map(question_info, chosen, start_map_screen=false) {
         else {
             if (start_map_screen) {
                 next_button.innerHTML = "Start"
-                next_button.onclick = function() { next_question() }
+                next_button.onclick = function() { embed_question() }
             }
             else if (chosen === answer) {
                 score.correct += 1
                 next_button.innerHTML = "Next"
-                next_button.onclick = function() { next_question() }
+                next_button.onclick = function() { embed_question() }
             }
             else if (chosen !== answer) {
                 score.wrong += 1
                 next_button.innerHTML = "Try Again"
-                next_button.onclick = function() { next_question(question_info) }
+                next_button.onclick = function() { embed_question(question_info) }
             }
         }
     }
     next_question_button()
-}
-
-function next_question(question_info=build_question(url_parameters)) {
-    embed_question(question_info)
 }
 
 function unused_quiz_modes() {
@@ -201,7 +193,7 @@ function unused_quiz_modes() {
 }
 
 function other_quiz_modes_message() {
-    var message  = `<span style="display:block;margin-bottom:15px;"/>`
+    var message = `<span style="display:block;margin-bottom:15px;"/>`
     if (unused_quiz_modes().length > 0) {
         message += `<div style="font-family:Helvetica">
                         <p>You can also try these quiz modes!</p>
@@ -210,8 +202,7 @@ function other_quiz_modes_message() {
                 message += `<li>
                                 <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;
                                 ${quiz_modes[mode].description}
-                            </li>`
-            )
+                            </li>`)
             message += `</ul>`
         message += `</div>`
     }
@@ -220,28 +211,23 @@ function other_quiz_modes_message() {
 
 // Let's go!!!!!!!
 function start_game() {
-    if ("no-start-map" in url_parameters) {
-        next_question()
+    var possible_starting_addresses = [url_parameters["start-map"], quiz_modes[current_quiz_modes(url_parameters)[0]].starting_map]
+    const starting_address = possible_starting_addresses.find(address => address !== undefined)
+    if ("no-start-map" in url_parameters || starting_address === undefined || current_quiz_modes(url_parameters).length > 1 ||
+        (("custom" in url_parameters || "start" in url_parameters) && !("start-map" in url_parameters))) {
+        embed_question()
     }
     else {
-        var possible_starting_addresses = [url_parameters["start-map"], quiz_modes[current_quiz_modes(url_parameters)[0]].starting_map]
-        const starting_address = possible_starting_addresses.find(address => address !== undefined)
-        if (starting_address === undefined || current_quiz_modes(url_parameters).length > 1 ||
-            (("custom" in url_parameters || "start" in url_parameters) && !("start-map" in url_parameters))) {
-            next_question()
+        try {
+            embed_map(Object.freeze({ quiz_mode: current_quiz_modes(url_parameters)[0],
+                                      territory: starting_address,
+                                      answer: starting_address,
+                                      wrong_answers: [] }),
+                      starting_address,
+                      true)
         }
-        else {
-            try {
-                embed_map(Object.freeze({ quiz_mode: current_quiz_modes(url_parameters)[0],
-                                          territory: starting_address,
-                                          answer: starting_address,
-                                          wrong_answers: [] }),
-                          starting_address,
-                          true)
-            }
-            catch(e) {
-                next_question()
-            }
+        catch(e) {
+            embed_question()
         }
     }
     $(game_iframe).after(other_quiz_modes_message())

@@ -3,7 +3,7 @@ const random = require("./random.js")
 const borders = require("./borders.json")
 const question_settings = require("./question-settings.json")
 
-Array.prototype.contains = function(s) { return this.indexOf(s) >= 0 }
+Array.prototype.contains = function(item) { return this.indexOf(item) >= 0 }
 
 const default_quiz_mode = Object.keys(borders).pop()
 
