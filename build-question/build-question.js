@@ -1,7 +1,7 @@
-const random = require("./random.js")
+const random = Object.freeze(require("./random.js"))
 
-const borders = require("./borders.json")
-const question_settings = require("./question-settings.json")
+const borders = Object.freeze(require("./borders.json"))
+const question_settings = Object.freeze(require("./question-settings.json"))
 
 Array.prototype.contains = function(item) { return this.indexOf(item) >= 0 }
 

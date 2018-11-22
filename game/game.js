@@ -198,8 +198,8 @@ function other_quiz_modes_message() {
                                 <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;
                                 ${quiz_modes[mode].description}
                             </li>`)
-            message += `</ul>`
-        message += `</div>`
+            message += `</ul>
+                    </div>`
     }
     return message
 }
