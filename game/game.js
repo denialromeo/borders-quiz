@@ -89,7 +89,6 @@ function embed_question(question_info=build_question(url_parameters)) {
 }
 
 function borders_sentence(territory, neighboring_territories) {
-
     if (!game_settings.dont_sort_neighbors.contains(territory)) {
         neighboring_territories.sort()
     }
@@ -122,7 +121,7 @@ function right_or_wrong_message(chosen, answer, territory) {
          : `Sorry! ${format_for_display(territory, true)} ${does_or_do} border ${format_for_display(chosen, false)}!`
 }
 
-function embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint="") {
+function embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint) {
     var content = `<div id='${on_mobile_device() ? "map-container-mobile" : "map-container"}'>
                     <center>
                         <p>${title_text}</p>
@@ -130,7 +129,7 @@ function embed_map(title_text, embedded_map_url, bottom_text, next_button_text, 
                                 frameborder=0 src='${embedded_map_url}'></iframe>
                         <p>${bottom_text}</p>
                         <button id='next'></button>
-                        ${on_mobile_device() ? `` : `<p id='click-message'>${user_hint}</p>`}
+                        ${on_mobile_device() ? `` : `<p id='user-hint'>${user_hint}</p>`}
                     </center>
                    </div>`
 
@@ -167,7 +166,8 @@ function embed_start_map(quiz_mode, territory) {
     }
     var next_button_text = "Start"
     var next_button_onclick = function() { embed_question() }
-    embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick)
+    const user_hint = territory in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].click_message
+    embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint)
 }
 
 function embed_normal_map(question_info, chosen) {
@@ -178,7 +178,8 @@ function embed_normal_map(question_info, chosen) {
     const bottom_text = borders_sentence(subject, neighbors(subject))
     const next_button_text = chosen === answer ? "Next" : "Try Again"
     const next_button_onclick = chosen === answer ? function() { embed_question() } : function() { embed_question(question_info) }
-    embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick)
+    const user_hint = subject in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].click_message
+    embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint)
 }
 
 function unused_quiz_modes() {
