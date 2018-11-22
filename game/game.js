@@ -177,7 +177,8 @@ function embed_normal_map(question_info, chosen) {
     const embedded_map_url = map_embed_url(quiz_mode, subject, url_parameters, false, on_mobile_device())
     const bottom_text = borders_sentence(subject, neighbors(subject))
     const next_button_text = chosen === answer ? "Next" : "Try Again"
-    const next_button_onclick = chosen === answer ? function() { embed_question() } : function() { embed_question(question_info) }
+    const next_button_onclick = chosen === answer ? function() { score.correct += 1; embed_question() } 
+                                                  : function() { score.wrong += 1; embed_question(question_info) }
     const user_hint = subject in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].click_message
     embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint)
 }

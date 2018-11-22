@@ -60,7 +60,7 @@
 		"click_message": "(Click the states!)",
 		"default_zoom_level": 4,
 		"description": "(Brazil's states.)",
-		"geocode_append": " State Brazil",
+		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+1RUviWSunc98hNoDXYbsNFfZrexdnriZyNnEctaox&viz=MAP&h=false&t=1&l=col3",
 		"starting_map": "Brazil",
 		"title": "Brazil States"

@@ -21,7 +21,6 @@
         "Belarus": "Pliescanicy Belarus",
         "Belgium": "Parette Belgium",
         "Benin_": "Benin",
-        "Brazil": "Brazil Country",
         "Brunei_": "Brunei",
         "Bulgaria": "Popovo Bulgaria",
         "Burkina Faso": "Sahel Reserve Burkina Faso",
@@ -158,6 +157,7 @@
     },
 
     "recenter_map_coordinates": {
+        "Brazil": { "lat": -14.915496, "lng": -58.604967 },
         "Sweden": { "lat": 59.776094, "lng": 18.643501 },
         "Italy": { "lat": 43.167335, "lng": 13.213455 },
         "Pacific Ocean_": { "lat": 42.484046, "lng": -125.906905 },
