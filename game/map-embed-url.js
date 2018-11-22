@@ -71,7 +71,7 @@ function google_maps_zoom_level(quiz_mode, territory, url_parameters, start_map_
 function map_embed_url(quiz_mode, territory, url_parameters, start_map_screen, on_mobile_device) {
     var url = new URI(quiz_modes[quiz_mode].map_embed_base_url)
     const { lat, lng } = coordinates(quiz_mode, territory)
-    return url.addSearch({ lat: lat, lng: lng, z: google_maps_zoom_level(quiz_mode, territory, start_map_screen, on_mobile_device) }).toString()
+    return url.addSearch({ lat: lat, lng: lng, z: google_maps_zoom_level(quiz_mode, territory, url_parameters, start_map_screen, on_mobile_device) }).toString()
 }
 
 // Exports
