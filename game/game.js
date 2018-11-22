@@ -21,16 +21,7 @@ Array.prototype.contains = function(item) { return this.indexOf(item) >= 0 }
 
 const url_parameters = Object.freeze(new URI(window.location.href).search(true))
 
-function on_mobile_device() {
-    return $(document).width() <= 760
-}
-
-function neighbors_augmented(territory) {
-    if (territory !== undefined && territory.startsWith("_")) { // For overview map at start of quiz.
-        territory = territory.slice(1)
-    }
-    return neighbors(territory)
-}
+function on_mobile_device() { return $(document).width() <= 760 }
 
 function format_for_display(territory, capitalize_the) {
     var the = ""
@@ -91,15 +82,14 @@ function embed_question(question_info=build_question(url_parameters)) {
             window.requestAnimationFrame(detect_player_choice)
         }
         else {
-            Array.from(choices).forEach(choice => choice.onclick = function() { embed_map(question_info, this.id) })
+            Array.from(choices).forEach(choice => choice.onclick = function() { embed_normal_map(question_info, this.id) })
         }
     }
     detect_player_choice()
 }
 
-function borders_sentence(territory) {
+function borders_sentence(territory, neighboring_territories) {
 
-    var neighboring_territories = neighbors_augmented(territory)
     if (!game_settings.dont_sort_neighbors.contains(territory)) {
         neighboring_territories.sort()
     }
@@ -132,29 +122,13 @@ function right_or_wrong_message(chosen, answer, territory) {
          : `Sorry! ${format_for_display(territory, true)} ${does_or_do} border ${format_for_display(chosen, false)}!`
 }
 
-function embed_map(question_info, chosen, start_map_screen=false) {
-    const { quiz_mode, answer, territory } = question_info
-    const subject = (chosen === answer ? chosen : territory)
-
-    let neighbors_message
-    if (start_map_screen && "starting_message" in quiz_modes[quiz_mode]) {
-        neighbors_message = quiz_modes[quiz_mode].starting_message
-    }
-    else if (start_map_screen && (neighbors_augmented(subject) === undefined || neighbors_augmented(subject).length === 0)) {
-        neighbors_message = "Get a feel for what's where!"
-    }
-    else {
-        neighbors_message = borders_sentence(subject)
-    }
-
-    var user_hint = subject in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].click_message
-
+function embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint="") {
     var content = `<div id='${on_mobile_device() ? "map-container-mobile" : "map-container"}'>
                     <center>
-                        <p>${!start_map_screen ? right_or_wrong_message(chosen, answer, territory) : format_for_display(subject, true)}</p>
-                        <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no' frameborder=0 
-                                src='${map_embed_url(quiz_mode, subject, url_parameters, start_map_screen, on_mobile_device())}'></iframe>
-                        <p>${neighbors_message}</p>
+                        <p>${title_text}</p>
+                        <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no'
+                                frameborder=0 src='${embedded_map_url}'></iframe>
+                        <p>${bottom_text}</p>
                         <button id='next'></button>
                         ${on_mobile_device() ? `` : `<p id='click-message'>${user_hint}</p>`}
                     </center>
@@ -163,29 +137,48 @@ function embed_map(question_info, chosen, start_map_screen=false) {
     embed(content)
 
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
-    function next_question_button() {
+    function set_next_button() {
         var next_button = game_iframe.contentWindow.document.getElementById("next")
         if (next_button === null) {
-            window.requestAnimationFrame(next_question_button)
+            window.requestAnimationFrame(set_next_button)
         }
         else {
-            if (start_map_screen) {
-                next_button.innerHTML = "Start"
-                next_button.onclick = function() { embed_question() }
-            }
-            else if (chosen === answer) {
-                score.correct += 1
-                next_button.innerHTML = "Next"
-                next_button.onclick = function() { embed_question() }
-            }
-            else if (chosen !== answer) {
-                score.wrong += 1
-                next_button.innerHTML = "Try Again"
-                next_button.onclick = function() { embed_question(question_info) }
-            }
+            next_button.innerHTML = next_button_text
+            next_button.onclick = next_button_onclick
         }
     }
-    next_question_button()
+    set_next_button()
+}
+
+function embed_start_map(quiz_mode, territory) {
+    var title_text = format_for_display(territory, true)
+    var embedded_map_url = map_embed_url(quiz_mode, territory, url_parameters, true, on_mobile_device())
+    if (territory !== undefined && territory.startsWith("_")) { territory = territory.slice(1) }
+    var neighboring_territories = neighbors(territory)
+    var bottom_text
+    if ("starting_message" in quiz_modes[quiz_mode]) { 
+        bottom_text = quiz_modes[quiz_mode].starting_message
+    }
+    else if (neighboring_territories === undefined || neighboring_territories.length === 0) {
+        bottom_text = "Get a feel for what's where!"
+    }
+    else {
+        bottom_text = borders_sentence(territory, neighboring_territories)
+    }
+    var next_button_text = "Start"
+    var next_button_onclick = function() { embed_question() }
+    embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick)
+}
+
+function embed_normal_map(question_info, chosen) {
+    const { quiz_mode, answer, territory } = question_info
+    const subject = chosen === answer ? chosen : territory
+    const title_text = right_or_wrong_message(chosen, answer, territory)
+    const embedded_map_url = map_embed_url(quiz_mode, subject, url_parameters, false, on_mobile_device())
+    const bottom_text = borders_sentence(subject, neighbors(subject))
+    const next_button_text = chosen === answer ? "Next" : "Try Again"
+    const next_button_onclick = chosen === answer ? function() { embed_question() } : function() { embed_question(question_info) }
+    embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick)
 }
 
 function unused_quiz_modes() {
@@ -219,12 +212,7 @@ function start_game() {
     }
     else {
         try {
-            embed_map(Object.freeze({ quiz_mode: current_quiz_modes(url_parameters)[0],
-                                      territory: starting_address,
-                                      answer: starting_address,
-                                      wrong_answers: [] }),
-                      starting_address,
-                      true)
+            embed_start_map(current_quiz_modes(url_parameters)[0], starting_address)
         }
         catch(e) {
             embed_question()
