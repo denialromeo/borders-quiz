@@ -41,7 +41,7 @@ function coordinates(quiz_mode, address) {
 }
 
 /**
- * Returns the zoom level of the final Google map (0-18).
+ * Returns the zoom level of the final Google map.
  * @param {string} quiz_mode The key to look up the proper fusion table map.
  * @param {string} territory The address to be mapped.
  * @param {Object} url_parameters The key-value pairs passed into the URL.
@@ -50,10 +50,10 @@ function coordinates(quiz_mode, address) {
  */
 function google_maps_zoom_level(quiz_mode, territory, url_parameters, start_map_screen, on_mobile_device) {
     if (start_map_screen && !isNaN(url_parameters["start-zoom"])) {
-        return url_parameters["start-zoom"]
+        return Number(url_parameters["start-zoom"])
     }
     var possible_zoom_levels = [game_settings.custom_zoom_levels[territory], quiz_modes[quiz_mode].default_zoom_level]
-    var zoom_level = possible_zoom_levels.find(zl => !isNaN(zl))
+    var zoom_level = Number(possible_zoom_levels.find(zl => !isNaN(zl)))
     if (on_mobile_device && zoom_level > 2) {
         zoom_level -= 1
     }
@@ -71,7 +71,8 @@ function google_maps_zoom_level(quiz_mode, territory, url_parameters, start_map_
 function map_embed_url(quiz_mode, territory, url_parameters, start_map_screen, on_mobile_device) {
     var url = new URI(quiz_modes[quiz_mode].map_embed_base_url)
     const { lat, lng } = coordinates(quiz_mode, territory)
-    return url.addSearch({ lat: lat, lng: lng, z: google_maps_zoom_level(quiz_mode, territory, url_parameters, start_map_screen, on_mobile_device) }).toString()
+    const zoom_level = google_maps_zoom_level(quiz_mode, territory, url_parameters, start_map_screen, on_mobile_device)
+    return url.addSearch({ lat: lat, lng: lng, z: zoom_level }).toString()
 }
 
 // Exports

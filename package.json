@@ -4,7 +4,7 @@
   "description": "Hone your geography!",
   "main": "./borders-quiz/build-question/build-question.js",
   "scripts": {
-    "start": "webpack -p && webpack-dev-server",
+    "start": "webpack && webpack-dev-server",
     "test": "node ./build-question/test.js"
   },
   "repository": {

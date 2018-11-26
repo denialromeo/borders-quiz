@@ -46,7 +46,7 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 * [Countries that end with "stan"](http://danielmoore.us/borders-quiz?custom=stan$)
 * [Country quiz excluding bodies of water](http://danielmoore.us/borders-quiz?custom=^(?!.*(Sea|Gulf|Bay|Strait|Lake|Channel|Ocean|Rio|Bight)\b))
 * [Country quiz with two answer choices](http://danielmoore.us/borders-quiz?num-choices=2)
-* [Countries in Africa](http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco)
+* [Countries in Africa starting with map](http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco&start-map=Moundou+Chad&start-zoom=2&title=Africa)
 * [U.S. states that don't contain the letters 'a' or 'e'](http://danielmoore.us/borders-quiz?usa-states&custom=^(?!.*[ae]))
 * [Canada and neighboring U.S. states starting with map](http://danielmoore.us/borders-quiz?usa-states&start-map=Canada_&start=Canada_)
 * [New York City boroughs starting with map](http://danielmoore.us/borders-quiz?new-york-counties&start-map=New+York+City&start-zoom=9&custom=Brooklyn|Bronx|Manhattan|Queens)

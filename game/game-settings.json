@@ -1,6 +1,7 @@
 {
 
     "recenter_map_address": {
+        "United Kingdom (Bermuda)": "Bermuda",
         "Denmark (Greenland)": "Greenland",
         "United Arab Emirates": "Al Hamra Airport UAE",
         "Sri Lanka": "Padaviya Sri Lanka",
@@ -157,6 +158,9 @@
     },
 
     "recenter_map_coordinates": {
+        "Ukraine": { "lat": 48.496052, "lng": 30.550346 },
+        "Great Australian Bight": { "lat": -35.197094, "lng": 131.280858 },
+        "Papua New Guinea": { "lat": -4.565167, "lng": 143.95555 },
         "Brazil": { "lat": -14.915496, "lng": -58.604967 },
         "Sweden": { "lat": 59.776094, "lng": 18.643501 },
         "Italy": { "lat": 43.167335, "lng": 13.213455 },
@@ -290,6 +294,7 @@
     ],
 
     "dont_sort_neighbors": [
+        "Gulf of Finland",
         "Mediterranean Sea__",
         "India_",
         "China____",

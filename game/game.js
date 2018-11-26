@@ -39,29 +39,36 @@ function embed(src) {
     game_iframe.srcdoc = `<html><head><style>${game_css}</style></head><body>${src}</body></html>`
 }
 
-function embed_question(question_info=build_question(url_parameters)) {
-    const { quiz_mode, wrong_answers, answer, territory } = question_info
+function embed_question(question=build_question(url_parameters)) {
+    const { quiz_mode, wrong_answers, answer, territory } = question
     var choices = random.shuffle(wrong_answers.concat(answer))
-    var question = `<div id='${on_mobile_device() ? "question-container-mobile" : "question-container"}'>
-                       <div id='quiz_title'>${quiz_modes[quiz_mode].title}</div>
-                       <div id='${(on_mobile_device() ? "question-text-mobile" : "question-text")}'>
-                           <p>Which of these does not border ${format_for_display(territory, false)}?</p>
-                           <form>`
-                               for (let i = 0; i < choices.length; i += 1) {
-                                   var choice = choices[i]
-                                   var letter = `&emsp;${String.fromCharCode(i + 65)}. `
-                                   question += `<input type='radio' id="${choice}" value="${choice}" name='choice'>
-                                                <label for="${choice}">${letter}${format_for_display(choice, true)}</label><br>`
-                               }
-              question += `</form>
-                       </div>
-                       <p id='score_and_timer'>
-                           <em id='score'>Correct: ${score.correct}&nbsp;&nbspWrong: ${score.wrong}</em><br>
-                           <span id='timer'>${timer.formatted_time}</span>
-                       </p>
-                    </div>`
+    var title_text
+    if ("title" in url_parameters) {
+        title_text = url_parameters["title"]
+    }
+    else {
+        title_text = quiz_modes[quiz_mode].title
+    }
+    var content = `<div id='${on_mobile_device() ? "question-container-mobile" : "question-container"}'>
+                      <div id='quiz_title'>${title_text}</div>
+                      <div id='${(on_mobile_device() ? "question-text-mobile" : "question-text")}'>
+                          <p>Which of these does not border ${format_for_display(territory, false)}?</p>
+                          <form>`
+                              for (let i = 0; i < choices.length; i += 1) {
+                                  var choice = choices[i]
+                                  var letter = `&emsp;${String.fromCharCode(i + 65)}. `
+                                  content  += `<input type='radio' id="${choice}" value="${choice}" name='choice'>
+                                               <label for="${choice}">${letter}${format_for_display(choice, true)}</label><br>`
+                              }
+              content += `</form>
+                      </div>
+                      <p id='score_and_timer'>
+                          <em id='score'>Correct: ${score.correct}&nbsp;&nbspWrong: ${score.wrong}</em><br>
+                          <span id='timer'>${timer.formatted_time}</span>
+                      </p>
+                   </div>`
 
-    embed(question)
+    embed(content)
 
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function begin_timing() {
@@ -82,7 +89,7 @@ function embed_question(question_info=build_question(url_parameters)) {
             window.requestAnimationFrame(detect_player_choice)
         }
         else {
-            Array.from(choices).forEach(choice => choice.onclick = function() { embed_normal_map(question_info, this.id) })
+            Array.from(choices).forEach(choice => choice.onclick = function() { embed_normal_map(question, this.id) })
         }
     }
     detect_player_choice()
@@ -150,7 +157,13 @@ function embed_map(title_text, embedded_map_url, bottom_text, next_button_text, 
 }
 
 function embed_start_map(quiz_mode, territory) {
-    var title_text = format_for_display(territory, true)
+    var title_text
+    if ("title" in url_parameters) {
+        title_text = url_parameters["title"]
+    }
+    else {
+        title_text = format_for_display(territory, true)
+    }
     var embedded_map_url = map_embed_url(quiz_mode, territory, url_parameters, true, on_mobile_device())
     if (territory !== undefined && territory.startsWith("_")) { territory = territory.slice(1) }
     var neighboring_territories = neighbors(territory)
@@ -170,15 +183,15 @@ function embed_start_map(quiz_mode, territory) {
     embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint)
 }
 
-function embed_normal_map(question_info, chosen) {
-    const { quiz_mode, answer, territory } = question_info
+function embed_normal_map(question, chosen) {
+    const { quiz_mode, answer, territory } = question
     const subject = chosen === answer ? chosen : territory
     const title_text = right_or_wrong_message(chosen, answer, territory)
     const embedded_map_url = map_embed_url(quiz_mode, subject, url_parameters, false, on_mobile_device())
     const bottom_text = borders_sentence(subject, neighbors(subject))
     const next_button_text = chosen === answer ? "Next" : "Try Again"
     const next_button_onclick = chosen === answer ? function() { score.correct += 1; embed_question() } 
-                                                  : function() { score.wrong += 1; embed_question(question_info) }
+                                                  : function() { score.wrong += 1; embed_question(question) }
     const user_hint = subject in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].click_message
     embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint)
 }
@@ -206,8 +219,8 @@ function other_quiz_modes_message() {
 
 // Let's go!!!!!!!
 function start_game() {
-    var possible_starting_addresses = [url_parameters["start-map"], quiz_modes[current_quiz_modes(url_parameters)[0]].starting_map]
-    const starting_address = possible_starting_addresses.find(address => address !== undefined)
+    const starting_address = [url_parameters["start-map"], quiz_modes[current_quiz_modes(url_parameters)[0]].starting_map]
+                            .find(address => address !== undefined)
     if ("no-start-map" in url_parameters || starting_address === undefined || current_quiz_modes(url_parameters).length > 1 ||
         (("custom" in url_parameters || "start" in url_parameters) && !("start-map" in url_parameters))) {
         embed_question()
