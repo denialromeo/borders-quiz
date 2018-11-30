@@ -157,16 +157,10 @@ function embed_map(title_text, embedded_map_url, bottom_text, next_button_text, 
 }
 
 function embed_start_map(quiz_mode, territory) {
-    var title_text
-    if ("title" in url_parameters) {
-        title_text = url_parameters["title"]
-    }
-    else {
-        title_text = format_for_display(territory, true)
-    }
-    var embedded_map_url = map_embed_url(quiz_mode, territory, url_parameters, true, on_mobile_device())
+    const title_text = "title" in url_parameters ? url_parameters["title"] : format_for_display(territory, true)
+    const embedded_map_url = map_embed_url(quiz_mode, territory, url_parameters, true, on_mobile_device())
     if (territory !== undefined && territory.startsWith("_")) { territory = territory.slice(1) }
-    var neighboring_territories = neighbors(territory)
+    const neighboring_territories = neighbors(territory)
     var bottom_text
     if ("starting_message" in quiz_modes[quiz_mode]) { 
         bottom_text = quiz_modes[quiz_mode].starting_message
@@ -177,8 +171,8 @@ function embed_start_map(quiz_mode, territory) {
     else {
         bottom_text = borders_sentence(territory, neighboring_territories)
     }
-    var next_button_text = "Start"
-    var next_button_onclick = function() { embed_question() }
+    const next_button_text = "Start"
+    const next_button_onclick = function() { embed_question() }
     const user_hint = territory in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].click_message
     embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint)
 }

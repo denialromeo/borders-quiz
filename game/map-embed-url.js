@@ -28,7 +28,7 @@ function coordinates(quiz_mode, address) {
         address = game_settings.recenter_map_address[address]
     }
     else if (address in game_settings.recenter_map_coordinates) {
-        return game_settings.recenter_map_coordinates[address]
+        return Object.freeze(game_settings.recenter_map_coordinates[address])
     }
     else if (quiz_mode_of(address) === quiz_mode) {
         address += quiz_modes[quiz_mode].geocode_append
