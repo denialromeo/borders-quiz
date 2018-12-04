@@ -158,6 +158,8 @@
     },
 
     "recenter_map_coordinates": {
+        "Ionian Sea": { "lat": 39.572211, "lng": 18.104494 },
+        "Bolivia": { "lat": -17.299838, "lng": -63.588653 },
         "Ukraine": { "lat": 48.496052, "lng": 30.550346 },
         "Great Australian Bight": { "lat": -35.197094, "lng": 131.280858 },
         "Papua New Guinea": { "lat": -4.565167, "lng": 143.95555 },
@@ -467,6 +469,7 @@
         "Heilongjiang": 4,
         "Herkimer": 6,
         "Hokkaido": 5,
+        "Hong Kong": 5,
         "Humboldt": 6,
         "Imperial": 6,
         "India__": 4,
@@ -557,6 +560,7 @@
         "_New York": 6,
         "_Nigeria": 5,
         "_Pakistan": 4,
+        "_Poland": 5,
         "_Singapore": 10,
         "_South Korea": 6,
         "_Spain": 4,

@@ -260,7 +260,7 @@
 		"description": "(Poland's provinces.)",
 		"geocode_append": " Poland",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col15+from+1kpY7Sdr0ifJxi_uN9SGcmxg9g36au73ilorUZCCO&viz=MAP&h=false&t=1&l=col15",
-		"starting_map": "Poland",
+		"starting_map": "_Poland",
 		"title": "Poland Provinces"
 	},
 	

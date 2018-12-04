@@ -41,29 +41,26 @@ function embed(src) {
 
 function embed_question(question=build_question(url_parameters)) {
     const { quiz_mode, wrong_answers, answer, territory } = question
-    var choices = random.shuffle(wrong_answers.concat(answer))
-    var title_text
-    if ("title" in url_parameters) {
-        title_text = url_parameters["title"]
-    }
-    else {
-        title_text = quiz_modes[quiz_mode].title
-    }
+    const choices = Object.freeze(random.shuffle(wrong_answers.concat(answer)))
+    const title_text = "title" in url_parameters ? url_parameters["title"] : quiz_modes[quiz_mode].title
     var content = `<div id='${on_mobile_device() ? "question-container-mobile" : "question-container"}'>
                       <div id='quiz_title'>${title_text}</div>
                       <div id='${(on_mobile_device() ? "question-text-mobile" : "question-text")}'>
                           <p>Which of these does not border ${format_for_display(territory, false)}?</p>
                           <form>`
                               for (let i = 0; i < choices.length; i += 1) {
-                                  var choice = choices[i]
-                                  var letter = `&emsp;${String.fromCharCode(i + 65)}. `
+                                  const choice = choices[i]
+                                  const letter = `&emsp;${String.fromCharCode(i + 65)}. `
                                   content  += `<input type='radio' id="${choice}" value="${choice}" name='choice'>
                                                <label for="${choice}">${letter}${format_for_display(choice, true)}</label><br>`
                               }
               content += `</form>
                       </div>
                       <p id='score_and_timer'>
-                          <em id='score'>Correct: ${score.correct}&nbsp;&nbspWrong: ${score.wrong}</em><br>
+                          <em id='score'>
+                            Correct: <span id='correct'>${score.correct}</span>&nbsp;&nbsp
+                            Wrong: <span id='wrong'>${score.wrong}</span>
+                          </em><br>
                           <span id='timer'>${timer.formatted_time}</span>
                       </p>
                    </div>`
@@ -72,7 +69,7 @@ function embed_question(question=build_question(url_parameters)) {
 
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function begin_timing() {
-        var timer_dom_node = game_iframe.contentWindow.document.getElementById("timer")
+        const timer_dom_node = game_iframe.contentWindow.document.getElementById("timer")
         if (timer_dom_node === null) {
             window.requestAnimationFrame(begin_timing);
         }
@@ -84,7 +81,7 @@ function embed_question(question=build_question(url_parameters)) {
 
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function detect_player_choice() {
-        var choices = game_iframe.contentWindow.document.getElementsByName("choice")
+        const choices = game_iframe.contentWindow.document.getElementsByName("choice")
         if (choices.length === 0) {
             window.requestAnimationFrame(detect_player_choice)
         }
@@ -113,7 +110,7 @@ function borders_sentence(territory, neighboring_territories) {
         sentence += `${neighboring_territories[0]} and ${neighboring_territories[1]}.`
     }
     else {
-        var last = neighboring_territories.pop()
+        const last = neighboring_territories.pop()
         sentence += `${neighboring_territories.join(", ")}, and ${last}.`
     }
 
@@ -144,7 +141,7 @@ function embed_map(title_text, embedded_map_url, bottom_text, next_button_text, 
 
     // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function set_next_button() {
-        var next_button = game_iframe.contentWindow.document.getElementById("next")
+        const next_button = game_iframe.contentWindow.document.getElementById("next")
         if (next_button === null) {
             window.requestAnimationFrame(set_next_button)
         }

@@ -14,13 +14,12 @@ function quiz_mode_of(territory) {
 
 function neighbors(territory) {
     var quiz_mode = quiz_mode_of(territory)
-    // slice() makes a copy of the array so we don't mess up the original.
     return (territory in borders[quiz_mode] ? borders[quiz_mode][territory].slice() : undefined)
 }
 
 // If a territory has no neighbors, we can't make a question from it!
 function valid(territory) {
-    return territory !== undefined && neighbors(territory).length > 0
+    return (territory !== undefined && neighbors(territory).length > 0)
 }
 
 function all_quiz_modes() {
@@ -31,14 +30,14 @@ function current_quiz_modes(url_parameters) {
     if ("all" in url_parameters) {
         return all_quiz_modes()
     }
-    var current_modes = all_quiz_modes().filter(mode => mode in url_parameters)
+    const current_modes = all_quiz_modes().filter(mode => mode in url_parameters)
     return current_modes.length === 0 ? [default_quiz_mode] : current_modes
 }
 
 function current_quiz_modes_territories(url_parameters) {
     return current_quiz_modes(url_parameters)
           .map(mode => Object.keys(borders[mode]))
-          .reduce((arr, next_arr) => arr.concat(next_arr)) // [[1,2], [3,4]] -> [1, 2, 3, 4]
+          .reduce((array, next_array) => array.concat(next_array))
           .filter(valid)
 }
 
@@ -46,13 +45,13 @@ function current_quiz_modes_territories(url_parameters) {
 // Countries in Africa - http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco
 function neighboring_territories(url_parameters) {
     if (url_parameters["start"] !== undefined && url_parameters["start"].split(";").some(valid)) {
-        var depth = isNaN(url_parameters["depth"]) ? 1 : Number(url_parameters["depth"])
-        var exclude_paths_through = "exclude-paths-through" in url_parameters ?
-                                    url_parameters["exclude-paths-through"].split(";") : []
-        var filter_search = exclude_paths_through.length > 0
-        var territory_distance_dict = url_parameters["start"].split(";").filter(valid)
-                                     .map(s => breadth_first_search(s, depth, filter_search, exclude_paths_through))
-                                     .reduce((dict, next_dict) => Object.assign(dict, next_dict))
+        const depth = isNaN(url_parameters["depth"]) ? 1 : Number(url_parameters["depth"])
+        const exclude_paths_through = "exclude-paths-through" in url_parameters ?
+                                      url_parameters["exclude-paths-through"].split(";") : []
+        const filter_search = exclude_paths_through.length > 0
+        const territory_distance_dict = url_parameters["start"].split(";").filter(valid)
+                                       .map(s => breadth_first_search(s, depth, filter_search, exclude_paths_through))
+                                       .reduce((dict, next_dict) => Object.assign(dict, next_dict))
         if ("exclude" in url_parameters) {
             url_parameters["exclude"].split(";").forEach(terr => delete territory_distance_dict[terr])
         }
@@ -80,7 +79,7 @@ function territories(url_parameters) {
     var territories_methods = [custom_territories, neighboring_territories, current_quiz_modes_territories]
     territories_methods.forEach(function(method) {
         if (pool.length === 0) {
-            var possible_pool = method(url_parameters)
+            const possible_pool = method(url_parameters)
             if (possible_pool.length > 0) { pool = possible_pool }
             if (pool.length > 0 && typeof window !== "undefined") { console.log("This quiz is asking questions about", pool.sort()) }
         }
@@ -128,9 +127,9 @@ function build_question(url_parameters) {
     const num_wrong_answers = num_choices(url_parameters) - 1
 
     const answer_distance = 2
-    var territory_distance_dict = breadth_first_search(territory, answer_distance)
-    var possible_answers = Object.keys(territory_distance_dict).filter(t => territory_distance_dict[t] === answer_distance)
+    const territory_distance_dict = breadth_first_search(territory, answer_distance)
 
+    var possible_answers = Object.keys(territory_distance_dict).filter(t => territory_distance_dict[t] === answer_distance)
     if (territory in question_settings.replace_possible_answers) {
         possible_answers = question_settings.replace_possible_answers[territory]
     }
@@ -138,8 +137,8 @@ function build_question(url_parameters) {
         possible_answers = possible_answers.concat(question_settings.add_possible_answers[territory])
     }
 
-    var answer = random.choice(possible_answers)
-    var wrong_answers = random.sample(neighbors(territory), num_wrong_answers)
+    const answer        = random.choice(possible_answers)
+    const wrong_answers = random.sample(neighbors(territory), num_wrong_answers)
 
     return Object.freeze({ quiz_mode: quiz_mode_of(territory), territory: territory, answer: answer, wrong_answers: wrong_answers })
 }

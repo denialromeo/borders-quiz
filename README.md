@@ -14,9 +14,9 @@ For example -
 
 Try it [here](http://danielmoore.us/borders-quiz)!
 
-## Installation
+## Development Guide
 
-Just install [Git](https://git-scm.com/) and [Node.js](https://nodejs.org/en/), then open your command prompt and run -
+First install [Git](https://git-scm.com/) and [Node.js](https://nodejs.org/en/), then open your command prompt and run -
 
 ```
 git clone https://github.com/denialromeo/borders-quiz
@@ -26,8 +26,6 @@ npm start
 ```
 
 Now you can play the game at [http://localhost:8000](http://localhost:8000)!
-
-## Development Guide
 
 Adding a quiz is simple. Just add relevant entries to [borders.json](/build-question/borders.json) and [quiz-modes.json](/game/quiz-modes.json). You can also play with some settings in [game-settings.json](/game/game-settings.json) (e.g. more precise maps, prepending "the").
 
@@ -49,12 +47,12 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 * [Countries in Africa starting with map](http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco&start-map=Moundou+Chad&start-zoom=2&title=Africa)
 * [U.S. states that don't contain the letters 'a' or 'e'](http://danielmoore.us/borders-quiz?usa-states&custom=^(?!.*[ae]))
 * [Canada and neighboring U.S. states starting with map](http://danielmoore.us/borders-quiz?usa-states&start-map=Canada_&start=Canada_)
-* [New York City boroughs starting with map](http://danielmoore.us/borders-quiz?new-york-counties&start-map=New+York+City&start-zoom=9&custom=Brooklyn|Bronx|Manhattan|Queens)
-* [San Francisco Bay Area counties starting with map](http://danielmoore.us/borders-quiz?california-counties&start=San+Francisco+Bay&exclude=San+Francisco+Bay&start-map=San+Francisco+Bay)
-* [Southern California counties](http://danielmoore.us/borders-quiz?california-counties&start=Orange;Santa+Barbara&include=Imperial)
-* [India's Punjab and Pakistan's Punjab](http://danielmoore.us/borders-quiz?india-states&pakistan-provinces&custom=Punjab)
+* [New York City boroughs starting with map](http://danielmoore.us/borders-quiz?new-york-counties&start-map=New+York+City&start-zoom=9&custom=Brooklyn|Bronx|Manhattan|Queens&title=New+York+City)
+* [San Francisco Bay Area counties starting with map](http://danielmoore.us/borders-quiz?california-counties&start=San+Francisco+Bay&exclude=San+Francisco+Bay&start-map=San+Francisco+Bay&title=The+San+Francisco+Bay+Area)
+* [Southern California counties](http://danielmoore.us/borders-quiz?california-counties&start=Orange;Santa+Barbara&include=Imperial&title=Southern+California+Counties)
+* [India's Punjab and Pakistan's Punjab](http://danielmoore.us/borders-quiz?india-states&pakistan-provinces&custom=Punjab&title=The+Two+Punjabs)
 
-(Github has encoded the above URL's for security. To see them in a more readable form, check the [raw version](https://raw.githubusercontent.com/denialromeo/borders-quiz/master/README.md) of this README.)
+(To see the above URL's in a more readable form, check the [raw version](https://raw.githubusercontent.com/denialromeo/borders-quiz/master/README.md) of this README.)
 
 ## Known Bugs
 
