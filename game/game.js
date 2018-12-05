@@ -77,10 +77,7 @@ function display_question(question=build_question(url_parameters)) {
               content += `</form>
                       </div>
                       <p id='score_and_timer'>
-                          <em id='score'>
-                            Correct: <span id='correct'>${score.correct}</span>&nbsp;&nbsp;
-                            Wrong: <span id='wrong'>${score.wrong}</span>
-                          </em><br>
+                          <em id='score'>Correct: ${score.correct}&nbsp;&nbspWrong: ${score.wrong}</em><br>
                           <span id='timer'>${timer.formatted_time}</span>
                       </p>
                    </div>`
