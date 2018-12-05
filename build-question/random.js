@@ -1,14 +1,14 @@
 /**
- * Swaps the entries at two given indices in an array (in-place).
+ * "Monkey patches" Array with a method that swaps the entries at two given indices (in-place).
  * @param {number} j The first index.
  * @param {number} k The second index.
  */
 Array.prototype.swap = function(j, k) {
-    var t = this[j] ; this[j] = this[k] ; this[k] = t
+    const t = this[j]; this[j] = this[k]; this[k] = t
 }
 
 /**
- * Returns a random number from [0, x) for a given x.
+ * Returns a random number from [0, x) for a given number x.
  * @param {number} x
  */
 function random(x) {

@@ -1,6 +1,6 @@
 ## World Borders Quiz
 
-This game tests the player's knowledge of the world's borders through randomly generated multiple-choice questions.
+This game strengthens the player's geography through randomly generated multiple-choice questions.
 
 For example -
 

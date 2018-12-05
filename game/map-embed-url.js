@@ -41,7 +41,7 @@ function coordinates(quiz_mode, address) {
 }
 
 /**
- * Returns the zoom level of the final Google map.
+ * Returns the zoom level of the map to display to the player.
  * @param {string}  quiz_mode        The key to look up in quiz-modes.json.
  * @param {string}  territory        The address to be mapped.
  * @param {Object}  url_parameters   The URL query string parsed as an object.
@@ -61,7 +61,7 @@ function google_maps_zoom_level(quiz_mode, territory, url_parameters, start_map_
 }
 
 /**
- * Returns the embedded map URL to be displayed to the user.
+ * Returns the embed URL to display to the player.
  * @param {string}  quiz_mode        The key to look up in quiz-modes.json.
  * @param {string}  territory        The address to be mapped.
  * @param {Object}  url_parameters   The URL query string parsed as an object.
