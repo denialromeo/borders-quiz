@@ -1,4 +1,4 @@
-# World Borders Quiz
+## World Borders Quiz
 
 This game tests the player's knowledge of the world's borders through randomly generated multiple-choice questions.
 
@@ -14,7 +14,7 @@ For example -
 
 Try it [here](http://danielmoore.us/borders-quiz)!
 
-## Development Guide
+### Development Guide
 
 First install [Git](https://git-scm.com/) and [Node.js](https://nodejs.org/en/), then open your command prompt and run -
 
@@ -54,7 +54,7 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 
 (To see the above URL's in a more readable form, check the [raw version](https://raw.githubusercontent.com/denialromeo/borders-quiz/master/README.md) of this README.)
 
-## Known Bugs
+### Known Bugs
 
 * Territory names in more recent quiz modes aren't properly abbreviated on mobile.
 
@@ -62,7 +62,9 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 
     (This problem can be fixed by replacing the iframe with a div (see branch `replace-iframe-with-div`), but iframes are just much more convenient to embed in external websites.)
 
-## Inspiration
+* There's a distracting black flash when the maps load on Firefox. This has me stumped. Probably best to just play the game on Chrome.
+
+### Inspiration
 
 The idea for this project was taken from this beautiful diagram in [*Algorithms*](https://www.amazon.com/Algorithms-Sanjoy-Dasgupta-ebook/dp/B006Z0QR3I/ref=sr_1_1_twi_kin_1?ie=UTF8&qid=1534812555&sr=8-1) by Dasgupta, Papadimitriou, and Vazirani.
 
