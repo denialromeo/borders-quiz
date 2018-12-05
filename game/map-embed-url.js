@@ -9,7 +9,7 @@ const google_maps_api_key = "AIzaSyBg5esZrKJYIXrvFfgu1TIApJupbEPmcTk"
 
 /**
  * Polls the Google Maps Geocode API with the given address and returns the response.
- * @param {string} address The address to be mapped.
+ * @param {string} address The address to send to the Geocode API.
  */
 function geocode(address) {
     const url = "https://maps.googleapis.com/maps/api/geocode/json"
@@ -20,8 +20,8 @@ function geocode(address) {
 
 /**
  * Returns the latitude and longitude of the given address.
- * @param {string} quiz_mode The key to look up the proper fusion table map.
- * @param {string} address The address to be mapped.
+ * @param {string} quiz_mode The key to look up in quiz-modes.json.
+ * @param {string} address   The address to find the latitute and longitude of.
  */
 function coordinates(quiz_mode, address) {
     if (address in game_settings.recenter_map_address) {
@@ -42,9 +42,9 @@ function coordinates(quiz_mode, address) {
 
 /**
  * Returns the zoom level of the final Google map.
- * @param {string} quiz_mode The key to look up the proper fusion table map.
- * @param {string} territory The address to be mapped.
- * @param {Object} url_parameters The key-value pairs passed into the URL.
+ * @param {string}  quiz_mode        The key to look up in quiz-modes.json.
+ * @param {string}  territory        The address to be mapped.
+ * @param {Object}  url_parameters   The URL query string parsed as an object.
  * @param {boolean} start_map_screen Whether this map is at the start of the quiz or after a question has been answered.
  * @param {boolean} on_mobile_device Whether the quiz is being browsed from a mobile device.
  */
@@ -62,9 +62,9 @@ function google_maps_zoom_level(quiz_mode, territory, url_parameters, start_map_
 
 /**
  * Returns the embedded map URL to be displayed to the user.
- * @param {string} quiz_mode The key to look up the proper fusion table map.
- * @param {string} territory The address to be mapped.
- * @param {Object} url_parameters The key-value pairs passed into the URL.
+ * @param {string}  quiz_mode        The key to look up in quiz-modes.json.
+ * @param {string}  territory        The address to be mapped.
+ * @param {Object}  url_parameters   The URL query string parsed as an object.
  * @param {boolean} start_map_screen Whether this map is at the start of the quiz or after a question has been answered.
  * @param {boolean} on_mobile_device Whether the quiz is being browsed from a mobile device.
  */

@@ -3,9 +3,12 @@ const random = Object.freeze(require("./random.js"))
 const borders = Object.freeze(require("./borders.json"))
 const question_settings = Object.freeze(require("./question-settings.json"))
 
-Array.prototype.contains = function(item) { return this.indexOf(item) >= 0 }
-
 const default_quiz_mode = Object.keys(borders).pop()
+
+/**
+ * "Monkey patches" Array with a method that returns whether the array contains a given item.
+ */
+Array.prototype.contains = function(item) { return this.indexOf(item) >= 0 }
 
 function quiz_mode_of(territory) {
     const quiz_mode = Object.keys(borders).find(mode => territory in borders[mode])

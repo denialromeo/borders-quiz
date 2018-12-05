@@ -17,12 +17,32 @@ const game_iframe = document.getElementById("game-container")
 const score = { correct: 0, wrong: 0 }
 const timer = new Timer()
 
-Array.prototype.contains = function(item) { return this.indexOf(item) >= 0 }
-
 const url_parameters = Object.freeze(new URI(window.location.href).search(true))
 
+/**
+ * "Monkey patches" Array with a method that returns whether the array contains a given item.
+ */
+Array.prototype.contains = function(item) { return this.indexOf(item) >= 0 }
+
+/**
+ * Returns whether the game is being viewed on a mobile device.
+ */
 function on_mobile_device() { return $(document).width() <= 760 }
 
+/**
+ * Displays given content to the player.
+ * @param {string} content The content to display.
+ */
+function embed(content) {
+    game_iframe.srcdoc = `<html><head><style>${game_css}</style></head><body>${content}</body></html>`
+}
+
+/**
+ * Formats a given territory for display to the user and returns the formatted territory.
+ * @param {string}  territory      The territory to format (e.g. "United States").
+ * @param {boolean} capitalize_the Whether to capitalize "the" if the territory starts with it
+ *                                 (e.g. "The United States" or "the United States").
+ */
 function format_for_display(territory, capitalize_the) {
     var the = ""
     if (game_settings.should_prepend_the.some(regex => new RegExp(regex).exec(territory) !== null)) {
@@ -35,10 +55,10 @@ function format_for_display(territory, capitalize_the) {
     return (the + territory)
 }
 
-function embed(src) {     
-    game_iframe.srcdoc = `<html><head><style>${game_css}</style></head><body>${src}</body></html>`
-}
-
+/**
+ * Displays the given question.
+ * @param {Object} question Example - { quiz_mode: "countries", territory: "Denmark", answer: "Belgium", wrong_answers: ["Germany"] }
+ */
 function embed_question(question=build_question(url_parameters)) {
     const { quiz_mode, wrong_answers, answer, territory } = question
     const choices = Object.freeze(random.shuffle(wrong_answers.concat(answer)))
@@ -67,7 +87,6 @@ function embed_question(question=build_question(url_parameters)) {
 
     embed(content)
 
-    // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function begin_timing() {
         const timer_dom_node = game_iframe.contentWindow.document.getElementById("timer")
         if (timer_dom_node === null) {
@@ -79,7 +98,6 @@ function embed_question(question=build_question(url_parameters)) {
     }
     begin_timing()
 
-    // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
     function detect_player_choice() {
         const choices = game_iframe.contentWindow.document.getElementsByName("choice")
         if (choices.length === 0) {
@@ -92,6 +110,46 @@ function embed_question(question=build_question(url_parameters)) {
     detect_player_choice()
 }
 
+/**
+ * Displays the map screens shown at the start of the game and after each question.
+ * @param {string}   title_text          The text to display at the top of the screen.
+ * @param {string}   embedded_map_url    The Google Maps embed URL to display to the user.
+ * @param {string}   bottom_text         The text to display at the bottom of the screen.
+ * @param {string}   next_button_text    The text to display on the "next" button.
+ * @param {function} next_button_onclick The callback to run when the "next" button is clicked.
+ * @param {string}   user_hint           The text to display at the bottom right corner of the screen.
+ */
+function embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint) {
+    var content = `<div id='${on_mobile_device() ? "map-container-mobile" : "map-container"}'>
+                    <center>
+                        <p>${title_text}</p>
+                        <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no'
+                                frameborder=0 src='${embedded_map_url}'></iframe>
+                        <p>${bottom_text}</p>
+                        <button id='next'>${next_button_text}</button>
+                        ${on_mobile_device() ? `` : `<p id='user-hint'>${user_hint}</p>`}
+                    </center>
+                   </div>`
+
+    embed(content)
+
+    function set_next_button() {
+        const next_button = game_iframe.contentWindow.document.getElementById("next")
+        if (next_button === null) {
+            window.requestAnimationFrame(set_next_button)
+        }
+        else {
+            next_button.onclick = next_button_onclick
+        }
+    }
+    set_next_button()
+}
+
+/**
+ * Returns a sentence explaining a territory's borders (e.g. "The United States borders Canada and Mexico.").
+ * @param {string}   territory               The subject territory.
+ * @param {string[]} neighboring_territories An array of the territories bordering the territory.
+ */
 function borders_sentence(territory, neighboring_territories) {
     if (!game_settings.dont_sort_neighbors.contains(territory)) {
         neighboring_territories.sort()
@@ -117,42 +175,11 @@ function borders_sentence(territory, neighboring_territories) {
     return sentence
 }
 
-function right_or_wrong_message(chosen, answer, territory) {
-    var subject = chosen === answer ? chosen : answer
-    var does_or_do = !game_settings.plural.contains(subject) ? "does" : "do"
-    return chosen === answer ?
-           `Correct! ${format_for_display(chosen, true)} ${does_or_do} not border ${format_for_display(territory, false)}!`
-         : `Sorry! ${format_for_display(territory, true)} ${does_or_do} border ${format_for_display(chosen, false)}!`
-}
-
-function embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint) {
-    var content = `<div id='${on_mobile_device() ? "map-container-mobile" : "map-container"}'>
-                    <center>
-                        <p>${title_text}</p>
-                        <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no'
-                                frameborder=0 src='${embedded_map_url}'></iframe>
-                        <p>${bottom_text}</p>
-                        <button id='next'></button>
-                        ${on_mobile_device() ? `` : `<p id='user-hint'>${user_hint}</p>`}
-                    </center>
-                   </div>`
-
-    embed(content)
-
-    // Taken from https://swizec.com/blog/how-to-properly-wait-for-dom-elements-to-show-up-in-modern-browsers/swizec/6663
-    function set_next_button() {
-        const next_button = game_iframe.contentWindow.document.getElementById("next")
-        if (next_button === null) {
-            window.requestAnimationFrame(set_next_button)
-        }
-        else {
-            next_button.innerHTML = next_button_text
-            next_button.onclick = next_button_onclick
-        }
-    }
-    set_next_button()
-}
-
+/**
+ * Displays the map shown at the start of the game.
+ * @param {string} quiz_mode The key to look up in quiz-modes.json.
+ * @param {string} territory The address to map.
+ */
 function embed_start_map(quiz_mode, territory) {
     const title_text = "title" in url_parameters ? url_parameters["title"] : format_for_display(territory, true)
     const embedded_map_url = map_embed_url(quiz_mode, territory, url_parameters, true, on_mobile_device())
@@ -174,30 +201,49 @@ function embed_start_map(quiz_mode, territory) {
     embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint)
 }
 
+/**
+ * Displays the map shown at the start of the game.
+ * @param {string} chosen    The answer the player chose.
+ * @param {string} answer    The correct answer to the answered question.
+ * @param {string} territory The territory the question was asked about.
+ */
+function right_or_wrong_message(chosen, answer, territory) {
+    const subject = chosen === answer ? chosen : territory
+    const does_or_do = !game_settings.plural.contains(subject) ? "does" : "do"
+    return chosen === answer ?
+           `Correct! ${format_for_display(chosen, true)} ${does_or_do} not border ${format_for_display(territory, false)}!`
+         : `Sorry! ${format_for_display(territory, true)} ${does_or_do} border ${format_for_display(chosen, false)}!`
+}
+
+/**
+ * Displays the map shown after the player answers a question.
+ * @param {Object} question Example - { quiz_mode: "countries", territory: "Denmark", answer: "Belgium", wrong_answers: ["Germany"] }
+ * @param {string} chosen   The answer the player chose.
+ */
 function embed_normal_map(question, chosen) {
     const { quiz_mode, answer, territory } = question
-    const subject = chosen === answer ? chosen : territory
     const title_text = right_or_wrong_message(chosen, answer, territory)
+    const subject = chosen === answer ? chosen : territory
     const embedded_map_url = map_embed_url(quiz_mode, subject, url_parameters, false, on_mobile_device())
     const bottom_text = borders_sentence(subject, neighbors(subject))
     const next_button_text = chosen === answer ? "Next" : "Try Again"
-    const next_button_onclick = chosen === answer ? function() { score.correct += 1; embed_question() } 
+    const next_button_onclick = chosen === answer ? function() { score.correct += 1; embed_question() }
                                                   : function() { score.wrong += 1; embed_question(question) }
     const user_hint = subject in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].click_message
     embed_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint)
 }
 
-function unused_quiz_modes() {
-    return Object.keys(quiz_modes).filter(mode => !current_quiz_modes(url_parameters).contains(mode))
-}
-
+/**
+ * Returns the other quiz modes a player can choose as an HTML string.
+ */
 function other_quiz_modes_message() {
-    var message = `<span style="display:block;margin-bottom:15px;"/>`
-    if (unused_quiz_modes().length > 0) {
+    var message  = `<span style="display:block;margin-bottom:15px;"/>`
+    const other_quiz_modes = Object.keys(quiz_modes).filter(mode => !current_quiz_modes(url_parameters).contains(mode))
+    if (other_quiz_modes.length > 0) {
         message += `<div style="font-family:Helvetica">
                         <p>You can also try these quiz modes!</p>
-                        <ul class='unused-quiz-modes'>`
-            unused_quiz_modes().forEach(mode =>
+                        <ul class='other-quiz-modes'>`
+            other_quiz_modes.forEach(mode =>
                 message += `<li>
                                 <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;
                                 ${quiz_modes[mode].description}
@@ -208,7 +254,9 @@ function other_quiz_modes_message() {
     return message
 }
 
-// Let's go!!!!!!!
+/**
+ * Starts the game.
+ */
 function start_game() {
     const starting_address = [url_parameters["start-map"], quiz_modes[current_quiz_modes(url_parameters)[0]].starting_map]
                             .find(address => address !== undefined)
@@ -226,7 +274,6 @@ function start_game() {
     }
     $(game_iframe).after(other_quiz_modes_message())
 }
-////
 
 // Exports
 Object.assign(exports, {

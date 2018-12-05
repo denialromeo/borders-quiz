@@ -158,6 +158,7 @@
     },
 
     "recenter_map_coordinates": {
+        "Western Australia": { "lat": -24.835589, "lng": 122.331435 },
         "Ionian Sea": { "lat": 39.572211, "lng": 18.104494 },
         "Bolivia": { "lat": -17.299838, "lng": -63.588653 },
         "Ukraine": { "lat": 48.496052, "lng": 30.550346 },
