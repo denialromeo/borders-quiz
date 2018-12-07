@@ -158,6 +158,7 @@
     },
 
     "recenter_map_coordinates": {
+        "Namibia": { "lat": -24.085842, "lng": 16.381035 },
         "Western Australia": { "lat": -24.835589, "lng": 122.331435 },
         "Ionian Sea": { "lat": 39.572211, "lng": 18.104494 },
         "Bolivia": { "lat": -17.299838, "lng": -63.588653 },
@@ -231,7 +232,7 @@
         "Philippine Sea": "(Zoom in!)"
     },
 
-    "truncations_for_mobile": {
+    "abbreviations_for_mobile": {
         "Australian Capital Territory": "ACT",
         "Azad Jammu and Kashmir": "AJK",
         "Bosnia and Herzegovina": "Bosnia",

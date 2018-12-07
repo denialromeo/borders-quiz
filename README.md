@@ -62,7 +62,7 @@ Note that you can also create custom quizzes by playing with the URL. Examples -
 
     (This problem can be fixed by replacing the iframe with a div (see branch `replace-iframe-with-div`), but iframes are just much more convenient to embed in external websites.)
 
-* There's a distracting black flash when the maps load on Firefox. This has me stumped. Probably best to just play the game on Chrome.
+* There's sometimes a distracting black flash when the maps load on Firefox. This has me stumped.
 
 ### Inspiration
 

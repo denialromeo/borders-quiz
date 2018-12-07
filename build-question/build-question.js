@@ -20,11 +20,11 @@ function quiz_mode_of(territory) {
 }
 
 /**
- * Returns the quiz mode of the given territory.
+ * Returns an array of the territories bordering the given territory.
  * @param {string} territory The territory to find the neighbors of.
  */
 function neighbors(territory) {
-    var quiz_mode = quiz_mode_of(territory)
+    const quiz_mode = quiz_mode_of(territory)
     return (territory in borders[quiz_mode] ? borders[quiz_mode][territory].slice() : undefined)
 }
 
@@ -52,7 +52,7 @@ function current_quiz_modes(url_parameters) {
         return all_quiz_modes()
     }
     const current_modes = all_quiz_modes().filter(mode => mode in url_parameters)
-    return current_modes.length === 0 ? [default_quiz_mode] : current_modes
+    return (current_modes.length === 0 ? [default_quiz_mode] : current_modes)
 }
 
 /**

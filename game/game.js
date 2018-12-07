@@ -17,6 +17,7 @@ const game_iframe = document.getElementById("game-container")
 const score = { correct: 0, wrong: 0 }
 const timer = new Timer()
 
+/** The URL query string parsed as an object. ?custom=Algeria becomes {"custom":"Algeria"} */
 const url_parameters = Object.freeze(new URI(window.location.href).search(true))
 
 /**
@@ -48,8 +49,8 @@ function format_for_display(territory, capitalize_the) {
     if (game_settings.should_prepend_the.some(regex => new RegExp(regex).exec(territory) !== null)) {
         the = capitalize_the ? "The " : "the "
     }
-    if (on_mobile_device() && territory in game_settings.truncations_for_mobile) {
-        territory = game_settings.truncations_for_mobile[territory]
+    if (on_mobile_device() && territory in game_settings.abbreviations_for_mobile) {
+        territory = game_settings.abbreviations_for_mobile[territory]
     }
     territory = territory.replace(/_/g,'').replace(/\s/g,'&nbsp;').replace(/-/g, '&#8209;')
     return (the + territory)
@@ -222,7 +223,7 @@ function display_normal_map(question, chosen) {
 /**
  * Returns the other quiz modes a player can choose as an HTML string.
  */
-function other_quiz_modes_message() {
+function other_quiz_modes_html() {
     var message  = `<span style="display:block;margin-bottom:15px;"/>`
     const other_quiz_modes = Object.keys(quiz_modes).filter(mode => !current_quiz_modes(url_parameters).contains(mode))
     if (other_quiz_modes.length > 0) {
@@ -258,7 +259,7 @@ function start_game() {
             display_question()
         }
     }
-    $(game_iframe).after(other_quiz_modes_message())
+    $(game_iframe).after(other_quiz_modes_html())
 }
 
 // Exports
