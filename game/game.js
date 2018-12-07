@@ -47,7 +47,7 @@ function display(content) {
 function format_for_display(territory, capitalize_the) {
     var the = ""
     if (game_settings.should_prepend_the.some(regex => new RegExp(regex).exec(territory) !== null)) {
-        the = capitalize_the ? "The " : "the "
+        the = (capitalize_the ? "The " : "the ")
     }
     if (on_mobile_device() && territory in game_settings.abbreviations_for_mobile) {
         territory = game_settings.abbreviations_for_mobile[territory]
@@ -154,7 +154,8 @@ function borders_sentence(territory, neighboring_territories) {
     }
     neighboring_territories = neighboring_territories.map(n => format_for_display(n, false))
 
-    var sentence = format_for_display(territory, true) + (game_settings.plural.contains(territory) ? ` border ` : ` borders `)
+    var sentence = format_for_display(territory, true)
+    sentence    += (game_settings.plural.contains(territory) ? ` border ` : ` borders `)
 
     switch(neighboring_territories.length) {
         case 0:
@@ -225,28 +226,28 @@ function display_normal_map(question, chosen) {
  * Returns the other quiz modes a player can choose as an HTML string.
  */
 function other_quiz_modes_html() {
-    var message  = `<span style="display:block;margin-bottom:15px;"/>`
+    var html  = `<span style="display:block;margin-bottom:15px;"/>`
     const other_quiz_modes = Object.keys(quiz_modes).filter(mode => !current_quiz_modes(url_parameters).contains(mode))
     if (other_quiz_modes.length > 0) {
-        message += `<div style="font-family:Helvetica">
+        html += `<div style="font-family:Helvetica">
                         <p>You can also try these quiz modes!</p>
                         <ul class='other-quiz-modes'>`
             other_quiz_modes.forEach(mode =>
-                message += `<li>
-                                <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;
-                                ${quiz_modes[mode].description}
-                            </li>`)
-            message += `</ul>
-                    </div>`
+                html += `<li>
+                            <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;${quiz_modes[mode].description}
+                         </li>`)
+            html += `</ul>
+                 </div>`
     }
-    return message
+    return html
 }
 
 /**
  * Starts the game.
  */
 function start_game() {
-    const starting_address = [url_parameters["start-map"], quiz_modes[current_quiz_modes(url_parameters)[0]].starting_map]
+    const starting_quiz_mode = current_quiz_modes(url_parameters)[0]
+    const starting_address = [url_parameters["start-map"], quiz_modes[starting_quiz_mode].starting_map]
                             .find(address => address !== undefined)
     if ("no-start-map" in url_parameters || starting_address === undefined || current_quiz_modes(url_parameters).length > 1 ||
         (("custom" in url_parameters || "start" in url_parameters) && !("start-map" in url_parameters))) {
@@ -254,7 +255,7 @@ function start_game() {
     }
     else {
         try {
-            display_start_map(current_quiz_modes(url_parameters)[0], starting_address)
+            display_start_map(starting_quiz_mode, starting_address)
         }
         catch(e) {
             display_question()
