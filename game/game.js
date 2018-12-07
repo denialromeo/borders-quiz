@@ -91,7 +91,7 @@ function display_question(question=build_question(url_parameters)) {
             window.requestAnimationFrame(begin_timing);
         }
         else {
-            timer.start_timer(function(time) { timer_dom_node.innerHTML = time })
+            timer.start(function(time) { timer_dom_node.innerHTML = time })
         }
     }
     begin_timing()
@@ -156,18 +156,19 @@ function borders_sentence(territory, neighboring_territories) {
 
     var sentence = format_for_display(territory, true) + (game_settings.plural.contains(territory) ? ` border ` : ` borders `)
 
-    if (neighboring_territories.length === 0) {
-        sentence += `nothing!`
-    }
-    else if (neighboring_territories.length === 1) {
-        sentence += `only ${neighboring_territories[0]}.`
-    }
-    else if (neighboring_territories.length === 2) {
-        sentence += `${neighboring_territories[0]} and ${neighboring_territories[1]}.`
-    }
-    else {
-        const last = neighboring_territories.pop()
-        sentence += `${neighboring_territories.join(", ")}, and ${last}.`
+    switch(neighboring_territories.length) {
+        case 0:
+            sentence += `nothing!`
+            break
+        case 1:
+            sentence += `only ${neighboring_territories[0]}.`
+            break
+        case 2:
+            sentence += `${neighboring_territories[0]} and ${neighboring_territories[1]}.`
+            break
+        default:
+            const last = neighboring_territories.pop()
+            sentence += `${neighboring_territories.join(", ")}, and ${last}.`
     }
 
     return sentence
@@ -195,7 +196,7 @@ function display_start_map(quiz_mode, territory) {
     }
     const next_button_text = "Start"
     const next_button_onclick = function() { display_question() }
-    const user_hint = territory in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].click_message
+    const user_hint = territory in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].user_hint
     display_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint)
 }
 
@@ -216,7 +217,7 @@ function display_normal_map(question, chosen) {
     const next_button_text = chosen === answer ? "Next" : "Try Again"
     const next_button_onclick = chosen === answer ? function() { score.correct += 1; display_question() }
                                                   : function() { score.wrong += 1; display_question(question) }
-    const user_hint = subject in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].click_message
+    const user_hint = subject in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].user_hint
     display_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint)
 }
 

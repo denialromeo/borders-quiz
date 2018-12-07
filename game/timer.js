@@ -19,7 +19,7 @@ class Timer {
      * Executes the given callback once every second.
      * @param {function} timer_callback The callback to run - should take the formatted time as its only parameter.
      */
-    start_timer(timer_callback) {
+    start(timer_callback) {
         clearInterval(this.timer_process_id)
         const bound_callback = (self => function() { self.seconds_elapsed += 1; timer_callback(self.formatted_time) })(this)
         this.timer_process_id = setInterval(bound_callback, 1000)
@@ -27,7 +27,7 @@ class Timer {
     /**
      * Stops timing.
      */
-    pause_timer() {
+    pause() {
         clearInterval(this.timer_process_id)
     }
 }
