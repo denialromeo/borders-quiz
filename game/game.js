@@ -35,7 +35,7 @@ function on_mobile_device() { return $(document).width() <= 760 }
  * @param {string} content The content to display.
  */
 function display(content) {
-    game_iframe.srcdoc = `<html><head><style>${game_css}</style></head><body>${content}</body></html>`
+    $(game_iframe).contents().find("html").html(`<html><head><style>${game_css}</style></head><body>${content}</body></html>`)
 }
 
 /**
