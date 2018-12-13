@@ -20,9 +20,7 @@ const timer = new Timer()
 /** The URL query string parsed as an object. ?custom=Algeria becomes {"custom":"Algeria"} */
 const url_parameters = Object.freeze(new URI(window.location.href).search(true))
 
-/**
- * "Monkey patches" Array with a method that returns whether the array contains a given item.
- */
+/** "Monkey patches" Array with a method that returns whether the array contains a given item. */
 Array.prototype.contains = function(item) { return this.indexOf(item) >= 0 }
 
 /**
@@ -63,7 +61,7 @@ function format_for_display(territory, capitalize_the) {
 function display_question(question=build_question(url_parameters)) {
     const { quiz_mode, wrong_answers, answer, territory } = question
     const choices = Object.freeze(random.shuffle(wrong_answers.concat(answer)))
-    const title_text = "title" in url_parameters ? url_parameters["title"] : quiz_modes[quiz_mode].title
+    const title_text = ("title" in url_parameters ? url_parameters["title"] : quiz_modes[quiz_mode].title)
     var content = `<div id='${on_mobile_device() ? "question-container-mobile" : "question-container"}'>
                       <div id='quiz_title'>${title_text}</div>
                       <div id='${(on_mobile_device() ? "question-text-mobile" : "question-text")}'>
@@ -181,7 +179,7 @@ function borders_sentence(territory, neighboring_territories) {
  * @param {string} territory The address to map.
  */
 function display_start_map(quiz_mode, territory) {
-    const title_text = "title" in url_parameters ? url_parameters["title"] : format_for_display(territory, true)
+    const title_text = ("title" in url_parameters ? url_parameters["title"] : format_for_display(territory, true))
     const embedded_map_url = map_embed_url(quiz_mode, territory, url_parameters, true, on_mobile_device())
     if (territory !== undefined && territory.startsWith("_")) { territory = territory.slice(1) }
     const neighboring_territories = neighbors(territory)
@@ -197,7 +195,7 @@ function display_start_map(quiz_mode, territory) {
     }
     const next_button_text = "Start"
     const next_button_onclick = function() { display_question() }
-    const user_hint = territory in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].user_hint
+    const user_hint = (territory in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].user_hint)
     display_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint)
 }
 
@@ -208,17 +206,17 @@ function display_start_map(quiz_mode, territory) {
  */
 function display_normal_map(question, chosen) {
     const { quiz_mode, answer, territory } = question
-    const subject = chosen === answer ? chosen : territory
-    const does_or_do = !game_settings.plural.contains(subject) ? "does" : "do"
+    const subject = (chosen === answer ? chosen : territory)
+    const does_or_do = (!game_settings.plural.contains(subject) ? "does" : "do")
     const title_text = chosen === answer ?
                        `Correct! ${format_for_display(chosen, true)} ${does_or_do} not border ${format_for_display(territory, false)}!`
                      : `Sorry! ${format_for_display(territory, true)} ${does_or_do} border ${format_for_display(chosen, false)}!`
     const embedded_map_url = map_embed_url(quiz_mode, subject, url_parameters, false, on_mobile_device())
     const bottom_text = borders_sentence(subject, neighbors(subject))
-    const next_button_text = chosen === answer ? "Next" : "Try Again"
+    const next_button_text = (chosen === answer ? "Next" : "Try Again")
     const next_button_onclick = chosen === answer ? function() { score.correct += 1; display_question() }
                                                   : function() { score.wrong += 1; display_question(question) }
-    const user_hint = subject in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].user_hint
+    const user_hint = (subject in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].user_hint)
     display_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint)
 }
 

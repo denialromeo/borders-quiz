@@ -88,7 +88,6 @@
         "Mexico__": "Baja California",
         "Mississippi River": "St Louis Missouri",
         "Missouri River": "Omaha Nebraska",
-        "Moldova": "Brosteni Moldova",
         "Mongolia": "Uyanga Mongolia",
         "Morocco_": "Tangier Morocco",
         "Morocco__": "Tangier Morocco",
@@ -158,6 +157,7 @@
     },
 
     "recenter_map_coordinates": {
+        "Moldova": { "lat": 47.288493, "lng": 28.03406 },
         "Namibia": { "lat": -24.085842, "lng": 16.381035 },
         "Western Australia": { "lat": -24.835589, "lng": 122.331435 },
         "Ionian Sea": { "lat": 39.572211, "lng": 18.104494 },

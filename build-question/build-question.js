@@ -3,11 +3,10 @@ const random = Object.freeze(require("./random.js"))
 const borders = Object.freeze(require("./borders.json"))
 const question_settings = Object.freeze(require("./question-settings.json"))
 
-const default_quiz_mode = Object.keys(borders).pop()
+const all_quiz_modes    = Object.keys(borders)
+const default_quiz_mode = all_quiz_modes.pop()
 
-/**
- * "Monkey patches" Array with a method that returns whether the array contains a given item.
- */
+/** "Monkey patches" Array with a method that returns whether the array contains a given item. */
 Array.prototype.contains = function(item) { return this.indexOf(item) >= 0 }
 
 /**
@@ -37,21 +36,14 @@ function valid(territory) {
 }
 
 /**
- * Returns an array of all quiz modes.
- */
-function all_quiz_modes() {
-    return Object.keys(borders)
-}
-
-/**
  * Returns an array of the quiz modes in the current game.
  * @param {Object} url_parameters The URL query string parsed as an object.
  */
 function current_quiz_modes(url_parameters) {
     if ("all" in url_parameters) {
-        return all_quiz_modes()
+        return all_quiz_modes
     }
-    const current_modes = all_quiz_modes().filter(mode => mode in url_parameters)
+    const current_modes = all_quiz_modes.filter(mode => mode in url_parameters)
     return (current_modes.length === 0 ? [default_quiz_mode] : current_modes)
 }
 
@@ -171,8 +163,9 @@ function territories(url_parameters) {
  * @param {Object} url_parameters The URL query string parsed as an object.
  */
 function num_choices(url_parameters) {
-    var num_choices = url_parameters["num-choices"]
-    return (isNaN(num_choices) || Number(num_choices) < 2 ? 4 : Number(num_choices))
+    const default_num_choices = 4
+    const num_choices         = url_parameters["num-choices"]
+    return ((isNaN(num_choices) || Number(num_choices) < 2) ? default_num_choices : Number(num_choices))
 }
 
 /**
