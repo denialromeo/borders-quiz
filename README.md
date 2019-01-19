@@ -14,6 +14,19 @@ For example -
 
 Try it [here](http://danielmoore.us/borders-quiz)!
 
+You can create custom quizzes by playing with the URL. Examples -
+
+* [Countries that end with "stan"](http://danielmoore.us/borders-quiz?custom=stan$)
+* [Country quiz excluding bodies of water](http://danielmoore.us/borders-quiz?custom=^(?!.*(Sea|Gulf|Bay|Strait|Lake|Channel|Ocean|Rio|Bight)\b))
+* [Country quiz with two answer choices](http://danielmoore.us/borders-quiz?num-choices=2)
+* [Countries in Africa starting with map](http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco&start-map=Moundou+Chad&start-zoom=2&title=Africa)
+* [U.S. states that don't contain the letters 'a' or 'e'](http://danielmoore.us/borders-quiz?usa-states&custom=^(?!.*[ae]))
+* [Canada and neighboring U.S. states starting with map](http://danielmoore.us/borders-quiz?usa-states&start-map=Canada_&start=Canada_)
+* [New York City boroughs starting with map](http://danielmoore.us/borders-quiz?new-york-counties&start-map=New+York+City&start-zoom=9&custom=Brooklyn|Bronx|Manhattan|Queens&title=New+York+City)
+* [San Francisco Bay Area counties starting with map](http://danielmoore.us/borders-quiz?california-counties&start=San+Francisco+Bay&exclude=San+Francisco+Bay&start-map=San+Francisco+Bay&title=The+San+Francisco+Bay+Area)
+* [Southern California counties](http://danielmoore.us/borders-quiz?california-counties&start=Orange;Santa+Barbara&include=Imperial&title=Southern+California+Counties)
+* [India's Punjab and Pakistan's Punjab](http://danielmoore.us/borders-quiz?india-states&pakistan-provinces&custom=Punjab&title=The+Two+Punjabs)
+
 ### Development Guide
 
 First install [Git](https://git-scm.com/) and [Node.js](https://nodejs.org/en/), then open your command prompt and run -
@@ -38,21 +51,6 @@ However, you must observe these rules or the game will break -
 (Running `npm test` will alert you to game-breaking data.)
 
 You can find U.S. fusion table data [here](https://support.google.com/fusiontables/answer/1182141?hl=en), official U.S. Census Bureau KML data [here](https://www.census.gov/geo/maps-data/data/tiger-kml.html), world state/province level data [here](https://fusiontables.google.com/DataSource?docid=1uK6JhwbCLeJWmTmoWTIKFOmdZuTxhfeT_Gy05QXy), and world physical geography fusion table data [here](https://fusiontables.google.com/DataSource?classic=true&docid=1UGwYogqtxVPga_76rxpL38CO1U6tr2s6Z0wSaQ).
-
-Note that you can also create custom quizzes by playing with the URL. Examples -
-
-* [Countries that end with "stan"](http://danielmoore.us/borders-quiz?custom=stan$)
-* [Country quiz excluding bodies of water](http://danielmoore.us/borders-quiz?custom=^(?!.*(Sea|Gulf|Bay|Strait|Lake|Channel|Ocean|Rio|Bight)\b))
-* [Country quiz with two answer choices](http://danielmoore.us/borders-quiz?num-choices=2)
-* [Countries in Africa starting with map](http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco&start-map=Moundou+Chad&start-zoom=2&title=Africa)
-* [U.S. states that don't contain the letters 'a' or 'e'](http://danielmoore.us/borders-quiz?usa-states&custom=^(?!.*[ae]))
-* [Canada and neighboring U.S. states starting with map](http://danielmoore.us/borders-quiz?usa-states&start-map=Canada_&start=Canada_)
-* [New York City boroughs starting with map](http://danielmoore.us/borders-quiz?new-york-counties&start-map=New+York+City&start-zoom=9&custom=Brooklyn|Bronx|Manhattan|Queens&title=New+York+City)
-* [San Francisco Bay Area counties starting with map](http://danielmoore.us/borders-quiz?california-counties&start=San+Francisco+Bay&exclude=San+Francisco+Bay&start-map=San+Francisco+Bay&title=The+San+Francisco+Bay+Area)
-* [Southern California counties](http://danielmoore.us/borders-quiz?california-counties&start=Orange;Santa+Barbara&include=Imperial&title=Southern+California+Counties)
-* [India's Punjab and Pakistan's Punjab](http://danielmoore.us/borders-quiz?india-states&pakistan-provinces&custom=Punjab&title=The+Two+Punjabs)
-
-(To see the above URL's in a more readable form, check the [raw version](https://raw.githubusercontent.com/denialromeo/borders-quiz/master/README.md) of this README.)
 
 ### Known Bugs
 
