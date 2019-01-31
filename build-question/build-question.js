@@ -4,7 +4,7 @@ const borders = Object.freeze(require("./borders.json"))
 const question_settings = Object.freeze(require("./question-settings.json"))
 
 const all_quiz_modes    = Object.keys(borders)
-const default_quiz_mode = all_quiz_modes.pop()
+const default_quiz_mode = all_quiz_modes[all_quiz_modes.length - 1]
 
 /** "Monkey patches" Array with a method that returns whether the array contains a given item. */
 Array.prototype.contains = function(item) { return this.indexOf(item) >= 0 }
