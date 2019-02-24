@@ -157,6 +157,7 @@
     },
 
     "recenter_map_coordinates": {
+        "Iceland": { "lat": 65.478748, "lng": -19.020835 },
         "Moldova": { "lat": 47.288493, "lng": 28.03406 },
         "Namibia": { "lat": -24.085842, "lng": 16.381035 },
         "Western Australia": { "lat": -24.835589, "lng": 122.331435 },

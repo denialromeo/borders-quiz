@@ -183,8 +183,8 @@ function display_start_map(quiz_mode, territory) {
     const embedded_map_url = map_embed_url(quiz_mode, territory, url_parameters, true, on_mobile_device())
     if (territory !== undefined && territory.startsWith("_")) { territory = territory.slice(1) }
     const neighboring_territories = neighbors(territory)
-    var bottom_text
-    if ("starting_message" in quiz_modes[quiz_mode]) { 
+    let bottom_text
+    if ("starting_message" in quiz_modes[quiz_mode] && !("start-map" in url_parameters)) {
         bottom_text = quiz_modes[quiz_mode].starting_message
     }
     else if (neighboring_territories === undefined || neighboring_territories.length === 0) {

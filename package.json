@@ -2,21 +2,20 @@
   "name": "borders-quiz",
   "version": "1.0.0",
   "description": "Hone your geography!",
-  "main": "./borders-quiz/build-question/build-question.js",
   "scripts": {
     "start": "webpack && webpack-dev-server",
     "test": "node ./build-question/test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/denialromeo/danielmoore.us.git"
+    "url": "git+https://github.com/denialromeo/borders-quiz.git"
   },
   "author": "Daniel Moore",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/denialromeo/danielmoore.us/issues"
+    "url": "https://github.com/denialromeo/borders-quiz/issues"
   },
-  "homepage": "https://github.com/denialromeo/danielmoore.us#readme",
+  "homepage": "https://github.com/denialromeo/borders-quiz#readme",
   "dependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
