@@ -57,10 +57,6 @@ You can find U.S. fusion table data [here](https://support.google.com/fusiontabl
 
 * Territory names in more recent quiz modes aren't properly abbreviated on mobile.
 
-* The game doesn't work on Microsoft Edge. This is because Edge doesn't yet support the HTML5 iframe `srcdoc` attribute. (Bug report [here](https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/12375527/).) Microsoft will fix it sooner or later.
-
-    (This problem can be fixed by replacing the iframe with a div (see branch `replace-iframe-with-div`), but iframes are just much more convenient to embed in external websites.)
-
 * There's sometimes a distracting black flash when the maps load on Firefox. This has me stumped.
 
 ### Inspiration

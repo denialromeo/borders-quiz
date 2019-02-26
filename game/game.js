@@ -12,7 +12,7 @@ const game_css = require("./game.css").toString()
 const game_settings = Object.freeze(require("./game-settings.json"))
 const quiz_modes = Object.freeze(require("./quiz-modes.json"))
 
-const game_iframe = document.getElementById("game-container")
+const game_container = document.getElementById("game-container")
 
 const score = { correct: 0, wrong: 0 }
 const timer = new Timer()
@@ -33,7 +33,7 @@ function on_mobile_device() { return $(document).width() <= 760 }
  * @param {string} content The content to display.
  */
 function display(content) {
-    game_iframe.srcdoc = `<html><head><style>${game_css}</style></head><body>${content}</body></html>`
+    game_container.innerHTML = `<html><head><style>${game_css}</style></head><body>${content}</body></html>`
 }
 
 /**
@@ -84,7 +84,7 @@ function display_question(question=build_question(url_parameters)) {
     display(content)
 
     function begin_timing() {
-        const timer_dom_node = game_iframe.contentWindow.document.getElementById("timer")
+        const timer_dom_node = document.getElementById("timer")
         if (timer_dom_node === null) {
             window.requestAnimationFrame(begin_timing);
         }
@@ -95,7 +95,7 @@ function display_question(question=build_question(url_parameters)) {
     begin_timing()
 
     function detect_player_choice() {
-        const choices = game_iframe.contentWindow.document.getElementsByName("choice")
+        const choices = document.getElementsByName("choice")
         if (choices.length === 0) {
             window.requestAnimationFrame(detect_player_choice)
         }
@@ -121,7 +121,7 @@ function display_map(title_text, embedded_map_url, bottom_text, next_button_text
                         <p>${title_text}</p>
                         <iframe id='${on_mobile_device() ? "map-mobile" : "map"}' scrolling='no'
                                 frameborder=0 src='${embedded_map_url}'></iframe>
-                        <p>${bottom_text}</p>
+                        <p id=borders-sentence>${bottom_text}</p>
                         <button id='next'>${next_button_text}</button>
                         ${on_mobile_device() ? `` : `<p id='user-hint'>${user_hint}</p>`}
                     </center>
@@ -130,7 +130,7 @@ function display_map(title_text, embedded_map_url, bottom_text, next_button_text
     display(content)
 
     function set_next_button() {
-        const next_button = game_iframe.contentWindow.document.getElementById("next")
+        const next_button = document.getElementById("next")
         if (next_button === null) {
             window.requestAnimationFrame(set_next_button)
         }
@@ -259,7 +259,7 @@ function start_game() {
             display_question()
         }
     }
-    $(game_iframe).after(other_quiz_modes_html())
+    $(game_container).after(other_quiz_modes_html())
 }
 
 // Exports
