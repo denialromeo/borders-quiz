@@ -2,7 +2,7 @@
 	position:relative;
 	font-family:Helvetica;
 	min-height: 480px;
-	padding-top:3%
+	padding-top:3%;
 }
 
 #next {
@@ -12,6 +12,7 @@
 #map-container-mobile {
 	position:relative;
 	font-family:Helvetica;
+	padding-top:3%;
 }
 
 #quiz_title {
@@ -61,7 +62,7 @@
 
 #question-text-mobile {
 	padding-left:8%;
-	padding-top:21%;
+	padding-top:31%;
 	font-size:20px;
 	font-family:Helvetica;
 }

@@ -229,7 +229,7 @@ function other_quiz_modes_html() {
     if (other_quiz_modes.length > 0) {
         html += `<div style="font-family:Helvetica">
                         <p>You can also try these quiz modes!</p>
-                        <ul class='other-quiz-modes'>`
+                        <ul id='other-quiz-modes'>`
             other_quiz_modes.forEach(mode =>
                 html += `<li>
                             <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;${quiz_modes[mode].description}
