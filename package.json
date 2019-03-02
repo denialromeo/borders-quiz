@@ -4,7 +4,7 @@
   "description": "Hone your geography!",
   "scripts": {
     "start": "webpack && webpack-dev-server",
-    "test": "node ./build-question/test.js"
+    "validate-data": "node ./build-question/test.js"
   },
   "repository": {
     "type": "git",

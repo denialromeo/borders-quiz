@@ -259,7 +259,8 @@
     },
 
     "should_prepend_the": [
-        "(Gulf|Sea|Ocean)(\\b|_)+",
+        "^(Gulf|Sea|Ocean)",
+        "(Gulf|Sea|Ocean)(\\b|_)+$",
         "^(?!.*Cross|Singapore).*River$",
         "Balearic Islands",
         "Basque Country",
