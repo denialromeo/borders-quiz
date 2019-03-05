@@ -43,7 +43,6 @@
         "Côte d'Ivoire": "Daleu Côte d'Ivoire",
         "Delaware River": "Philadephia Pennsylvania",
         "Democratic Republic of the Congo": "Iteli DRC",
-        "Denmark": "Skagen Denmark",
         "Dominican Republic": "Monte Cristi Dominican Republic",
         "Florida": "Jon Bethea State Forest Florida",
         "France (New Caledonia)": "New Caledonia",
@@ -157,6 +156,7 @@
     },
 
     "recenter_map_coordinates": {
+        "Denmark": { "lat": 55.772683, "lng": 9.501785 },
         "Iceland": { "lat": 65.478748, "lng": -19.020835 },
         "Moldova": { "lat": 47.288493, "lng": 28.03406 },
         "Namibia": { "lat": -24.085842, "lng": 16.381035 },

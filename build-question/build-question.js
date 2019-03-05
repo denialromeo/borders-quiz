@@ -39,12 +39,24 @@ function valid(territory) {
  * Returns an array of the quiz modes in the current game.
  * @param {Object} url_parameters The URL query string parsed as an object.
  */
+let current_quiz_modes_ = []
 function current_quiz_modes(url_parameters) {
-    if ("all" in url_parameters) {
-        return all_quiz_modes
+    if (current_quiz_modes_.length > 0) {
+        return current_quiz_modes_
     }
-    const current_modes = all_quiz_modes.filter(mode => mode in url_parameters)
-    return (current_modes.length === 0 ? [default_quiz_mode] : current_modes)
+    else {
+        if ("all" in url_parameters) {
+            current_quiz_modes_ = all_quiz_modes
+        }
+        else if ("random-quiz-mode" in url_parameters) {
+            current_quiz_modes_ = [random.choice(all_quiz_modes)]
+        }
+        else {
+            const current_modes = all_quiz_modes.filter(mode => mode in url_parameters)
+            current_quiz_modes_ = (current_modes.length === 0 ? [default_quiz_mode] : current_modes)
+        }
+        return current_quiz_modes_
+    }
 }
 
 /**
@@ -146,11 +158,13 @@ function neighboring_territories(url_parameters) {
  */
 var pool = []
 function territories(url_parameters) {
+    if (pool.length > 0) {
+        return pool
+    }
     var territories_methods = [custom_territories, neighboring_territories, current_quiz_modes_territories]
     territories_methods.forEach(function(method) {
         if (pool.length === 0) {
-            const possible_pool = method(url_parameters)
-            if (possible_pool.length > 0) { pool = possible_pool }
+            pool = method(url_parameters)
             if (pool.length > 0 && typeof window !== "undefined") { console.log("This quiz is asking questions about", pool.sort()) }
         }
     })

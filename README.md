@@ -21,12 +21,13 @@ You can create custom quizzes by playing with the URL. Examples -
 * [Country quiz with two answer choices](http://danielmoore.us/borders-quiz?num-choices=2)
 * [Countries in Africa starting with map](http://danielmoore.us/borders-quiz?start=Guinea&depth=100&exclude-paths-through=Egypt;Morocco&start-map=Moundou+Chad&start-zoom=2&title=Africa)
 * [U.S. states without starting map](http://danielmoore.us/borders-quiz?no-start-map&usa-states)
-* [U.S. states that don't contain the letters 'a' or 'e'](http://danielmoore.us/borders-quiz?usa-states&custom=^(?!.*[ae]))
+* [U.S. states that don't contain the letters 'a' or 'e'](http://danielmoore.us/borders-quiz?usa-states&custom=^(?!.*[ae])&title=USA+States+That+Don't+Contain+the+Letters+'a'+or+'e')
 * [Canada and neighboring U.S. states starting with map](http://danielmoore.us/borders-quiz?usa-states&start-map=Canada_&start=Canada_)
 * [New York City boroughs starting with map](http://danielmoore.us/borders-quiz?new-york-counties&start-map=New+York+City&start-zoom=9&custom=Brooklyn|Bronx|Manhattan|Queens&title=New+York+City)
 * [San Francisco Bay Area counties starting with map](http://danielmoore.us/borders-quiz?california-counties&start=San+Francisco+Bay&exclude=San+Francisco+Bay&start-map=San+Francisco+Bay&title=The+San+Francisco+Bay+Area)
 * [Southern California counties](http://danielmoore.us/borders-quiz?california-counties&start=Orange;Santa+Barbara&include=Imperial&title=Southern+California+Counties)
 * [India's Punjab and Pakistan's Punjab](http://danielmoore.us/borders-quiz?india-states&pakistan-provinces&custom=Punjab&title=The+Two+Punjabs)
+* [Random quiz mode](http://danielmoore.us/borders-quiz?random-quiz-mode)
 * [Mega-quiz covering everything](http://danielmoore.us/borders-quiz?all)
 
 ### Development Guide
@@ -52,7 +53,7 @@ However, you must observe these rules or the game will break -
 
 (Running `npm run validate-data` will alert you to game-breaking data.)
 
-You can find U.S. fusion table data [here](https://support.google.com/fusiontables/answer/1182141?hl=en) and official U.S. Census Bureau KML data [here](https://www.census.gov/geo/maps-data/data/tiger-kml.html).
+You can find official U.S. Census Bureau KML data [here](https://www.census.gov/geo/maps-data/data/tiger-kml.html).
 
 ### Known Bugs
 
