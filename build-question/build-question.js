@@ -48,7 +48,7 @@ function current_quiz_modes(url_parameters) {
         if ("all" in url_parameters) {
             current_quiz_modes_ = all_quiz_modes
         }
-        else if ("random-quiz-mode" in url_parameters) {
+        else if ("random" in url_parameters) {
             current_quiz_modes_ = [random.choice(all_quiz_modes)]
         }
         else {

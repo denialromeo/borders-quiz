@@ -27,7 +27,7 @@ You can create custom quizzes by playing with the URL. Examples -
 * [San Francisco Bay Area counties starting with map](http://danielmoore.us/borders-quiz?california-counties&start=San+Francisco+Bay&exclude=San+Francisco+Bay&start-map=San+Francisco+Bay&title=The+San+Francisco+Bay+Area)
 * [Southern California counties](http://danielmoore.us/borders-quiz?california-counties&start=Orange;Santa+Barbara&include=Imperial&title=Southern+California+Counties)
 * [India's Punjab and Pakistan's Punjab](http://danielmoore.us/borders-quiz?india-states&pakistan-provinces&custom=Punjab&title=The+Two+Punjabs)
-* [Random quiz mode](http://danielmoore.us/borders-quiz?random-quiz-mode)
+* [Random quiz mode](http://danielmoore.us/borders-quiz?random)
 * [Mega-quiz covering everything](http://danielmoore.us/borders-quiz?all)
 
 ### Development Guide
