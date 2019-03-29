@@ -1,8 +1,8 @@
 {
 
     "recenter_map_address": {
-        "United Kingdom (Bermuda)": "Bermuda",
         "Denmark (Greenland)": "Greenland",
+        "United Kingdom (Bermuda)": "Bermuda",
         "United Arab Emirates": "Al Hamra Airport UAE",
         "Sri Lanka": "Padaviya Sri Lanka",
         "North Korea__": "Chongju North Korea",
@@ -94,7 +94,6 @@
         "Myanmar_": "Thabeikkyin Myanmar",
         "Nei Mongol": "Ulaanbadrakh Mongolia",
         "Nevada_": "Mina Nevada",
-        "New York": "Belden New York State",
         "Nicaragua": "Bambana Nicaragua",
         "Niger_": "Marandet Niger",
         "North Korea": "Sakchu North Korea",
@@ -156,6 +155,7 @@
     },
 
     "recenter_map_coordinates": {
+        "New York": { "lat": 43.428578, "lng": -75.67491 },
         "Denmark": { "lat": 55.772683, "lng": 9.501785 },
         "Iceland": { "lat": 65.478748, "lng": -19.020835 },
         "Moldova": { "lat": 47.288493, "lng": 28.03406 },
@@ -412,6 +412,7 @@
     ],
 
     "custom_zoom_levels": {
+        "Chandigarh": 6,
         "Turkey_": 5,
         "Jordan__": 6,
         "Murmansk Oblast": 3,
