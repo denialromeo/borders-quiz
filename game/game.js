@@ -7,8 +7,6 @@ const random = require("../build-question/random.js")
 const { map_embed_url } = require("./map-embed-url.js")
 const { Timer } = require("./timer.js")
 
-const game_css = require("./game.css").toString()
-
 const game_settings = Object.freeze(require("./game-settings.json"))
 const quiz_modes = Object.freeze(require("./quiz-modes.json"))
 
@@ -33,7 +31,7 @@ function on_mobile_device() { return $(document).width() <= 760 }
  * @param {string} content The content to display.
  */
 function display(content) {
-    game_container.innerHTML = `<html><head><style>${game_css}</style></head><body>${content}</body></html>`
+    game_container.innerHTML = content
 }
 
 /**
