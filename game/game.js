@@ -60,7 +60,7 @@ function display_question(question=build_question(url_parameters)) {
     const { quiz_mode, wrong_answers, answer, territory } = question
     const choices = Object.freeze(random.shuffle(wrong_answers.concat(answer)))
     const title_text = ("title" in url_parameters ? url_parameters["title"] : quiz_modes[quiz_mode].title)
-    var content = `<div id='${on_mobile_device() ? "question-container-mobile" : "question-container"}'>
+    var content = `<div id='question-container'>
                       <div id='quiz_title'>${title_text}</div>
                       <div id='${(on_mobile_device() ? "question-text-mobile" : "question-text")}'>
                           <p>Which of these does not border ${format_for_display(territory, false)}?</p>
