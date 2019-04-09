@@ -3,7 +3,7 @@
 	"canada-provinces": {
 		"anthem": "\"O Canada\"",
 		"default_zoom_level": 3,
-		"description": "(Canada's provinces.)",
+		"description": "Canada's provinces",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col4+from+1WLNv__CToy_grFi67jOIKJPmy5KlA0Ihh6j0sW0H&viz=MAP&h=false&t=1&l=col4",
 		"starting_map": "Canada",
@@ -14,7 +14,7 @@
 	"usa-states": {
 		"anthem": "\"The Star-Spangled Banner\"",
 		"default_zoom_level": 5,
-		"description": "(U.S. states.)",
+		"description": "The U.S.A.'s states",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+1wm55ugZ3RffprAFPRklG254KDInGYwtYy_-5oQQX&viz=MAP&h=false&t=1&l=col3",
 		"starting_map": "United States",
@@ -25,7 +25,7 @@
 	"new-york-counties": {
 		"anthem": "\"I Love New York\"",
 		"default_zoom_level": 7,
-		"description": "(New York's counties.)",
+		"description": "New York's counties",
 		"geocode_append": " County New York",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col4+from+10MgyT_d49QqPH-KVsTT9o2U3s3nYYN3Xvpf4yLSi&viz=MAP&h=false&t=1&l=col4",
 		"starting_map": "_New York",
@@ -36,7 +36,7 @@
 	"california-counties": {
 		"anthem": "\"I Love You, California\"",
 		"default_zoom_level": 7,
-		"description": "(California's counties.)",
+		"description": "California's counties",
 		"geocode_append": " County California",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col4+from+1QxmdyxJWnq5IgFpS5zGv9M1v25l84InpK8y-yY_m&viz=MAP&h=false&t=1&l=col4",
 		"starting_map": "_California",
@@ -47,7 +47,7 @@
 	"mexico-states": {
 		"anthem": "\"Mexicanos, al Grito de Guerra\"",
 		"default_zoom_level": 5,
-		"description": "(Mexico's states.)",
+		"description": "Mexico's states",
 		"geocode_append": " Mexico",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col5+from+19KyBvfdcDLNkVwn466Aa9asNfTMsPhwsasNdimAP&viz=MAP&h=false&t=1&l=col5",
 		"starting_map": "_Mexico",
@@ -58,7 +58,7 @@
 	"brazil-states": {
 		"anthem": "\"Hino da Independência\"",
 		"default_zoom_level": 4,
-		"description": "(Brazil's states.)",
+		"description": "Brazil's states",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+1RUviWSunc98hNoDXYbsNFfZrexdnriZyNnEctaox&viz=MAP&h=false&t=1&l=col3",
 		"starting_map": "Brazil",
@@ -69,7 +69,7 @@
 	"nigeria-states": {
 		"anthem": "\"Arise, O Compatriots\"",
 		"default_zoom_level": 6,
-		"description": "(Nigeria's states.)",
+		"description": "Nigeria's states",
 		"geocode_append": " Nigeria",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+17IWDPjtStnNVSnuTzKB1wZksNUZ5mu6x-4k5AU-J&viz=MAP&h=false&t=1&l=col0",
 		"starting_map": "_Nigeria",
@@ -80,7 +80,7 @@
 	"israel-districts": {
 		"anthem": "\"Hatikvah\"",
 		"default_zoom_level": 7,
-		"description": "(Israel's districts.)",
+		"description": "Israel's districts",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1dbOltNkuYWspcY9B9OiCommIjbf_KgJpn70NIWFO&viz=MAP&h=false&t=1&l=col0",
 		"starting_map": "_Israel",
@@ -91,7 +91,7 @@
 	"syria-governorates": {
 		"anthem": "\"Ḥumāt ad-Diyār\"",
 		"default_zoom_level": 6,
-		"description": "(Syria's governorates.)",
+		"description": "Syria's governorates",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1sH9umChO1iiwHeHcwVWl6-E_TfzGGOENqTuNaDXF&viz=MAP&h=false&t=1&l=col0",
 		"starting_map": "_Syria",
@@ -102,7 +102,7 @@
 	"afghanistan-provinces": {
 		"anthem": "\"Milli Surood\"",
 		"default_zoom_level": 6,
-		"description": "(Afghanistan's provinces.)",
+		"description": "Afghanistan's provinces",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+103avDrD4bFCW2UGPnCWy6AFc0XFZhoLASS4IFg4t&viz=MAP&h=false&t=1&l=col0",
 		"starting_map": "_Afghanistan",
@@ -113,7 +113,7 @@
 	"pakistan-provinces": {
 		"anthem": "\"Qaumi Taranah\"",
 		"default_zoom_level": 5,
-		"description": "(Pakistan's provinces.)",
+		"description": "Pakistan's provinces",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1CFcoHdOuF_S98-v5E8RuFOobTOFYzq6Gz4FfVoK5&viz=MAP&h=false&t=1&l=col0",
 		"starting_map": "_Pakistan",
@@ -124,7 +124,7 @@
 	"india-states": {
 		"anthem": "\"Jana Gana Mana\"",
 		"default_zoom_level": 5,
-		"description": "(India's states.)",
+		"description": "India's states",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+1ic8zKmb8ROuFbiQMLXvdA6u9EPJaJjWq6pyZDC83&viz=MAP&h=false&t=1&l=col3",
 		"starting_map": "India",
@@ -135,7 +135,7 @@
 	"bangladesh-divisions": {
 		"anthem": "\"Amar Shonar Bangla\"",
 		"default_zoom_level": 6,
-		"description": "(Bangladesh's pre-2015 divisions.)",
+		"description": "Bangladesh's pre-2015 divisions",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1TOnSjo523Rq0q1QwPssF-fFc9xTVCzH7e_SuJrpn&viz=MAP&h=false&t=1&l=col0",
 		"starting_map": "_Bangladesh",
@@ -146,7 +146,7 @@
 	"china-provinces": {
 		"anthem": "\"Yiyongjun Jinxingqu\"",
 		"default_zoom_level": 4,
-		"description": "(China's provinces.)",
+		"description": "China's provinces",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col12+from+1ZpUS_-CvOh40_HaHXJ4TGjfOO0n9VPglLpTtlFg9&viz=MAP&h=false&t=1&l=col12",
 		"starting_map": "China",
@@ -157,7 +157,7 @@
 	"taiwan-counties": {
 	    "anthem": "\"Sanmin Zhuyi\"",
 	    "default_zoom_level": 8,
-	    "description": "(Taiwan's cities and counties.)",
+	    "description": "Taiwan's cities and counties",
 	    "geocode_append": "",
 	    "map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+12zcluwsLcKnPYh42DRReW60ZjZIXNRS8sWkOpv5w&viz=MAP&h=false&t=1&l=col2",
 		"starting_map": "_Taiwan",
@@ -168,7 +168,7 @@
 	"malaysia-states": {
 		"anthem": "\"Negaraku\"",
 		"default_zoom_level": 6,
-		"description": "(Malaysia's states.)",
+		"description": "Malaysia's states",
 		"geocode_append": " Malaysia",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1oY7JvyX3rW_yaOwSW-cLkCn7FYOjCnZbJ8OzMB2L&viz=MAP&h=false&t=1&l=col2",
 		"starting_map": "_Malaysia",
@@ -179,7 +179,7 @@
 	"singapore-planning-areas": {
 		"anthem": "\"Majulah Singapura\"",
 		"default_zoom_level": 11,
-		"description": "(Singapore's planning areas.)",
+		"description": "Singapore's planning areas",
 		"geocode_append": " Planning Area Singapore",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1yZ0_F6_kXGEVJYKmCdpLKWjlOxuKYc88bU5o-6dB&viz=MAP&h=false&t=1&l=col0",
 		"starting_map": "_Singapore",
@@ -190,7 +190,7 @@
 	"indonesia-provinces": {
 		"anthem": "\"Indonesia Raya\"",
 		"default_zoom_level": 5,
-		"description": "(Indonesia's provinces.)",
+		"description": "Indonesia's provinces",
 		"geocode_append": " Indonesia",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+194aFJNWEGO3l47407GuckyOjzgLdL3qCtVGvlTVT&viz=MAP&h=false&t=1&l=col3",
 		"starting_map": "_Indonesia",
@@ -201,7 +201,7 @@
 	"australia-states": {
 		"anthem": "\"Advance Australia Fair\"",
 		"default_zoom_level": 4,
-		"description": "(Australia's states.)",
+		"description": "Australia's states",
 		"geocode_append": " Australia",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1AyYgmyEMeKnAqdAGoeQCfkOROAGAQYnzlzvV92Bo&viz=MAP&h=false&t=1&l=col2",
 		"starting_map": "Australia",
@@ -212,7 +212,7 @@
 	"japan-prefectures": {
 		"anthem": "\"Kimigayo\"",
 		"default_zoom_level": 6,
-		"description": "(Japan's prefectures.)",
+		"description": "Japan's prefectures",
 		"geocode_append": " Japan",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1e1KEhbC1opeDS1IhQCVCyyR4X9U1D1eVB_gfmIdy&viz=MAP&h=false&t=1&l=col2",
 		"starting_map": "Japan",
@@ -223,7 +223,7 @@
 	"south-korea-provinces": {
 		"anthem": "\"Aegukga\"",
 		"default_zoom_level": 7,
-		"description": "(South Korea's provinces.)",
+		"description": "South Korea's provinces",
 		"geocode_append": " South Korea",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1mXgLcmURA7HTJvsWHchCErieTTykv5xqS9WDWjDA&viz=MAP&h=false&t=1&l=col2",
 		"starting_map": "_South Korea",
@@ -234,7 +234,7 @@
 	"russia-federal-subjects": {
 		"anthem": "\"Patrioticheskaya Pesnya\"",
 		"default_zoom_level": 4,
-		"description": "(Russia's federal subjects.)",
+		"description": "Russia's federal subjects",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1HPB9NFQFQECAii23-N-ZhjptEt2AJMOV7Onwl_Kz&viz=MAP&h=false&t=1&l=col2",
 		"starting_map": "Russia",
@@ -245,7 +245,7 @@
 	"ukraine-provinces": {
 		"anthem": "\"Shche ne vmerla Ukraina\"",
 		"default_zoom_level": 5,
-		"description": "(Ukraine's provinces.)",
+		"description": "Ukraine's provinces",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col16+from+1ps0MS1fqxkcmnrGklSD5HEVNCoVTSL8MkhrT4vyl&viz=MAP&h=false&t=1&l=col16",
 		"starting_map": "Ukraine",
@@ -256,7 +256,7 @@
 	"poland-provinces": {
 		"anthem": "\"Mazurek Dąbrowskiego\"",
 		"default_zoom_level": 5,
-		"description": "(Poland's provinces.)",
+		"description": "Poland's provinces",
 		"geocode_append": " Poland",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col15+from+1kpY7Sdr0ifJxi_uN9SGcmxg9g36au73ilorUZCCO&viz=MAP&h=false&t=1&l=col15",
 		"starting_map": "_Poland",
@@ -267,7 +267,7 @@
 	"germany-states": {
 		"anthem": "\"Deutschlandlied\"",
 		"default_zoom_level": 5,
-		"description": "(Germany's states.)",
+		"description": "Germany's states",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1LJBiyxxI5VmRg5ELJ6wMXIUuxbDf-YsYgkmldZ3V&viz=MAP&h=false&t=1&l=col0",
 		"starting_map": "Germany",
@@ -278,7 +278,7 @@
 	"italy-regions": {
 		"anthem": "\"Fratelli d'Italia\"",
 		"default_zoom_level": 6,
-		"description": "(Italy's regions.)",
+		"description": "Italy's regions",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1smAC5HzCv5KAQ0MOb-80aTGavsZK_rIV-D8yGqdh&viz=MAP&h=false&t=1&l=col2",
 		"starting_map": "Italy",
@@ -289,7 +289,7 @@
 	"france-regions": {
 		"anthem": "\"La Marseillaise\"",
 		"default_zoom_level": 5,
-		"description": "(France's pre-2016 regions.)",
+		"description": "France's pre-2016 regions",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1muJSWzcqq9Xja9GEsNRGt5oljHJ0WwaKy-Ud7OMg&viz=MAP&h=false&t=1&l=col0",
 		"starting_map": "France",
@@ -300,7 +300,7 @@
 	"england-ceremonial-counties": {
 		"anthem": "\"God Save the Queen\"",
 		"default_zoom_level": 7,
-		"description": "(England's ceremonial counties.)",
+		"description": "England's ceremonial counties",
 		"geocode_append": " County England",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+1JXIDp4FOMTOES9t1EuZlSurdA_LgLhhHQK1MhVFa&viz=MAP&h=false&t=1&l=col2",
 		"starting_map": "_England",
@@ -312,7 +312,7 @@
 	"london-boroughs": {
 		"anthem": "\"London Pride\"",
 		"default_zoom_level": 10,
-		"description": "(London's boroughs.)",
+		"description": "London's boroughs",
 		"geocode_append": " Borough London",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col0+from+1ikUcw7gDt8B-J0XqJOHEF2SiYRHJxBPCz7D3D4kn&viz=MAP&h=false&t=1&l=col0",
 		"starting_map": "_London",
@@ -323,7 +323,7 @@
 	"ireland-counties": {
 	    "anthem": "\"Amhrán na bhFiann\"",
 	    "default_zoom_level": 7,
-	    "description": "(Ireland's counties.)",
+	    "description": "Ireland's counties",
 	    "geocode_append": " County Ireland",
 	    "map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col2+from+13PyOxVhuAzhyIUFaHaswDcKssO7xtPqDkhqBV2Sm&viz=MAP&h=false&t=1&l=col2",
 		"starting_map": "_Ireland",
@@ -334,7 +334,7 @@
 	"spain-autonomous-communities": {
 		"anthem": "\"Marcha Real\"",
 		"default_zoom_level": 5,
-		"description": "(Spain's autonomous communities.)",
+		"description": "Spain's autonomous communities",
 		"geocode_append": " Spain",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col1+from+1NHEGhx3wWq8PeqmFtY_IEz7ADv4yE3scsQzd9OH-&viz=MAP&h=false&t=1&l=col1",
 		"starting_map": "_Spain",
@@ -345,7 +345,7 @@
 	"countries": {
 		"anthem": "\"Pale Blue Dot\"",
 		"default_zoom_level": 5,
-		"description": "(The world's countries.)",
+		"description": "The world's countries",
 		"geocode_append": "",
 		"map_embed_base_url": "https://fusiontables.google.com/embedviz?q=select+col3+from+1rkqDW9ccbr840fEN9Ao5sq2fVrYXPkirKjnN4oyD&viz=MAP&h=false&t=1&l=col3",
 		"title": "World Countries",

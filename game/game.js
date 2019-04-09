@@ -228,10 +228,11 @@ function other_quiz_modes_html() {
         html += `<div style="font-family:Helvetica">
                         <p id='other-quiz-modes'>You can also try these quiz modes!</p>
                         <ul>`
-            other_quiz_modes.forEach(mode =>
+            other_quiz_modes.forEach(function(mode) {
+                const description = on_mobile_device() ? quiz_modes[mode].description.split("'")[0] : quiz_modes[mode].description
                 html += `<li>
-                            <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;${quiz_modes[mode].description}
-                         </li>`)
+                            <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;(${description}.)
+                         </li>`})
             html += `</ul>
                  </div>`
     }
