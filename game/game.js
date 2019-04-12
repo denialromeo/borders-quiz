@@ -252,6 +252,7 @@ function start_game() {
     }
     else {
         try {
+            document.title = ("title" in url_parameters ? url_parameters["title"] : quiz_modes[starting_quiz_mode].title)
             display_start_map(starting_quiz_mode, starting_address)
         }
         catch(e) {
