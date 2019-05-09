@@ -246,6 +246,7 @@ function start_game() {
     const starting_quiz_mode = current_quiz_modes(url_parameters)[0]
     const starting_address = [url_parameters["start-map"], quiz_modes[starting_quiz_mode].starting_map]
                             .find(address => address !== undefined)
+    if ("title" in url_parameters) { document.title = url_parameters["title"] }
     if ("no-start-map" in url_parameters || starting_address === undefined || current_quiz_modes(url_parameters).length > 1 ||
         (("custom" in url_parameters || "start" in url_parameters) && !("start-map" in url_parameters))) {
         display_question()
