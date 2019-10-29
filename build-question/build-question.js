@@ -77,7 +77,7 @@ function current_quiz_modes_territories(url_parameters) {
  */
 function custom_territories(url_parameters) {
     if ("custom" in url_parameters) {
-        var custom_regex = new RegExp(url_parameters["custom"])
+        var custom_regex = new RegExp(url_parameters["custom"], "i")
         return current_quiz_modes_territories(url_parameters).filter(t => custom_regex.exec(t) !== null)
     }
     return []
