@@ -69,10 +69,12 @@ function google_maps_zoom_level(quiz_mode, territory, url_parameters, start_map_
  * @param {boolean} on_mobile_device Whether the quiz is being browsed from a mobile device.
  */
 function map_embed_url(quiz_mode, territory, url_parameters, start_map_screen, on_mobile_device) {
-    var url = new URI(quiz_modes[quiz_mode].map_embed_base_url)
+    // const url = new URI(quiz_modes[quiz_mode].map_embed_base_url) // Fusion Tables discontinued. Why, Google?!
+    const url = new URI("https://www.google.com/maps/embed/v1/view")
     const { lat, lng } = coordinates(quiz_mode, territory)
     const zoom_level = google_maps_zoom_level(quiz_mode, territory, url_parameters, start_map_screen, on_mobile_device)
-    return url.addSearch({ lat: lat, lng: lng, z: zoom_level }).toString()
+    // return url.addSearch({ lat: lat, lng: lng, z: zoom_level }).toString()
+    return url.addSearch({key: google_maps_api_key, zoom: zoom_level, center: `${lat},${lng}`}).toString()
 }
 
 // Exports
