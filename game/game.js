@@ -193,7 +193,8 @@ function display_start_map(quiz_mode, territory) {
     }
     const next_button_text = "Start"
     const next_button_onclick = function() { display_question() }
-    const user_hint = (territory in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].user_hint)
+    // const user_hint = (territory in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].user_hint)
+    const user_hint = "" // Fusion Tables discontinued. Maps no longer clickable.
     display_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint)
 }
 
@@ -214,7 +215,8 @@ function display_normal_map(question, chosen) {
     const next_button_text = (chosen === answer ? "Next" : "Try Again")
     const next_button_onclick = chosen === answer ? function() { score.correct += 1; display_question() }
                                                   : function() { score.wrong += 1; display_question(question) }
-    const user_hint = (subject in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].user_hint)
+    // const user_hint = (subject in game_settings.user_hint ? game_settings.user_hint[subject] : quiz_modes[quiz_mode].user_hint)
+    const user_hint = "" // Fusion Tables discontinued. Maps no longer clickable.
     display_map(title_text, embedded_map_url, bottom_text, next_button_text, next_button_onclick, user_hint)
 }
 
