@@ -27,7 +27,7 @@ You can create custom quizzes by playing with the URL. Examples -
 * [Random quiz mode](http://danielmoore.us/borders-quiz?random)
 * [Mega-quiz covering everything](http://danielmoore.us/borders-quiz?all)
 
-(Note: Google discontinued Fusion Tables on December 3, 2019. As a result, I've had to gut borders-quiz from 30 quiz modes to 6.)
+(Google discontinued Fusion Tables on December 3, 2019. As a result, I've had to gut borders-quiz from 30 quiz modes to 6.)
 
 ### Development Guide
 
