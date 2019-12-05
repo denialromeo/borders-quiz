@@ -245,6 +245,7 @@ function other_quiz_modes_html() {
  */
 function start_game() {
     const starting_quiz_mode = current_quiz_modes(url_parameters)[0]
+    console.log(quiz_modes)
     const starting_address = [url_parameters["start-map"], quiz_modes[starting_quiz_mode].starting_map]
                             .find(address => address !== undefined)
     if ("title" in url_parameters) { document.title = url_parameters["title"] }
