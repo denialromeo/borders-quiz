@@ -224,19 +224,19 @@ function display_normal_map(question, chosen) {
  */
 function other_quiz_modes_html() {
     var html  = `<span style="display:block;margin-bottom:15px;"/>`
-    const other_quiz_modes = Object.keys(quiz_modes).filter(mode => !current_quiz_modes(url_parameters).contains(mode))
-    if (other_quiz_modes.length > 0) {
-        html += `<div style="font-family:Helvetica">
-                        <p id='other-quiz-modes'>You can also try these quiz modes!</p>
-                        <ul>`
-            other_quiz_modes.forEach(function(mode) {
-                const description = on_mobile_device() ? quiz_modes[mode].description.split("'")[0] : quiz_modes[mode].description
-                html += `<li>
-                            <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;(${description}.)
-                         </li>`})
-            html += `</ul>
-                 </div>`
-    }
+    // const other_quiz_modes = Object.keys(quiz_modes).filter(mode => !current_quiz_modes(url_parameters).contains(mode))
+    // if (other_quiz_modes.length > 0) {
+    //     html += `<div style="font-family:Helvetica">
+    //                     <p id='other-quiz-modes'>You can also try these quiz modes!</p>
+    //                     <ul>`
+    //         other_quiz_modes.forEach(function(mode) {
+    //             const description = on_mobile_device() ? quiz_modes[mode].description.split("'")[0] : quiz_modes[mode].description
+    //             html += `<li>
+    //                         <a target='_self' href='?${mode}'>${quiz_modes[mode].anthem}</a>&nbsp;(${description}.)
+    //                      </li>`})
+    //         html += `</ul>
+    //              </div>`
+    // }
     return html
 }
 
