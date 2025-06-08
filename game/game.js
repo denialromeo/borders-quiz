@@ -177,9 +177,9 @@ function borders_sentence(territory, neighboring_territories) {
  * @param {string} quiz_mode The key to look up in quiz-modes.json.
  * @param {string} territory The address to map.
  */
-function display_start_map(quiz_mode, territory) {
+async function display_start_map(quiz_mode, territory) {
     const title_text = ("title" in url_parameters ? url_parameters["title"] : format_for_display(territory, true))
-    const embedded_map_url = map_embed_url(quiz_mode, territory, url_parameters, true, on_mobile_device())
+    const embedded_map_url = await map_embed_url(quiz_mode, territory, url_parameters, true, on_mobile_device())
     if (territory !== undefined && territory.startsWith("_")) { territory = territory.slice(1) }
     const neighboring_territories = neighbors(territory)
     let bottom_text
@@ -203,14 +203,14 @@ function display_start_map(quiz_mode, territory) {
  * @param {Object} question Example - { quiz_mode: "countries", territory: "Denmark", answer: "Belgium", wrong_answers: ["Germany"] }
  * @param {string} chosen   The answer the player chose.
  */
-function display_normal_map(question, chosen) {
+async function display_normal_map(question, chosen) {
     const { quiz_mode, answer, territory } = question
     const subject = (chosen === answer ? chosen : territory)
     const does_or_do = (!game_settings.plural.contains(subject) ? "does" : "do")
     const title_text = chosen === answer ?
                        `Correct! ${format_for_display(chosen, true)} ${does_or_do} not border ${format_for_display(territory, false)}!`
                      : `Sorry! ${format_for_display(territory, true)} ${does_or_do} border ${format_for_display(chosen, false)}!`
-    const embedded_map_url = map_embed_url(quiz_mode, subject, url_parameters, false, on_mobile_device())
+    const embedded_map_url = await map_embed_url(quiz_mode, subject, url_parameters, false, on_mobile_device())
     const bottom_text = borders_sentence(subject, neighbors(subject))
     const next_button_text = (chosen === answer ? "Next" : "Try Again")
     const next_button_onclick = chosen === answer ? function() { score.correct += 1; display_question() }
@@ -243,7 +243,7 @@ function other_quiz_modes_html() {
 /**
  * Starts the game.
  */
-function start_game() {
+async function start_game() {
     const starting_quiz_mode = current_quiz_modes(url_parameters)[0]
     console.log(quiz_modes)
     const starting_address = [url_parameters["start-map"], quiz_modes[starting_quiz_mode].starting_map]
@@ -256,7 +256,7 @@ function start_game() {
     else {
         try {
             document.title = ("title" in url_parameters ? url_parameters["title"] : quiz_modes[starting_quiz_mode].title)
-            display_start_map(starting_quiz_mode, starting_address)
+            await display_start_map(starting_quiz_mode, starting_address)
         }
         catch(e) {
             display_question()
